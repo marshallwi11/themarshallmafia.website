@@ -1,0 +1,396 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Custom marker font */
+@font-face {
+  font-family: 'MarkerBold';
+  src: url('/fonts/asset_font_bold_marker.otf') format('opentype'),
+       url('/fonts/asset_font_bold_marker.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #000000;
+  --card-foreground: #ffffff;
+  --popover: #000000;
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #000000;
+  --secondary: #ffffff;
+  --secondary-foreground: #000000;
+  --muted: #333333;
+  --muted-foreground: #999999;
+  --accent: #ffffff;
+  --accent-foreground: #000000;
+  --border: #333333;
+  --input: #333333;
+  --ring: #ffffff;
+  --radius: 1.5rem;
+
+  --color-kill: #E3000B;
+  --color-guess: #0080C5;
+  --color-save: #00983F;
+  --color-wild: #F8AC00;
+  --color-ally: #9152E6;
+
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+@theme inline {
+  --font-sans: 'MarkerBold', sans-serif;
+  --font-serif: 'MarkerBold', sans-serif;
+  --font-mono: 'MarkerBold', sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-kill: #E3000B;
+  --color-guess: #0080C5;
+  --color-save: #00983F;
+  --color-wild: #F8AC00;
+  --color-ally: #9152E6;
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 8px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'MarkerBold', sans-serif;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* =============================================
+   LIQUID GLASS + MODAL SYSTEM
+   ============================================= */
+
+@layer utilities {
+
+  /* --- TEXT NAV BAR (smaller) --- */
+  .nav-link {
+    font-family: 'MarkerBold', sans-serif;
+    font-size: 18px;
+    line-height: 24px;
+    color: #7B7B7B;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+  }
+  .nav-link:hover {
+    color: #bbbbbb;
+  }
+
+  .nav-title {
+    font-family: 'MarkerBold', sans-serif;
+    font-size: 18px;
+    line-height: 24px;
+    color: #FFFFFF;
+    white-space: nowrap;
+  }
+
+  /* --- MODAL OVERLAY: Blurred backdrop --- */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    animation: fadeIn 0.25s ease-out;
+  }
+
+  /* --- MODAL CONTENT: Liquid glass container (not solid black) --- */
+  .modal-content {
+    position: relative;
+    width: calc(100% - 48px);
+    max-width: 720px;
+    height: calc(100% - 100px);
+    margin-top: 70px;
+    overflow: hidden;
+    border-radius: 32px;
+    /* Liquid glass: translucent dark with blur and edge highlight */
+    background: rgba(18, 18, 18, 0.65);
+    backdrop-filter: blur(60px) saturate(1.8);
+    -webkit-backdrop-filter: blur(60px) saturate(1.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 0 0 0.5px rgba(255, 255, 255, 0.06),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.08),
+      0 25px 60px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-scroll {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .modal-scroll::-webkit-scrollbar { display: none; }
+
+  /* --- GLASS BLOCK: Liquid glass content blocks --- */
+  .glass-block {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 30px;
+    padding: 40px 44px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
+      0 0 0 0.5px rgba(255, 255, 255, 0.03);
+  }
+
+  .glass-block-showcase {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 35px;
+    padding: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
+      0 0 0 0.5px rgba(255, 255, 255, 0.03);
+  }
+
+  /* --- PLAY BLOCK TYPOGRAPHY --- */
+  .play-block-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  .play-block-title {
+    font-family: 'MarkerBold', sans-serif;
+    font-size: 22px;
+    line-height: 30px;
+    color: #FFFFFF;
+  }
+
+  .play-block-subtitle {
+    font-family: 'MarkerBold', sans-serif;
+    font-size: 22px;
+    line-height: 30px;
+    color: #7B7B7B;
+  }
+
+  .play-block-body {
+    font-family: 'MarkerBold', sans-serif;
+    font-size: 16px;
+    line-height: 23px;
+    color: #FFFFFF;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  /* --- SHOWCASE --- */
+  .showcase-image-wrapper {
+    width: 100%;
+    aspect-ratio: 577 / 433;
+    overflow: hidden;
+    border-radius: 17.5px;
+  }
+
+  /* --- COLLECT INPUTS --- */
+  .collect-input {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-family: 'MarkerBold', sans-serif;
+    font-size: 14px;
+    color: white;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    outline: none;
+    transition: background 0.15s ease, border-color 0.15s ease;
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04);
+  }
+  .collect-input::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+  }
+  .collect-input:focus {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+
+  /* --- CHECKOUT BUTTONS --- */
+  .checkout-btn {
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.15s ease;
+  }
+  .checkout-btn:hover {
+    opacity: 0.85;
+  }
+
+  /* --- MUSIC PLAYER BUTTONS (liquid glass) --- */
+  .player-btn {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: white;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+  }
+  .player-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.05);
+  }
+  .player-btn:active {
+    transform: scale(0.96);
+  }
+
+  /* --- MUSIC ICON WRAPPER --- */
+  .music-icon-wrapper {
+    display: block;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+  .music-icon-wrapper:hover {
+    transform: scale(1.08);
+    opacity: 0.85;
+  }
+
+  /* --- ANIMATIONS --- */
+  .animate-modal-in {
+    animation: modalIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes modalIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  /* --- ACCENT COLORS --- */
+  .text-kill { color: var(--color-kill); }
+  .text-guess { color: var(--color-guess); }
+  .text-save { color: var(--color-save); }
+  .text-wild { color: var(--color-wild); }
+  .text-ally { color: var(--color-ally); }
+}
