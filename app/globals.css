@@ -317,7 +317,7 @@
     flex-direction: column;
     gap: 32px;
   }
-  /* Outer dark glass card — matches play-card style */
+  /* Outer dark glass card — no padding, image fills inside well */
   .showcase-card {
     border-radius: 30px;
     width: 100%;
@@ -325,37 +325,22 @@
     border: 1px solid rgba(255,255,255,0.07);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    padding: 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    padding: 16px;
     box-sizing: border-box;
   }
-  /* Header row inside card */
-  .showcase-card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  /* Light inner well — image sits centred inside */
+  /* Inner well — image fills it completely */
   .showcase-img-well {
     background: rgba(230, 228, 224, 0.92);
     border-radius: 20px;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 28px;
-    min-height: 200px;
+    width: 100%;
+    line-height: 0;
   }
   .showcase-img-well img {
-    max-width: 100%;
-    max-height: 420px;
-    width: auto;
+    width: 100%;
     height: auto;
     display: block;
-    object-fit: contain;
-    border-radius: 8px;
+    object-fit: cover;
   }
 
   /* --- MUSIC GRID --- */

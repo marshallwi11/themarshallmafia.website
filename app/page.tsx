@@ -252,10 +252,6 @@ export default function Home() {
               <div className="showcase-list" onClick={(e) => e.stopPropagation()}>
                 {[1,2,3,4,5,6,7].map((n) => (
                   <div key={n} className="showcase-card">
-                    <div className="showcase-card-header">
-                      <span className="play-block-title" style={{fontSize:"15px"}}>LIMITED - 1ST EDITION</span>
-                      <span className="play-block-subtitle" style={{fontSize:"15px"}}>STANDARD PACK</span>
-                    </div>
                     <div className="showcase-img-well">
                       <img
                         src={`/images/tmm_picture_${n}.png`}
