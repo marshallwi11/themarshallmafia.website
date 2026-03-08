@@ -251,22 +251,56 @@ export default function Home() {
             <div className="modal-backdrop" />
             <div className="modal-scroll-bare animate-modal-in">
               <div className="showcase-list" onClick={(e) => e.stopPropagation()}>
-                {[1,2,3,4,5,6,7].map((n) => (
+
+                {/* Image 1 */}
+                <div className="showcase-card">
+                  <div className="showcase-img-well">
+                    <img src="/images/tmm_picture_1.png" alt="The Marshall Mafia" loading="eager"
+                      onError={(e) => { const t=e.target as HTMLImageElement; t.onerror=null; t.parentElement!.style.minHeight="200px" }} />
+                  </div>
+                </div>
+
+                {/* Info 1 */}
+                <div className="play-card">
+                  <p className="play-block-body">The <span className="text-tmm-red">Marshall Mafia</span> is a social deduction card game where players secretly take on the roles of <span className="text-tmm-red">Mafia</span> members or <span className="text-tmm-cream">Villagers</span>, and through rounds of sleeping, discussion and voting, the <span className="text-tmm-cream">Villagers</span> must identify and eliminate the <span className="text-tmm-red">Mafia</span> before they are outnumbered.</p>
+                </div>
+
+                {/* Image 2 */}
+                <div className="showcase-card">
+                  <div className="showcase-img-well">
+                    <img src="/images/tmm_picture_2.png" alt="The Marshall Mafia" loading="lazy"
+                      onError={(e) => { const t=e.target as HTMLImageElement; t.onerror=null; t.parentElement!.style.minHeight="200px" }} />
+                  </div>
+                </div>
+
+                {/* Info 2 */}
+                <div className="play-card">
+                  <p className="play-block-body">Discover the hidden secrets of the game! — Learn how roles are assigned, master the rules of <span className="text-tmm-red">Mafia</span> vs. <span className="text-tmm-cream">Villagers</span>, and get familiar with the game{"'"}s core phases.</p>
+                </div>
+
+                {/* Image 3 */}
+                <div className="showcase-card">
+                  <div className="showcase-img-well">
+                    <img src="/images/tmm_picture_3.png" alt="The Marshall Mafia" loading="lazy"
+                      onError={(e) => { const t=e.target as HTMLImageElement; t.onerror=null; t.parentElement!.style.minHeight="200px" }} />
+                  </div>
+                </div>
+
+                {/* Info 3 */}
+                <div className="play-card">
+                  <p className="play-block-body">From the silence in the Sleep Phase to the heated debates in the Discussion Phase, and the all-important Vote Phase... where eliminations happen — understand how the <span className="text-tmm-cream">Marshall</span> hands out roles and sharpen your strategy to outsmart your rivals, whether you{"'"}re a sneaky <span className="text-tmm-red">Mafia</span> or a watchful <span className="text-tmm-cream">Villager</span>!</p>
+                </div>
+
+                {/* Images 4–7 */}
+                {[4,5,6,7].map((n) => (
                   <div key={n} className="showcase-card">
                     <div className="showcase-img-well">
-                      <img
-                        src={`/images/tmm_picture_${n}.png`}
-                        alt={`The Marshall Mafia — image ${n}`}
-                        loading={n === 1 ? "eager" : "lazy"}
-                        onError={(e) => {
-                          const t = e.target as HTMLImageElement
-                          t.src = `/images/tmm_picture_${n}.jpg`
-                          t.onerror = () => { t.parentElement!.style.minHeight = "200px" }
-                        }}
-                      />
+                      <img src={`/images/tmm_picture_${n}.png`} alt={`The Marshall Mafia — image ${n}`} loading="lazy"
+                        onError={(e) => { const t=e.target as HTMLImageElement; t.onerror=null; t.parentElement!.style.minHeight="200px" }} />
                     </div>
                   </div>
                 ))}
+
               </div>
             </div>
           </div>
@@ -330,6 +364,31 @@ export default function Home() {
 
                   </div>
                 </div>
+
+                {/* Releases card */}
+                <div className="play-card" onClick={(e) => e.stopPropagation()} style={{marginTop:"0"}}>
+                  <div className="play-card-header">
+                    <span className="play-block-title">RELEASES</span>
+                    <span className="play-block-subtitle">ALBUMS</span>
+                  </div>
+                  <div className="releases-list">
+                    <div className="release-row">
+                      <span className="play-block-body">THE MARSHALL MAFIA</span>
+                      <span className="play-block-subtitle release-tag">EP RELEASED</span>
+                    </div>
+                    <hr className="play-card-divider" />
+                    <div className="release-row">
+                      <span className="play-block-body">THE MARSHALL MAFIA</span>
+                      <span className="play-block-subtitle release-tag">ALBUM RELEASED</span>
+                    </div>
+                    <hr className="play-card-divider" />
+                    <div className="release-row">
+                      <span className="play-block-body">THE MARSHALL MAFIA</span>
+                      <span className="play-block-subtitle release-tag">SOUNDTRACKS RELEASED</span>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>

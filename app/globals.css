@@ -667,6 +667,44 @@
   .text-muted { color: rgba(255,255,255,0.35); }
 }
 
+  /* --- RELEASES LIST in music modal --- */
+  .releases-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 4px;
+  }
+  .release-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .release-tag {
+    font-size: clamp(11px, 2.5vw, 14px) !important;
+    white-space: nowrap;
+    color: rgba(255,255,255,0.4) !important;
+  }
+
+  /* --- RELEASES LIST in music modal --- */
+  .releases-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 4px;
+  }
+  .release-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .release-tag {
+    font-size: clamp(11px, 2.5vw, 14px) !important;
+    white-space: nowrap;
+    color: rgba(255,255,255,0.4) !important;
+  }
+
   /* ===== MOBILE OVERRIDES (≤480px) ===== */
   @media (max-width: 480px) {
     /* Nav height reduction */
