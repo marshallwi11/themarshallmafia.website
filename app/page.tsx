@@ -118,7 +118,7 @@ export default function Home() {
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
             <div className="modal-scroll-bare animate-modal-in">
-              <div className="max-w-[675px] mx-auto space-y-[50px] pb-[80px] px-6">
+              <div className="max-w-[675px] mx-auto pb-[80px] px-4 sm:px-6" style={{display:"flex",flexDirection:"column",gap:"clamp(24px,5vw,50px)"}}>
 
                 <div className="play-card" onClick={(e) => e.stopPropagation()}>
                   <div className="play-card-header">
@@ -277,7 +277,7 @@ export default function Home() {
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
             <div className="modal-scroll-bare animate-modal-in">
-              <div className="w-full max-w-[600px] mx-auto px-6 pb-[80px]">
+              <div className="w-full max-w-[600px] mx-auto px-4 sm:px-6 pb-[80px]">
                 <div className="play-card" onClick={(e) => e.stopPropagation()}>
                   <div className="music-modal-header">
                     <span className="play-block-title">LISTEN</span>

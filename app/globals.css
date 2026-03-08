@@ -232,7 +232,7 @@
   }
   .mobile-menu-item {
     font-family: 'MarkerBold', sans-serif;
-    font-size: 32px;
+    font-size: clamp(24px, 7vw, 32px);
     color: white;
     letter-spacing: 0.08em;
     transition: opacity 0.15s ease;
@@ -272,7 +272,7 @@
     /* NO pointer-events:none — scroll must work on touch */
   }
   .modal-scroll-bare > div {
-    padding-top: 90px;
+    padding-top: clamp(70px, 12vw, 90px);
     min-height: 100%;
     /* Clicks on the padding area (gaps between cards) will bubble up to modal-overlay and close */
   }
@@ -312,20 +312,20 @@
   .showcase-list {
     max-width: 600px;
     margin: 0 auto;
-    padding: 0 24px 80px;
+    padding: 0 clamp(12px, 4vw, 24px) clamp(60px, 10vw, 80px);
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: clamp(16px, 4vw, 32px);
   }
   /* Outer dark glass card — no padding, image fills inside well */
   .showcase-card {
-    border-radius: 30px;
+    border-radius: clamp(16px, 4vw, 30px);
     width: 100%;
     background: rgba(52,52,52,0.25);
     border: 1px solid rgba(255,255,255,0.07);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    padding: 16px;
+    padding: clamp(8px, 2.5vw, 16px);
     box-sizing: border-box;
   }
   /* Inner well — image fills it completely */
@@ -353,14 +353,14 @@
   /* Force both sides to same font size */
   .music-modal-header .play-block-title,
   .music-modal-header .play-block-subtitle {
-    font-size: 20px !important;
+    font-size: clamp(15px, 3.5vw, 20px) !important;
     line-height: 1;
   }
   .music-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-top: 24px;
+    gap: clamp(10px, 3vw, 20px);
+    margin-top: clamp(16px, 4vw, 24px);
   }
   .music-tile {
     display: flex;
@@ -375,12 +375,11 @@
     opacity: 0.85;
   }
   .music-tile-icon {
-    width: 96px;
-    height: 96px;
-    border-radius: 26px;
+    width: clamp(64px, 18vw, 96px);
+    height: clamp(64px, 18vw, 96px);
+    border-radius: clamp(16px, 4vw, 26px);
     overflow: hidden;
     flex-shrink: 0;
-    /* PNG fills the box instantly */
   }
   .music-tile-img {
     width: 100%;
@@ -402,10 +401,10 @@
   .collect-list {
     max-width: 560px;
     margin: 0 auto;
-    padding: 0 24px 80px;
+    padding: 0 clamp(12px, 4vw, 24px) clamp(60px, 10vw, 80px);
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: clamp(16px, 4vw, 32px);
   }
   .collect-img-well {
     background: rgba(230, 228, 224, 0.92);
@@ -471,7 +470,7 @@
   .play-card-pill {
     background: rgba(52, 52, 52, 0.25);
     border-radius: 100px;
-    padding: 28px 50px;
+    padding: clamp(14px, 3vw, 28px) clamp(20px, 5vw, 50px);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -481,11 +480,11 @@
   /* --- PLAY CARD: compact block matching Figma, no double box --- */
   .play-card {
     background: rgba(52, 52, 52, 0.25);
-    border-radius: 50px;
-    padding: 50px;
+    border-radius: clamp(24px, 5vw, 50px);
+    padding: clamp(20px, 5vw, 50px);
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: clamp(12px, 2.5vw, 18px);
     border: 1px solid rgba(255, 255, 255, 0.05);
   }
 
@@ -531,22 +530,22 @@
 
   .play-block-title {
     font-family: 'MarkerBold', sans-serif;
-    font-size: 22px;
-    line-height: 30px;
+    font-size: clamp(16px, 3.5vw, 22px);
+    line-height: 1.35;
     color: #FFFFFF;
   }
 
   .play-block-subtitle {
     font-family: 'MarkerBold', sans-serif;
-    font-size: 22px;
-    line-height: 30px;
+    font-size: clamp(14px, 3vw, 22px);
+    line-height: 1.35;
     color: #7B7B7B;
   }
 
   .play-block-body {
     font-family: 'MarkerBold', sans-serif;
-    font-size: 16px;
-    line-height: 23px;
+    font-size: clamp(13px, 3vw, 16px);
+    line-height: 1.55;
     color: #FFFFFF;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
@@ -666,4 +665,66 @@
   .text-wild  { color: var(--tmm-yellow); }
   .text-ally  { color: var(--tmm-cream); }
   .text-muted { color: rgba(255,255,255,0.35); }
+}
+
+  /* ===== MOBILE OVERRIDES (≤480px) ===== */
+  @media (max-width: 480px) {
+    /* Nav height reduction */
+    nav { height: 56px !important; }
+
+    /* Play modal: reduce padding-top to clear smaller nav */
+    .modal-scroll-bare > div {
+      padding-top: 64px;
+    }
+
+    /* Cards tighter */
+    .play-card {
+      border-radius: 20px;
+      padding: 18px;
+      gap: 10px;
+    }
+    .play-card-pill {
+      padding: 14px 20px;
+      border-radius: 60px;
+    }
+
+    /* Music grid: 2 columns on very small screens */
+    .music-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .music-tile-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+    }
+    .music-tile-label {
+      font-size: 10px;
+    }
+
+    /* Showcase card inner well radius */
+    .showcase-img-well,
+    .collect-img-well {
+      border-radius: 12px;
+    }
+    .showcase-card {
+      border-radius: 14px;
+      padding: 8px;
+    }
+
+    /* Collect list */
+    .collect-list {
+      gap: 16px;
+      padding: 0 12px 60px;
+    }
+
+    /* Typography floor */
+    .play-block-title  { font-size: 15px; }
+    .play-block-subtitle { font-size: 13px; }
+    .play-block-body   { font-size: 13px; line-height: 1.5; }
+
+    /* Mobile menu items */
+    .mobile-menu-item { font-size: 26px; }
+    .mobile-menu-inner { gap: 28px; }
+  }
 }
