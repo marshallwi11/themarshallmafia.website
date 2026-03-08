@@ -33,6 +33,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Preload music icons so they're instant when the modal opens */}
+        <link rel="preload" as="image" href="/images/tmm_music_spotify.png" />
+        <link rel="preload" as="image" href="/images/tmm_music_apple_music.png" />
+        <link rel="preload" as="image" href="/images/tmm_music_tidal.png" />
+        <link rel="preload" as="image" href="/images/tmm_music_amazon_music.png" />
+        <link rel="preload" as="image" href="/images/tmm_music_deezer.png" />
+        <link rel="preload" as="image" href="/images/tmm_music_youtube.png" />
+      </head>
       <body className="antialiased">
         {children}
         <Analytics />

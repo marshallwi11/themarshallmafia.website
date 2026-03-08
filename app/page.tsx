@@ -176,6 +176,7 @@ export default function Home() {
                     <span className="play-block-subtitle">1, 2 & 3</span>
                   </div>
                   <p className="play-block-body">Each round in The Marshall Mafia consists of three phases. 1. SLEEP → 2. DISCUSSION → 3. VOTE.</p>
+                  <hr className="play-card-divider" />
                   <p className="play-block-body">If the games go too quickly or too many players are getting eliminated each night, the role groups (e.g. if there are 2+ <span className="text-tmm-green">Angels</span>, 2+ <span className="text-tmm-red">Mafia</span>, 2+ <span className="text-tmm-blue">Detectives</span>) each type of role (<span className="text-tmm-red">KILL</span>, <span className="text-tmm-blue">GUESS</span>, <span className="text-tmm-green">SAVE</span>, <span className="text-tmm-yellow">WILD</span>) must decide one player to do their action on.</p>
                 </div>
 
@@ -354,7 +355,7 @@ export default function Home() {
                       <span className="play-block-body">STANDARD CARD GAME</span>
                       <span className="play-block-title" style={{color:"var(--tmm-cream)"}}>£20</span>
                     </div>
-                    <p className="play-block-body" style={{color:"rgba(255,255,255,0.5)", fontSize:"14px", marginTop:"8px", marginBottom:"20px"}}>
+                    <p className="play-block-body" style={{color:"rgba(255,255,255,0.5)", fontSize:"14px", marginTop:"8px", marginBottom:"0"}}>
                       A social deduction card game where Villagers must identify and eliminate the Mafia before they are outnumbered.
                     </p>
                   </div>
@@ -377,6 +378,7 @@ export default function Home() {
                     <span className="play-block-title">CHECKOUT</span>
                     <span className="play-block-subtitle">SECURE PAYMENT</span>
                   </div>
+                  <hr className="play-card-divider" style={{marginBottom:"20px"}} />
                   {paypalReady ? (
                     <div key={collectKey} id="paypal-container-7FQPC38SRM8BN" className="paypal-button-container" />
                   ) : (
