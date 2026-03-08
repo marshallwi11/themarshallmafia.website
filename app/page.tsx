@@ -14,6 +14,7 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [stripeClientSecret, setStripeClientSecret] = useState<string | null>(null)
   const [stripeLoading, setStripeLoading] = useState(false)
+  const [collectKey, setCollectKey] = useState(0)
 
   const openModal = (modal: ModalType) => {
     setMobileMenuOpen(false)
@@ -358,7 +359,7 @@ export default function Home() {
                 </div>
 
                 {/* Releases card */}
-                <div className="play-card" onClick={(e) => e.stopPropagation()} style={{marginTop:"0"}}>
+                <div className="play-card" onClick={(e) => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
                   <div className="play-card-header">
                     <span className="play-block-title">RELEASES</span>
                     <span className="play-block-subtitle">ALBUMS</span>
@@ -366,17 +367,17 @@ export default function Home() {
                   <div className="releases-list">
                     <div className="release-row">
                       <span className="play-block-body">THE MARSHALL MAFIA</span>
-                      <span className="play-block-subtitle release-tag">EP RELEASED</span>
+                      <span className="play-block-subtitle release-tag">EP&nbsp;&nbsp;&nbsp;RELEASED</span>
                     </div>
                     <hr className="play-card-divider" />
                     <div className="release-row">
                       <span className="play-block-body">THE MARSHALL MAFIA</span>
-                      <span className="play-block-subtitle release-tag">ALBUM RELEASED</span>
+                      <span className="play-block-subtitle release-tag">ALBUM&nbsp;&nbsp;&nbsp;RELEASED</span>
                     </div>
                     <hr className="play-card-divider" />
                     <div className="release-row">
                       <span className="play-block-body">THE MARSHALL MAFIA</span>
-                      <span className="play-block-subtitle release-tag">SOUNDTRACKS RELEASED</span>
+                      <span className="play-block-subtitle release-tag">SOUNDTRACKS&nbsp;&nbsp;&nbsp;RELEASED</span>
                     </div>
                   </div>
                 </div>
