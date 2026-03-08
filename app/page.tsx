@@ -348,18 +348,13 @@ export default function Home() {
                     <span className="play-block-subtitle">1ST EDITION</span>
                   </div>
 
-                  {/* Product image */}
-                  <div className="collect-img-well">
-                    <img src="/images/tmm_picture_1.png" alt="The Marshall Mafia Card Game" className="collect-img" />
-                  </div>
-
                   {/* Product details */}
                   <div className="collect-details">
                     <div className="collect-detail-row">
                       <span className="play-block-body">STANDARD CARD GAME</span>
                       <span className="play-block-title" style={{color:"var(--tmm-cream)"}}>£20</span>
                     </div>
-                    <p className="play-block-body" style={{color:"rgba(255,255,255,0.5)", fontSize:"14px", marginTop:"8px"}}>
+                    <p className="play-block-body" style={{color:"rgba(255,255,255,0.5)", fontSize:"14px", marginTop:"8px", marginBottom:"20px"}}>
                       A social deduction card game where Villagers must identify and eliminate the Mafia before they are outnumbered.
                     </p>
                   </div>
@@ -369,15 +364,10 @@ export default function Home() {
                 <div className="play-card">
                   <div className="play-card-header">
                     <span className="play-block-title">DELIVERY</span>
-                    <span className="play-block-subtitle">SHIPPING INFO</span>
-                  </div>
-                  <div className="collect-detail-row" style={{marginTop:"8px"}}>
-                    <span className="play-block-body">🇬🇧 UK</span>
-                    <span className="play-block-body" style={{color:"var(--tmm-green)"}}>INCLUDED</span>
                   </div>
                   <div className="collect-detail-row" style={{marginTop:"12px"}}>
-                    <span className="play-block-body">🌍 INTERNATIONAL</span>
-                    <span className="play-block-body" style={{color:"var(--tmm-cream)"}}>+£5</span>
+                    <span className="play-block-body">🇬🇧 UNITED KINGDOM</span>
+                    <span className="play-block-body" style={{color:"var(--tmm-green)"}}>£5 <span style={{color:"rgba(255,255,255,0.35)"}}>(INCLUDED)</span></span>
                   </div>
                 </div>
 
