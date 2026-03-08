@@ -175,8 +175,8 @@ export default function Home() {
                     <span className="play-block-title">PHASES</span>
                     <span className="play-block-subtitle">1, 2 & 3</span>
                   </div>
-                  <p className="play-block-body">Each round in The Marshall Mafia consists of three phases. 1. SLEEP → 2. DISCUSSION → 3. VOTE.</p>
-                  <hr className="play-card-divider" />
+                  <p className="play-block-body">Each round in The Marshall Mafia consists of three phases.</p>
+                  <p className="play-block-body">1. SLEEP → 2. DISCUSSION → 3. VOTE.</p>
                   <p className="play-block-body">If the games go too quickly or too many players are getting eliminated each night, the role groups (e.g. if there are 2+ <span className="text-tmm-green">Angels</span>, 2+ <span className="text-tmm-red">Mafia</span>, 2+ <span className="text-tmm-blue">Detectives</span>) each type of role (<span className="text-tmm-red">KILL</span>, <span className="text-tmm-blue">GUESS</span>, <span className="text-tmm-green">SAVE</span>, <span className="text-tmm-yellow">WILD</span>) must decide one player to do their action on.</p>
                 </div>
 
