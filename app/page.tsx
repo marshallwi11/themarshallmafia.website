@@ -394,37 +394,6 @@ export default function Home() {
             <div className="modal-scroll-bare animate-modal-in">
               <div className="collect-list" onClick={(e) => e.stopPropagation()}>
 
-                {/* Product card */}
-                <div className="play-card">
-                  <div className="play-card-header">
-                    <span className="play-block-title">THE MARSHALL MAFIA</span>
-                    <span className="play-block-subtitle">1ST EDITION</span>
-                  </div>
-
-                  {/* Product details */}
-                  <div className="collect-details">
-                    <div className="collect-detail-row">
-                      <span className="play-block-body">STANDARD CARD GAME</span>
-                      <span className="play-block-title" style={{color:"var(--tmm-cream)"}}>£20</span>
-                    </div>
-                    <p className="play-block-body" style={{color:"rgba(255,255,255,0.5)", fontSize:"14px", marginTop:"8px", marginBottom:"0"}}>
-                      A social deduction card game where Villagers must identify and eliminate the Mafia before they are outnumbered.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Delivery card */}
-                <div className="play-card">
-                  <div className="play-card-header">
-                    <span className="play-block-title">DELIVERY</span>
-                    <span className="play-block-subtitle">INCLUDED</span>
-                  </div>
-                  <div className="collect-detail-row" style={{marginTop:"12px"}}>
-                    <span className="play-block-body">UNITED KINGDOM</span>
-                    <span className="play-block-body" style={{color:"var(--tmm-green)"}}>£5</span>
-                  </div>
-                </div>
-
                 {/* Checkout card */}
                 <div className="play-card">
                   <div className="play-card-header" style={{marginBottom:"20px"}}>
