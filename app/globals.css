@@ -203,6 +203,20 @@
     animation: fadeIn 0.25s ease-out;
   }
 
+  /* --- MODAL SCROLL BARE: no outer box, cards float directly on blur --- */
+  .modal-scroll-bare {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: calc(100% - 70px);
+    margin-top: 70px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .modal-scroll-bare::-webkit-scrollbar { display: none; }
+
   /* --- MODAL CONTENT: Liquid glass container (not solid black) --- */
   .modal-content {
     position: relative;
