@@ -250,13 +250,24 @@ export default function Home() {
             <div className="modal-backdrop" />
             <div className="modal-scroll-bare animate-modal-in">
               <div className="showcase-list" onClick={(e) => e.stopPropagation()}>
-                {["showcase-1","showcase-2","showcase-3","showcase-4"].map((name, i) => (
-                  <div key={i} className="showcase-card">
-                    <img
-                      src={`/images/${name}.png`}
-                      alt={`The Marshall Mafia — image ${i + 1}`}
-                      loading={i === 0 ? "eager" : "lazy"}
-                    />
+                {[1,2,3,4,5,6,7].map((n) => (
+                  <div key={n} className="showcase-card">
+                    <div className="showcase-card-header">
+                      <span className="play-block-title" style={{fontSize:"15px"}}>LIMITED - 1ST EDITION</span>
+                      <span className="play-block-subtitle" style={{fontSize:"15px"}}>STANDARD PACK</span>
+                    </div>
+                    <div className="showcase-img-well">
+                      <img
+                        src={`/images/tmm_picture_${n}.png`}
+                        alt={`The Marshall Mafia — image ${n}`}
+                        loading={n === 1 ? "eager" : "lazy"}
+                        onError={(e) => {
+                          const t = e.target as HTMLImageElement
+                          t.src = `/images/tmm_picture_${n}.jpg`
+                          t.onerror = () => { t.parentElement!.style.minHeight = "200px" }
+                        }}
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
