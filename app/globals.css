@@ -270,14 +270,17 @@
   }
   .modal-scroll::-webkit-scrollbar { display: none; }
 
-  /* --- SHOWCASE CARD: image-only card — no fixed ratio, height driven by image --- */
+  /* --- SHOWCASE CARD: glass container matching play-card style --- */
   .showcase-card {
     border-radius: 35px;
     overflow: hidden;
     width: 100%;
     display: block;
-    background: transparent;
-    line-height: 0; /* removes inline gap below img */
+    background: rgba(52, 52, 52, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    line-height: 0;
   }
 
   /* --- MUSIC PLATFORM ICON --- */
