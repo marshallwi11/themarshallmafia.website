@@ -200,7 +200,8 @@ export default function Home() {
                   <img
                     src={`/images/${name}.png`}
                     alt={`The Marshall Mafia ${i + 1}`}
-                    className="w-full h-full object-cover select-none"
+                    className="w-full block select-none"
+                    style={{ display: "block" }}
                     draggable={false}
                     loading={i === 0 ? "eager" : "lazy"}
                     onError={(e) => {

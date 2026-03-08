@@ -270,14 +270,14 @@
   }
   .modal-scroll::-webkit-scrollbar { display: none; }
 
-  /* --- SHOWCASE CARD: image-only card with correct radius --- */
+  /* --- SHOWCASE CARD: image-only card — no fixed ratio, height driven by image --- */
   .showcase-card {
     border-radius: 35px;
     overflow: hidden;
     width: 100%;
-    aspect-ratio: 4 / 3;
-    background: rgba(52, 52, 52, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: block;
+    background: transparent;
+    line-height: 0; /* removes inline gap below img */
   }
 
   /* --- MUSIC PLATFORM ICON --- */
