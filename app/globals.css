@@ -432,7 +432,33 @@
     align-items: center;
     justify-content: space-between;
   }
-  /* Stripe embedded checkout fills naturally */
+  .paypal-button-container {
+    width: 100%;
+    min-height: 48px;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  /* Force spacing above PayPal's injected QUANTITY label */
+  #paypal-container-7FQPC38SRM8BN > * {
+    padding-top: 8px;
+  }
+  #paypal-container-7FQPC38SRM8BN label:first-of-type,
+  #paypal-container-7FQPC38SRM8BN > div:first-child {
+    margin-top: 12px !important;
+  }
+
+  /* --- PAYPAL BUTTON CONTAINER --- */
+  /* Overrides PayPal's injected iframe styles to blend with dark theme */
+  .paypal-button-container {
+    width: 100%;
+    min-height: 48px;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  /* Force PayPal's button border-radius to match our design */
+  .paypal-button-container .paypal-buttons {
+    border-radius: 16px !important;
+  }
 
   /* --- PLAY CARD PILL: footer pill style --- */
   .play-card-divider {
