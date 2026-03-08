@@ -60,10 +60,12 @@ export default function Home() {
       {activeModal === "play" && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-backdrop" />
-          <div className="modal-scroll-bare animate-modal-in" onClick={(e) => e.stopPropagation()}>
+          {/* Scroll container — click passes through to overlay */}
+          <div className="modal-scroll-bare animate-modal-in">
+            {/* Inner width-constrained column — clicks on gaps close modal */}
             <div className="max-w-[675px] mx-auto space-y-[50px] py-[80px] px-6">
 
-              <div className="play-card">
+              <div className="play-card" onClick={(e) => e.stopPropagation()}>
                 <div className="play-card-header">
                   <span className="play-block-title">HOW TO PLAY</span>
                   <span className="play-block-subtitle">INSTRUCTIONS</span>
@@ -72,7 +74,7 @@ export default function Home() {
                 <p className="play-block-body">The <span className="text-tmm-cream">Marshall</span> hosts the game, managing the flow of the rounds and overseeing the distribution of roles and actions.</p>
               </div>
 
-              <div className="play-card">
+              <div className="play-card" onClick={(e) => e.stopPropagation()}>
                 <div className="play-card-header">
                   <span className="play-block-title">SETUP</span>
                   <span className="play-block-subtitle">(SEE PLAY CARD*)</span>
@@ -82,7 +84,7 @@ export default function Home() {
                 <p className="play-block-body">Use the (<span className="text-tmm-green">Music Card*</span>) as an added bonus, it is used for the game ambience (stopping voting on players that make noise while asleep & puts players in the mood to continue playing).</p>
               </div>
 
-              <div className="play-card">
+              <div className="play-card" onClick={(e) => e.stopPropagation()}>
                 <div className="play-card-header">
                   <span className="play-block-title">RULES</span>
                   <span className="play-block-subtitle">(SEE RULES CARD*)</span>
@@ -98,7 +100,7 @@ export default function Home() {
                 <p className="play-block-body">SCAN the "<span className="text-tmm-green">MUSIC CARD</span>" to make the GAME more enjoyable (helps the restless "sleeping" of players in the night).</p>
               </div>
 
-              <div className="play-card">
+              <div className="play-card" onClick={(e) => e.stopPropagation()}>
                 <div className="play-card-header">
                   <span className="play-block-title">CHARACTERS</span>
                   <span className="play-block-subtitle">(SEE EACH ROLE CARD*)</span>
@@ -113,7 +115,7 @@ export default function Home() {
                 <p className="play-block-body"><span className="text-tmm-cream">VILLAGER (10)</span> — Vote out mafia to win.</p>
               </div>
 
-              <div className="play-card">
+              <div className="play-card" onClick={(e) => e.stopPropagation()}>
                 <div className="play-card-header">
                   <span className="play-block-title">PHASES</span>
                   <span className="play-block-subtitle">1, 2 & 3</span>
@@ -122,7 +124,7 @@ export default function Home() {
                 <p className="play-block-body">If the games go too quickly or too many players are getting eliminated each night, the role groups (e.g. if there are 2+ <span className="text-tmm-green">Angels</span>, 2+ <span className="text-tmm-red">Mafia</span>, 2+ <span className="text-tmm-blue">Detectives</span>) each type of role (<span className="text-tmm-red">KILL</span>, <span className="text-tmm-blue">GUESS</span>, <span className="text-tmm-green">SAVE</span>, <span className="text-tmm-yellow">WILD</span>) must decide one player to do their action on.</p>
               </div>
 
-              <div className="play-card">
+              <div className="play-card" onClick={(e) => e.stopPropagation()}>
                 <div className="play-card-header">
                   <span className="play-block-title">PHASE 1.</span>
                   <span className="play-block-subtitle">SLEEP</span>
@@ -135,7 +137,7 @@ export default function Home() {
                 <p className="play-block-body">After all actions are completed, the <span className="text-tmm-cream">Marshall</span> announces the result of the night{"'"}s activities (who has been eliminated, if anyone was saved... without naming the player of course, etc.).</p>
               </div>
 
-              <div className="play-card">
+              <div className="play-card" onClick={(e) => e.stopPropagation()}>
                 <div className="play-card-header">
                   <span className="play-block-title">PHASE 2.</span>
                   <span className="play-block-subtitle">DISCUSSION</span>
@@ -145,17 +147,18 @@ export default function Home() {
                 <p className="play-block-body">Players are free to speculate, but players must not reveal their card (if a player is caught showing their card to another player, they are instantly eliminated).</p>
               </div>
 
-              <div className="play-card">
+              <div className="play-card" onClick={(e) => e.stopPropagation()}>
                 <div className="play-card-header">
                   <span className="play-block-title">PHASE 3.</span>
                   <span className="play-block-subtitle">VOTE</span>
                 </div>
-                <p className="play-block-body">After the discussion, players proceed straight to the voting. Each <span className="text-tmm-cream">Villager</span> role votes to eliminate someone they suspect is <span className="text-tmm-red">Mafia</span>, while the <span className="text-tmm-red">Mafia</span> aim to deceive <span className="text-tmm-cream">Villagers</span> into voting out their own.</p>
+                <p className="play-block-body">After the discussion, players proceed straight to the voting.</p>
+                <p className="play-block-body">Each <span className="text-tmm-cream">Villager</span> role votes to eliminate someone they suspect is <span className="text-tmm-red">Mafia</span>, while the <span className="text-tmm-red">Mafia</span> aim to deceive <span className="text-tmm-cream">Villagers</span> into voting out their own.</p>
                 <p className="play-block-body">Each player is allowed to make a single vote, on anyone they choose. When a player casts a vote for another player — the player who has been voted for must hold up a finger for each vote received.</p>
                 <p className="play-block-body">If the vote ties, a re-vote occurs between the tied players (depending on chosen <span className="text-muted">Rule Cards*</span>). The player with the most votes is immediately eliminated from the game, and their character is revealed (also depending on chosen <span className="text-muted">Rule Cards*</span>).</p>
               </div>
 
-              <div className="play-card">
+              <div className="play-card" onClick={(e) => e.stopPropagation()}>
                 <div className="play-card-header">
                   <span className="play-block-title">ROUNDS</span>
                   <span className="play-block-subtitle">REPEAT</span>
@@ -166,21 +169,19 @@ export default function Home() {
                 <p className="play-block-body">c. <span className="text-tmm-yellow">Wild</span> role wins by fulfilling the unique conditions tied to their abilities.</p>
               </div>
 
-              <div className="play-card">
+              <div className="play-card" onClick={(e) => e.stopPropagation()}>
                 <div className="play-card-header">
                   <span className="play-block-title">Links</span>
                   <span className="play-block-subtitle">SNEAK PEAKS!</span>
                 </div>
-                <p className="play-block-body">Collect → <a href="https://linktr.ee/themarshallmafia" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white underline underline-offset-2 transition-colors">linktr.ee/themarshallmafia</a></p>
-                <p className="play-block-body">Music → <a href="https://linktr.ee/themarshallmafia.music" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white underline underline-offset-2 transition-colors">linktr.ee/themarshallmafia.music</a></p>
-                <p className="play-block-body">Developer → <a href="https://linktr.ee/marshallwi11" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white underline underline-offset-2 transition-colors">linktr.ee/marshallwi11</a></p>
+                <p className="play-block-body">Collect → <a href="https://linktr.ee/themarshallmafia" target="_blank" rel="noopener noreferrer" className="text-tmm-blue hover:text-white underline underline-offset-2 transition-colors">https://linktr.ee/themarshallmafia</a></p>
+                <p className="play-block-body">Music → <a href="https://linktr.ee/themarshallmafia.music" target="_blank" rel="noopener noreferrer" className="text-tmm-blue hover:text-white underline underline-offset-2 transition-colors">https://linktr.ee/themarshallmafia.music</a></p>
+                <p className="play-block-body">Developer → <a href="https://linktr.ee/marshallwi11" target="_blank" rel="noopener noreferrer" className="text-tmm-blue hover:text-white underline underline-offset-2 transition-colors">https://linktr.ee/marshallwi11</a></p>
               </div>
 
-              <div className="play-card">
-                <div className="play-card-header">
-                  <span className="play-block-title">by marshallwi11</span>
-                  <span className="play-block-subtitle">est. 2025</span>
-                </div>
+              <div className="play-card-pill" onClick={(e) => e.stopPropagation()}>
+                <span className="play-block-title">by marshallwi11</span>
+                <span className="play-block-subtitle">est. 2025</span>
               </div>
 
             </div>
@@ -192,24 +193,21 @@ export default function Home() {
       {activeModal === "showcase" && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-backdrop" />
-          <div className="modal-scroll-bare animate-modal-in" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-scroll-bare animate-modal-in">
             <div className="max-w-[650px] mx-auto space-y-[40px] py-[80px] px-6">
-              {[
-                { src: "/images/showcase-1.png", alt: "Angel, Jester and Detective character cards" },
-                { src: "/images/showcase-2.png", alt: "Game box open with Marshall and Character cards" },
-                { src: "/images/showcase-3.png", alt: "Doctor, Silencer and 1st Edition cards" },
-                { src: "/images/showcase-4.png", alt: "Doctor, Silencer and 1st Edition cards alternate view" },
-              ].map((img, i) => (
-                <div key={i} className="glass-block-showcase">
-                  <div className="showcase-image-wrapper">
-                    <img
-                      src={img.src}
-                      alt={img.alt}
-                      className="w-full h-full object-cover rounded-[17.5px] select-none"
-                      draggable={false}
-                      loading={i === 0 ? "eager" : "lazy"}
-                    />
-                  </div>
+              {["tmm_picture_1","tmm_picture_2","tmm_picture_3","tmm_picture_4","tmm_picture_5","tmm_picture_6","tmm_picture_7"].map((name, i) => (
+                <div key={i} className="showcase-card" onClick={(e) => e.stopPropagation()}>
+                  <img
+                    src={`/images/${name}.png`}
+                    alt={`The Marshall Mafia ${i + 1}`}
+                    className="w-full h-full object-cover select-none"
+                    draggable={false}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    onError={(e) => {
+                      const t = e.target as HTMLImageElement
+                      t.src = `/images/${name}.jpg`
+                    }}
+                  />
                 </div>
               ))}
             </div>
@@ -221,56 +219,53 @@ export default function Home() {
       {activeModal === "music" && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-backdrop" />
-          <div className="modal-scroll-bare animate-modal-in" onClick={(e) => e.stopPropagation()}>
-            <div className="w-full max-w-[500px] mx-auto px-6 py-[80px] space-y-[40px]">
+          <div className="modal-scroll-bare animate-modal-in">
+            <div className="w-full max-w-[560px] mx-auto px-6 py-[80px]">
 
-              <h2 className="text-[22px] text-center">Play the Full Experience</h2>
+              {/* Single card: title + horizontal icons */}
+              <div className="play-card" onClick={(e) => e.stopPropagation()}>
+                <p className="text-[20px] text-center mb-2">Play the Full Experience</p>
+                <p className="text-[13px] text-white/35 text-center mb-6">The Marshall Mafia — Official Soundtrack</p>
 
-              {/* Platform Icons — proper brand SVGs */}
-              <div className="play-card flex items-center justify-center gap-6 !py-8">
+                <div className="flex items-center justify-center gap-5">
 
-                {/* Spotify */}
-                <a href="https://open.spotify.com" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Spotify">
-                  <div className="w-14 h-14 rounded-2xl bg-[#1DB954] flex items-center justify-center">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-                  </div>
-                </a>
+                  {/* Spotify */}
+                  <a href="https://open.spotify.com" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Spotify">
+                    <div className="music-platform-icon bg-[#1DB954]">
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                    </div>
+                  </a>
 
-                {/* Apple Music */}
-                <a href="https://music.apple.com" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Apple Music">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#fc5c7d] to-[#6a3093] flex items-center justify-center">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M23.994 6.124a9.23 9.23 0 0 0-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 0 0-1.726-.53c-.444-.062-.89-.096-1.335-.12-.07-.004-.28-.067-.338.013H8.812c-.08-.08-.303-.01-.36-.013-.５ .023-.954.056-1.404.12A4.94 4.94 0 0 0 5.32.88C4.207 1.615 3.462 2.61 3.147 3.912a9.05 9.05 0 0 0-.242 2.19C2.876 6.507 2.87 6.91 2.87 7.314v9.372c0 .404.006.808.035 1.212.061.749.232 1.51.61 2.176.67 1.18 1.71 1.88 3.03 2.102.54.092 1.089.13 1.636.145.35.01.7.01 1.05.01H15.7c.35 0 .7 0 1.05-.01.547-.015 1.096-.053 1.636-.145 1.32-.222 2.36-.923 3.03-2.102.378-.666.549-1.427.61-2.176.03-.404.035-.808.035-1.212V7.314c0-.404-.006-.807-.067-1.19zM12 17.5c-3.038 0-5.5-2.463-5.5-5.5s2.462-5.5 5.5-5.5 5.5 2.463 5.5 5.5-2.462 5.5-5.5 5.5zm5.75-9.978a1.286 1.286 0 1 1 0-2.572 1.286 1.286 0 0 1 0 2.572zM12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/></svg>
-                  </div>
-                </a>
+                  {/* Apple Music */}
+                  <a href="https://music.apple.com" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Apple Music">
+                    <div className="music-platform-icon" style={{background:"linear-gradient(135deg,#fc5c7d,#6a3093)"}}>
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.5 5.5l-5 2V15c-.552-.35-1.208-.5-1.899-.326C7.45 14.938 7 15.74 7 16.551c0 .81.45 1.449 1.101 1.449.652 0 1.235-.486 1.449-1.224.07-.245.099-.5.099-.776V11.8l3-1v2.7c-.552-.35-1.208-.5-1.899-.326C9.45 13.438 9 14.24 9 15.051c0 .81.45 1.449 1.101 1.449.652 0 1.235-.486 1.449-1.224.07-.245.099-.5.099-.776V7.5z"/></svg>
+                    </div>
+                  </a>
 
-                {/* Tidal */}
-                <a href="https://tidal.com" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Tidal">
-                  <div className="w-14 h-14 rounded-2xl bg-black border border-white/20 flex items-center justify-center">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12.012 3.992L8.008 7.996 4.004 3.992 0 7.996l4.004 4.004 4.004-4.004 4.004 4.004 4.004-4.004zM8.008 12l-4.004 4.004L8.008 20l4.004-4.004zm7.996 0l-4.004 4.004 4.004 4.004L20 16.004z"/></svg>
-                  </div>
-                </a>
+                  {/* Tidal */}
+                  <a href="https://tidal.com" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Tidal">
+                    <div className="music-platform-icon bg-black border border-white/20">
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M12.012 3.992L8.008 7.996 4.004 3.992 0 7.996l4.004 4.004 4.004-4.004 4.004 4.004 4.004-4.004zM8.008 12l-4.004 4.004L8.008 20l4.004-4.004zm7.996 0l-4.004 4.004 4.004 4.004L20 16.004z"/></svg>
+                    </div>
+                  </a>
 
-                {/* Amazon Music */}
-                <a href="https://music.amazon.com" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Amazon Music">
-                  <div className="w-14 h-14 rounded-2xl bg-[#232F3E] flex items-center justify-center">
-                    <svg width="28" height="20" viewBox="0 0 103 31" fill="white"><path d="M58.545 24.177c-5.515 4.068-13.51 6.237-20.4 6.237-9.648 0-18.337-3.566-24.91-9.497-.516-.467-.054-1.103.565-.74 7.09 4.123 15.855 6.603 24.905 6.603 6.105 0 12.816-1.265 18.993-3.882.932-.396 1.712.613.847 1.279z"/><path d="M60.826 21.564c-.703-.902-4.656-.426-6.432-.215-.54.066-.622-.404-.136-.742 3.15-2.214 8.313-1.575 8.916-.833.603.746-.157 5.922-3.118 8.393-.454.381-.888.178-.686-.327.666-1.661 2.159-5.374 1.456-6.276z"/><path d="M54.684 3.442V1.209A.37.37 0 0 1 55.054.84h9.865a.37.37 0 0 1 .373.373v1.906c-.004.212-.18.49-.494.928l-5.112 7.298c1.9-.047 3.908.238 5.632 1.209.388.218.494.538.523.852v2.384c0 .319-.351.692-.72.499-3.008-1.578-7.005-1.749-10.333.017-.34.183-.695-.187-.695-.506V12.48c0-.354.005-.959.363-1.497l5.922-8.494h-5.154a.37.37 0 0 1-.374-.373v-.674zM19.78 16.31H17.41a.376.376 0 0 1-.356-.337V1.243c0-.204.17-.366.38-.366h2.211c.207.008.373.174.38.38v1.948h.044C20.612 1.48 21.727.84 23.23.84c1.524 0 2.477.641 3.162 2.365.641-1.724 2.097-2.365 3.532-2.365.071 0 4.244-.034 4.244 5.582V15.958c0 .204-.17.366-.38.366h-2.365a.374.374 0 0 1-.357-.366V7.185c0-1.817-.159-4.826-1.97-4.826-1.682 0-2.097 1.817-2.097 4.826v8.773a.374.374 0 0 1-.357.366H25.28a.374.374 0 0 1-.357-.366V7.185c0-1.817-.158-4.826-1.97-4.826-1.681 0-2.096 1.817-2.096 4.826v8.773a.376.376 0 0 1-.38.366h-.697zM71.967.84c4.597 0 7.088 3.948 7.088 8.969 0 4.853-2.75 8.7-7.088 8.7-4.512 0-6.973-3.948-6.973-8.87C64.994 4.721 67.484.84 71.967.84zm.026 3.215c-2.282 0-2.423 3.108-2.423 5.045s-.026 6.074 2.397 6.074c2.394 0 2.509-3.343 2.509-5.382 0-1.343-.054-2.951-.497-4.225-.381-1.107-1.139-1.512-1.986-1.512zm13.028 12.255H82.65a.374.374 0 0 1-.357-.366l-.006-14.73c.017-.195.184-.35.38-.35h2.203c.179.009.327.134.363.3v2.253h.044c.738-1.918 1.772-2.837 3.593-2.837 1.184 0 2.336.427 3.075 1.598.686 1.073.686 2.876.686 4.174V15.959a.38.38 0 0 1-.38.351h-2.374a.376.376 0 0 1-.35-.351V7.487c0-1.784-.207-4.39-2.052-4.39-.8 0-1.531.538-1.897 1.343-.464 1.011-.527 2.019-.527 3.047v8.522a.382.382 0 0 1-.38.351h-.177zM47.24 9.208v-.607c-2.403 0-4.942.514-4.942 3.329 0 1.428.741 2.396 2.011 2.396.931 0 1.765-.574 2.291-1.508.647-1.151.64-2.232.64-3.61zm3.258 7.877a.677.677 0 0 1-.765.077c-1.074-.893-1.268-1.308-1.857-2.161-1.776 1.813-3.034 2.354-5.338 2.354-2.726 0-4.843-1.682-4.843-5.045 0-2.628 1.424-4.415 3.451-5.29 1.757-.773 4.21-.911 6.085-1.124v-.42c0-.776.06-1.693-.396-2.364-.397-.601-1.157-.852-1.83-.852-1.243 0-2.353.638-2.625 1.96-.056.294-.272.584-.568.599l-3.178-.344c-.268-.06-.564-.274-.488-.682C39.19 1.243 42.569 0 45.595 0c1.549 0 3.573.413 4.793 1.587 1.549 1.445 1.401 3.37 1.401 5.467v4.951c0 1.489.617 2.142 1.198 2.946.203.285.248.628-.012.842-.651.544-1.807 1.553-2.443 2.119l-.034-.827zM8.59 9.208v-.607c-2.403 0-4.942.514-4.942 3.329 0 1.428.741 2.396 2.011 2.396.931 0 1.765-.574 2.291-1.508.647-1.151.64-2.232.64-3.61zm3.258 7.877a.677.677 0 0 1-.765.077c-1.074-.893-1.268-1.308-1.857-2.161-1.776 1.813-3.034 2.354-5.338 2.354C1.162 17.355 0 15.673 0 12.31c0-2.628 1.424-4.415 3.451-5.29 1.757-.773 4.21-.911 6.085-1.124v-.42c0-.776.06-1.693-.396-2.364C8.743 2.511 7.983 2.26 7.31 2.26c-1.243 0-2.353.638-2.625 1.96-.056.294-.272.584-.568.599L.94 4.475c-.268-.06-.564-.274-.488-.682C1.541 1.243 4.92 0 7.945 0c1.549 0 3.573.413 4.793 1.587 1.549 1.445 1.401 3.37 1.401 5.467v4.951c0 1.489.617 2.142 1.198 2.946.203.285.248.628-.012.842-.651.544-1.807 1.553-2.443 2.119l-.034-.827z"/></svg>
-                  </div>
-                </a>
+                  {/* Amazon Music */}
+                  <a href="https://music.amazon.com" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Amazon Music">
+                    <div className="music-platform-icon bg-[#232F3E]">
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M15.93 17.09c-.16.12-.38.13-.56.03-1.77-1.09-2.35-1.59-3.46-2.62-1.04.98-1.78 1.28-2.96 1.28-1.48 0-2.63-.92-2.63-2.75 0-1.45.78-2.43 1.9-2.91.97-.43 2.33-.51 3.37-.62v-.23c0-.43.03-.94-.22-1.31-.22-.33-.64-.47-1.01-.47-.69 0-1.3.35-1.45 1.08-.03.16-.15.32-.31.33l-1.75-.19c-.15-.03-.31-.15-.27-.38.4-2.11 2.3-2.74 4.01-2.74.87 0 2.01.23 2.7.89.87.81.79 1.9.79 3.08v2.79c0 .84.35 1.21.67 1.66.12.16.14.35-.01.47-.36.3-1.01.87-1.37 1.19l-.45-.57zM13.37 13.55v-.39c-1.33 0-2.73.28-2.73 1.83 0 .79.41 1.32 1.11 1.32.51 0 .97-.32 1.26-.83.35-.63.36-1.23.36-1.93z"/><path d="M17.5 19.26c-2.31 1.7-5.65 2.6-8.53 2.6-4.04 0-7.67-1.49-10.42-3.97-.22-.19-.02-.46.24-.31 2.97 1.73 6.63 2.76 10.43 2.76 2.56 0 5.37-.53 7.95-1.63.39-.17.72.26.33.55z"/><path d="M18.53 18.06c-.29-.38-1.95-.18-2.69-.09-.23.03-.26-.17-.06-.31 1.32-.93 3.48-.66 3.73-.35.25.31-.07 2.48-1.3 3.51-.19.16-.37.07-.29-.14.28-.69.9-2.25.61-2.62z"/></svg>
+                    </div>
+                  </a>
 
-                {/* YouTube */}
-                <a href="https://www.youtube.com/watch?v=rDAGxCTx-28" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="YouTube">
-                  <div className="w-14 h-14 rounded-2xl bg-[#FF0000] flex items-center justify-center">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                  </div>
-                </a>
+                  {/* YouTube */}
+                  <a href="https://www.youtube.com/watch?v=rDAGxCTx-28" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="YouTube">
+                    <div className="music-platform-icon bg-[#FF0000]">
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </div>
+                  </a>
 
+                </div>
               </div>
-
-              <div className="play-card text-center !py-8 space-y-2">
-                <p className="text-[16px] text-white/80">The Marshall Mafia</p>
-                <p className="text-[13px] text-white/35">Official Soundtrack — Coming Soon</p>
-              </div>
-
             </div>
           </div>
         </div>
@@ -280,10 +275,10 @@ export default function Home() {
       {activeModal === "collect" && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-backdrop" />
-          <div className="modal-scroll-bare animate-modal-in" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-scroll-bare animate-modal-in">
             <div className="max-w-[650px] mx-auto space-y-[40px] py-[80px] px-6">
 
-              <div className="glass-block">
+              <div className="glass-block" onClick={(e) => e.stopPropagation()}>
                 <div className="flex gap-5 items-start">
                   <div className="w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0">
                     <Image src="/images/asset-image-1.png" alt="Limited 1st Edition" width={96} height={96} className="w-full h-full object-cover" />
@@ -296,7 +291,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="glass-block space-y-5">
+              <div className="glass-block space-y-5" onClick={(e) => e.stopPropagation()}>
                 <p className="text-[13px] text-white/40 text-center">Express checkout</p>
                 <div className="grid grid-cols-3 gap-3">
                   <button onClick={() => setComingSoonVisible(true)} className="checkout-btn bg-[#FFC439] text-black">
@@ -316,7 +311,7 @@ export default function Home() {
                 )}
               </div>
 
-              <div className="glass-block space-y-5">
+              <div className="glass-block space-y-5" onClick={(e) => e.stopPropagation()}>
                 <span className="play-block-title text-[18px]">Contact</span>
                 <input type="email" placeholder="Email address" className="collect-input" />
                 <input type="tel" placeholder="Phone number (optional)" className="collect-input" />
@@ -326,7 +321,7 @@ export default function Home() {
                 </label>
               </div>
 
-              <div className="glass-block space-y-5">
+              <div className="glass-block space-y-5" onClick={(e) => e.stopPropagation()}>
                 <span className="play-block-title text-[18px]">Delivery</span>
                 <div className="grid grid-cols-2 gap-3">
                   <input type="text" placeholder="First name" className="collect-input" />
@@ -336,7 +331,7 @@ export default function Home() {
                 <input type="text" placeholder="Postcode" className="collect-input" />
               </div>
 
-              <div className="glass-block space-y-5">
+              <div className="glass-block space-y-5" onClick={(e) => e.stopPropagation()}>
                 <span className="play-block-title text-[18px]">Support the Project</span>
                 <div className="flex items-center gap-2 collect-input">
                   <span className="text-white/35 text-[16px]">{"£"}</span>
@@ -352,7 +347,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="glass-block space-y-5">
+              <div className="glass-block space-y-5" onClick={(e) => e.stopPropagation()}>
                 <span className="play-block-title text-[18px]">Order Summary</span>
                 <div className="space-y-3 text-[14px]">
                   <div className="flex justify-between">
