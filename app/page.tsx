@@ -9,7 +9,6 @@ type ModalType = "play" | "showcase" | "music" | "collect" | null
 export default function Home() {
   const [activeModal, setActiveModal] = useState<ModalType>(null)
   const [paypalReady, setPaypalReady] = useState(false)
-  const paypalContainerRef = useRef<HTMLDivElement>(null)
   const paypalRenderedRef = useRef(false)
 
   const openModal = (modal: ModalType) => setActiveModal(modal)
@@ -26,20 +25,20 @@ export default function Home() {
     return () => { document.body.style.overflow = "" }
   }, [activeModal])
 
-  // Render PayPal button once modal is open and SDK is ready
+  // Render PayPal when modal opens and SDK is ready
   useEffect(() => {
-    if (activeModal === "collect" && paypalReady && paypalContainerRef.current && !paypalRenderedRef.current) {
-      paypalRenderedRef.current = true
-      try {
-        // @ts-ignore
-        paypal.HostedButtons({
-          hostedButtonId: "7FQPC38SRM8BN",
-        }).render("#paypal-container-7FQPC38SRM8BN")
-      } catch (e) {
-        console.error("PayPal render error:", e)
+    if (activeModal === "collect" && paypalReady && !paypalRenderedRef.current) {
+      const container = document.getElementById("paypal-container-7FQPC38SRM8BN")
+      if (container) {
+        paypalRenderedRef.current = true
+        try {
+          // @ts-ignore
+          paypal.HostedButtons({ hostedButtonId: "7FQPC38SRM8BN" }).render("#paypal-container-7FQPC38SRM8BN")
+        } catch (e) {
+          console.error("PayPal render error:", e)
+        }
       }
     }
-    // Reset when modal closes so it can re-render next open
     if (activeModal !== "collect") {
       paypalRenderedRef.current = false
     }
@@ -47,7 +46,6 @@ export default function Home() {
 
   return (
     <>
-      {/* PayPal SDK — loads once, globally */}
       <Script
         src="https://www.paypal.com/sdk/js?client-id=BAAHLKdlCHkITDXSJJ2L4OwBggnZscg77Oqj9XSptYrHLbdiEtjbQCD2KD-i3obFsLes3m7WcyDyMnez4I&components=hosted-buttons&disable-funding=venmo&currency=GBP"
         strategy="afterInteractive"
@@ -56,7 +54,7 @@ export default function Home() {
 
       <main className="h-screen w-screen overflow-hidden bg-black relative flex flex-col items-center justify-center">
 
-        {/* ===== TEXT NAV BAR ===== */}
+        {/* ===== NAV ===== */}
         <nav className="fixed top-0 left-0 right-0 z-40 flex items-center justify-center h-[70px]">
           <div className="flex items-center gap-8 md:gap-12">
             <button onClick={() => openModal("play")} className="nav-link">PLAY</button>
@@ -67,17 +65,10 @@ export default function Home() {
           </div>
         </nav>
 
-        {/* ===== EYES HERO ===== */}
+        {/* ===== HERO ===== */}
         <div className="select-none pointer-events-none">
-          <Image
-            src="/images/asset-logo-motion-graphic.gif"
-            alt="The Marshall Mafia"
-            width={1175}
-            height={1175}
-            className="w-[84vw] max-w-[1175px] h-auto"
-            priority
-            unoptimized
-          />
+          <Image src="/images/asset-logo-motion-graphic.gif" alt="The Marshall Mafia" width={1175} height={1175}
+            className="w-[84vw] max-w-[1175px] h-auto" priority unoptimized />
         </div>
 
         {/* ==================== PLAY MODAL ==================== */}
@@ -216,14 +207,13 @@ export default function Home() {
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
             <div className="modal-scroll-bare animate-modal-in">
-              <div className="max-w-[650px] mx-auto space-y-[40px] pb-[80px] px-6">
+              <div className="max-w-[600px] mx-auto space-y-[32px] pb-[80px] px-6">
                 {["showcase-1","showcase-2","showcase-3","showcase-4"].map((name, i) => (
                   <div key={i} className="showcase-card" onClick={(e) => e.stopPropagation()}>
                     <img
                       src={`/images/${name}.png`}
                       alt={`The Marshall Mafia ${i + 1}`}
-                      className="w-full block select-none"
-                      style={{ display: "block" }}
+                      className="w-full h-auto block"
                       draggable={false}
                       loading={i === 0 ? "eager" : "lazy"}
                     />
@@ -240,46 +230,36 @@ export default function Home() {
             <div className="modal-backdrop" />
             <div className="modal-scroll-bare animate-modal-in">
               <div className="w-full max-w-[560px] mx-auto px-6 pb-[80px]">
-
                 <div className="play-card" onClick={(e) => e.stopPropagation()}>
                   <div className="play-card-header">
                     <span className="play-block-title">PLAY THE FULL EXPERIENCE</span>
                   </div>
-
-                  <div className="flex items-center justify-center gap-4 mt-4 flex-wrap">
+                  <div className="flex items-center justify-center gap-4 mt-6 flex-wrap">
 
                     <a href="https://open.spotify.com/playlist/3IciRcKF72CRT6MHI6C6Ry" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Spotify">
-                      <div className="music-platform-icon overflow-hidden">
-                        <img src="/images/spotify-icon.png" alt="Spotify" width="56" height="56" className="w-full h-full object-cover" />
-                      </div>
+                      <img src="/images/spotify-icon.png" alt="Spotify" className="music-platform-icon" />
                     </a>
 
                     <a href="https://music.apple.com/gb/artist/marshallwi11/1844826623" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Apple Music">
-                      <div className="music-platform-icon overflow-hidden">
-                        <img src="/images/apple-music-icon.png" alt="Apple Music" width="56" height="56" className="w-full h-full object-cover" />
-                      </div>
+                      <img src="/images/apple-music-icon.png" alt="Apple Music" className="music-platform-icon" />
                     </a>
 
                     <a href="https://tidal.com/playlist/5f88e8b6-cded-4806-9c94-b22894328454" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Tidal">
-                      <div className="music-platform-icon overflow-hidden">
-                        <img src="/images/tidal-icon.png" alt="Tidal" width="56" height="56" className="w-full h-full object-cover" />
-                      </div>
+                      <img src="/images/tidal-icon.png" alt="Tidal" className="music-platform-icon" />
                     </a>
 
                     <a href="https://music.amazon.co.uk/artists/B0FV93YR78/marshallwi11" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Amazon Music">
-                      <div className="music-platform-icon overflow-hidden">
-                        <img src="/images/amazon-music-icon.png" alt="Amazon Music" width="56" height="56" className="w-full h-full object-cover" />
-                      </div>
+                      <img src="/images/amazon-music-icon.png" alt="Amazon Music" className="music-platform-icon" />
                     </a>
 
-                    <a href="https://www.deezer.com/en/artist/349863202" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Deezer">
-                      <div className="music-platform-icon" style={{background:"linear-gradient(135deg,#a238ff,#ef5466,#ff8c00)"}}>
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M18.944 17.236h2.387v1.072h-2.387zM3.67 17.236h2.387v1.072H3.67zm5.087 0h2.387v1.072H8.757zm5.087 0h2.387v1.072h-2.387zM18.944 14.91h2.387v1.073h-2.387zm-5.1 0h2.387v1.073h-2.387zM8.757 14.91h2.387v1.073H8.757zm-5.087 0h2.387v1.073H3.67zm15.274-2.326h2.387v1.072h-2.387zm-5.1 0h2.387v1.072h-2.387zM8.757 12.584h2.387v1.072H8.757zM18.944 10.26h2.387v1.071h-2.387zm-5.1 0h2.387v1.071h-2.387zm10.187-2.326h2.387v1.072H24.031V7.934zm-5.087 0h2.387v1.072h-2.387z"/></svg>
+                    <a href="https://link.deezer.com/s/32Ea3kbAJwzVroL9cvbDM" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Deezer">
+                      <div className="music-platform-icon music-platform-icon--svg" style={{background:"linear-gradient(135deg,#a238ff,#ef5466,#ff8c00)"}}>
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M18.944 17.236h2.387v1.072h-2.387zM3.67 17.236h2.387v1.072H3.67zm5.087 0h2.387v1.072H8.757zm5.087 0h2.387v1.072h-2.387zM18.944 14.91h2.387v1.073h-2.387zm-5.1 0h2.387v1.073h-2.387zM8.757 14.91h2.387v1.073H8.757zm-5.087 0h2.387v1.073H3.67zm15.274-2.326h2.387v1.072h-2.387zm-5.1 0h2.387v1.072h-2.387zM8.757 12.584h2.387v1.072H8.757zM18.944 10.26h2.387v1.071h-2.387zm-5.1 0h2.387v1.071h-2.387zm10.187-2.326h2.387v1.072H24.031V7.934zm-5.087 0h2.387v1.072h-2.387z"/></svg>
                       </div>
                     </a>
 
                     <a href="https://www.youtube.com/playlist?list=PLg6v-S6qo4anyKTHrD3zxMAnkHGrSLDlJ" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="YouTube">
-                      <div className="music-platform-icon bg-[#FF0000]">
+                      <div className="music-platform-icon music-platform-icon--svg bg-[#FF0000]">
                         <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                       </div>
                     </a>
@@ -295,54 +275,31 @@ export default function Home() {
         {activeModal === "collect" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <div className="modal-scroll-bare animate-modal-in">
-              <div className="max-w-[560px] mx-auto space-y-[32px] pb-[80px] px-6">
+            {/* Collect uses its own non-scrolling layout since PayPal handles its own scroll */}
+            <div className="collect-modal-inner animate-modal-in" onClick={(e) => e.stopPropagation()}>
 
-                {/* Product card */}
-                <div className="play-card" onClick={(e) => e.stopPropagation()}>
-                  <div className="play-card-header">
-                    <span className="play-block-title">COLLECT</span>
-                    <span className="play-block-subtitle">LIMITED 1ST EDITION</span>
-                  </div>
-                  <div className="flex gap-5 items-center mt-2">
-                    <div className="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0 bg-white/5">
-                      <Image src="/images/asset-image-1.png" alt="The Marshall Mafia" width={80} height={80} className="w-full h-full object-cover" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="play-block-body">The Marshall Mafia — Complete game set.</p>
-                      <p className="play-block-body">First release limited edition card included.</p>
-                    </div>
-                    <p className="text-[22px] flex-shrink-0 font-bold">£25</p>
-                  </div>
+              {/* PayPal checkout card */}
+              <div className="play-card w-full">
+                <div className="play-card-header mb-5">
+                  <span className="play-block-title">CHECKOUT</span>
+                  <span className="play-block-subtitle">SECURE PAYMENT</span>
                 </div>
-
-                {/* PayPal hosted buttons — the real checkout */}
-                <div className="play-card" onClick={(e) => e.stopPropagation()}>
-                  <div className="play-card-header mb-4">
-                    <span className="play-block-title">CHECKOUT</span>
-                    <span className="play-block-subtitle">SECURE PAYMENT</span>
+                {paypalReady ? (
+                  <div id="paypal-container-7FQPC38SRM8BN" className="paypal-button-container" />
+                ) : (
+                  <div className="flex items-center justify-center py-10 gap-3">
+                    <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                    <span className="text-white/40 text-[13px]">Loading secure checkout...</span>
                   </div>
-                  {paypalReady ? (
-                    <div
-                      id="paypal-container-7FQPC38SRM8BN"
-                      ref={paypalContainerRef}
-                      className="paypal-button-container"
-                    />
-                  ) : (
-                    <div className="flex items-center justify-center py-8 gap-3">
-                      <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                      <span className="text-white/40 text-[13px]">Loading secure checkout...</span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Shipping note */}
-                <div className="play-card-pill" onClick={(e) => e.stopPropagation()}>
-                  <span className="play-block-body text-white/50 text-[13px]">🚚 UK delivery included — £5 international</span>
-                  <span className="play-block-subtitle text-[13px]">£25.00</span>
-                </div>
-
+                )}
               </div>
+
+              {/* Delivery info pill */}
+              <div className="play-card-pill w-full mt-6">
+                <span className="play-block-body" style={{color:"rgba(255,255,255,0.45)", fontSize:"13px"}}>UK delivery included</span>
+                <span className="play-block-subtitle" style={{fontSize:"13px"}}>£5 international</span>
+              </div>
+
             </div>
           </div>
         )}
