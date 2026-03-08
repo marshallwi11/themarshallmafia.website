@@ -338,28 +338,66 @@ export default function Home() {
         {activeModal === "collect" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <div className="collect-centered animate-modal-in" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-scroll-bare animate-modal-in">
+              <div className="collect-list" onClick={(e) => e.stopPropagation()}>
 
-              <div className="play-card w-full">
-                <div className="play-card-header" style={{marginBottom:"20px"}}>
-                  <span className="play-block-title">CHECKOUT</span>
-                  <span className="play-block-subtitle">SECURE PAYMENT</span>
-                </div>
-                {paypalReady ? (
-                  <div key={collectKey} id="paypal-container-7FQPC38SRM8BN" />
-                ) : (
-                  <div className="flex items-center justify-center py-10 gap-3">
-                    <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                    <span className="text-white/40 text-[13px]">Loading secure checkout...</span>
+                {/* Product card */}
+                <div className="play-card">
+                  <div className="play-card-header">
+                    <span className="play-block-title">THE MARSHALL MAFIA</span>
+                    <span className="play-block-subtitle">1ST EDITION</span>
                   </div>
-                )}
-              </div>
 
-              <div className="play-card-pill w-full" style={{marginTop:"20px"}}>
-                <span className="play-block-body" style={{color:"rgba(255,255,255,0.45)",fontSize:"13px"}}>UK delivery included</span>
-                <span className="play-block-subtitle" style={{fontSize:"13px"}}>£5 international</span>
-              </div>
+                  {/* Product image */}
+                  <div className="collect-img-well">
+                    <img src="/images/tmm_picture_1.png" alt="The Marshall Mafia Card Game" className="collect-img" />
+                  </div>
 
+                  {/* Product details */}
+                  <div className="collect-details">
+                    <div className="collect-detail-row">
+                      <span className="play-block-body">STANDARD CARD GAME</span>
+                      <span className="play-block-title" style={{color:"var(--tmm-cream)"}}>£20</span>
+                    </div>
+                    <p className="play-block-body" style={{color:"rgba(255,255,255,0.5)", fontSize:"14px", marginTop:"8px"}}>
+                      A social deduction card game where Villagers must identify and eliminate the Mafia before they are outnumbered.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Delivery card */}
+                <div className="play-card">
+                  <div className="play-card-header">
+                    <span className="play-block-title">DELIVERY</span>
+                    <span className="play-block-subtitle">SHIPPING INFO</span>
+                  </div>
+                  <div className="collect-detail-row" style={{marginTop:"8px"}}>
+                    <span className="play-block-body">🇬🇧 UK</span>
+                    <span className="play-block-body" style={{color:"var(--tmm-green)"}}>INCLUDED</span>
+                  </div>
+                  <div className="collect-detail-row" style={{marginTop:"12px"}}>
+                    <span className="play-block-body">🌍 INTERNATIONAL</span>
+                    <span className="play-block-body" style={{color:"var(--tmm-cream)"}}>+£5</span>
+                  </div>
+                </div>
+
+                {/* Checkout card */}
+                <div className="play-card">
+                  <div className="play-card-header" style={{marginBottom:"20px"}}>
+                    <span className="play-block-title">CHECKOUT</span>
+                    <span className="play-block-subtitle">SECURE PAYMENT</span>
+                  </div>
+                  {paypalReady ? (
+                    <div key={collectKey} id="paypal-container-7FQPC38SRM8BN" className="paypal-button-container" />
+                  ) : (
+                    <div className="flex items-center justify-center py-8 gap-3">
+                      <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                      <span className="text-white/40 text-[13px]">Loading secure checkout...</span>
+                    </div>
+                  )}
+                </div>
+
+              </div>
             </div>
           </div>
         )}
