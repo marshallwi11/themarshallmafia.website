@@ -299,6 +299,19 @@
     opacity: 0.9;
   }
 
+  /* --- PAYPAL BUTTON CONTAINER --- */
+  /* Overrides PayPal's injected iframe styles to blend with dark theme */
+  .paypal-button-container {
+    width: 100%;
+    min-height: 48px;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  /* Force PayPal's button border-radius to match our design */
+  .paypal-button-container .paypal-buttons {
+    border-radius: 16px !important;
+  }
+
   /* --- PLAY CARD PILL: footer pill style --- */
   .play-card-pill {
     background: rgba(52, 52, 52, 0.25);
