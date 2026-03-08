@@ -401,9 +401,11 @@ export default function Home() {
                     <span className="play-block-subtitle">SECURE</span>
                   </div>
                   {stripeClientSecret ? (
-                    <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret: stripeClientSecret }}>
-                      <EmbeddedCheckout />
-                    </EmbeddedCheckoutProvider>
+                    <div style={{borderRadius:"20px", overflow:"hidden", background:"rgba(255,255,255,0.06)", padding:"2px"}}>
+                      <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret: stripeClientSecret }}>
+                        <EmbeddedCheckout />
+                      </EmbeddedCheckoutProvider>
+                    </div>
                   ) : (
                     <div className="flex items-center justify-center py-8 gap-3">
                       <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
