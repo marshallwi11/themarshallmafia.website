@@ -239,6 +239,34 @@
   }
   .mobile-menu-item:hover { opacity: 0.6; }
 
+  /* --- FLOATING BUY BUTTON --- */
+  .floating-buy {
+    position: fixed;
+    bottom: clamp(24px, 5vw, 40px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--tmm-cream);
+    color: #000;
+    border: none;
+    border-radius: 100px;
+    padding: clamp(12px, 2.5vw, 16px) clamp(20px, 4vw, 32px);
+    cursor: pointer;
+    font-family: 'MarkerBold', sans-serif;
+    font-size: clamp(13px, 2.5vw, 16px);
+    letter-spacing: 0.05em;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    transition: opacity 0.2s, transform 0.2s;
+    white-space: nowrap;
+  }
+  .floating-buy:hover {
+    opacity: 0.85;
+    transform: translateX(-50%) scale(1.03);
+  }
+
   .modal-overlay {
     position: fixed;
     inset: 0;
@@ -319,7 +347,7 @@
   }
   /* Outer dark glass card — no padding, image fills inside well */
   .showcase-card {
-    border-radius: clamp(16px, 4vw, 30px);
+    border-radius: clamp(12px, 2.5vw, 20px);
     width: 100%;
     background: rgba(52,52,52,0.25);
     border: 1px solid rgba(255,255,255,0.07);
@@ -480,7 +508,7 @@
   /* --- PLAY CARD: compact block matching Figma, no double box --- */
   .play-card {
     background: rgba(52, 52, 52, 0.25);
-    border-radius: clamp(24px, 5vw, 50px);
+    border-radius: clamp(16px, 3vw, 24px);
     padding: clamp(20px, 5vw, 50px);
     display: flex;
     flex-direction: column;
@@ -717,7 +745,7 @@
 
     /* Cards tighter */
     .play-card {
-      border-radius: 20px;
+      border-radius: 14px;
       padding: 18px;
       gap: 10px;
     }
@@ -746,7 +774,7 @@
       border-radius: 12px;
     }
     .showcase-card {
-      border-radius: 14px;
+      border-radius: 10px;
       padding: 8px;
     }
 
