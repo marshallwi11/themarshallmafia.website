@@ -432,7 +432,56 @@ export default function Home() {
                     <span className="play-block-subtitle">SECURE</span>
                   </div>
                   {stripeClientSecret ? (
-                    <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret: stripeClientSecret }}>
+                    <EmbeddedCheckoutProvider stripe={stripePromise} options={{
+                      clientSecret: stripeClientSecret,
+                      appearance: {
+                        theme: "night",
+                        variables: {
+                          colorBackground: "#1a1a1a",
+                          colorSurface: "#222222",
+                          colorText: "#ffffff",
+                          colorTextSecondary: "rgba(255,255,255,0.5)",
+                          colorTextPlaceholder: "rgba(255,255,255,0.25)",
+                          colorPrimary: "#DBAB7F",
+                          colorDanger: "#E3000B",
+                          borderRadius: "12px",
+                          fontFamily: "system-ui, sans-serif",
+                          spacingUnit: "4px",
+                        },
+                        rules: {
+                          ".Input": {
+                            backgroundColor: "#2a2a2a",
+                            border: "1px solid rgba(255,255,255,0.1)",
+                            color: "#ffffff",
+                          },
+                          ".Input:focus": {
+                            border: "1px solid #DBAB7F",
+                            boxShadow: "none",
+                          },
+                          ".Label": {
+                            color: "rgba(255,255,255,0.6)",
+                            fontSize: "12px",
+                          },
+                          ".Block": {
+                            backgroundColor: "#1a1a1a",
+                            border: "1px solid rgba(255,255,255,0.08)",
+                          },
+                          ".Tab": {
+                            backgroundColor: "#222222",
+                            border: "1px solid rgba(255,255,255,0.1)",
+                            color: "rgba(255,255,255,0.6)",
+                          },
+                          ".Tab--selected": {
+                            backgroundColor: "#2a2a2a",
+                            border: "1px solid #DBAB7F",
+                            color: "#ffffff",
+                          },
+                          ".TabIcon--selected": {
+                            fill: "#DBAB7F",
+                          },
+                        },
+                      },
+                    }}>
                       <EmbeddedCheckout />
                     </EmbeddedCheckoutProvider>
                   ) : (

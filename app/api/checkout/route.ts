@@ -18,6 +18,9 @@ export async function POST() {
       },
       mode: "payment",
       return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout/return?session_id={CHECKOUT_SESSION_ID}`,
+      custom_text: {
+        submit: { message: "Your order will be shipped within 3–5 working days." },
+      },
     })
 
     return NextResponse.json({ clientSecret: session.client_secret })
