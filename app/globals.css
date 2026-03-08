@@ -33,11 +33,21 @@
   --ring: #ffffff;
   --radius: 1.5rem;
 
-  --color-kill: #E3000B;
-  --color-guess: #0080C5;
-  --color-save: #00983F;
-  --color-wild: #F8AC00;
-  --color-ally: #9152E6;
+  /* === TMM BRAND COLOURS === */
+  --tmm-brown:  #7E3C05;
+  --tmm-cream:  #DBAB7F;
+  --tmm-red:    #E3000B;
+  --tmm-blue:   #0080C5;
+  --tmm-green:  #00983F;
+  --tmm-yellow: #F8AC00;
+  --tmm-purple: #9152E6;
+
+  /* Legacy aliases */
+  --color-kill: var(--tmm-red);
+  --color-guess: var(--tmm-blue);
+  --color-save: var(--tmm-green);
+  --color-wild: var(--tmm-yellow);
+  --color-ally: var(--tmm-cream);
 
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
@@ -113,11 +123,18 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-kill: #E3000B;
-  --color-guess: #0080C5;
-  --color-save: #00983F;
-  --color-wild: #F8AC00;
-  --color-ally: #9152E6;
+  --color-tmm-brown: var(--tmm-brown);
+  --color-tmm-cream: var(--tmm-cream);
+  --color-tmm-red: var(--tmm-red);
+  --color-tmm-blue: var(--tmm-blue);
+  --color-tmm-green: var(--tmm-green);
+  --color-tmm-yellow: var(--tmm-yellow);
+  --color-tmm-purple: var(--tmm-purple);
+  --color-kill: var(--tmm-red);
+  --color-guess: var(--tmm-blue);
+  --color-save: var(--tmm-green);
+  --color-wild: var(--tmm-yellow);
+  --color-ally: var(--tmm-cream);
 
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
@@ -419,10 +436,20 @@
     }
   }
 
-  /* --- ACCENT COLORS --- */
-  .text-kill { color: var(--color-kill); }
-  .text-guess { color: var(--color-guess); }
-  .text-save { color: var(--color-save); }
-  .text-wild { color: var(--color-wild); }
-  .text-ally { color: var(--color-ally); }
+  /* --- TMM BRAND COLOUR UTILITIES --- */
+  .text-tmm-brown  { color: var(--tmm-brown); }
+  .text-tmm-cream  { color: var(--tmm-cream); }
+  .text-tmm-red    { color: var(--tmm-red); }
+  .text-tmm-blue   { color: var(--tmm-blue); }
+  .text-tmm-green  { color: var(--tmm-green); }
+  .text-tmm-yellow { color: var(--tmm-yellow); }
+  .text-tmm-purple { color: var(--tmm-purple); }
+
+  /* --- LEGACY ACCENT ALIASES --- */
+  .text-kill  { color: var(--tmm-red); }
+  .text-guess { color: var(--tmm-blue); }
+  .text-save  { color: var(--tmm-green); }
+  .text-wild  { color: var(--tmm-yellow); }
+  .text-ally  { color: var(--tmm-cream); }
+  .text-muted { color: rgba(255,255,255,0.35); }
 }
