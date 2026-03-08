@@ -8,41 +8,55 @@ type ModalType = "play" | "showcase" | "music" | "collect" | null
 
 export default function Home() {
   const [activeModal, setActiveModal] = useState<ModalType>(null)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [paypalReady, setPaypalReady] = useState(false)
+  const [collectKey, setCollectKey] = useState(0)
   const paypalRenderedRef = useRef(false)
 
-  const openModal = (modal: ModalType) => setActiveModal(modal)
+  const openModal = (modal: ModalType) => {
+    setMobileMenuOpen(false)
+    if (modal === "collect") {
+      setCollectKey(k => k + 1)
+      paypalRenderedRef.current = false
+    }
+    setActiveModal(modal)
+  }
   const closeModal = useCallback(() => setActiveModal(null), [])
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => { if (e.key === "Escape") closeModal() }
+    const handleKeyDown = (e: KeyboardEvent) => { if (e.key === "Escape") { closeModal(); setMobileMenuOpen(false) } }
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [closeModal])
 
   useEffect(() => {
-    document.body.style.overflow = activeModal ? "hidden" : ""
+    document.body.style.overflow = (activeModal || mobileMenuOpen) ? "hidden" : ""
     return () => { document.body.style.overflow = "" }
-  }, [activeModal])
+  }, [activeModal, mobileMenuOpen])
 
-  // Render PayPal when modal opens and SDK is ready
+  // Render PayPal when collect modal mounts
   useEffect(() => {
     if (activeModal === "collect" && paypalReady && !paypalRenderedRef.current) {
       const container = document.getElementById("paypal-container-7FQPC38SRM8BN")
-      if (container) {
+      if (container && container.children.length === 0) {
         paypalRenderedRef.current = true
         try {
           // @ts-ignore
           paypal.HostedButtons({ hostedButtonId: "7FQPC38SRM8BN" }).render("#paypal-container-7FQPC38SRM8BN")
         } catch (e) {
           console.error("PayPal render error:", e)
+          paypalRenderedRef.current = false
         }
       }
     }
-    if (activeModal !== "collect") {
-      paypalRenderedRef.current = false
-    }
-  }, [activeModal, paypalReady])
+  }, [activeModal, paypalReady, collectKey])
+
+  const navItems: { label: string; modal: ModalType }[] = [
+    { label: "PLAY", modal: "play" },
+    { label: "SHOWCASE", modal: "showcase" },
+    { label: "MUSIC", modal: "music" },
+    { label: "COLLECT", modal: "collect" },
+  ]
 
   return (
     <>
@@ -54,21 +68,49 @@ export default function Home() {
 
       <main className="h-screen w-screen overflow-hidden bg-black relative flex flex-col items-center justify-center">
 
-        {/* ===== NAV ===== */}
-        <nav className="fixed top-0 left-0 right-0 z-40 flex items-center justify-center h-[70px]">
-          <div className="flex items-center gap-8 md:gap-12">
+        {/* ===== DESKTOP NAV ===== */}
+        <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center h-[70px]">
+          {/* Desktop: all items in a row */}
+          <div className="hidden md:flex items-center gap-8 md:gap-12">
             <button onClick={() => openModal("play")} className="nav-link">PLAY</button>
             <button onClick={() => openModal("showcase")} className="nav-link">SHOWCASE</button>
             <span className="nav-title">THE MARSHALL MAFIA</span>
             <button onClick={() => openModal("music")} className="nav-link">MUSIC</button>
             <button onClick={() => openModal("collect")} className="nav-link">COLLECT</button>
           </div>
+
+          {/* Mobile: title + hamburger */}
+          <div className="flex md:hidden items-center justify-between w-full px-5">
+            <span className="nav-title" style={{fontSize:"clamp(10px,3.5vw,18px)"}}>THE MARSHALL MAFIA</span>
+            <button
+              onClick={() => setMobileMenuOpen(o => !o)}
+              className="flex flex-col gap-[5px] p-2"
+              aria-label="Menu"
+            >
+              <span className={`mobile-bar ${mobileMenuOpen ? "rotate-45 translate-y-[7px]" : ""}`} />
+              <span className={`mobile-bar ${mobileMenuOpen ? "opacity-0" : ""}`} />
+              <span className={`mobile-bar ${mobileMenuOpen ? "-rotate-45 -translate-y-[7px]" : ""}`} />
+            </button>
+          </div>
         </nav>
+
+        {/* ===== MOBILE DROPDOWN MENU ===== */}
+        {mobileMenuOpen && (
+          <div className="mobile-menu" onClick={() => setMobileMenuOpen(false)}>
+            <div className="mobile-menu-inner" onClick={(e) => e.stopPropagation()}>
+              {navItems.map(({ label, modal }) => (
+                <button key={label} onClick={() => openModal(modal)} className="mobile-menu-item">
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* ===== HERO ===== */}
         <div className="select-none pointer-events-none">
-          <Image src="/images/asset-logo-motion-graphic.gif" alt="The Marshall Mafia" width={1175} height={1175}
-            className="w-[84vw] max-w-[1175px] h-auto" priority unoptimized />
+          <Image src="/images/asset-logo-motion-graphic.gif" alt="The Marshall Mafia"
+            width={1175} height={1175} className="w-[84vw] max-w-[1175px] h-auto" priority unoptimized />
         </div>
 
         {/* ==================== PLAY MODAL ==================== */}
@@ -168,7 +210,7 @@ export default function Home() {
                   <p className="play-block-body">After the discussion, players proceed straight to the voting.</p>
                   <p className="play-block-body">Each <span className="text-tmm-cream">Villager</span> role votes to eliminate someone they suspect is <span className="text-tmm-red">Mafia</span>, while the <span className="text-tmm-red">Mafia</span> aim to deceive <span className="text-tmm-cream">Villagers</span> into voting out their own.</p>
                   <p className="play-block-body">Each player is allowed to make a single vote, on anyone they choose. When a player casts a vote for another player — the player who has been voted for must hold up a finger for each vote received.</p>
-                  <p className="play-block-body">If the vote ties, a re-vote occurs between the tied players (depending on chosen <span className="text-muted">Rule Cards*</span>). The player with the most votes is immediately eliminated from the game, and their character is revealed (also depending on chosen <span className="text-muted">Rule Cards*</span>).</p>
+                  <p className="play-block-body">If the vote ties, a re-vote occurs between the tied players (depending on chosen <span className="text-muted">Rule Cards*</span>). The player with the most votes is immediately eliminated, and their character is revealed (also depending on chosen <span className="text-muted">Rule Cards*</span>).</p>
                 </div>
 
                 <div className="play-card" onClick={(e) => e.stopPropagation()}>
@@ -207,14 +249,12 @@ export default function Home() {
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
             <div className="modal-scroll-bare animate-modal-in">
-              <div className="max-w-[600px] mx-auto space-y-[32px] pb-[80px] px-6">
+              <div className="showcase-list" onClick={(e) => e.stopPropagation()}>
                 {["showcase-1","showcase-2","showcase-3","showcase-4"].map((name, i) => (
-                  <div key={i} className="showcase-card" onClick={(e) => e.stopPropagation()}>
+                  <div key={i} className="showcase-card">
                     <img
                       src={`/images/${name}.png`}
-                      alt={`The Marshall Mafia ${i + 1}`}
-                      className="w-full h-auto block"
-                      draggable={false}
+                      alt={`The Marshall Mafia — image ${i + 1}`}
                       loading={i === 0 ? "eager" : "lazy"}
                     />
                   </div>
@@ -234,32 +274,32 @@ export default function Home() {
                   <div className="play-card-header">
                     <span className="play-block-title">PLAY THE FULL EXPERIENCE</span>
                   </div>
-                  <div className="flex items-center justify-center gap-4 mt-6 flex-wrap">
+                  <div className="music-icons-row">
 
-                    <a href="https://open.spotify.com/playlist/3IciRcKF72CRT6MHI6C6Ry" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Spotify">
-                      <img src="/images/spotify-icon.png" alt="Spotify" className="music-platform-icon" />
+                    <a href="https://open.spotify.com/playlist/3IciRcKF72CRT6MHI6C6Ry" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
+                      <img src="/images/spotify-icon.png" alt="Spotify" className="music-icon-img" />
                     </a>
 
-                    <a href="https://music.apple.com/gb/artist/marshallwi11/1844826623" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Apple Music">
-                      <img src="/images/apple-music-icon.png" alt="Apple Music" className="music-platform-icon" />
+                    <a href="https://music.apple.com/gb/artist/marshallwi11/1844826623" target="_blank" rel="noopener noreferrer" aria-label="Apple Music">
+                      <img src="/images/apple-music-icon.png" alt="Apple Music" className="music-icon-img" />
                     </a>
 
-                    <a href="https://tidal.com/playlist/5f88e8b6-cded-4806-9c94-b22894328454" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Tidal">
-                      <img src="/images/tidal-icon.png" alt="Tidal" className="music-platform-icon" />
+                    <a href="https://tidal.com/playlist/5f88e8b6-cded-4806-9c94-b22894328454" target="_blank" rel="noopener noreferrer" aria-label="Tidal">
+                      <img src="/images/tidal-icon.png" alt="Tidal" className="music-icon-img" />
                     </a>
 
-                    <a href="https://music.amazon.co.uk/artists/B0FV93YR78/marshallwi11" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Amazon Music">
-                      <img src="/images/amazon-music-icon.png" alt="Amazon Music" className="music-platform-icon" />
+                    <a href="https://music.amazon.co.uk/artists/B0FV93YR78/marshallwi11" target="_blank" rel="noopener noreferrer" aria-label="Amazon Music">
+                      <img src="/images/amazon-music-icon.png" alt="Amazon Music" className="music-icon-img" />
                     </a>
 
-                    <a href="https://link.deezer.com/s/32Ea3kbAJwzVroL9cvbDM" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Deezer">
-                      <div className="music-platform-icon music-platform-icon--svg" style={{background:"linear-gradient(135deg,#a238ff,#ef5466,#ff8c00)"}}>
+                    <a href="https://link.deezer.com/s/32Ea3kbAJwzVroL9cvbDM" target="_blank" rel="noopener noreferrer" aria-label="Deezer">
+                      <div className="music-icon-img music-icon-svg" style={{background:"linear-gradient(135deg,#a238ff,#ef5466,#ff8c00)"}}>
                         <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M18.944 17.236h2.387v1.072h-2.387zM3.67 17.236h2.387v1.072H3.67zm5.087 0h2.387v1.072H8.757zm5.087 0h2.387v1.072h-2.387zM18.944 14.91h2.387v1.073h-2.387zm-5.1 0h2.387v1.073h-2.387zM8.757 14.91h2.387v1.073H8.757zm-5.087 0h2.387v1.073H3.67zm15.274-2.326h2.387v1.072h-2.387zm-5.1 0h2.387v1.072h-2.387zM8.757 12.584h2.387v1.072H8.757zM18.944 10.26h2.387v1.071h-2.387zm-5.1 0h2.387v1.071h-2.387zm10.187-2.326h2.387v1.072H24.031V7.934zm-5.087 0h2.387v1.072h-2.387z"/></svg>
                       </div>
                     </a>
 
-                    <a href="https://www.youtube.com/playlist?list=PLg6v-S6qo4anyKTHrD3zxMAnkHGrSLDlJ" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="YouTube">
-                      <div className="music-platform-icon music-platform-icon--svg bg-[#FF0000]">
+                    <a href="https://www.youtube.com/playlist?list=PLg6v-S6qo4anyKTHrD3zxMAnkHGrSLDlJ" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                      <div className="music-icon-img music-icon-svg" style={{background:"#FF0000"}}>
                         <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                       </div>
                     </a>
@@ -275,17 +315,15 @@ export default function Home() {
         {activeModal === "collect" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            {/* Collect uses its own non-scrolling layout since PayPal handles its own scroll */}
-            <div className="collect-modal-inner animate-modal-in" onClick={(e) => e.stopPropagation()}>
+            <div className="collect-centered animate-modal-in" onClick={(e) => e.stopPropagation()}>
 
-              {/* PayPal checkout card */}
               <div className="play-card w-full">
-                <div className="play-card-header mb-5">
+                <div className="play-card-header" style={{marginBottom:"20px"}}>
                   <span className="play-block-title">CHECKOUT</span>
                   <span className="play-block-subtitle">SECURE PAYMENT</span>
                 </div>
                 {paypalReady ? (
-                  <div id="paypal-container-7FQPC38SRM8BN" className="paypal-button-container" />
+                  <div key={collectKey} id="paypal-container-7FQPC38SRM8BN" />
                 ) : (
                   <div className="flex items-center justify-center py-10 gap-3">
                     <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
@@ -294,9 +332,8 @@ export default function Home() {
                 )}
               </div>
 
-              {/* Delivery info pill */}
-              <div className="play-card-pill w-full mt-6">
-                <span className="play-block-body" style={{color:"rgba(255,255,255,0.45)", fontSize:"13px"}}>UK delivery included</span>
+              <div className="play-card-pill w-full" style={{marginTop:"20px"}}>
+                <span className="play-block-body" style={{color:"rgba(255,255,255,0.45)",fontSize:"13px"}}>UK delivery included</span>
                 <span className="play-block-subtitle" style={{fontSize:"13px"}}>£5 international</span>
               </div>
 
