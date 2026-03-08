@@ -439,6 +439,14 @@
     border-radius: 16px;
     overflow: hidden;
   }
+  /* Force spacing above PayPal's injected QUANTITY label */
+  #paypal-container-7FQPC38SRM8BN > * {
+    padding-top: 8px;
+  }
+  #paypal-container-7FQPC38SRM8BN label:first-of-type,
+  #paypal-container-7FQPC38SRM8BN > div:first-child {
+    margin-top: 12px !important;
+  }
 
   /* --- PAYPAL BUTTON CONTAINER --- */
   /* Overrides PayPal's injected iframe styles to blend with dark theme */

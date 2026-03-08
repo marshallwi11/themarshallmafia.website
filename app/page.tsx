@@ -365,10 +365,11 @@ export default function Home() {
                 <div className="play-card">
                   <div className="play-card-header">
                     <span className="play-block-title">DELIVERY</span>
+                    <span className="play-block-subtitle">INCLUDED</span>
                   </div>
                   <div className="collect-detail-row" style={{marginTop:"12px"}}>
-                    <span className="play-block-body">🇬🇧 UNITED KINGDOM</span>
-                    <span className="play-block-body" style={{color:"var(--tmm-green)"}}>£5 <span style={{color:"rgba(255,255,255,0.35)"}}>(INCLUDED)</span></span>
+                    <span className="play-block-body">UNITED KINGDOM</span>
+                    <span className="play-block-body" style={{color:"var(--tmm-green)"}}>£5</span>
                   </div>
                 </div>
 
@@ -376,11 +377,10 @@ export default function Home() {
                 <div className="play-card">
                   <div className="play-card-header" style={{marginBottom:"20px"}}>
                     <span className="play-block-title">CHECKOUT</span>
-                    <span className="play-block-subtitle">SECURE PAYMENT</span>
+                    <span className="play-block-subtitle">SECURE</span>
                   </div>
-                  <hr className="play-card-divider" style={{marginBottom:"20px"}} />
                   {paypalReady ? (
-                    <div key={collectKey} id="paypal-container-7FQPC38SRM8BN" className="paypal-button-container" />
+                    <div style={{paddingTop:"4px"}}><div key={collectKey} id="paypal-container-7FQPC38SRM8BN" className="paypal-button-container" /></div>
                   ) : (
                     <div className="flex items-center justify-center py-8 gap-3">
                       <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
