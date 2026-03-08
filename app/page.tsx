@@ -287,41 +287,43 @@ export default function Home() {
 
                     <a href="https://open.spotify.com/playlist/3IciRcKF72CRT6MHI6C6Ry" target="_blank" rel="noopener noreferrer" className="music-tile">
                       <div className="music-tile-icon">
-                        <img src="/images/spotify-icon.png" alt="Spotify" className="music-tile-img" loading="eager" />
+                        <img src="/images/tmm_music_spotify.png" alt="Spotify" className="music-tile-img" loading="eager" />
                       </div>
                       <span className="music-tile-label">SPOTIFY</span>
                     </a>
 
                     <a href="https://music.apple.com/gb/artist/marshallwi11/1844826623" target="_blank" rel="noopener noreferrer" className="music-tile">
                       <div className="music-tile-icon">
-                        <img src="/images/apple-music-icon.png" alt="Apple Music" className="music-tile-img" loading="eager" />
+                        <img src="/images/tmm_music_apple_music.png" alt="Apple Music" className="music-tile-img" loading="eager" />
                       </div>
                       <span className="music-tile-label">APPLE MUSIC</span>
                     </a>
 
                     <a href="https://tidal.com/playlist/5f88e8b6-cded-4806-9c94-b22894328454" target="_blank" rel="noopener noreferrer" className="music-tile">
                       <div className="music-tile-icon">
-                        <img src="/images/tidal-icon.png" alt="Tidal" className="music-tile-img" loading="eager" />
+                        <img src="/images/tmm_music_tidal.png" alt="Tidal" className="music-tile-img" loading="eager" />
                       </div>
                       <span className="music-tile-label">TIDAL</span>
                     </a>
 
                     <a href="https://music.amazon.co.uk/artists/B0FV93YR78/marshallwi11" target="_blank" rel="noopener noreferrer" className="music-tile">
                       <div className="music-tile-icon">
-                        <img src="/images/amazon-music-icon.png" alt="Amazon Music" className="music-tile-img" loading="eager" />
+                        <img src="/images/tmm_music_amazon_music.png" alt="Amazon Music" className="music-tile-img" loading="eager" />
                       </div>
                       <span className="music-tile-label">AMAZON MUSIC</span>
                     </a>
 
-                    {/* Deezer — CSS background icon, instant, no network flash */}
                     <a href="https://link.deezer.com/s/32Ea3kbAJwzVroL9cvbDM" target="_blank" rel="noopener noreferrer" className="music-tile">
-                      <div className="music-tile-icon music-tile-deezer" />
+                      <div className="music-tile-icon">
+                        <img src="/images/tmm_music_deezer.png" alt="Deezer" className="music-tile-img" loading="eager" />
+                      </div>
                       <span className="music-tile-label">DEEZER</span>
                     </a>
 
-                    {/* YouTube — CSS background icon, instant, no network flash */}
                     <a href="https://www.youtube.com/playlist?list=PLg6v-S6qo4anyKTHrD3zxMAnkHGrSLDlJ" target="_blank" rel="noopener noreferrer" className="music-tile">
-                      <div className="music-tile-icon music-tile-youtube" />
+                      <div className="music-tile-icon">
+                        <img src="/images/tmm_music_youtube.png" alt="YouTube" className="music-tile-img" loading="eager" />
+                      </div>
                       <span className="music-tile-label">YOUTUBE</span>
                     </a>
 
