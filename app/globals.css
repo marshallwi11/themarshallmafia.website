@@ -337,36 +337,59 @@
     border-radius: 0; /* parent clips */
   }
 
-  /* --- MUSIC ICONS ROW + ICON --- */
-  .music-icons-row {
+  /* --- MUSIC GRID --- */
+  .music-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 28px;
+  }
+  .music-tile {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 16px;
-    margin-top: 24px;
-  }
-  .music-icons-row a {
-    display: block;
+    gap: 10px;
     transition: transform 0.15s ease, opacity 0.15s ease;
+    text-decoration: none;
   }
-  .music-icons-row a:hover {
-    transform: scale(1.08);
+  .music-tile:hover {
+    transform: scale(1.05);
     opacity: 0.85;
   }
-  /* Applied to <img> for PNGs */
-  .music-icon-img {
-    width: 64px;
-    height: 64px;
-    border-radius: 18px;
-    display: block;
-    object-fit: cover;
-  }
-  /* Applied to <div> for SVG fallbacks */
-  .music-icon-svg {
+  .music-tile-icon {
+    width: 96px;
+    height: 96px;
+    border-radius: 26px;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    flex-shrink: 0;
+  }
+  /* Full-cover image — hides fallback SVG when loaded */
+  .music-tile-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    z-index: 1;
+  }
+  /* SVG shown behind — visible only when img fails to load */
+  .music-tile-fallback {
+    position: relative;
+    z-index: 0;
+    flex-shrink: 0;
+  }
+  .music-tile-label {
+    font-family: 'MarkerBold', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    line-height: 1.2;
   }
 
   /* --- COLLECT MODAL: vertically centred, no scroll --- */

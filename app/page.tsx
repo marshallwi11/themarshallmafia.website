@@ -269,39 +269,72 @@ export default function Home() {
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
             <div className="modal-scroll-bare animate-modal-in">
-              <div className="w-full max-w-[560px] mx-auto px-6 pb-[80px]">
+              <div className="w-full max-w-[600px] mx-auto px-6 pb-[80px]">
                 <div className="play-card" onClick={(e) => e.stopPropagation()}>
                   <div className="play-card-header">
                     <span className="play-block-title">PLAY THE FULL EXPERIENCE</span>
                   </div>
-                  <div className="music-icons-row">
 
-                    <a href="https://open.spotify.com/playlist/3IciRcKF72CRT6MHI6C6Ry" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
-                      <img src="/images/spotify-icon.png" alt="Spotify" className="music-icon-img" />
-                    </a>
+                  <div className="music-grid">
 
-                    <a href="https://music.apple.com/gb/artist/marshallwi11/1844826623" target="_blank" rel="noopener noreferrer" aria-label="Apple Music">
-                      <img src="/images/apple-music-icon.png" alt="Apple Music" className="music-icon-img" />
-                    </a>
-
-                    <a href="https://tidal.com/playlist/5f88e8b6-cded-4806-9c94-b22894328454" target="_blank" rel="noopener noreferrer" aria-label="Tidal">
-                      <img src="/images/tidal-icon.png" alt="Tidal" className="music-icon-img" />
-                    </a>
-
-                    <a href="https://music.amazon.co.uk/artists/B0FV93YR78/marshallwi11" target="_blank" rel="noopener noreferrer" aria-label="Amazon Music">
-                      <img src="/images/amazon-music-icon.png" alt="Amazon Music" className="music-icon-img" />
-                    </a>
-
-                    <a href="https://link.deezer.com/s/32Ea3kbAJwzVroL9cvbDM" target="_blank" rel="noopener noreferrer" aria-label="Deezer">
-                      <div className="music-icon-img music-icon-svg" style={{background:"linear-gradient(135deg,#a238ff,#ef5466,#ff8c00)"}}>
-                        <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M18.944 17.236h2.387v1.072h-2.387zM3.67 17.236h2.387v1.072H3.67zm5.087 0h2.387v1.072H8.757zm5.087 0h2.387v1.072h-2.387zM18.944 14.91h2.387v1.073h-2.387zm-5.1 0h2.387v1.073h-2.387zM8.757 14.91h2.387v1.073H8.757zm-5.087 0h2.387v1.073H3.67zm15.274-2.326h2.387v1.072h-2.387zm-5.1 0h2.387v1.072h-2.387zM8.757 12.584h2.387v1.072H8.757zM18.944 10.26h2.387v1.071h-2.387zm-5.1 0h2.387v1.071h-2.387zm10.187-2.326h2.387v1.072H24.031V7.934zm-5.087 0h2.387v1.072h-2.387z"/></svg>
+                    {/* Spotify */}
+                    <a href="https://open.spotify.com/playlist/3IciRcKF72CRT6MHI6C6Ry" target="_blank" rel="noopener noreferrer" className="music-tile" aria-label="Spotify">
+                      <div className="music-tile-icon bg-[#1DB954]">
+                        <img src="/images/tmm_music_spotify.png" alt="" className="music-tile-img"
+                          onError={(e) => { (e.target as HTMLImageElement).style.display="none" }} />
+                        <svg className="music-tile-fallback" width="44" height="44" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
                       </div>
+                      <span className="music-tile-label">SPOTIFY</span>
                     </a>
 
-                    <a href="https://www.youtube.com/playlist?list=PLg6v-S6qo4anyKTHrD3zxMAnkHGrSLDlJ" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-                      <div className="music-icon-img music-icon-svg" style={{background:"#FF0000"}}>
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    {/* Apple Music */}
+                    <a href="https://music.apple.com/gb/artist/marshallwi11/1844826623" target="_blank" rel="noopener noreferrer" className="music-tile" aria-label="Apple Music">
+                      <div className="music-tile-icon" style={{background:"linear-gradient(145deg,#fc5c7d,#6a3093)"}}>
+                        <img src="/images/tmm_music_apple_music.png" alt="" className="music-tile-img"
+                          onError={(e) => { (e.target as HTMLImageElement).style.display="none" }} />
+                        <svg className="music-tile-fallback" width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.5 5.5l-5 2V15c-.552-.35-1.208-.5-1.899-.326C7.45 14.938 7 15.74 7 16.551c0 .81.45 1.449 1.101 1.449.652 0 1.235-.486 1.449-1.224.07-.245.099-.5.099-.776V11.8l3-1v2.7c-.552-.35-1.208-.5-1.899-.326C9.45 13.438 9 14.24 9 15.051c0 .81.45 1.449 1.101 1.449.652 0 1.235-.486 1.449-1.224.07-.245.099-.5.099-.776V7.5z"/></svg>
                       </div>
+                      <span className="music-tile-label">APPLE MUSIC</span>
+                    </a>
+
+                    {/* Tidal */}
+                    <a href="https://tidal.com/playlist/5f88e8b6-cded-4806-9c94-b22894328454" target="_blank" rel="noopener noreferrer" className="music-tile" aria-label="Tidal">
+                      <div className="music-tile-icon" style={{background:"#000", border:"1px solid rgba(255,255,255,0.15)"}}>
+                        <img src="/images/tmm_music_tidal.png" alt="" className="music-tile-img"
+                          onError={(e) => { (e.target as HTMLImageElement).style.display="none" }} />
+                        <svg className="music-tile-fallback" width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M12.012 3.992L8.008 7.996 4.004 3.992 0 7.996l4.004 4.004 4.004-4.004 4.004 4.004 4.004-4.004zM8.008 12l-4.004 4.004L8.008 20l4.004-4.004zm7.996 0l-4.004 4.004 4.004 4.004L20 16.004z"/></svg>
+                      </div>
+                      <span className="music-tile-label">TIDAL</span>
+                    </a>
+
+                    {/* Amazon Music */}
+                    <a href="https://music.amazon.co.uk/artists/B0FV93YR78/marshallwi11" target="_blank" rel="noopener noreferrer" className="music-tile" aria-label="Amazon Music">
+                      <div className="music-tile-icon bg-[#232F3E]">
+                        <img src="/images/tmm_music_amazon_music.png" alt="" className="music-tile-img"
+                          onError={(e) => { (e.target as HTMLImageElement).style.display="none" }} />
+                        <svg className="music-tile-fallback" width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M15.93 17.09c-.16.12-.38.13-.56.03-1.77-1.09-2.35-1.59-3.46-2.62-1.04.98-1.78 1.28-2.96 1.28-1.48 0-2.63-.92-2.63-2.75 0-1.45.78-2.43 1.9-2.91.97-.43 2.33-.51 3.37-.62v-.23c0-.43.03-.94-.22-1.31-.22-.33-.64-.47-1.01-.47-.69 0-1.3.35-1.45 1.08-.03.16-.15.32-.31.33l-1.75-.19c-.15-.03-.31-.15-.27-.38.4-2.11 2.3-2.74 4.01-2.74.87 0 2.01.23 2.7.89.87.81.79 1.9.79 3.08v2.79c0 .84.35 1.21.67 1.66.12.16.14.35-.01.47-.36.3-1.01.87-1.37 1.19l-.45-.57z"/><path d="M17.5 19.26c-2.31 1.7-5.65 2.6-8.53 2.6-4.04 0-7.67-1.49-10.42-3.97-.22-.19-.02-.46.24-.31 2.97 1.73 6.63 2.76 10.43 2.76 2.56 0 5.37-.53 7.95-1.63.39-.17.72.26.33.55z"/></svg>
+                      </div>
+                      <span className="music-tile-label">AMAZON MUSIC</span>
+                    </a>
+
+                    {/* Deezer */}
+                    <a href="https://link.deezer.com/s/32Ea3kbAJwzVroL9cvbDM" target="_blank" rel="noopener noreferrer" className="music-tile" aria-label="Deezer">
+                      <div className="music-tile-icon" style={{background:"linear-gradient(135deg,#a238ff,#ef5466,#ff8c00)"}}>
+                        <img src="/images/tmm_music_deezer.png" alt="" className="music-tile-img"
+                          onError={(e) => { (e.target as HTMLImageElement).style.display="none" }} />
+                        <svg className="music-tile-fallback" width="38" height="38" viewBox="0 0 24 24" fill="white"><path d="M18.944 17.236h2.387v1.072h-2.387zM3.67 17.236h2.387v1.072H3.67zm5.087 0h2.387v1.072H8.757zm5.087 0h2.387v1.072h-2.387zM18.944 14.91h2.387v1.073h-2.387zm-5.1 0h2.387v1.073h-2.387zM8.757 14.91h2.387v1.073H8.757zm-5.087 0h2.387v1.073H3.67zm15.274-2.326h2.387v1.072h-2.387zm-5.1 0h2.387v1.072h-2.387zM8.757 12.584h2.387v1.072H8.757zM18.944 10.26h2.387v1.071h-2.387zm-5.1 0h2.387v1.071h-2.387zm10.187-2.326h2.387v1.072H24.031V7.934zm-5.087 0h2.387v1.072h-2.387z"/></svg>
+                      </div>
+                      <span className="music-tile-label">DEEZER</span>
+                    </a>
+
+                    {/* YouTube */}
+                    <a href="https://www.youtube.com/playlist?list=PLg6v-S6qo4anyKTHrD3zxMAnkHGrSLDlJ" target="_blank" rel="noopener noreferrer" className="music-tile" aria-label="YouTube">
+                      <div className="music-tile-icon bg-[#FF0000]">
+                        <img src="/images/tmm_music_youtube.png" alt="" className="music-tile-img"
+                          onError={(e) => { (e.target as HTMLImageElement).style.display="none" }} />
+                        <svg className="music-tile-fallback" width="44" height="44" viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                      </div>
+                      <span className="music-tile-label">YOUTUBE</span>
                     </a>
 
                   </div>
