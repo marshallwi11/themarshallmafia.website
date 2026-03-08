@@ -1,23 +1,24 @@
 "use client"
 
 import Image from "next/image"
-import Script from "next/script"
 import { useState, useEffect, useCallback, useRef } from "react"
+import { loadStripe } from "@stripe/stripe-js"
+import { EmbeddedCheckout, EmbeddedCheckoutProvider } from "@stripe/react-stripe-js"
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 type ModalType = "play" | "showcase" | "music" | "collect" | null
 
 export default function Home() {
   const [activeModal, setActiveModal] = useState<ModalType>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [paypalReady, setPaypalReady] = useState(false)
-  const [collectKey, setCollectKey] = useState(0)
-  const paypalRenderedRef = useRef(false)
+  const [stripeClientSecret, setStripeClientSecret] = useState<string | null>(null)
+  const [stripeLoading, setStripeLoading] = useState(false)
 
   const openModal = (modal: ModalType) => {
     setMobileMenuOpen(false)
     if (modal === "collect") {
       setCollectKey(k => k + 1)
-      paypalRenderedRef.current = false
     }
     setActiveModal(modal)
   }
@@ -34,23 +35,20 @@ export default function Home() {
     return () => { document.body.style.overflow = "" }
   }, [activeModal, mobileMenuOpen])
 
-  // Render PayPal when collect modal mounts
+  // Fetch Stripe client secret when collect modal opens
   useEffect(() => {
-    if (activeModal === "collect" && paypalReady && !paypalRenderedRef.current) {
-      const container = document.getElementById("paypal-container-7FQPC38SRM8BN")
-      if (container && container.children.length === 0) {
-        paypalRenderedRef.current = true
-        try {
-          // @ts-ignore
-          paypal.HostedButtons({ hostedButtonId: "7FQPC38SRM8BN" }).render("#paypal-container-7FQPC38SRM8BN")
-        } catch (e) {
-          console.error("PayPal render error:", e)
-          paypalRenderedRef.current = false
-        }
-      }
+    if (activeModal === "collect" && !stripeClientSecret && !stripeLoading) {
+      setStripeLoading(true)
+      fetch("/api/checkout", { method: "POST" })
+        .then((r) => r.json())
+        .then((data) => { setStripeClientSecret(data.clientSecret); setStripeLoading(false) })
+        .catch(() => setStripeLoading(false))
     }
-  }, [activeModal, paypalReady, collectKey])
-
+    if (activeModal !== "collect") {
+      setStripeClientSecret(null)
+      setStripeLoading(false)
+    }
+  }, [activeModal])
   const navItems: { label: string; modal: ModalType }[] = [
     { label: "PLAY", modal: "play" },
     { label: "SHOWCASE", modal: "showcase" },
@@ -60,12 +58,6 @@ export default function Home() {
 
   return (
     <>
-      <Script
-        src="https://www.paypal.com/sdk/js?client-id=BAAHLKdlCHkITDXSJJ2L4OwBggnZscg77Oqj9XSptYrHLbdiEtjbQCD2KD-i3obFsLes3m7WcyDyMnez4I&components=hosted-buttons&disable-funding=venmo&currency=GBP"
-        strategy="afterInteractive"
-        onReady={() => setPaypalReady(true)}
-      />
-
       <main className="h-screen w-screen overflow-hidden bg-black relative flex flex-col items-center justify-center">
 
         {/* ===== DESKTOP NAV ===== */}
@@ -438,8 +430,10 @@ export default function Home() {
                     <span className="play-block-title">CHECKOUT</span>
                     <span className="play-block-subtitle">SECURE</span>
                   </div>
-                  {paypalReady ? (
-                    <div style={{paddingTop:"4px"}}><div key={collectKey} id="paypal-container-7FQPC38SRM8BN" className="paypal-button-container" /></div>
+                  {stripeClientSecret ? (
+                    <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret: stripeClientSecret }}>
+                      <EmbeddedCheckout />
+                    </EmbeddedCheckoutProvider>
                   ) : (
                     <div className="flex items-center justify-center py-8 gap-3">
                       <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
