@@ -233,6 +233,24 @@
   }
   .modal-scroll::-webkit-scrollbar { display: none; }
 
+  /* --- PLAY CARD: compact block matching Figma, no double box --- */
+  .play-card {
+    background: rgba(52, 52, 52, 0.25);
+    border-radius: 50px;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .play-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
   /* --- GLASS BLOCK: Liquid glass content blocks --- */
   .glass-block {
     background: rgba(255, 255, 255, 0.04);
