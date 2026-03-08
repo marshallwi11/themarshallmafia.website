@@ -220,23 +220,24 @@
     animation: fadeIn 0.25s ease-out;
   }
 
-  /* --- MODAL SCROLL BARE: no outer box, cards float directly on blur --- */
-  /* pointer-events: none lets clicks on empty space pass through to the overlay/backdrop */
+  /* --- MODAL SCROLL BARE: full height, padding-top clears nav --- */
   .modal-scroll-bare {
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 1;
-    width: 100%;
-    height: calc(100% - 70px);
-    margin-top: 70px;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
     pointer-events: none;
   }
-  /* re-enable pointer events on the inner column so cards are clickable / scrollable */
+  /* re-enable pointer events on the inner column */
   .modal-scroll-bare > div {
     pointer-events: auto;
+    padding-top: 80px;
   }
   .modal-scroll-bare::-webkit-scrollbar { display: none; }
 

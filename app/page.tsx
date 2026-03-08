@@ -63,7 +63,7 @@ export default function Home() {
           {/* Scroll container — click passes through to overlay */}
           <div className="modal-scroll-bare animate-modal-in">
             {/* Inner width-constrained column — clicks on gaps close modal */}
-            <div className="max-w-[675px] mx-auto space-y-[50px] py-[80px] px-6">
+            <div className="max-w-[675px] mx-auto space-y-[50px] pb-[80px] px-6">
 
               <div className="play-card" onClick={(e) => e.stopPropagation()}>
                 <div className="play-card-header">
@@ -194,8 +194,8 @@ export default function Home() {
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-backdrop" />
           <div className="modal-scroll-bare animate-modal-in">
-            <div className="max-w-[650px] mx-auto space-y-[40px] py-[80px] px-6">
-              {["tmm_picture_1","tmm_picture_2","tmm_picture_3","tmm_picture_4","tmm_picture_5","tmm_picture_6","tmm_picture_7"].map((name, i) => (
+            <div className="max-w-[650px] mx-auto space-y-[40px] pb-[80px] px-6">
+              {["showcase-1","showcase-2","showcase-3","showcase-4"].map((name, i) => (
                 <div key={i} className="showcase-card" onClick={(e) => e.stopPropagation()}>
                   <img
                     src={`/images/${name}.png`}
@@ -204,10 +204,6 @@ export default function Home() {
                     style={{ display: "block" }}
                     draggable={false}
                     loading={i === 0 ? "eager" : "lazy"}
-                    onError={(e) => {
-                      const t = e.target as HTMLImageElement
-                      t.src = `/images/${name}.jpg`
-                    }}
                   />
                 </div>
               ))}
@@ -221,7 +217,7 @@ export default function Home() {
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-backdrop" />
           <div className="modal-scroll-bare animate-modal-in">
-            <div className="w-full max-w-[560px] mx-auto px-6 py-[80px]">
+            <div className="w-full max-w-[560px] mx-auto px-6 pb-[80px]">
 
               <div className="play-card" onClick={(e) => e.stopPropagation()}>
                 <div className="play-card-header">
@@ -233,28 +229,28 @@ export default function Home() {
                   {/* Spotify — using local icon */}
                   <a href="https://open.spotify.com/playlist/3IciRcKF72CRT6MHI6C6Ry" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Spotify">
                     <div className="music-platform-icon overflow-hidden">
-                      <img src="/images/spotify-icon.png" alt="Spotify" className="w-full h-full object-cover" />
+                      <img src="/images/spotify-icon.png" alt="Spotify" width="56" height="56" className="w-full h-full object-cover" />
                     </div>
                   </a>
 
                   {/* Apple Music — using local icon */}
                   <a href="https://music.apple.com/gb/artist/marshallwi11/1844826623" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Apple Music">
                     <div className="music-platform-icon overflow-hidden">
-                      <img src="/images/apple-music-icon.png" alt="Apple Music" className="w-full h-full object-cover" />
+                      <img src="/images/apple-music-icon.png" alt="Apple Music" width="56" height="56" className="w-full h-full object-cover" />
                     </div>
                   </a>
 
                   {/* Tidal — using local icon */}
-                  <a href="https://tidal.com/artist/68027124" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Tidal">
+                  <a href="https://tidal.com/playlist/5f88e8b6-cded-4806-9c94-b22894328454" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Tidal">
                     <div className="music-platform-icon overflow-hidden">
-                      <img src="/images/tidal-icon.png" alt="Tidal" className="w-full h-full object-cover" />
+                      <img src="/images/tidal-icon.png" alt="Tidal" width="56" height="56" className="w-full h-full object-cover" />
                     </div>
                   </a>
 
                   {/* Amazon Music — using local icon */}
                   <a href="https://music.amazon.co.uk/artists/B0FV93YR78/marshallwi11" target="_blank" rel="noopener noreferrer" className="music-icon-wrapper" aria-label="Amazon Music">
                     <div className="music-platform-icon overflow-hidden">
-                      <img src="/images/amazon-music-icon.png" alt="Amazon Music" className="w-full h-full object-cover" />
+                      <img src="/images/amazon-music-icon.png" alt="Amazon Music" width="56" height="56" className="w-full h-full object-cover" />
                     </div>
                   </a>
 
@@ -284,7 +280,7 @@ export default function Home() {
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-backdrop" />
           <div className="modal-scroll-bare animate-modal-in">
-            <div className="max-w-[650px] mx-auto space-y-[40px] py-[80px] px-6">
+            <div className="max-w-[650px] mx-auto space-y-[40px] pb-[80px] px-6">
 
               <div className="glass-block" onClick={(e) => e.stopPropagation()}>
                 <div className="flex gap-5 items-start">
