@@ -366,23 +366,23 @@ export default function Home() {
                 {/* Releases card */}
                 <div className="play-card" onClick={(e) => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
                   <div className="play-card-header">
-                    <span className="play-block-title">ALBUMS</span>
+                    <span className="play-block-title">MUSIC</span>
                     <span className="play-block-subtitle">RELEASED</span>
                   </div>
                   <div className="releases-list">
                     <div className="release-row">
-                      <span className="play-block-body">THE MARSHALL MAFIA</span>
-                      <span className="play-block-subtitle release-tag">VOLUME 1</span>
+                      <span className="play-block-body">VOLUME 1</span>
+                      <span className="play-block-body">EXTENDED PLAYLIST</span>
                     </div>
                     <hr className="play-card-divider" />
                     <div className="release-row">
-                      <span className="play-block-body">THE MARSHALL MAFIA</span>
-                      <span className="play-block-subtitle release-tag">VOLUME 2</span>
+                      <span className="play-block-body">VOLUME 2</span>
+                      <span className="play-block-body">ALBUM</span>
                     </div>
                     <hr className="play-card-divider" />
                     <div className="release-row">
-                      <span className="play-block-body">THE MARSHALL MAFIA</span>
-                      <span className="play-block-subtitle release-tag">VOLUME 3</span>
+                      <span className="play-block-body">VOLUME 3</span>
+                      <span className="play-block-body">SOUNDTRACKS</span>
                     </div>
                   </div>
                 </div>
