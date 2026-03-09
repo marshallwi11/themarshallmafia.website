@@ -341,7 +341,7 @@
     height: calc(100% - 100px);
     margin-top: 70px;
     overflow: hidden;
-    border-radius: 32px;
+    border-radius: 38px;
     /* Liquid glass: translucent dark with blur and edge highlight */
     background: rgba(18, 18, 18, 0.65);
     backdrop-filter: blur(60px) saturate(1.8);
@@ -374,7 +374,7 @@
   }
   /* Outer dark glass card — no padding, image fills inside well */
   .showcase-card {
-    border-radius: clamp(12px, 2.5vw, 20px);
+    border-radius: clamp(15px, 3vw, 24px);
     width: 100%;
     background: rgba(52,52,52,0.25);
     border: 1px solid rgba(255,255,255,0.07);
@@ -386,7 +386,7 @@
   /* Inner well — image fills it completely */
   .showcase-img-well {
     background: rgba(230, 228, 224, 0.92);
-    border-radius: 20px;
+    border-radius: clamp(8px, 1.5vw, 14px);
     overflow: hidden;
     width: 100%;
     line-height: 0;
@@ -432,7 +432,7 @@
   .music-tile-icon {
     width: clamp(64px, 18vw, 96px);
     height: clamp(64px, 18vw, 96px);
-    border-radius: clamp(16px, 4vw, 26px);
+    border-radius: clamp(20px, 4.8vw, 31px);
     overflow: hidden;
     flex-shrink: 0;
   }
@@ -535,7 +535,7 @@
   /* --- PLAY CARD: compact block matching Figma, no double box --- */
   .play-card {
     background: rgba(52, 52, 52, 0.25);
-    border-radius: clamp(16px, 3vw, 24px);
+    border-radius: clamp(19px, 3.6vw, 29px);
     padding: clamp(20px, 5vw, 50px);
     display: flex;
     flex-direction: column;
@@ -555,7 +555,7 @@
     background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-radius: 30px;
+    border-radius: 36px;
     padding: 40px 44px;
     border: 1px solid rgba(255, 255, 255, 0.07);
     box-shadow:
@@ -567,7 +567,7 @@
     background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-radius: 35px;
+    border-radius: 42px;
     padding: 28px;
     border: 1px solid rgba(255, 255, 255, 0.07);
     box-shadow:
@@ -772,7 +772,7 @@
 
     /* Cards tighter */
     .play-card {
-      border-radius: 14px;
+      border-radius: 17px;
       padding: 18px;
       gap: 10px;
     }
@@ -789,7 +789,7 @@
     .music-tile-icon {
       width: 72px;
       height: 72px;
-      border-radius: 18px;
+      border-radius: 22px;
     }
     .music-tile-label {
       font-size: 10px;
@@ -798,10 +798,10 @@
     /* Showcase card inner well radius */
     .showcase-img-well,
     .collect-img-well {
-      border-radius: 12px;
+      border-radius: 7px;
     }
     .showcase-card {
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 8px;
     }
 
