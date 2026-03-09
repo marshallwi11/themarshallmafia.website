@@ -110,7 +110,7 @@ export default function Home() {
         {activeModal === "play" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <button onClick={closeModal} className="fixed top-5 right-5 z-[60] flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-colors" aria-label="Close">
+            <button onClick={closeModal} className="modal-close-btn" aria-label="Close">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="white" strokeWidth="2.5" strokeLinecap="round"/></svg>
             </button>
             <div className="modal-scroll-bare animate-modal-in">
@@ -245,7 +245,7 @@ export default function Home() {
         {activeModal === "showcase" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <button onClick={closeModal} className="fixed top-5 right-5 z-[60] flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-colors" aria-label="Close">
+            <button onClick={closeModal} className="modal-close-btn" aria-label="Close">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="white" strokeWidth="2.5" strokeLinecap="round"/></svg>
             </button>
             <div className="modal-scroll-bare animate-modal-in">
@@ -309,7 +309,7 @@ export default function Home() {
         {activeModal === "music" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <button onClick={closeModal} className="fixed top-5 right-5 z-[60] flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-colors" aria-label="Close">
+            <button onClick={closeModal} className="modal-close-btn" aria-label="Close">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="white" strokeWidth="2.5" strokeLinecap="round"/></svg>
             </button>
             <div className="modal-scroll-bare animate-modal-in">
@@ -376,17 +376,17 @@ export default function Home() {
                   <div className="releases-list">
                     <div className="release-row">
                       <span className="play-block-body">THE MARSHALL MAFIA</span>
-                      <span className="play-block-subtitle release-tag">EP</span>
+                      <span className="play-block-subtitle release-tag">VOLUME 1</span>
                     </div>
                     <hr className="play-card-divider" />
                     <div className="release-row">
                       <span className="play-block-body">THE MARSHALL MAFIA</span>
-                      <span className="play-block-subtitle release-tag">ALBUM</span>
+                      <span className="play-block-subtitle release-tag">VOLUME 2</span>
                     </div>
                     <hr className="play-card-divider" />
                     <div className="release-row">
                       <span className="play-block-body">THE MARSHALL MAFIA</span>
-                      <span className="play-block-subtitle release-tag">SOUNDTRACKS</span>
+                      <span className="play-block-subtitle release-tag">VOLUME 3</span>
                     </div>
                   </div>
                 </div>
@@ -400,7 +400,7 @@ export default function Home() {
         {activeModal === "collect" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <button onClick={closeModal} className="fixed top-5 right-5 z-[60] flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-colors" aria-label="Close">
+            <button onClick={closeModal} className="modal-close-btn" aria-label="Close">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="white" strokeWidth="2.5" strokeLinecap="round"/></svg>
             </button>
             <div className="modal-scroll-bare animate-modal-in">
@@ -434,7 +434,6 @@ export default function Home() {
         {/* ==================== FLOATING BUY BUTTON ==================== */}
         {!activeModal && !mobileMenuOpen && (
           <button className="floating-buy" onClick={() => openModal("collect")}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
             BUY NOW
           </button>
         )}
