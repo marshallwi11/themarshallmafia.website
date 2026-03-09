@@ -14,6 +14,33 @@ export default function Home() {
   const [stripeClientSecret, setStripeClientSecret] = useState<string | null>(null)
   const [stripeLoading, setStripeLoading] = useState(false)
   const [collectKey, setCollectKey] = useState(0)
+  const [lightMode, setLightMode] = useState(false)
+  const [logoFlipping, setLogoFlipping] = useState(false)
+  const [checkoutShaking, setCheckoutShaking] = useState(false)
+  const lastTapRef = useRef<number>(0)
+
+  // Double-click/double-tap on hero GIF toggles light mode with flip animation
+  const handleLogoDoubleTap = useCallback(() => {
+    const now = Date.now()
+    if (now - lastTapRef.current < 400) {
+      setLogoFlipping(true)
+      setTimeout(() => {
+        setLightMode(m => !m)
+        setLogoFlipping(false)
+      }, 400)
+    }
+    lastTapRef.current = now
+  }, [])
+
+  // Shake checkout card every 10s when collect modal is open
+  useEffect(() => {
+    if (activeModal !== "collect") return
+    const interval = setInterval(() => {
+      setCheckoutShaking(true)
+      setTimeout(() => setCheckoutShaking(false), 600)
+    }, 10000)
+    return () => clearInterval(interval)
+  }, [activeModal])
 
   const openModal = (modal: ModalType) => {
     if (modal === "collect") {
@@ -50,12 +77,21 @@ export default function Home() {
 
   return (
     <>
-      <main className="h-screen w-screen overflow-hidden bg-black relative flex flex-col items-center justify-center">
+      <main className={`h-screen w-screen overflow-hidden relative flex flex-col items-center justify-center${lightMode ? " tmm-light" : " tmm-dark"}`}>
 
         {/* ===== HERO ===== */}
-        <div className="select-none pointer-events-none">
-          <Image src="/images/asset-logo-motion-graphic.gif" alt="The Marshall Mafia"
-            width={1175} height={1175} className="w-[84vw] max-w-[1175px] h-auto" priority unoptimized />
+        <div
+          className="select-none cursor-pointer"
+          onClick={handleLogoDoubleTap}
+          aria-label="Toggle light mode"
+        >
+          <Image
+            src="/images/asset-logo-motion-graphic.gif"
+            alt="The Marshall Mafia"
+            width={1175} height={1175}
+            className={`w-[84vw] max-w-[1175px] h-auto transition-transform${logoFlipping ? " logo-flip-anim" : lightMode ? " logo-flipped" : ""}`}
+            priority unoptimized
+          />
         </div>
 
         {/* ===== FLOATING PILL NAV ===== */}
@@ -127,12 +163,13 @@ export default function Home() {
               onClick={() => activeModal === "collect" ? closeModal() : openModal("collect")}
               aria-label="Collect"
             >
-              <span className="pill-nav-icon">
+              <span className="pill-nav-icon" style={{position:"relative"}}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                   <path d="M16 10a4 4 0 01-8 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
+                <span className="collect-dot" />
               </span>
               <span className="pill-nav-label">COLLECT</span>
             </button>
@@ -436,7 +473,7 @@ export default function Home() {
             <div className="modal-scroll-bare animate-modal-in">
               <div className="collect-list" onClick={(e) => e.stopPropagation()}>
 
-                <div className="play-card">
+                <div className={`play-card${checkoutShaking ? " checkout-shake" : ""}`}>
                   <div className="play-card-header" style={{marginBottom:"20px"}}>
                     <span className="play-block-title">CHECKOUT</span>
                     <span className="play-block-subtitle">SECURE</span>

@@ -674,6 +674,156 @@
   }
 
   /* ===================================================
+     COLLECT DOT
+     =================================================== */
+  .collect-dot {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--tmm-red);
+    border: 1.5px solid rgba(0,0,0,0.5);
+    animation: dotPulse 2s ease-in-out infinite;
+  }
+  @keyframes dotPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+  }
+
+  /* ===================================================
+     CHECKOUT SHAKE
+     =================================================== */
+  .checkout-shake {
+    animation: checkoutShake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+  }
+  @keyframes checkoutShake {
+    0%, 100% { transform: translateX(0); }
+    15%  { transform: translateX(-5px) rotate(-0.4deg); }
+    30%  { transform: translateX(5px) rotate(0.4deg); }
+    45%  { transform: translateX(-4px) rotate(-0.3deg); }
+    60%  { transform: translateX(4px) rotate(0.3deg); }
+    75%  { transform: translateX(-2px); }
+    90%  { transform: translateX(2px); }
+  }
+
+  /* ===================================================
+     LOGO FLIP ANIMATION
+     =================================================== */
+  .logo-flipped {
+    transform: rotate(180deg);
+  }
+  .logo-flip-anim {
+    animation: logoSpin 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes logoSpin {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(180deg); }
+  }
+
+  /* ===================================================
+     DARK / LIGHT MODE BASE
+     =================================================== */
+  .tmm-dark {
+    background: #000000;
+  }
+  .tmm-light {
+    background: #f5f3ef;
+  }
+
+  /* Light mode — nav pill */
+  .tmm-light .pill-nav-inner {
+    background: rgba(240, 238, 234, 0.75);
+    border-color: rgba(0,0,0,0.1);
+    box-shadow:
+      0 0 0 0.5px rgba(0,0,0,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.8),
+      0 8px 32px rgba(0,0,0,0.12);
+  }
+  .tmm-light .pill-nav-item {
+    color: rgba(0,0,0,0.4);
+  }
+  .tmm-light .pill-nav-item:hover {
+    color: #000000;
+    background: rgba(0,0,0,0.06);
+  }
+  .tmm-light .pill-nav-item--active {
+    color: #000000 !important;
+    background: rgba(0,0,0,0.08) !important;
+  }
+  .tmm-light .pill-nav-home-active {
+    background: rgba(30,30,30,0.9);
+    border-color: rgba(0,0,0,0.15);
+  }
+  .tmm-light .pill-nav-home:hover .pill-nav-home-active {
+    background: rgba(50,50,50,0.95);
+  }
+
+  /* Light mode — modal backdrop */
+  .tmm-light .modal-backdrop {
+    background: rgba(240, 238, 234, 0.6);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+  }
+
+  /* Light mode — play cards */
+  .tmm-light .play-card {
+    background: rgba(255,255,255,0.7);
+    border-color: rgba(0,0,0,0.08);
+  }
+  .tmm-light .play-card-pill {
+    background: rgba(255,255,255,0.7);
+    border-color: rgba(0,0,0,0.08);
+  }
+  .tmm-light .play-block-title {
+    color: #111111;
+  }
+  .tmm-light .play-block-subtitle {
+    color: #888888;
+  }
+  .tmm-light .play-block-body {
+    color: #111111;
+    text-shadow: none;
+  }
+  .tmm-light .play-card-divider {
+    border-color: rgba(0,0,0,0.1);
+  }
+
+  /* Light mode — showcase cards */
+  .tmm-light .showcase-card {
+    background: rgba(255,255,255,0.6);
+    border-color: rgba(0,0,0,0.08);
+  }
+  .tmm-light .showcase-img-well {
+    background: rgba(220,218,214,0.9);
+  }
+
+  /* Light mode — music tiles */
+  .tmm-light .music-tile-label {
+    color: rgba(0,0,0,0.45);
+  }
+  .tmm-light .music-tile:hover {
+    opacity: 0.75;
+  }
+
+  /* Light mode — modal close button */
+  .tmm-light .modal-close-btn {
+    background: rgba(0,0,0,0.08);
+  }
+  .tmm-light .modal-close-btn:hover {
+    background: rgba(0,0,0,0.15);
+  }
+  .tmm-light .modal-close-btn svg path {
+    stroke: #111111;
+  }
+
+  /* Light mode — collect dot border adapts */
+  .tmm-light .collect-dot {
+    border-color: rgba(240,238,234,0.8);
+  }
+
+  /* ===================================================
      TMM BRAND COLOUR UTILITIES
      =================================================== */
   .text-tmm-brown  { color: var(--tmm-brown); }
