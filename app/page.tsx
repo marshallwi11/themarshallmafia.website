@@ -254,8 +254,7 @@ export default function Home() {
                 {/* Image 1 */}
                 <div className="showcase-card">
                   <div className="showcase-img-well">
-                    <img src="/images/tmm_picture_1.png" alt="The Marshall Mafia" loading="eager"
-                      onError={(e) => { const t=e.target as HTMLImageElement; t.onerror=null; t.parentElement!.style.minHeight="200px" }} />
+                    <Image src="/images/tmm_picture_1.jpg" alt="The Marshall Mafia card game" width={1200} height={900} priority sizes="(max-width:600px) 100vw, 600px" style={{width:"100%",height:"auto"}} />
                   </div>
                 </div>
 
@@ -267,8 +266,7 @@ export default function Home() {
                 {/* Image 2 */}
                 <div className="showcase-card">
                   <div className="showcase-img-well">
-                    <img src="/images/tmm_picture_2.png" alt="The Marshall Mafia" loading="lazy"
-                      onError={(e) => { const t=e.target as HTMLImageElement; t.onerror=null; t.parentElement!.style.minHeight="200px" }} />
+                    <Image src="/images/tmm_picture_2.jpg" alt="The Marshall Mafia roles and rules" width={1200} height={900} loading="lazy" sizes="(max-width:600px) 100vw, 600px" style={{width:"100%",height:"auto"}} />
                   </div>
                 </div>
 
@@ -280,8 +278,7 @@ export default function Home() {
                 {/* Image 3 */}
                 <div className="showcase-card">
                   <div className="showcase-img-well">
-                    <img src="/images/tmm_picture_3.png" alt="The Marshall Mafia" loading="lazy"
-                      onError={(e) => { const t=e.target as HTMLImageElement; t.onerror=null; t.parentElement!.style.minHeight="200px" }} />
+                    <Image src="/images/tmm_picture_3.jpg" alt="The Marshall Mafia game phases" width={1200} height={900} loading="lazy" sizes="(max-width:600px) 100vw, 600px" style={{width:"100%",height:"auto"}} />
                   </div>
                 </div>
 
@@ -294,8 +291,7 @@ export default function Home() {
                 {[4,5,6,7].map((n) => (
                   <div key={n} className="showcase-card">
                     <div className="showcase-img-well">
-                      <img src={`/images/tmm_picture_${n}.png`} alt={`The Marshall Mafia — image ${n}`} loading="lazy"
-                        onError={(e) => { const t=e.target as HTMLImageElement; t.onerror=null; t.parentElement!.style.minHeight="200px" }} />
+                      <Image src={`/images/tmm_picture_${n}.jpg`} alt={`The Marshall Mafia — image ${n}`} width={1200} height={900} loading="lazy" sizes="(max-width:600px) 100vw, 600px" style={{width:"100%",height:"auto"}} />
                     </div>
                   </div>
                 ))}
@@ -324,42 +320,42 @@ export default function Home() {
 
                     <a href="https://open.spotify.com/playlist/3IciRcKF72CRT6MHI6C6Ry" target="_blank" rel="noopener noreferrer" className="music-tile">
                       <div className="music-tile-icon">
-                        <img src="/images/tmm_music_spotify.png" alt="Spotify" className="music-tile-img" loading="eager" />
+                        <img src="/images/tmm_music_spotify.jpg" alt="Spotify" className="music-tile-img" loading="eager" />
                       </div>
                       <span className="music-tile-label">SPOTIFY</span>
                     </a>
 
                     <a href="https://music.apple.com/gb/artist/marshallwi11/1844826623" target="_blank" rel="noopener noreferrer" className="music-tile">
                       <div className="music-tile-icon">
-                        <img src="/images/tmm_music_apple_music.png" alt="Apple Music" className="music-tile-img" loading="eager" />
+                        <img src="/images/tmm_music_apple_music.jpg" alt="Apple Music" className="music-tile-img" loading="eager" />
                       </div>
                       <span className="music-tile-label">APPLE MUSIC</span>
                     </a>
 
                     <a href="https://tidal.com/playlist/5f88e8b6-cded-4806-9c94-b22894328454" target="_blank" rel="noopener noreferrer" className="music-tile">
                       <div className="music-tile-icon">
-                        <img src="/images/tmm_music_tidal.png" alt="Tidal" className="music-tile-img" loading="eager" />
+                        <img src="/images/tmm_music_tidal.jpg" alt="Tidal" className="music-tile-img" loading="eager" />
                       </div>
                       <span className="music-tile-label">TIDAL</span>
                     </a>
 
                     <a href="https://music.amazon.co.uk/artists/B0FV93YR78/marshallwi11" target="_blank" rel="noopener noreferrer" className="music-tile">
                       <div className="music-tile-icon">
-                        <img src="/images/tmm_music_amazon_music.png" alt="Amazon Music" className="music-tile-img" loading="eager" />
+                        <img src="/images/tmm_music_amazon_music.jpg" alt="Amazon Music" className="music-tile-img" loading="eager" />
                       </div>
                       <span className="music-tile-label">AMAZON MUSIC</span>
                     </a>
 
                     <a href="https://link.deezer.com/s/32Ea3kbAJwzVroL9cvbDM" target="_blank" rel="noopener noreferrer" className="music-tile">
                       <div className="music-tile-icon">
-                        <img src="/images/tmm_music_deezer.png" alt="Deezer" className="music-tile-img" loading="eager" />
+                        <img src="/images/tmm_music_deezer.jpg" alt="Deezer" className="music-tile-img" loading="eager" />
                       </div>
                       <span className="music-tile-label">DEEZER</span>
                     </a>
 
                     <a href="https://www.youtube.com/playlist?list=PLg6v-S6qo4anyKTHrD3zxMAnkHGrSLDlJ" target="_blank" rel="noopener noreferrer" className="music-tile">
                       <div className="music-tile-icon">
-                        <img src="/images/tmm_music_youtube.png" alt="YouTube" className="music-tile-img" loading="eager" />
+                        <img src="/images/tmm_music_youtube.jpg" alt="YouTube" className="music-tile-img" loading="eager" />
                       </div>
                       <span className="music-tile-label">YOUTUBE</span>
                     </a>
