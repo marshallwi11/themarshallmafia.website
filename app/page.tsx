@@ -19,15 +19,20 @@ export default function Home() {
   const [checkoutShaking, setCheckoutShaking] = useState(false)
   const lastTapRef = useRef<number>(0)
 
-  // Double-click/double-tap on hero GIF toggles light mode with flip animation
+  // Double-click/double-tap on nav eyes toggles light mode
+  // Phase 1 (0-200ms): blur out + scaleY to 0
+  // Phase 2 (200ms): swap light mode state
+  // Phase 3 (200-400ms): scaleY back to 1, blur out (new state)
   const handleLogoDoubleTap = useCallback(() => {
     const now = Date.now()
     if (now - lastTapRef.current < 400) {
       setLogoFlipping(true)
       setTimeout(() => {
         setLightMode(m => !m)
+      }, 200)
+      setTimeout(() => {
         setLogoFlipping(false)
-      }, 400)
+      }, 420)
     }
     lastTapRef.current = now
   }, [])
