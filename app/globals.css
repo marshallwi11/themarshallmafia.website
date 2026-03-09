@@ -42,7 +42,6 @@
   --tmm-yellow: #F8AC00;
   --tmm-purple: #9152E6;
 
-  /* Legacy aliases */
   --color-kill: var(--tmm-red);
   --color-guess: var(--tmm-blue);
   --color-save: var(--tmm-green);
@@ -135,7 +134,6 @@
   --color-save: var(--tmm-green);
   --color-wild: var(--tmm-yellow);
   --color-ally: var(--tmm-cream);
-
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-chart-1: var(--chart-1);
@@ -177,96 +175,119 @@
 
 @layer utilities {
 
-  /* --- TEXT NAV BAR (smaller) --- */
-  .nav-link {
-    font-family: 'MarkerBold', sans-serif;
-    font-size: 18px;
-    line-height: 24px;
-    color: #7B7B7B;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: color 0.2s ease;
-    white-space: nowrap;
-  }
-  .nav-link:hover {
-    color: #bbbbbb;
-  }
-
-  .nav-title {
-    font-family: 'MarkerBold', sans-serif;
-    font-size: 18px;
-    line-height: 24px;
-    color: #FFFFFF;
-    white-space: nowrap;
-  }
-
-  /* --- MODAL OVERLAY: Blurred backdrop --- */
-
-  /* ===== MOBILE NAV ===== */
-  .mobile-bar {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: white;
-    border-radius: 2px;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-  }
-  .mobile-menu {
+  /* ===================================================
+     FLOATING PILL NAV
+     =================================================== */
+  .pill-nav {
     position: fixed;
-    inset: 0;
-    z-index: 45;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    bottom: clamp(28px, 5vw, 44px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    pointer-events: auto;
+  }
+  .pill-nav-inner {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 8px;
+    background: rgba(30, 30, 30, 0.45);
+    backdrop-filter: blur(32px) saturate(1.6);
+    -webkit-backdrop-filter: blur(32px) saturate(1.6);
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow:
+      0 0 0 0.5px rgba(255,255,255,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.1),
+      0 20px 60px rgba(0,0,0,0.6);
+  }
+
+  /* Each nav item */
+  .pill-nav-item {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  }
-  .mobile-menu-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 32px;
-  }
-  .mobile-menu-item {
-    font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(24px, 7vw, 32px);
-    color: white;
-    letter-spacing: 0.08em;
-    transition: opacity 0.15s ease;
-  }
-  .mobile-menu-item:hover { opacity: 0.6; }
-
-  /* --- FLOATING BUY BUTTON --- */
-  .floating-buy {
-    position: fixed;
-    bottom: clamp(24px, 5vw, 40px);
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 40;
-    display: flex;
-    align-items: center;
-    background: var(--tmm-cream);
-    color: #fff;
+    gap: 3px;
+    padding: 10px 14px;
     border: none;
-    border-radius: 100px;
-    padding: clamp(12px, 2.5vw, 16px) clamp(24px, 4vw, 40px);
+    background: none;
     cursor: pointer;
+    border-radius: 80px;
+    color: rgba(255,255,255,0.45);
+    transition: color 0.2s ease, background 0.2s ease;
+    min-width: 52px;
+  }
+  .pill-nav-item:hover {
+    color: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.06);
+  }
+
+  /* Icon wrapper — scales up on hover */
+  .pill-nav-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+  }
+  .pill-nav-item:hover .pill-nav-icon {
+    transform: scale(1.15);
+  }
+
+  /* Label beneath each icon */
+  .pill-nav-label {
     font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(13px, 2.5vw, 16px);
-    letter-spacing: 0.05em;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-    transition: opacity 0.2s, transform 0.2s;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    line-height: 1;
     white-space: nowrap;
   }
-  .floating-buy:hover {
-    opacity: 0.85;
-    transform: translateX(-50%) scale(1.03);
+
+  /* TMM centre home button — elevated dark circle like reference */
+  .pill-nav-home {
+    padding: 0;
+    min-width: auto;
+    background: none !important;
+    margin: 0 4px;
+    /* Lift it above the pill bar */
+    position: relative;
+    bottom: 18px;
+  }
+  .pill-nav-home:hover {
+    background: none !important;
+  }
+  .pill-nav-home-active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(22, 22, 22, 0.92);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.08),
+      0 8px 32px rgba(0,0,0,0.7);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .pill-nav-home:hover .pill-nav-home-active {
+    background: rgba(38, 38, 38, 0.95);
+    transform: scale(1.06);
+  }
+  .pill-nav-home-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
   }
 
-  /* --- MODAL CLOSE BUTTON --- */
+  /* ===================================================
+     MODAL CLOSE BUTTON
+     =================================================== */
   .modal-close-btn {
     position: fixed;
     top: 20px;
@@ -294,6 +315,9 @@
     .modal-close-btn:hover { background: transparent; opacity: 0.6; }
   }
 
+  /* ===================================================
+     MODAL SYSTEM
+     =================================================== */
   .modal-overlay {
     position: fixed;
     inset: 0;
@@ -312,7 +336,6 @@
     animation: fadeIn 0.25s ease-out;
   }
 
-  /* --- MODAL SCROLL BARE: full scrollable area, clicks on gaps close modal --- */
   .modal-scroll-bare {
     position: absolute;
     top: 0;
@@ -324,16 +347,13 @@
     overflow-x: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    /* NO pointer-events:none — scroll must work on touch */
   }
   .modal-scroll-bare > div {
     padding-top: clamp(90px, 15vw, 110px);
     min-height: 100%;
-    /* Clicks on the padding area (gaps between cards) will bubble up to modal-overlay and close */
   }
   .modal-scroll-bare::-webkit-scrollbar { display: none; }
 
-  /* --- MODAL CONTENT: Liquid glass container (not solid black) --- */
   .modal-content {
     position: relative;
     width: calc(100% - 48px);
@@ -342,7 +362,6 @@
     margin-top: 70px;
     overflow: hidden;
     border-radius: 38px;
-    /* Liquid glass: translucent dark with blur and edge highlight */
     background: rgba(18, 18, 18, 0.65);
     backdrop-filter: blur(60px) saturate(1.8);
     -webkit-backdrop-filter: blur(60px) saturate(1.8);
@@ -363,7 +382,9 @@
   }
   .modal-scroll::-webkit-scrollbar { display: none; }
 
-  /* --- SHOWCASE LIST + CARD --- */
+  /* ===================================================
+     SHOWCASE
+     =================================================== */
   .showcase-list {
     max-width: 600px;
     margin: 0 auto;
@@ -372,7 +393,6 @@
     flex-direction: column;
     gap: clamp(16px, 4vw, 32px);
   }
-  /* Outer dark glass card — no padding, image fills inside well */
   .showcase-card {
     border-radius: clamp(15px, 3vw, 24px);
     width: 100%;
@@ -383,7 +403,6 @@
     padding: clamp(8px, 2.5vw, 16px);
     box-sizing: border-box;
   }
-  /* Inner well — image fills it completely */
   .showcase-img-well {
     background: rgba(230, 228, 224, 0.92);
     border-radius: clamp(8px, 1.5vw, 14px);
@@ -391,25 +410,23 @@
     width: 100%;
     line-height: 0;
   }
-  .showcase-img-well img {
+  .showcase-img-well img,
+  .showcase-img-well span,
+  .showcase-img-well > * {
     width: 100%;
     height: auto;
     display: block;
     object-fit: cover;
   }
 
-  /* --- MUSIC GRID --- */
+  /* ===================================================
+     MUSIC MODAL
+     =================================================== */
   .music-modal-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 8px;
-  }
-  /* Force both sides to same font size */
-  .music-modal-header .play-block-title,
-  .music-modal-header .play-block-subtitle {
-    font-size: clamp(15px, 3.5vw, 20px) !important;
-    line-height: 1;
   }
   .music-grid {
     display: grid;
@@ -442,7 +459,6 @@
     object-fit: cover;
     display: block;
   }
-
   .music-tile-label {
     font-family: 'MarkerBold', sans-serif;
     font-size: 11px;
@@ -452,7 +468,28 @@
     line-height: 1.2;
   }
 
-  /* --- COLLECT MODAL: scrollable list like play/showcase --- */
+  /* Releases list */
+  .releases-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 4px;
+  }
+  .release-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .release-tag {
+    font-size: clamp(11px, 2.5vw, 14px) !important;
+    white-space: nowrap;
+    color: rgba(255,255,255,0.4) !important;
+  }
+
+  /* ===================================================
+     COLLECT MODAL
+     =================================================== */
   .collect-list {
     max-width: 560px;
     margin: 0 auto;
@@ -479,49 +516,15 @@
     display: block;
     object-fit: contain;
   }
-  .collect-details {
-    margin-top: 16px;
-  }
-  .collect-detail-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .paypal-button-container {
-    width: 100%;
-    min-height: 48px;
-    border-radius: 16px;
-    overflow: hidden;
-  }
-  /* Force spacing above PayPal's injected QUANTITY label */
-  #paypal-container-7FQPC38SRM8BN > * {
-    padding-top: 8px;
-  }
-  #paypal-container-7FQPC38SRM8BN label:first-of-type,
-  #paypal-container-7FQPC38SRM8BN > div:first-child {
-    margin-top: 12px !important;
-  }
 
-  /* --- PAYPAL BUTTON CONTAINER --- */
-  /* Overrides PayPal's injected iframe styles to blend with dark theme */
-  .paypal-button-container {
-    width: 100%;
-    min-height: 48px;
-    border-radius: 16px;
-    overflow: hidden;
-  }
-  /* Force PayPal's button border-radius to match our design */
-  .paypal-button-container .paypal-buttons {
-    border-radius: 16px !important;
-  }
-
-  /* --- PLAY CARD PILL: footer pill style --- */
+  /* ===================================================
+     PLAY CARDS
+     =================================================== */
   .play-card-divider {
     border: none;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin: 6px 0;
   }
-
   .play-card-pill {
     background: rgba(52, 52, 52, 0.25);
     border-radius: 100px;
@@ -531,8 +534,6 @@
     justify-content: space-between;
     border: 1px solid rgba(255, 255, 255, 0.05);
   }
-
-  /* --- PLAY CARD: compact block matching Figma, no double box --- */
   .play-card {
     background: rgba(52, 52, 52, 0.25);
     border-radius: clamp(19px, 3.6vw, 29px);
@@ -542,7 +543,6 @@
     gap: clamp(12px, 2.5vw, 18px);
     border: 1px solid rgba(255, 255, 255, 0.05);
   }
-
   .play-card-header {
     display: flex;
     align-items: center;
@@ -550,7 +550,9 @@
     margin-bottom: 8px;
   }
 
-  /* --- GLASS BLOCK: Liquid glass content blocks --- */
+  /* ===================================================
+     GLASS BLOCKS
+     =================================================== */
   .glass-block {
     background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(20px);
@@ -562,7 +564,6 @@
       inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
       0 0 0 0.5px rgba(255, 255, 255, 0.03);
   }
-
   .glass-block-showcase {
     background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(20px);
@@ -575,28 +576,21 @@
       0 0 0 0.5px rgba(255, 255, 255, 0.03);
   }
 
-  /* --- PLAY BLOCK TYPOGRAPHY --- */
-  .play-block-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 24px;
-  }
-
+  /* ===================================================
+     TYPOGRAPHY
+     =================================================== */
   .play-block-title {
     font-family: 'MarkerBold', sans-serif;
     font-size: clamp(16px, 3.5vw, 22px);
     line-height: 1.35;
     color: #FFFFFF;
   }
-
   .play-block-subtitle {
     font-family: 'MarkerBold', sans-serif;
     font-size: clamp(14px, 3vw, 22px);
     line-height: 1.35;
     color: #7B7B7B;
   }
-
   .play-block-body {
     font-family: 'MarkerBold', sans-serif;
     font-size: clamp(13px, 3vw, 16px);
@@ -605,15 +599,9 @@
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 
-  /* --- SHOWCASE --- */
-  .showcase-image-wrapper {
-    width: 100%;
-    aspect-ratio: 577 / 433;
-    overflow: hidden;
-    border-radius: 17.5px;
-  }
-
-  /* --- COLLECT INPUTS --- */
+  /* ===================================================
+     INPUTS & BUTTONS
+     =================================================== */
   .collect-input {
     width: 100%;
     padding: 14px 18px;
@@ -625,17 +613,12 @@
     border: 1px solid rgba(255, 255, 255, 0.07);
     outline: none;
     transition: background 0.15s ease, border-color 0.15s ease;
-    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04);
   }
-  .collect-input::placeholder {
-    color: rgba(255, 255, 255, 0.25);
-  }
+  .collect-input::placeholder { color: rgba(255, 255, 255, 0.25); }
   .collect-input:focus {
     background: rgba(255, 255, 255, 0.06);
     border-color: rgba(255, 255, 255, 0.14);
   }
-
-  /* --- CHECKOUT BUTTONS --- */
   .checkout-btn {
     height: 48px;
     border-radius: 12px;
@@ -646,11 +629,7 @@
     border: none;
     transition: opacity 0.15s ease;
   }
-  .checkout-btn:hover {
-    opacity: 0.85;
-  }
-
-  /* --- MUSIC PLAYER BUTTONS (liquid glass) --- */
+  .checkout-btn:hover { opacity: 0.85; }
   .player-btn {
     border-radius: 50%;
     display: flex;
@@ -661,50 +640,28 @@
     color: white;
     cursor: pointer;
     transition: background 0.15s ease, transform 0.1s ease;
-    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
   }
-  .player-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: scale(1.05);
-  }
-  .player-btn:active {
-    transform: scale(0.96);
-  }
+  .player-btn:hover { background: rgba(255, 255, 255, 0.1); transform: scale(1.05); }
+  .player-btn:active { transform: scale(0.96); }
 
-  /* --- MUSIC ICON WRAPPER --- */
-  .music-icon-wrapper {
-    display: block;
-    border-radius: 16px;
-    overflow: hidden;
-    transition: transform 0.15s ease, opacity 0.15s ease;
-  }
-  .music-icon-wrapper:hover {
-    transform: scale(1.08);
-    opacity: 0.85;
-  }
-
-  /* --- ANIMATIONS --- */
+  /* ===================================================
+     ANIMATIONS
+     =================================================== */
   .animate-modal-in {
     animation: modalIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
-
   @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
   }
-
   @keyframes modalIn {
-    from {
-      opacity: 0;
-      transform: scale(0.95) translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-    }
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
   }
 
-  /* --- TMM BRAND COLOUR UTILITIES --- */
+  /* ===================================================
+     TMM BRAND COLOUR UTILITIES
+     =================================================== */
   .text-tmm-brown  { color: var(--tmm-brown); }
   .text-tmm-cream  { color: var(--tmm-cream); }
   .text-tmm-red    { color: var(--tmm-red); }
@@ -712,8 +669,6 @@
   .text-tmm-green  { color: var(--tmm-green); }
   .text-tmm-yellow { color: var(--tmm-yellow); }
   .text-tmm-purple { color: var(--tmm-purple); }
-
-  /* --- LEGACY ACCENT ALIASES --- */
   .text-kill  { color: var(--tmm-red); }
   .text-guess { color: var(--tmm-blue); }
   .text-save  { color: var(--tmm-green); }
@@ -722,101 +677,63 @@
   .text-muted { color: rgba(255,255,255,0.35); }
 }
 
-  /* --- RELEASES LIST in music modal --- */
-  .releases-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 4px;
+/* ===================================================
+   MOBILE OVERRIDES ≤480px
+   =================================================== */
+@media (max-width: 480px) {
+  .modal-scroll-bare > div {
+    padding-top: 64px;
   }
-  .release-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
+  .play-card {
+    border-radius: 17px;
+    padding: 18px;
+    gap: 10px;
   }
-  .release-tag {
-    font-size: clamp(11px, 2.5vw, 14px) !important;
-    white-space: nowrap;
-    color: rgba(255,255,255,0.4) !important;
+  .play-card-pill {
+    padding: 14px 20px;
+    border-radius: 60px;
   }
-
-  /* --- RELEASES LIST in music modal --- */
-  .releases-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 4px;
-  }
-  .release-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  .music-grid {
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
-  .release-tag {
-    font-size: clamp(11px, 2.5vw, 14px) !important;
-    white-space: nowrap;
-    color: rgba(255,255,255,0.4) !important;
+  .music-tile-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 22px;
   }
-
-  /* ===== MOBILE OVERRIDES (≤480px) ===== */
-  @media (max-width: 480px) {
-    /* Nav height reduction */
-    nav { height: 56px !important; }
-
-    /* Play modal: reduce padding-top to clear smaller nav */
-    .modal-scroll-bare > div {
-      padding-top: 64px;
-    }
-
-    /* Cards tighter */
-    .play-card {
-      border-radius: 17px;
-      padding: 18px;
-      gap: 10px;
-    }
-    .play-card-pill {
-      padding: 14px 20px;
-      border-radius: 60px;
-    }
-
-    /* Music grid: 2 columns on very small screens */
-    .music-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-    .music-tile-icon {
-      width: 72px;
-      height: 72px;
-      border-radius: 22px;
-    }
-    .music-tile-label {
-      font-size: 10px;
-    }
-
-    /* Showcase card inner well radius */
-    .showcase-img-well,
-    .collect-img-well {
-      border-radius: 7px;
-    }
-    .showcase-card {
-      border-radius: 12px;
-      padding: 8px;
-    }
-
-    /* Collect list */
-    .collect-list {
-      gap: 16px;
-      padding: 0 12px 60px;
-    }
-
-    /* Typography floor */
-    .play-block-title  { font-size: 15px; }
-    .play-block-subtitle { font-size: 13px; }
-    .play-block-body   { font-size: 13px; line-height: 1.5; }
-
-    /* Mobile menu items */
-    .mobile-menu-item { font-size: 26px; }
-    .mobile-menu-inner { gap: 28px; }
+  .music-tile-label { font-size: 10px; }
+  .showcase-img-well,
+  .collect-img-well { border-radius: 7px; }
+  .showcase-card {
+    border-radius: 12px;
+    padding: 8px;
   }
+  .collect-list {
+    gap: 16px;
+    padding: 0 12px 60px;
+  }
+  .play-block-title    { font-size: 15px; }
+  .play-block-subtitle { font-size: 13px; }
+  .play-block-body     { font-size: 13px; line-height: 1.5; }
+
+  /* Pill nav scales down gracefully on narrow screens */
+  .pill-nav-item {
+    padding: 8px 10px;
+    min-width: 40px;
+  }
+  .pill-nav-home {
+    bottom: 14px;
+  }
+  .pill-nav-home-active {
+    width: 58px;
+    height: 58px;
+  }
+  .pill-nav-home-logo {
+    width: 38px;
+    height: 38px;
+  }
+  .pill-nav-label {
+    font-size: 8px;
+  }
+}

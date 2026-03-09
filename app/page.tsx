@@ -11,13 +11,11 @@ type ModalType = "play" | "showcase" | "music" | "collect" | null
 
 export default function Home() {
   const [activeModal, setActiveModal] = useState<ModalType>(null)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [stripeClientSecret, setStripeClientSecret] = useState<string | null>(null)
   const [stripeLoading, setStripeLoading] = useState(false)
   const [collectKey, setCollectKey] = useState(0)
 
   const openModal = (modal: ModalType) => {
-    setMobileMenuOpen(false)
     if (modal === "collect") {
       setCollectKey(k => k + 1)
     }
@@ -26,17 +24,16 @@ export default function Home() {
   const closeModal = useCallback(() => setActiveModal(null), [])
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => { if (e.key === "Escape") { closeModal(); setMobileMenuOpen(false) } }
+    const handleKeyDown = (e: KeyboardEvent) => { if (e.key === "Escape") { closeModal() } }
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [closeModal])
 
   useEffect(() => {
-    document.body.style.overflow = (activeModal || mobileMenuOpen) ? "hidden" : ""
+    document.body.style.overflow = activeModal ? "hidden" : ""
     return () => { document.body.style.overflow = "" }
-  }, [activeModal, mobileMenuOpen])
+  }, [activeModal])
 
-  // Fetch Stripe client secret when collect modal opens
   useEffect(() => {
     if (activeModal === "collect" && !stripeClientSecret && !stripeLoading) {
       setStripeLoading(true)
@@ -50,61 +47,84 @@ export default function Home() {
       setStripeLoading(false)
     }
   }, [activeModal])
-  const navItems: { label: string; modal: ModalType }[] = [
-    { label: "PLAY", modal: "play" },
-    { label: "SHOWCASE", modal: "showcase" },
-    { label: "MUSIC", modal: "music" },
-    { label: "COLLECT", modal: "collect" },
-  ]
 
   return (
     <>
       <main className="h-screen w-screen overflow-hidden bg-black relative flex flex-col items-center justify-center">
-
-        {/* ===== DESKTOP NAV ===== */}
-        <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center h-[70px]">
-          {/* Desktop: all items in a row */}
-          <div className="hidden md:flex items-center gap-8 md:gap-12">
-            <button onClick={() => openModal("play")} className="nav-link">PLAY</button>
-            <button onClick={() => openModal("showcase")} className="nav-link">SHOWCASE</button>
-            <span className="nav-title">THE MARSHALL MAFIA</span>
-            <button onClick={() => openModal("music")} className="nav-link">MUSIC</button>
-            <button onClick={() => openModal("collect")} className="nav-link">COLLECT</button>
-          </div>
-
-          {/* Mobile: title + hamburger */}
-          <div className="flex md:hidden items-center justify-between w-full px-5">
-            <span className="nav-title" style={{fontSize:"clamp(13px,4.5vw,18px)"}}>THE MARSHALL MAFIA</span>
-            <button
-              onClick={() => setMobileMenuOpen(o => !o)}
-              className="flex flex-col gap-[5px] p-2"
-              aria-label="Menu"
-            >
-              <span className={`mobile-bar ${mobileMenuOpen ? "rotate-45 translate-y-[7px]" : ""}`} />
-              <span className={`mobile-bar ${mobileMenuOpen ? "opacity-0" : ""}`} />
-              <span className={`mobile-bar ${mobileMenuOpen ? "-rotate-45 -translate-y-[7px]" : ""}`} />
-            </button>
-          </div>
-        </nav>
-
-        {/* ===== MOBILE DROPDOWN MENU ===== */}
-        {mobileMenuOpen && (
-          <div className="mobile-menu" onClick={() => setMobileMenuOpen(false)}>
-            <div className="mobile-menu-inner" onClick={(e) => e.stopPropagation()}>
-              {navItems.map(({ label, modal }) => (
-                <button key={label} onClick={() => openModal(modal)} className="mobile-menu-item">
-                  {label}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* ===== HERO ===== */}
         <div className="select-none pointer-events-none">
           <Image src="/images/asset-logo-motion-graphic.gif" alt="The Marshall Mafia"
             width={1175} height={1175} className="w-[84vw] max-w-[1175px] h-auto" priority unoptimized />
         </div>
+
+        {/* ===== FLOATING PILL NAV ===== */}
+        {!activeModal && (
+          <nav className="pill-nav">
+            <div className="pill-nav-inner">
+
+              {/* PLAY */}
+              <button className="pill-nav-item" onClick={() => openModal("play")} aria-label="Play">
+                <span className="pill-nav-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <polygon points="6,3 20,12 6,21" fill="currentColor" />
+                  </svg>
+                </span>
+                <span className="pill-nav-label">PLAY</span>
+              </button>
+
+              {/* SHOWCASE */}
+              <button className="pill-nav-item" onClick={() => openModal("showcase")} aria-label="Showcase">
+                <span className="pill-nav-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <rect x="3" y="3" width="7" height="7" rx="1.5" fill="currentColor" opacity="0.9"/>
+                    <rect x="14" y="3" width="7" height="7" rx="1.5" fill="currentColor" opacity="0.9"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1.5" fill="currentColor" opacity="0.6"/>
+                    <rect x="14" y="14" width="7" height="7" rx="1.5" fill="currentColor" opacity="0.6"/>
+                  </svg>
+                </span>
+                <span className="pill-nav-label">SHOWCASE</span>
+              </button>
+
+              {/* TMM — HOME / CENTRE */}
+              <button className="pill-nav-item pill-nav-home" onClick={closeModal} aria-label="Home">
+                <span className="pill-nav-home-active">
+                  <img
+                    src="/tmm_themarshallmafia_logo.svg"
+                    alt="The Marshall Mafia"
+                    className="pill-nav-home-logo"
+                    draggable={false}
+                  />
+                </span>
+              </button>
+
+              {/* MUSIC */}
+              <button className="pill-nav-item" onClick={() => openModal("music")} aria-label="Music">
+                <span className="pill-nav-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <path d="M9 18V6l12-2v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="6" cy="18" r="3" fill="currentColor"/>
+                    <circle cx="18" cy="16" r="3" fill="currentColor"/>
+                  </svg>
+                </span>
+                <span className="pill-nav-label">MUSIC</span>
+              </button>
+
+              {/* COLLECT */}
+              <button className="pill-nav-item" onClick={() => openModal("collect")} aria-label="Collect">
+                <span className="pill-nav-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                    <path d="M16 10a4 4 0 01-8 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
+                <span className="pill-nav-label">COLLECT</span>
+              </button>
+
+            </div>
+          </nav>
+        )}
 
         {/* ==================== PLAY MODAL ==================== */}
         {activeModal === "play" && (
@@ -402,7 +422,6 @@ export default function Home() {
             <div className="modal-scroll-bare animate-modal-in">
               <div className="collect-list" onClick={(e) => e.stopPropagation()}>
 
-                {/* Checkout card */}
                 <div className="play-card">
                   <div className="play-card-header" style={{marginBottom:"20px"}}>
                     <span className="play-block-title">CHECKOUT</span>
@@ -425,13 +444,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-        )}
-
-        {/* ==================== FLOATING BUY BUTTON ==================== */}
-        {!activeModal && !mobileMenuOpen && (
-          <button className="floating-buy" onClick={() => openModal("collect")}>
-            BUY NOW
-          </button>
         )}
 
       </main>
