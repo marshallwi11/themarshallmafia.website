@@ -711,15 +711,30 @@
   /* ===================================================
      LOGO FLIP ANIMATION
      =================================================== */
+  /* Nav eyes logo flip */
   .logo-flipped {
     transform: rotate(180deg);
   }
   .logo-flip-anim {
-    animation: logoSpin 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: logoSpin 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   @keyframes logoSpin {
     0%   { transform: rotate(0deg); }
     100% { transform: rotate(180deg); }
+  }
+
+  /* Hero GIF flip + invert */
+  .hero-flipped {
+    transform: rotate(180deg);
+    filter: invert(1);
+  }
+  .hero-flip-anim {
+    animation: heroFlipSpin 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes heroFlipSpin {
+    0%   { transform: rotate(0deg);   filter: invert(0); }
+    50%  { filter: invert(0.5); }
+    100% { transform: rotate(180deg); filter: invert(1); }
   }
 
   /* ===================================================

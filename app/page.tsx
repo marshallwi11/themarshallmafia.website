@@ -80,16 +80,12 @@ export default function Home() {
       <main className={`h-screen w-screen overflow-hidden relative flex flex-col items-center justify-center${lightMode ? " tmm-light" : " tmm-dark"}`}>
 
         {/* ===== HERO ===== */}
-        <div
-          className="select-none cursor-pointer"
-          onClick={handleLogoDoubleTap}
-          aria-label="Toggle light mode"
-        >
+        <div className="select-none pointer-events-none">
           <Image
             src="/images/asset-logo-motion-graphic.gif"
             alt="The Marshall Mafia"
             width={1175} height={1175}
-            className={`w-[84vw] max-w-[1175px] h-auto transition-transform${logoFlipping ? " logo-flip-anim" : lightMode ? " logo-flipped" : ""}`}
+            className={`w-[84vw] max-w-[1175px] h-auto${logoFlipping ? " hero-flip-anim" : lightMode ? " hero-flipped" : ""}`}
             priority unoptimized
           />
         </div>
@@ -130,12 +126,16 @@ export default function Home() {
             </button>
 
             {/* TMM — HOME / CENTRE */}
-            <button className="pill-nav-item pill-nav-home" onClick={closeModal} aria-label="Home">
+            <button
+              className="pill-nav-item pill-nav-home"
+              onClick={(e) => { closeModal(); handleLogoDoubleTap() }}
+              aria-label="Home"
+            >
               <span className="pill-nav-home-active">
                 <img
                   src="/tmm_themarshallmafia_logo.svg"
                   alt="The Marshall Mafia"
-                  className="pill-nav-home-logo"
+                  className={`pill-nav-home-logo${logoFlipping ? " logo-flip-anim" : lightMode ? " logo-flipped" : ""}`}
                   draggable={false}
                 />
               </span>
