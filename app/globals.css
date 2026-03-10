@@ -203,40 +203,23 @@
       0 8px 32px rgba(0,0,0,0.5);
   }
 
-  /* Sliding active circle — same style as the eyes button, slides between items */
+  /* Sliding active circle — position set via inline style from JS measurement */
   .pill-nav-slider {
     position: absolute;
-    /* vertically centred */
     top: 50%;
     transform: translateY(-50%);
     width: 52px;
     height: 52px;
     border-radius: 50%;
-    background: rgba(18, 18, 18, 0.95);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(22, 22, 22, 0.9);
+    border: 1px solid rgba(255,255,255,0.18);
     box-shadow:
-      0 0 0 1px rgba(255,255,255,0.05),
-      inset 0 1px 0 rgba(255,255,255,0.07),
-      0 4px 16px rgba(0,0,0,0.6);
+      inset 0 1px 0 rgba(255,255,255,0.1),
+      0 2px 12px rgba(0,0,0,0.5);
     pointer-events: none;
-    /* slide left only, size is fixed circle */
-    transition: left 0.38s cubic-bezier(0.34,1.2,0.64,1);
+    transition: left 0.36s cubic-bezier(0.34,1.15,0.64,1);
     z-index: 0;
   }
-  /* Each item is 54px wide with 2px gap. Home is 60px (4px padding + 52px circle).
-     Offsets = inner padding (8px) + accumulated item widths.
-     play:  8px offset, centred in 54px item  → 8 + (54-52)/2 = 9px
-     showcase: 8 + 54+2 = 64px → centre → 64 + 1 = 65px
-     home is 60px wide: 8+54+2+54+2 = 120px... skip, slider never lands here
-     music: 8+54+2+54+2+60+2 = 182px → centre in 54px → 182+1 = 183px
-     collect: 182+54+2 = 238px → centre → 239px
-  */
-  /* home = behind the eyes circle (8 + 54+2 + 54+2 = 120px, centre in 60px home = 120+4 = 124px) */
-  .pill-nav-slider--home     { left: 124px; }
-  .pill-nav-slider--play     { left: 9px;   }
-  .pill-nav-slider--showcase { left: 65px;  }
-  .pill-nav-slider--music    { left: 183px; }
-  .pill-nav-slider--collect  { left: 239px; }
 
   /* Each nav item */
   .pill-nav-item {
@@ -285,43 +268,39 @@
     80%  { transform: rotate(4deg); }
   }
 
-  /* Red notification dot — solid, tight on the bag icon SVG top-right corner */
+  /* Red notification dot — solid, sits on top-right of bag icon */
   .collect-dot {
     position: absolute;
-    top: 6px;
-    right: 6px;
-    width: 7px;
-    height: 7px;
+    top: 8px;
+    right: 8px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: var(--tmm-red);
-    border: 1.5px solid rgba(18,18,18,0.95);
-    z-index: 2;
+    border: 1.5px solid rgba(22,22,22,0.9);
+    z-index: 3;
     pointer-events: none;
   }
 
-  /* TMM centre home button — dark circle INSIDE the bar */
+  /* TMM centre home button — no extra wrapper, slider circle is the background */
   .pill-nav-home {
-    padding: 4px;
-    min-width: auto;
-    background: none !important;
-    margin: 0 2px;
-  }
-  .pill-nav-home:hover {
-    background: none !important;
-  }
-  .pill-nav-home-active {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 52px;
     height: 52px;
-    border-radius: 50%;
-    /* background handled by the sliding pill-nav-slider */
-    background: transparent;
+    padding: 0;
+    min-width: 52px;
+    background: none !important;
     border: none;
+    cursor: pointer;
+    border-radius: 50%;
     transition: transform 0.22s ease;
   }
-  .pill-nav-home:hover .pill-nav-home-active {
+  .pill-nav-home:hover {
+    background: none !important;
     transform: scale(1.07);
   }
   .pill-nav-home-logo {
@@ -331,6 +310,12 @@
     display: block;
     user-select: none;
     -webkit-user-drag: none;
+    position: relative;
+    z-index: 1;
+  }
+  /* Collect button needs position:relative for the dot */
+  .pill-nav-collect {
+    position: relative;
   }
 
   /* ===================================================
@@ -749,12 +734,12 @@
     background: #000000;
   }
   .tmm-light {
-    background: #f5f3ef;
+    background: #ffffff;
   }
 
   /* Light mode — nav pill */
   .tmm-light .pill-nav-inner {
-    background: rgba(240, 238, 234, 0.75);
+    background: rgba(245, 245, 245, 0.85);
     border-color: rgba(0,0,0,0.1);
     box-shadow:
       0 0 0 0.5px rgba(0,0,0,0.06),
@@ -840,7 +825,7 @@
 
   /* Light mode — collect dot border adapts */
   .tmm-light .collect-dot {
-    border-color: rgba(240,238,234,0.8);
+    border-color: rgba(245,245,245,0.9);
   }
 
   /* ===================================================

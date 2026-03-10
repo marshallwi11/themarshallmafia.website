@@ -19,6 +19,37 @@ export default function Home() {
   const [collectShaking, setCollectShaking] = useState(false)
   const lastTapRef = useRef<number>(0)
 
+  // Slider — measured from real DOM positions so it always lands correctly
+  const navInnerRef = useRef<HTMLDivElement>(null)
+  const btnPlayRef = useRef<HTMLButtonElement>(null)
+  const btnShowcaseRef = useRef<HTMLButtonElement>(null)
+  const btnHomeRef = useRef<HTMLButtonElement>(null)
+  const btnMusicRef = useRef<HTMLButtonElement>(null)
+  const btnCollectRef = useRef<HTMLButtonElement>(null)
+  const [sliderLeft, setSliderLeft] = useState(0)
+  const SLIDER_SIZE = 52
+
+  const updateSlider = useCallback(() => {
+    const inner = navInnerRef.current
+    if (!inner) return
+    const refMap: Record<string, React.RefObject<HTMLButtonElement | null>> = {
+      play: btnPlayRef, showcase: btnShowcaseRef, home: btnHomeRef,
+      music: btnMusicRef, collect: btnCollectRef
+    }
+    const key = activeModal ?? "home"
+    const btn = refMap[key]?.current
+    if (!btn) return
+    const btnRect = btn.getBoundingClientRect()
+    const innerRect = inner.getBoundingClientRect()
+    setSliderLeft(btnRect.left - innerRect.left + (btnRect.width - SLIDER_SIZE) / 2)
+  }, [activeModal])
+
+  useEffect(() => { updateSlider() }, [updateSlider])
+  useEffect(() => {
+    window.addEventListener("resize", updateSlider)
+    return () => window.removeEventListener("resize", updateSlider)
+  }, [updateSlider])
+
   const handleLogoDoubleTap = useCallback(() => {
     const now = Date.now()
     if (now - lastTapRef.current < 400) {
@@ -88,81 +119,80 @@ export default function Home() {
 
         {/* ===== FLOATING PILL NAV ===== */}
         <nav className="pill-nav">
-          <div className="pill-nav-inner">
+          <div className="pill-nav-inner" ref={navInnerRef}>
 
-            {/* Sliding circle — starts at eyes (home), moves to active modal */}
+            {/* Sliding circle — JS-measured, always lands on the right button */}
             <span
-              className={`pill-nav-slider pill-nav-slider--${activeModal ?? "home"}`}
+              className="pill-nav-slider"
+              style={{ left: sliderLeft }}
               aria-hidden="true"
             />
 
-            {/* PLAY */}
+            {/* PLAY — solid right-pointing triangle */}
             <button
+              ref={btnPlayRef}
               className={`pill-nav-item${activeModal === "play" ? " pill-nav-item--active" : ""}`}
               onClick={() => activeModal === "play" ? closeModal() : openModal("play")}
               aria-label="Play"
             >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <polygon points="6,3 20,12 6,21" fill="currentColor" />
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M4 2.5L17.5 10 4 17.5V2.5Z"/>
               </svg>
             </button>
 
-            {/* SHOWCASE */}
+            {/* SHOWCASE — solid 2x2 grid */}
             <button
+              ref={btnShowcaseRef}
               className={`pill-nav-item${activeModal === "showcase" ? " pill-nav-item--active" : ""}`}
               onClick={() => activeModal === "showcase" ? closeModal() : openModal("showcase")}
               aria-label="Showcase"
             >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="3" width="7" height="7" rx="1.5" fill="currentColor"/>
-                <rect x="14" y="3" width="7" height="7" rx="1.5" fill="currentColor"/>
-                <rect x="3" y="14" width="7" height="7" rx="1.5" fill="currentColor" opacity="0.55"/>
-                <rect x="14" y="14" width="7" height="7" rx="1.5" fill="currentColor" opacity="0.55"/>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                <rect x="2" y="2" width="7" height="7" rx="1"/>
+                <rect x="11" y="2" width="7" height="7" rx="1"/>
+                <rect x="2" y="11" width="7" height="7" rx="1"/>
+                <rect x="11" y="11" width="7" height="7" rx="1"/>
               </svg>
             </button>
 
-            {/* TMM — HOME / CENTRE */}
+            {/* TMM — HOME / CENTRE (eyes logo) */}
             <button
+              ref={btnHomeRef}
               className="pill-nav-item pill-nav-home"
               onClick={() => { closeModal(); handleLogoDoubleTap() }}
               aria-label="Home"
             >
-              <span className="pill-nav-home-active">
-                <img
-                  src="/tmm_themarshallmafia_logo.svg"
-                  alt="The Marshall Mafia"
-                  className={`pill-nav-home-logo${logoFlipping ? " logo-flip-anim" : lightMode ? " logo-flipped" : ""}`}
-                  draggable={false}
-                />
-              </span>
+              <img
+                src="/tmm_themarshallmafia_logo.svg"
+                alt="The Marshall Mafia"
+                className={`pill-nav-home-logo${logoFlipping ? " logo-flip-anim" : lightMode ? " logo-flipped" : ""}`}
+                draggable={false}
+              />
             </button>
 
-            {/* MUSIC */}
+            {/* MUSIC — solid music note */}
             <button
+              ref={btnMusicRef}
               className={`pill-nav-item${activeModal === "music" ? " pill-nav-item--active" : ""}`}
               onClick={() => activeModal === "music" ? closeModal() : openModal("music")}
               aria-label="Music"
             >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <path d="M9 18V6l12-2v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <circle cx="6" cy="18" r="3" fill="currentColor"/>
-                <circle cx="18" cy="16" r="3" fill="currentColor"/>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M8 14.5V4.5l9-2v10M8 14.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zm9 0a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" fillRule="evenodd" clipRule="evenodd"/>
               </svg>
             </button>
 
-            {/* COLLECT */}
+            {/* COLLECT — solid bag with dot ON the icon */}
             <button
-              className={`pill-nav-item${activeModal === "collect" ? " pill-nav-item--active" : ""}${collectShaking ? " collect-icon-shake" : ""}`}
+              ref={btnCollectRef}
+              className={`pill-nav-item pill-nav-collect${activeModal === "collect" ? " pill-nav-item--active" : ""}${collectShaking ? " collect-icon-shake" : ""}`}
               onClick={() => activeModal === "collect" ? closeModal() : openModal("collect")}
               aria-label="Collect"
-              style={{position:"relative"}}
             >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M16 10a4 4 0 01-8 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" clipRule="evenodd" d="M7 6V5a3 3 0 016 0v1h3.5A.5.5 0 0117 6.5l-1.5 10a.5.5 0 01-.5.5H5a.5.5 0 01-.5-.45L3 6.5A.5.5 0 013.5 6H7zm2 0V5a1 1 0 012 0v1H9zm0 3a1 1 0 112 0 1 1 0 01-2 0z"/>
               </svg>
-              <span className="collect-dot" />
+              <span className="collect-dot" aria-hidden="true" />
             </button>
 
           </div>
