@@ -16,36 +16,27 @@ export default function Home() {
   const [collectKey, setCollectKey] = useState(0)
   const [lightMode, setLightMode] = useState(false)
   const [logoFlipping, setLogoFlipping] = useState(false)
-  const [checkoutShaking, setCheckoutShaking] = useState(false)
+  const [collectShaking, setCollectShaking] = useState(false)
   const lastTapRef = useRef<number>(0)
 
-  // Double-click/double-tap on nav eyes toggles light mode
-  // Phase 1 (0-200ms): blur out + scaleY to 0
-  // Phase 2 (200ms): swap light mode state
-  // Phase 3 (200-400ms): scaleY back to 1, blur out (new state)
   const handleLogoDoubleTap = useCallback(() => {
     const now = Date.now()
     if (now - lastTapRef.current < 400) {
       setLogoFlipping(true)
-      setTimeout(() => {
-        setLightMode(m => !m)
-      }, 200)
-      setTimeout(() => {
-        setLogoFlipping(false)
-      }, 420)
+      setTimeout(() => { setLightMode(m => !m) }, 200)
+      setTimeout(() => { setLogoFlipping(false) }, 420)
     }
     lastTapRef.current = now
   }, [])
 
-  // Shake checkout card every 10s when collect modal is open
+  // Shake COLLECT nav icon every 10s always
   useEffect(() => {
-    if (activeModal !== "collect") return
     const interval = setInterval(() => {
-      setCheckoutShaking(true)
-      setTimeout(() => setCheckoutShaking(false), 600)
+      setCollectShaking(true)
+      setTimeout(() => setCollectShaking(false), 600)
     }, 10000)
     return () => clearInterval(interval)
-  }, [activeModal])
+  }, [])
 
   const openModal = (modal: ModalType) => {
     if (modal === "collect") {
@@ -99,18 +90,23 @@ export default function Home() {
         <nav className="pill-nav">
           <div className="pill-nav-inner">
 
+            {/* Sliding active background — positioned behind buttons */}
+            {activeModal && activeModal !== null && (
+              <span
+                className={`pill-nav-slider pill-nav-slider--${activeModal}`}
+                aria-hidden="true"
+              />
+            )}
+
             {/* PLAY */}
             <button
               className={`pill-nav-item${activeModal === "play" ? " pill-nav-item--active" : ""}`}
               onClick={() => activeModal === "play" ? closeModal() : openModal("play")}
               aria-label="Play"
             >
-              <span className="pill-nav-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <polygon points="6,3 20,12 6,21" fill="currentColor" />
-                </svg>
-              </span>
-              <span className="pill-nav-label">PLAY</span>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <polygon points="6,3 20,12 6,21" fill="currentColor" />
+              </svg>
             </button>
 
             {/* SHOWCASE */}
@@ -119,21 +115,18 @@ export default function Home() {
               onClick={() => activeModal === "showcase" ? closeModal() : openModal("showcase")}
               aria-label="Showcase"
             >
-              <span className="pill-nav-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <rect x="3" y="3" width="7" height="7" rx="1.5" fill="currentColor"/>
-                  <rect x="14" y="3" width="7" height="7" rx="1.5" fill="currentColor"/>
-                  <rect x="3" y="14" width="7" height="7" rx="1.5" fill="currentColor" opacity="0.55"/>
-                  <rect x="14" y="14" width="7" height="7" rx="1.5" fill="currentColor" opacity="0.55"/>
-                </svg>
-              </span>
-              <span className="pill-nav-label">SHOWCASE</span>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="7" height="7" rx="1.5" fill="currentColor"/>
+                <rect x="14" y="3" width="7" height="7" rx="1.5" fill="currentColor"/>
+                <rect x="3" y="14" width="7" height="7" rx="1.5" fill="currentColor" opacity="0.55"/>
+                <rect x="14" y="14" width="7" height="7" rx="1.5" fill="currentColor" opacity="0.55"/>
+              </svg>
             </button>
 
             {/* TMM — HOME / CENTRE */}
             <button
               className="pill-nav-item pill-nav-home"
-              onClick={(e) => { closeModal(); handleLogoDoubleTap() }}
+              onClick={() => { closeModal(); handleLogoDoubleTap() }}
               aria-label="Home"
             >
               <span className="pill-nav-home-active">
@@ -152,31 +145,26 @@ export default function Home() {
               onClick={() => activeModal === "music" ? closeModal() : openModal("music")}
               aria-label="Music"
             >
-              <span className="pill-nav-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M9 18V6l12-2v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <circle cx="6" cy="18" r="3" fill="currentColor"/>
-                  <circle cx="18" cy="16" r="3" fill="currentColor"/>
-                </svg>
-              </span>
-              <span className="pill-nav-label">MUSIC</span>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M9 18V6l12-2v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="6" cy="18" r="3" fill="currentColor"/>
+                <circle cx="18" cy="16" r="3" fill="currentColor"/>
+              </svg>
             </button>
 
             {/* COLLECT */}
             <button
-              className={`pill-nav-item${activeModal === "collect" ? " pill-nav-item--active" : ""}`}
+              className={`pill-nav-item${activeModal === "collect" ? " pill-nav-item--active" : ""}${collectShaking ? " collect-icon-shake" : ""}`}
               onClick={() => activeModal === "collect" ? closeModal() : openModal("collect")}
               aria-label="Collect"
+              style={{position:"relative"}}
             >
-              <span className="pill-nav-icon" style={{position:"relative"}}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                  <path d="M16 10a4 4 0 01-8 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <span className="collect-dot" />
-              </span>
-              <span className="pill-nav-label">COLLECT</span>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M16 10a4 4 0 01-8 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span className="collect-dot" />
             </button>
 
           </div>
@@ -186,9 +174,6 @@ export default function Home() {
         {activeModal === "play" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <button onClick={closeModal} className="modal-close-btn" aria-label="Close">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="white" strokeWidth="2.5" strokeLinecap="round"/></svg>
-            </button>
             <div className="modal-scroll-bare animate-modal-in">
               <div className="max-w-[675px] mx-auto pb-[80px] px-4 sm:px-6" style={{display:"flex",flexDirection:"column",gap:"clamp(24px,5vw,50px)"}}>
 
@@ -321,9 +306,6 @@ export default function Home() {
         {activeModal === "showcase" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <button onClick={closeModal} className="modal-close-btn" aria-label="Close">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="white" strokeWidth="2.5" strokeLinecap="round"/></svg>
-            </button>
             <div className="modal-scroll-bare animate-modal-in">
               <div className="showcase-list" onClick={(e) => e.stopPropagation()}>
 
@@ -381,9 +363,6 @@ export default function Home() {
         {activeModal === "music" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <button onClick={closeModal} className="modal-close-btn" aria-label="Close">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="white" strokeWidth="2.5" strokeLinecap="round"/></svg>
-            </button>
             <div className="modal-scroll-bare animate-modal-in">
               <div className="w-full max-w-[600px] mx-auto px-4 sm:px-6 pb-[80px]">
                 <div className="play-card" onClick={(e) => e.stopPropagation()}>
@@ -472,13 +451,10 @@ export default function Home() {
         {activeModal === "collect" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <button onClick={closeModal} className="modal-close-btn" aria-label="Close">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="white" strokeWidth="2.5" strokeLinecap="round"/></svg>
-            </button>
             <div className="modal-scroll-bare animate-modal-in">
               <div className="collect-list" onClick={(e) => e.stopPropagation()}>
 
-                <div className={`play-card${checkoutShaking ? " checkout-shake" : ""}`}>
+                <div className="play-card">
                   <div className="play-card-header" style={{marginBottom:"20px"}}>
                     <span className="play-block-title">CHECKOUT</span>
                     <span className="play-block-subtitle">SECURE</span>
