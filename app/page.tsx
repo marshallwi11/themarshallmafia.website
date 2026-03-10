@@ -27,8 +27,9 @@ export default function Home() {
   const btnMusicRef = useRef<HTMLButtonElement>(null)
   const btnCollectRef = useRef<HTMLButtonElement>(null)
   const [sliderStyle, setSliderStyle] = useState({ left: 0, width: 72 })
+  const [sliderReady, setSliderReady] = useState(false)
 
-  const updateSlider = useCallback(() => {
+  const measureSlider = useCallback((skipTransition = false) => {
     const inner = navInnerRef.current
     if (!inner) return
     const refMap: Record<string, React.RefObject<HTMLButtonElement | null>> = {
@@ -40,17 +41,26 @@ export default function Home() {
     if (!btn) return
     const btnRect = btn.getBoundingClientRect()
     const innerRect = inner.getBoundingClientRect()
-    setSliderStyle({
-      left: btnRect.left - innerRect.left,
-      width: btnRect.width,
-    })
+    setSliderStyle({ left: btnRect.left - innerRect.left, width: btnRect.width })
+    if (skipTransition) setTimeout(() => setSliderReady(true), 0)
   }, [activeModal])
 
-  useEffect(() => { updateSlider() }, [updateSlider])
+  // On mount: measure with no transition so slider snaps to home immediately
   useEffect(() => {
-    window.addEventListener("resize", updateSlider)
-    return () => window.removeEventListener("resize", updateSlider)
-  }, [updateSlider])
+    measureSlider(true)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // On modal change: animate normally
+  useEffect(() => {
+    if (sliderReady) measureSlider(false)
+  }, [activeModal, sliderReady, measureSlider])
+
+  useEffect(() => {
+    const onResize = () => measureSlider(false)
+    window.addEventListener("resize", onResize)
+    return () => window.removeEventListener("resize", onResize)
+  }, [measureSlider])
 
   const handleLogoDoubleTap = useCallback(() => {
     const now = Date.now()
@@ -129,7 +139,13 @@ export default function Home() {
             {/* Sliding pill — JS-measured: tracks exact button width + left */}
             <span
               className="pill-nav-slider"
-              style={{ left: sliderStyle.left, width: sliderStyle.width }}
+              style={{
+                left: sliderStyle.left,
+                width: sliderStyle.width,
+                transition: sliderReady
+                  ? "left 0.38s cubic-bezier(0.34,1.15,0.64,1), width 0.38s cubic-bezier(0.34,1.15,0.64,1)"
+                  : "none",
+              }}
               aria-hidden="true"
             />
 
