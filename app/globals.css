@@ -203,25 +203,38 @@
       0 8px 32px rgba(0,0,0,0.5);
   }
 
-  /* Sliding active glass pill — absolutely positioned inside pill-nav-inner */
+  /* Sliding active circle — same style as the eyes button, slides between items */
   .pill-nav-slider {
     position: absolute;
-    top: 6px;
-    height: calc(100% - 12px);
-    border-radius: 80px;
-    background: rgba(255,255,255,0.13);
-    border: 1px solid rgba(255,255,255,0.14);
+    /* vertically centred */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(18, 18, 18, 0.95);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.05),
+      inset 0 1px 0 rgba(255,255,255,0.07),
+      0 4px 16px rgba(0,0,0,0.6);
     pointer-events: none;
-    transition: left 0.32s cubic-bezier(0.34,1.2,0.64,1), width 0.32s cubic-bezier(0.34,1.2,0.64,1);
+    /* slide left only, size is fixed circle */
+    transition: left 0.38s cubic-bezier(0.34,1.2,0.64,1);
     z-index: 0;
   }
-  /* Positions: play=0, showcase=1, home=2(skip), music=3, collect=4 */
-  /* Each regular item is ~54px wide + 2px gap. Home is ~60px. */
-  /* Calculated offsets from left edge of pill-nav-inner padding (8px) */
-  .pill-nav-slider--play     { left: 8px;    width: 54px; }
-  .pill-nav-slider--showcase { left: 64px;   width: 54px; }
-  .pill-nav-slider--music    { left: 186px;  width: 54px; }
-  .pill-nav-slider--collect  { left: 242px;  width: 54px; }
+  /* Each item is 54px wide with 2px gap. Home is 60px (4px padding + 52px circle).
+     Offsets = inner padding (8px) + accumulated item widths.
+     play:  8px offset, centred in 54px item  → 8 + (54-52)/2 = 9px
+     showcase: 8 + 54+2 = 64px → centre → 64 + 1 = 65px
+     home is 60px wide: 8+54+2+54+2 = 120px... skip, slider never lands here
+     music: 8+54+2+54+2+60+2 = 182px → centre in 54px → 182+1 = 183px
+     collect: 182+54+2 = 238px → centre → 239px
+  */
+  .pill-nav-slider--play     { left: 9px;  }
+  .pill-nav-slider--showcase { left: 65px; }
+  .pill-nav-slider--music    { left: 183px; }
+  .pill-nav-slider--collect  { left: 239px; }
 
   /* Each nav item */
   .pill-nav-item {
@@ -258,18 +271,34 @@
     100% { transform: scale(1); }
   }
 
-  /* Collect icon shake */
+  /* Collect icon shake — subtle, on the whole button */
   .collect-icon-shake {
-    animation: collectShake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+    animation: collectShake 0.7s cubic-bezier(0.36, 0.07, 0.19, 0.97);
   }
   @keyframes collectShake {
-    0%, 100% { transform: translateX(0) rotate(0); }
-    15%  { transform: translateX(-4px) rotate(-4deg); }
-    30%  { transform: translateX(4px) rotate(4deg); }
-    45%  { transform: translateX(-3px) rotate(-3deg); }
-    60%  { transform: translateX(3px) rotate(3deg); }
-    75%  { transform: translateX(-2px); }
-    90%  { transform: translateX(2px); }
+    0%, 100% { transform: rotate(0deg); }
+    20%  { transform: rotate(-8deg); }
+    40%  { transform: rotate(7deg); }
+    60%  { transform: rotate(-5deg); }
+    80%  { transform: rotate(4deg); }
+  }
+
+  /* Red notification dot — on the bag icon, top-right */
+  .collect-dot {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--tmm-red);
+    border: 1.5px solid rgba(22,22,22,0.9);
+    animation: dotPulse 2.5s ease-in-out infinite;
+    z-index: 2;
+  }
+  @keyframes dotPulse {
+    0%, 100% { transform: scale(1);   opacity: 1; }
+    50%       { transform: scale(1.35); opacity: 0.75; }
   }
 
   /* TMM centre home button — dark circle INSIDE the bar */
@@ -474,7 +503,8 @@
   .music-tile-icon {
     width: clamp(64px, 18vw, 96px);
     height: clamp(64px, 18vw, 96px);
-    border-radius: clamp(20px, 4.8vw, 31px);
+    /* iOS app icon superellipse: ~22.5% of size */
+    border-radius: clamp(14px, 3.2vw, 22px);
     overflow: hidden;
     flex-shrink: 0;
   }
@@ -682,25 +712,6 @@
   @keyframes modalIn {
     from { opacity: 0; transform: scale(0.95) translateY(10px); }
     to   { opacity: 1; transform: scale(1) translateY(0); }
-  }
-
-  /* ===================================================
-     COLLECT DOT
-     =================================================== */
-  .collect-dot {
-    position: absolute;
-    top: -3px;
-    right: -3px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--tmm-red);
-    border: 1.5px solid rgba(0,0,0,0.5);
-    animation: dotPulse 2s ease-in-out infinite;
-  }
-  @keyframes dotPulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.3); opacity: 0.7; }
   }
 
   /* ===================================================
