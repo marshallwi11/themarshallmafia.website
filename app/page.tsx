@@ -90,13 +90,11 @@ export default function Home() {
         <nav className="pill-nav">
           <div className="pill-nav-inner">
 
-            {/* Sliding active background — positioned behind buttons */}
-            {activeModal && activeModal !== null && (
-              <span
-                className={`pill-nav-slider pill-nav-slider--${activeModal}`}
-                aria-hidden="true"
-              />
-            )}
+            {/* Sliding circle — starts at eyes (home), moves to active modal */}
+            <span
+              className={`pill-nav-slider pill-nav-slider--${activeModal ?? "home"}`}
+              aria-hidden="true"
+            />
 
             {/* PLAY */}
             <button

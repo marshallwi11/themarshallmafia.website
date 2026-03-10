@@ -231,8 +231,10 @@
      music: 8+54+2+54+2+60+2 = 182px → centre in 54px → 182+1 = 183px
      collect: 182+54+2 = 238px → centre → 239px
   */
-  .pill-nav-slider--play     { left: 9px;  }
-  .pill-nav-slider--showcase { left: 65px; }
+  /* home = behind the eyes circle (8 + 54+2 + 54+2 = 120px, centre in 60px home = 120+4 = 124px) */
+  .pill-nav-slider--home     { left: 124px; }
+  .pill-nav-slider--play     { left: 9px;   }
+  .pill-nav-slider--showcase { left: 65px;  }
   .pill-nav-slider--music    { left: 183px; }
   .pill-nav-slider--collect  { left: 239px; }
 
@@ -283,22 +285,18 @@
     80%  { transform: rotate(4deg); }
   }
 
-  /* Red notification dot — on the bag icon, top-right */
+  /* Red notification dot — solid, tight on the bag icon SVG top-right corner */
   .collect-dot {
     position: absolute;
-    top: 2px;
-    right: 2px;
+    top: 6px;
+    right: 6px;
     width: 7px;
     height: 7px;
     border-radius: 50%;
     background: var(--tmm-red);
-    border: 1.5px solid rgba(22,22,22,0.9);
-    animation: dotPulse 2.5s ease-in-out infinite;
+    border: 1.5px solid rgba(18,18,18,0.95);
     z-index: 2;
-  }
-  @keyframes dotPulse {
-    0%, 100% { transform: scale(1);   opacity: 1; }
-    50%       { transform: scale(1.35); opacity: 0.75; }
+    pointer-events: none;
   }
 
   /* TMM centre home button — dark circle INSIDE the bar */
@@ -318,16 +316,12 @@
     width: 52px;
     height: 52px;
     border-radius: 50%;
-    background: rgba(18, 18, 18, 0.95);
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow:
-      0 0 0 1px rgba(255,255,255,0.05),
-      inset 0 1px 0 rgba(255,255,255,0.07),
-      0 4px 16px rgba(0,0,0,0.6);
-    transition: background 0.22s ease, transform 0.22s ease;
+    /* background handled by the sliding pill-nav-slider */
+    background: transparent;
+    border: none;
+    transition: transform 0.22s ease;
   }
   .pill-nav-home:hover .pill-nav-home-active {
-    background: rgba(36, 36, 36, 0.98);
     transform: scale(1.07);
   }
   .pill-nav-home-logo {
