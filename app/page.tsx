@@ -2,10 +2,45 @@
 
 import Image from "next/image"
 import { useState, useEffect, useCallback, useRef } from "react"
+import type { AnimationItem } from "lottie-web"
 import { loadStripe } from "@stripe/stripe-js"
 import { EmbeddedCheckout, EmbeddedCheckoutProvider } from "@stripe/react-stripe-js"
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+
+// ── Lottie hero ──────────────────────────────────────────────────────────────
+function LottieHero({ flipping }: { flipping: boolean }) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const animRef = useRef<AnimationItem | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+    import("lottie-web").then((lottie) => {
+      if (cancelled || !containerRef.current) return
+      animRef.current = lottie.default.loadAnimation({
+        container: containerRef.current,
+        renderer: "svg",
+        loop: true,
+        autoplay: true,
+        path: "/tmm_hero.json",
+      })
+    })
+    return () => {
+      cancelled = true
+      animRef.current?.destroy()
+      animRef.current = null
+    }
+  }, [])
+
+  return (
+    <div
+      ref={containerRef}
+      className={`select-none pointer-events-none w-[84vw] max-w-[1175px] aspect-square hero-gif${flipping ? " hero-flip-anim" : ""}`}
+      aria-label="The Marshall Mafia"
+    />
+  )
+}
+// ─────────────────────────────────────────────────────────────────────────────
 
 type ModalType = "play" | "showcase" | "music" | "collect" | null
 
@@ -119,18 +154,10 @@ export default function Home() {
       {/* Animated glass backdrop — separate from main so z-index stacking is clean */}
       {!lightMode && <div className="tmm-backdrop" aria-hidden="true" />}
 
-      <main className={`h-screen w-screen overflow-hidden relative flex flex-col items-center justify-center${lightMode ? " tmm-light" : " tmm-dark"}`}>
+      <main className={`h-screen w-screen overflow-hidden relative flex flex-col items-center justify-center${lightMode ? " tmm-light" : ""}`}>
 
         {/* ===== HERO ===== */}
-        <div className="select-none pointer-events-none">
-          <Image
-            src={lightMode ? "/tmm_motion_graphic_open.gif" : "/tmm_motion_graphic_closed.gif"}
-            alt="The Marshall Mafia"
-            width={1175} height={1175}
-            className={`w-[84vw] max-w-[1175px] h-auto hero-invert${logoFlipping ? " hero-flip-anim" : ""}`}
-            priority unoptimized
-          />
-        </div>
+        <LottieHero flipping={logoFlipping} />
 
         {/* ===== FLOATING PILL NAV ===== */}
         <nav className="pill-nav">

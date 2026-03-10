@@ -161,8 +161,9 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
     font-family: 'MarkerBold', sans-serif;
+    background: #000000; /* fallback; backdrop div provides the real bg */
   }
   html {
     scroll-behavior: smooth;
@@ -218,8 +219,10 @@
     100% { transform: translate(-1%,  2%)   scale(1.03); opacity: 0.85; }
   }
 
-  .tmm-dark { background: #000000; }
-  .tmm-dark > * { position: relative; z-index: 1; }
+  /* main has no bg — backdrop div provides it.
+     All direct children need z-index above the fixed backdrop (z:0) */
+  .tmm-light { background: #ffffff; }
+  main { position: relative; z-index: 1; }
 
   /* ===================================================
      FLOATING PILL NAV — TOP CENTRE, ALWAYS VISIBLE
@@ -761,33 +764,31 @@
     100% { transform: scaleY(-1); filter: blur(0px);   opacity: 1; }
   }
 
-  /* Hero GIF — always inverted (black eyes → white), fades in on load */
-  .hero-invert {
-    filter: invert(1);
+  /* Hero GIF — mix-blend-mode:screen makes black pixels invisible,
+     white eyes stay white against any dark background */
+  .hero-gif {
+    mix-blend-mode: screen;
     animation: heroFadeIn 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   @keyframes heroFadeIn {
-    0%   { opacity: 0; filter: invert(1) blur(18px) brightness(0); transform: scale(0.96); }
+    0%   { opacity: 0; filter: blur(18px) brightness(0); transform: scale(0.96); }
     40%  { opacity: 0.15; }
-    100% { opacity: 1; filter: invert(1) blur(0px)  brightness(1); transform: scale(1); }
+    100% { opacity: 1; filter: blur(0px)  brightness(1); transform: scale(1); }
   }
-  /* Hero GIF — blur pulse between states, no spin */
+  /* Hero GIF — blur pulse on mode switch */
   .hero-flip-anim {
     animation: heroBlip 0.42s ease-in-out forwards;
   }
   @keyframes heroBlip {
-    0%   { filter: invert(1) blur(0px);  opacity: 1; }
-    45%  { filter: invert(1) blur(24px); opacity: 0; }
-    55%  { filter: invert(1) blur(24px); opacity: 0; }
-    100% { filter: invert(1) blur(0px);  opacity: 1; }
+    0%   { opacity: 1; filter: blur(0px); }
+    45%  { opacity: 0; filter: blur(24px); }
+    55%  { opacity: 0; filter: blur(24px); }
+    100% { opacity: 1; filter: blur(0px); }
   }
 
   /* ===================================================
      DARK / LIGHT MODE BASE
      =================================================== */
-  .tmm-light {
-    background: #ffffff;
-  }
 
   /* Light mode — nav pill */
   .tmm-light .pill-nav-inner {
