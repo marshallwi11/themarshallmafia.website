@@ -176,6 +176,38 @@
 @layer utilities {
 
   /* ===================================================
+     ANIMATED GLASS BACKDROP — fixed layer behind everything
+     =================================================== */
+  .tmm-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: #000000;
+    overflow: hidden;
+  }
+  .tmm-backdrop::after {
+    content: '';
+    position: absolute;
+    inset: -20%;
+    background:
+      radial-gradient(ellipse 70% 55% at 18% 28%, rgba(55,20,80,0.55) 0%, transparent 65%),
+      radial-gradient(ellipse 55% 50% at 82% 72%, rgba(15,40,70,0.45) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 40% at 55% 45%, rgba(35,10,55,0.3) 0%, transparent 75%);
+    animation: backdropDrift 22s ease-in-out infinite alternate;
+  }
+  @keyframes backdropDrift {
+    0%   { transform: translate(0%,   0%)   scale(1);    opacity: 0.75; }
+    25%  { transform: translate(2%,   -1%)  scale(1.03); opacity: 0.9; }
+    50%  { transform: translate(-1%,  2%)   scale(0.98); opacity: 0.8; }
+    75%  { transform: translate(1.5%, 1%)   scale(1.04); opacity: 0.88; }
+    100% { transform: translate(-0.5%, -2%) scale(1.01); opacity: 0.78; }
+  }
+
+  .tmm-dark { background: #000000; }
+  .tmm-dark > * { position: relative; z-index: 1; }
+
+  /* ===================================================
      FLOATING PILL NAV — TOP CENTRE, ALWAYS VISIBLE
      =================================================== */
   .pill-nav {
@@ -190,34 +222,35 @@
     position: relative;
     display: flex;
     align-items: center;
-    gap: 2px;
-    padding: 6px 8px;
-    background: rgba(22, 22, 22, 0.55);
-    backdrop-filter: blur(32px) saturate(1.6);
-    -webkit-backdrop-filter: blur(32px) saturate(1.6);
+    gap: 4px;
+    padding: 7px 10px;
+    background: rgba(22, 22, 22, 0.6);
+    backdrop-filter: blur(32px) saturate(1.8);
+    -webkit-backdrop-filter: blur(32px) saturate(1.8);
     border-radius: 100px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.13);
     box-shadow:
-      0 0 0 0.5px rgba(255,255,255,0.06),
-      inset 0 1px 0 rgba(255,255,255,0.1),
-      0 8px 32px rgba(0,0,0,0.5);
+      0 0 0 0.5px rgba(255,255,255,0.07),
+      inset 0 1px 0 rgba(255,255,255,0.12),
+      0 10px 40px rgba(0,0,0,0.55);
   }
 
-  /* Sliding active circle — position set via inline style from JS measurement */
+  /* Sliding pill — width+left transition so it morphs between items */
   .pill-nav-slider {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: rgba(22, 22, 22, 0.9);
+    height: 58px;
+    border-radius: 100px;
+    background: rgba(28, 28, 28, 0.92);
     border: 1px solid rgba(255,255,255,0.18);
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.1),
-      0 2px 12px rgba(0,0,0,0.5);
+      inset 0 1px 0 rgba(255,255,255,0.12),
+      0 3px 16px rgba(0,0,0,0.55);
     pointer-events: none;
-    transition: left 0.36s cubic-bezier(0.34,1.15,0.64,1);
+    transition:
+      left  0.38s cubic-bezier(0.34,1.15,0.64,1),
+      width 0.38s cubic-bezier(0.34,1.15,0.64,1);
     z-index: 0;
   }
 
@@ -228,20 +261,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 13px 16px;
+    padding: 16px 20px;
     border: none;
     background: none;
     cursor: pointer;
-    border-radius: 80px;
-    color: rgba(255,255,255,0.45);
+    border-radius: 100px;
+    color: rgba(255,255,255,0.4);
     transition: color 0.22s ease;
-    min-width: 54px;
+    min-width: 62px;
+    height: 58px;
   }
   .pill-nav-item:hover {
-    color: #ffffff;
+    color: rgba(255,255,255,0.8);
   }
 
-  /* Active state — white icon, no background (slider handles it) */
+  /* Active state — bright white */
   .pill-nav-item--active {
     color: #ffffff !important;
   }
@@ -249,63 +283,63 @@
     animation: navIconPop 0.3s cubic-bezier(0.34,1.56,0.64,1);
   }
 
-  /* Icon pop animation when item becomes active */
   @keyframes navIconPop {
     0%   { transform: scale(0.8); }
-    60%  { transform: scale(1.2); }
+    60%  { transform: scale(1.18); }
     100% { transform: scale(1); }
   }
 
-  /* Collect icon shake — subtle, on the whole button */
+  /* Collect icon shake */
   .collect-icon-shake {
     animation: collectShake 0.7s cubic-bezier(0.36, 0.07, 0.19, 0.97);
   }
   @keyframes collectShake {
     0%, 100% { transform: rotate(0deg); }
-    20%  { transform: rotate(-8deg); }
-    40%  { transform: rotate(7deg); }
-    60%  { transform: rotate(-5deg); }
+    20%  { transform: rotate(-9deg); }
+    40%  { transform: rotate(8deg); }
+    60%  { transform: rotate(-6deg); }
     80%  { transform: rotate(4deg); }
   }
 
-  /* Red notification dot — solid, sits on top-right of bag icon */
+  /* Red notification dot — sits on the top-right of the bag icon itself */
   .collect-dot {
     position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 6px;
-    height: 6px;
+    /* align with top-right of the SVG icon, roughly */
+    top: 50%;
+    right: 50%;
+    transform: translate(160%, -110%);
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background: var(--tmm-red);
-    border: 1.5px solid rgba(22,22,22,0.9);
+    border: 2px solid rgba(22,22,22,0.92);
     z-index: 3;
     pointer-events: none;
   }
 
-  /* TMM centre home button — no extra wrapper, slider circle is the background */
+  /* TMM centre home button */
   .pill-nav-home {
     position: relative;
     z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 52px;
-    height: 52px;
-    padding: 0;
-    min-width: 52px;
+    padding: 10px 14px;
+    min-width: 72px;
+    height: 58px;
     background: none !important;
     border: none;
     cursor: pointer;
-    border-radius: 50%;
+    border-radius: 100px;
     transition: transform 0.22s ease;
   }
   .pill-nav-home:hover {
     background: none !important;
-    transform: scale(1.07);
+    transform: scale(1.06);
   }
   .pill-nav-home-logo {
-    width: 36px;
-    height: 36px;
+    width: 42px;
+    height: 42px;
     object-fit: contain;
     display: block;
     user-select: none;
@@ -313,7 +347,7 @@
     position: relative;
     z-index: 1;
   }
-  /* Collect button needs position:relative for the dot */
+  /* Collect button needs position:relative for dot */
   .pill-nav-collect {
     position: relative;
   }
@@ -730,9 +764,6 @@
   /* ===================================================
      DARK / LIGHT MODE BASE
      =================================================== */
-  .tmm-dark {
-    background: #000000;
-  }
   .tmm-light {
     background: #ffffff;
   }
@@ -754,15 +785,11 @@
     background: rgba(0,0,0,0.06);
   }
   .tmm-light .pill-nav-item--active {
-    color: #000000 !important;
-    background: rgba(0,0,0,0.08) !important;
+    color: #ffffff !important;
   }
-  .tmm-light .pill-nav-home-active {
-    background: rgba(30,30,30,0.9);
-    border-color: rgba(0,0,0,0.15);
-  }
-  .tmm-light .pill-nav-home:hover .pill-nav-home-active {
-    background: rgba(50,50,50,0.95);
+  /* light mode: slider pill goes dark so eyes stay visible */
+  .tmm-light .pill-nav-slider {
+    background: rgba(30,30,30,0.88);
   }
 
   /* Light mode — modal backdrop */
@@ -888,18 +915,19 @@
 
   /* Pill nav scales down gracefully on narrow screens */
   .pill-nav-item {
-    padding: 7px 10px;
-    min-width: 42px;
+    padding: 10px 12px;
+    min-width: 44px;
+    height: 48px;
   }
-  .pill-nav-home-active {
-    width: 44px;
-    height: 44px;
+  .pill-nav-home {
+    min-width: 56px;
+    height: 48px;
+  }
+  .pill-nav-slider {
+    height: 48px;
   }
   .pill-nav-home-logo {
-    width: 30px;
-    height: 30px;
-  }
-  .pill-nav-label {
-    font-size: 8px;
+    width: 32px;
+    height: 32px;
   }
 }

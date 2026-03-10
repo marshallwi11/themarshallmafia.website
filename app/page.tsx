@@ -26,8 +26,7 @@ export default function Home() {
   const btnHomeRef = useRef<HTMLButtonElement>(null)
   const btnMusicRef = useRef<HTMLButtonElement>(null)
   const btnCollectRef = useRef<HTMLButtonElement>(null)
-  const [sliderLeft, setSliderLeft] = useState(0)
-  const SLIDER_SIZE = 52
+  const [sliderStyle, setSliderStyle] = useState({ left: 0, width: 72 })
 
   const updateSlider = useCallback(() => {
     const inner = navInnerRef.current
@@ -41,7 +40,10 @@ export default function Home() {
     if (!btn) return
     const btnRect = btn.getBoundingClientRect()
     const innerRect = inner.getBoundingClientRect()
-    setSliderLeft(btnRect.left - innerRect.left + (btnRect.width - SLIDER_SIZE) / 2)
+    setSliderStyle({
+      left: btnRect.left - innerRect.left,
+      width: btnRect.width,
+    })
   }, [activeModal])
 
   useEffect(() => { updateSlider() }, [updateSlider])
@@ -104,12 +106,15 @@ export default function Home() {
 
   return (
     <>
+      {/* Animated glass backdrop — separate from main so z-index stacking is clean */}
+      {!lightMode && <div className="tmm-backdrop" aria-hidden="true" />}
+
       <main className={`h-screen w-screen overflow-hidden relative flex flex-col items-center justify-center${lightMode ? " tmm-light" : " tmm-dark"}`}>
 
         {/* ===== HERO ===== */}
         <div className="select-none pointer-events-none">
           <Image
-            src="/images/asset-logo-motion-graphic.gif"
+            src={lightMode ? "/tmm_motion_graphic_open.gif" : "/tmm_motion_graphic_closed.gif"}
             alt="The Marshall Mafia"
             width={1175} height={1175}
             className={`w-[84vw] max-w-[1175px] h-auto${logoFlipping ? " hero-flip-anim" : lightMode ? " hero-flipped" : ""}`}
@@ -121,10 +126,10 @@ export default function Home() {
         <nav className="pill-nav">
           <div className="pill-nav-inner" ref={navInnerRef}>
 
-            {/* Sliding circle — JS-measured, always lands on the right button */}
+            {/* Sliding pill — JS-measured: tracks exact button width + left */}
             <span
               className="pill-nav-slider"
-              style={{ left: sliderLeft }}
+              style={{ left: sliderStyle.left, width: sliderStyle.width }}
               aria-hidden="true"
             />
 
@@ -170,15 +175,24 @@ export default function Home() {
               />
             </button>
 
-            {/* MUSIC — solid music note */}
+            {/* MUSIC — two solid notes with beam */}
             <button
               ref={btnMusicRef}
               className={`pill-nav-item${activeModal === "music" ? " pill-nav-item--active" : ""}`}
               onClick={() => activeModal === "music" ? closeModal() : openModal("music")}
               aria-label="Music"
             >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M8 14.5V4.5l9-2v10M8 14.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zm9 0a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" fillRule="evenodd" clipRule="evenodd"/>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                {/* beam at top */}
+                <rect x="6" y="3" width="13" height="2.5" rx="1.25"/>
+                {/* left stem */}
+                <rect x="6" y="3" width="2.5" height="11" rx="1.25"/>
+                {/* right stem */}
+                <rect x="16.5" y="3" width="2.5" height="9" rx="1.25"/>
+                {/* left note head */}
+                <ellipse cx="8" cy="16.5" rx="3.5" ry="2.5"/>
+                {/* right note head */}
+                <ellipse cx="18.5" cy="14.5" rx="3.5" ry="2.5"/>
               </svg>
             </button>
 
