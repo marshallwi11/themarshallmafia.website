@@ -186,22 +186,36 @@
     background: #000000;
     overflow: hidden;
   }
+  .tmm-backdrop::before {
+    content: '';
+    position: absolute;
+    inset: -20%;
+    background:
+      radial-gradient(ellipse 75% 60% at 15% 25%, rgba(80,20,120,0.7) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 55% at 85% 75%, rgba(10,45,90,0.6) 0%, transparent 58%),
+      radial-gradient(ellipse 50% 45% at 50% 50%, rgba(50,10,70,0.35) 0%, transparent 70%);
+    animation: backdropDrift 22s ease-in-out infinite alternate;
+  }
   .tmm-backdrop::after {
     content: '';
     position: absolute;
     inset: -20%;
     background:
-      radial-gradient(ellipse 70% 55% at 18% 28%, rgba(55,20,80,0.55) 0%, transparent 65%),
-      radial-gradient(ellipse 55% 50% at 82% 72%, rgba(15,40,70,0.45) 0%, transparent 60%),
-      radial-gradient(ellipse 45% 40% at 55% 45%, rgba(35,10,55,0.3) 0%, transparent 75%);
-    animation: backdropDrift 22s ease-in-out infinite alternate;
+      radial-gradient(ellipse 40% 35% at 70% 20%, rgba(20,60,110,0.45) 0%, transparent 55%),
+      radial-gradient(ellipse 35% 30% at 25% 80%, rgba(90,30,80,0.4) 0%, transparent 50%);
+    animation: backdropDrift2 28s ease-in-out infinite alternate;
   }
   @keyframes backdropDrift {
-    0%   { transform: translate(0%,   0%)   scale(1);    opacity: 0.75; }
-    25%  { transform: translate(2%,   -1%)  scale(1.03); opacity: 0.9; }
-    50%  { transform: translate(-1%,  2%)   scale(0.98); opacity: 0.8; }
-    75%  { transform: translate(1.5%, 1%)   scale(1.04); opacity: 0.88; }
-    100% { transform: translate(-0.5%, -2%) scale(1.01); opacity: 0.78; }
+    0%   { transform: translate(0%,    0%)   scale(1);    opacity: 0.85; }
+    33%  { transform: translate(2.5%,  -1.5%) scale(1.04); opacity: 1; }
+    66%  { transform: translate(-1.5%, 2%)   scale(0.97); opacity: 0.9; }
+    100% { transform: translate(1%,    -2%)  scale(1.02); opacity: 0.95; }
+  }
+  @keyframes backdropDrift2 {
+    0%   { transform: translate(0%,   0%)   scale(1);    opacity: 0.7; }
+    40%  { transform: translate(-2%,  1.5%) scale(1.05); opacity: 0.9; }
+    70%  { transform: translate(1.5%, -1%)  scale(0.96); opacity: 0.8; }
+    100% { transform: translate(-1%,  2%)   scale(1.03); opacity: 0.85; }
   }
 
   .tmm-dark { background: #000000; }
@@ -749,20 +763,25 @@
     100% { transform: scaleY(-1); filter: blur(0px);   opacity: 1; }
   }
 
-  /* Hero GIF — flipped + inverted in light mode */
-  .hero-flipped {
-    transform: scaleY(-1);
+  /* Hero GIF — always inverted (black eyes → white), fades in on load */
+  .hero-invert {
     filter: invert(1);
+    animation: heroFadeIn 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes heroFadeIn {
+    0%   { opacity: 0; filter: invert(1) blur(18px) brightness(0); transform: scale(0.96); }
+    40%  { opacity: 0.15; }
+    100% { opacity: 1; filter: invert(1) blur(0px)  brightness(1); transform: scale(1); }
   }
   /* Hero GIF — blur pulse between states, no spin */
   .hero-flip-anim {
     animation: heroBlip 0.42s ease-in-out forwards;
   }
   @keyframes heroBlip {
-    0%   { filter: blur(0px)  invert(0); opacity: 1; transform: scaleY(1);  }
-    45%  { filter: blur(24px) invert(0); opacity: 0; transform: scaleY(1);  }
-    55%  { filter: blur(24px) invert(1); opacity: 0; transform: scaleY(-1); }
-    100% { filter: blur(0px)  invert(1); opacity: 1; transform: scaleY(-1); }
+    0%   { filter: invert(1) blur(0px);  opacity: 1; }
+    45%  { filter: invert(1) blur(24px); opacity: 0; }
+    55%  { filter: invert(1) blur(24px); opacity: 0; }
+    100% { filter: invert(1) blur(0px);  opacity: 1; }
   }
 
   /* ===================================================

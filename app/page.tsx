@@ -117,7 +117,7 @@ export default function Home() {
             src={lightMode ? "/tmm_motion_graphic_open.gif" : "/tmm_motion_graphic_closed.gif"}
             alt="The Marshall Mafia"
             width={1175} height={1175}
-            className={`w-[84vw] max-w-[1175px] h-auto${logoFlipping ? " hero-flip-anim" : ""}`}
+            className={`w-[84vw] max-w-[1175px] h-auto hero-invert${logoFlipping ? " hero-flip-anim" : ""}`}
             priority unoptimized
           />
         </div>
