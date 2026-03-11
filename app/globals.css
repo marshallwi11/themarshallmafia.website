@@ -247,14 +247,14 @@
     100% { opacity: 1; filter: blur(0px); }
   }
 
-  /* ── ? / ! INFO BUTTON — outer shell matches pill-nav-inner height ── */
-  .info-btn {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 7px;
-    background: rgba(22, 22, 22, 0.6);
+  /* ── Site load intro text pill ──────────────────────────────────────── */
+  .nav-intro-pill {
+    position: fixed;
+    top: clamp(16px, 3vw, 28px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 60;
+    background: rgba(18, 18, 18, 0.70);
     backdrop-filter: blur(32px) saturate(1.8);
     -webkit-backdrop-filter: blur(32px) saturate(1.8);
     border-radius: 100px;
@@ -263,49 +263,23 @@
       0 0 0 0.5px rgba(255,255,255,0.06),
       inset 0 1px 0 rgba(255,255,255,0.10),
       0 10px 40px rgba(0,0,0,0.55);
-    cursor: pointer;
-    flex-shrink: 0;
-    z-index: auto;
+    padding: 16px 28px;
+    pointer-events: none;
+    white-space: nowrap;
   }
-  /* Inner label — same padding as pill-nav-item */
-  .info-btn-inner {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 14px 22px;
-    border-radius: 100px;
-    color: rgba(255, 255, 255, 0.55);
+  .nav-intro-text {
     font-family: 'MarkerBold', sans-serif;
-    font-size: 16px;
-    transition: color 0.2s ease;
-    min-width: 48px;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.9);
+    white-space: nowrap;
+    display: block;
   }
-  .info-btn:hover .info-btn-inner { color: rgba(255, 255, 255, 0.9); }
-  /* Active: dark inner pill — mirrors pill-nav-slider */
-  .info-btn--active .info-btn-inner {
-    color: #ffffff;
-    background: rgba(28, 28, 28, 0.92);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 3px 16px rgba(0,0,0,0.55);
+  .tmm-light .nav-intro-pill {
+    background: rgba(220, 218, 213, 0.80);
+    border-color: rgba(0, 0, 0, 0.08);
   }
-  .tmm-light .info-btn {
-    background: rgba(245,244,240,0.85);
-    border-color: rgba(0,0,0,0.1);
-    box-shadow:
-      0 0 0 0.5px rgba(0,0,0,0.06),
-      inset 0 1px 0 rgba(255,255,255,0.8),
-      0 8px 32px rgba(0,0,0,0.12);
-  }
-  .tmm-light .info-btn-inner { color: rgba(0,0,0,0.5); }
-  .tmm-light .info-btn:hover .info-btn-inner { color: #111111; }
-  .tmm-light .info-btn--active .info-btn-inner {
-    color: rgba(0,0,0,0.88);
-    background: rgba(232, 229, 224, 0.9);
-    border-color: rgba(0,0,0,0.08);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 2px 8px rgba(0,0,0,0.06);
-  }
+  .tmm-light .nav-intro-text { color: rgba(0, 0, 0, 0.7); }
 
   /* ── INFO POPUP ────────────────────────────────────────────────────── */
   .info-popup-overlay {
@@ -361,7 +335,7 @@
   }
   .tmm-light .info-popup-num { color: rgba(0,0,0,0.25); }
 
-  /* ── NAV CLUSTER — info btn · main pill · cart pill, all inline centered ── */
+  /* ── NAV CLUSTER — single unified pill nav ── */
   .nav-cluster {
     position: fixed;
     top: clamp(16px, 3vw, 28px);
@@ -370,7 +344,6 @@
     z-index: 60;
     display: flex;
     align-items: center;
-    gap: 8px;
     pointer-events: none;
   }
   .nav-cluster > * { pointer-events: auto; }
@@ -385,57 +358,23 @@
     max-width: none;
   }
 
-  /* Cart pill de-fixed inside cluster */
-  .nav-cluster .cart-pill-nav {
-    position: static;
-    top: auto;
-    right: auto;
-    z-index: auto;
+  /* ── Cart badge (inside unified pill) ───────────────────────────────── */
+  .cart-pill-badge {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--tmm-red);
+    border: 1.5px solid rgba(18, 18, 18, 0.85);
+    pointer-events: none;
+    z-index: 2;
   }
+  .tmm-light .cart-pill-badge { border-color: rgba(220, 218, 213, 0.9); }
 
-  /* ── CART PILL NAV ──────────────────────────────────────────────────── */
-  .cart-pill-nav {
-    z-index: 60;
-  }
-  .cart-pill-btn {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 7px;
-    background: rgba(22, 22, 22, 0.6);
-    backdrop-filter: blur(32px) saturate(1.8);
-    -webkit-backdrop-filter: blur(32px) saturate(1.8);
-    border-radius: 100px;
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    box-shadow:
-      0 0 0 0.5px rgba(255,255,255,0.06),
-      inset 0 1px 0 rgba(255,255,255,0.10),
-      0 10px 40px rgba(0,0,0,0.55);
-    cursor: pointer;
-  }
-  /* Inner icon wrapper — same padding as pill-nav-item */
-  .cart-pill-btn-inner {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 14px 18px;
-    border-radius: 100px;
-    color: rgba(255, 255, 255, 0.4);
-    transition: color 0.22s ease;
-  }
-  .cart-pill-btn:hover .cart-pill-btn-inner { color: rgba(255,255,255,0.85); }
-  /* Active: dark inner pill — mirrors pill-nav-slider */
-  .cart-pill-btn--active .cart-pill-btn-inner {
-    color: #ffffff;
-    background: rgba(28, 28, 28, 0.92);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 3px 16px rgba(0,0,0,0.55);
-  }
-  /* Shake animation */
-  .cart-pill-btn--shake {
+  /* Cart shake — applied to pill-nav-item */
+  .pill-nav-item--shake {
     animation: cartWiggle 0.9s cubic-bezier(0.36, 0.07, 0.19, 0.97);
   }
   @keyframes cartWiggle {
@@ -446,36 +385,6 @@
     60%        { transform: rotate(2deg); }
     75%        { transform: rotate(-1deg); }
   }
-  /* Red badge — anchored to outer button corner */
-  .cart-pill-badge {
-    position: absolute;
-    top: 7px;
-    right: 7px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--tmm-red);
-    border: 1.5px solid rgba(22,22,22,0.9);
-    pointer-events: none;
-    z-index: 2;
-  }
-  /* Light mode cart pill */
-  .tmm-light .cart-pill-btn {
-    background: rgba(245,244,240,0.85);
-    border-color: rgba(0,0,0,0.1);
-    box-shadow:
-      0 0 0 0.5px rgba(0,0,0,0.06),
-      inset 0 1px 0 rgba(255,255,255,0.8),
-      0 8px 32px rgba(0,0,0,0.12);
-  }
-  .tmm-light .cart-pill-btn-inner { color: rgba(0,0,0,0.4); }
-  .tmm-light .cart-pill-btn:hover .cart-pill-btn-inner { color: rgba(0,0,0,0.85); }
-  .tmm-light .cart-pill-btn--active .cart-pill-btn-inner {
-    color: #ffffff;
-    background: rgba(28,28,28,0.88);
-    border-color: rgba(255,255,255,0.18);
-  }
-  .tmm-light .cart-pill-badge { border-color: rgba(245,244,240,0.9); }
 
   /* ── Floating Pill Nav ────────────────────────────────────────────── */
   .pill-nav {
@@ -490,8 +399,8 @@
     position: relative;
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 10px;
+    gap: 2px;
+    padding: 8px;
     background: rgba(18, 18, 18, 0.70);
     backdrop-filter: blur(32px) saturate(1.8);
     -webkit-backdrop-filter: blur(32px) saturate(1.8);
@@ -504,38 +413,41 @@
     overflow: visible;
   }
 
-  /* Slider retired — each item now has its own glass background */
-  .pill-nav-slider { display: none; }
+  /* ── Sliding glass pill indicator — animated behind active item ── */
+  .pill-nav-slider {
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    background: rgba(28, 28, 28, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 100px;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.12),
+      0 3px 16px rgba(0,0,0,0.55);
+    pointer-events: none;
+    z-index: 0;
+    /* left + width controlled via JS */
+  }
 
-  /* ── Each nav item = its own glass rounded-square ── */
+  /* ── Transparent nav items — slider provides the active highlight ── */
   .pill-nav-item {
     position: relative;
     z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 16px 20px;
-    background: rgba(52, 52, 52, 0.30);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    padding: 12px 14px;
+    background: transparent;
+    border: none;
     cursor: pointer;
-    border-radius: 20px;
+    border-radius: 100px;
     color: rgba(255, 255, 255, 0.45);
-    transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: color 0.2s ease;
     white-space: nowrap;
     flex-shrink: 0;
   }
-  .pill-nav-item:hover {
-    color: rgba(255, 255, 255, 0.85);
-    background: rgba(52, 52, 52, 0.52);
-  }
-  .pill-nav-item--active {
-    color: #ffffff !important;
-    background: rgba(28, 28, 28, 0.92) !important;
-    border-color: rgba(255, 255, 255, 0.18) !important;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 3px 16px rgba(0,0,0,0.55);
-  }
+  .pill-nav-item:hover { color: rgba(255, 255, 255, 0.85); }
+  .pill-nav-item--active { color: #ffffff; }
   .pill-nav-item--active svg {
     animation: navIconPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
@@ -545,30 +457,11 @@
     100% { transform: scale(1); }
   }
 
-  /* Home button — same glass treatment as other items */
-  .pill-nav-home {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 16px;
-    background: rgba(52, 52, 52, 0.30) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    border-radius: 20px;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
-    flex-shrink: 0;
-  }
-  .pill-nav-home:hover {
-    background: rgba(52, 52, 52, 0.52) !important;
-    transform: scale(1.04);
-  }
+  /* Home button — slightly less side-padding to keep logo proportional */
+  .pill-nav-home { padding: 8px 10px; }
   .pill-nav-home-logo {
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
     object-fit: contain;
     display: block;
     user-select: none;
@@ -604,26 +497,14 @@
       inset 0 1px 0 rgba(255,255,255,0.7),
       0 8px 32px rgba(0,0,0,0.10);
   }
-  .tmm-light .pill-nav-item {
-    background: rgba(255, 255, 255, 0.55);
-    border-color: rgba(0, 0, 0, 0.08);
-    color: rgba(0, 0, 0, 0.45);
+  .tmm-light .pill-nav-slider {
+    background: rgba(200, 196, 190, 0.95);
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 2px 8px rgba(0,0,0,0.10);
   }
-  .tmm-light .pill-nav-item:hover {
-    background: rgba(255, 255, 255, 0.75);
-    color: rgba(0, 0, 0, 0.85);
-  }
-  .tmm-light .pill-nav-item--active {
-    color: rgba(0, 0, 0, 0.88) !important;
-    background: rgba(232, 229, 224, 0.95) !important;
-    border-color: rgba(0, 0, 0, 0.10) !important;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 2px 8px rgba(0,0,0,0.08);
-  }
-  .tmm-light .pill-nav-home {
-    background: rgba(255, 255, 255, 0.55) !important;
-    border-color: rgba(0, 0, 0, 0.08) !important;
-  }
-  .tmm-light .pill-nav-home:hover { background: rgba(255, 255, 255, 0.75) !important; }
+  .tmm-light .pill-nav-item { color: rgba(0, 0, 0, 0.40); }
+  .tmm-light .pill-nav-item:hover { color: rgba(0, 0, 0, 0.85); }
+  .tmm-light .pill-nav-item--active { color: rgba(0, 0, 0, 0.88); }
 
   /* ── Modal system ────────────────────────────────────────────────── */
   .modal-overlay {
@@ -968,23 +849,21 @@
 }
 
 /* =====================================================================
-   MOBILE — ≤ 600px: compact top nav bar (cluster stays together)
+   MOBILE — ≤ 600px: compact unified top pill nav
    ===================================================================== */
 @media (max-width: 600px) {
 
-  /* ── Nav cluster: explicitly fixed at TOP on mobile, flex row ── */
+  /* ── Nav cluster: fixed at TOP ── */
   .nav-cluster {
     position: fixed !important;
-    top: clamp(10px, 2.5vw, 18px) !important;
+    top: clamp(10px, 2.5vw, 16px) !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
     display: flex !important;
-    align-items: center !important;
-    gap: 4px;
     z-index: 60 !important;
   }
 
-  /* Pill nav is static inside the cluster on mobile */
+  /* Pill nav static inside cluster */
   .nav-cluster .pill-nav,
   .pill-nav {
     position: static !important;
@@ -993,57 +872,43 @@
     transform: none !important;
   }
 
-  /* Cart and info stay static inside cluster on mobile */
-  .nav-cluster .cart-pill-nav,
-  .cart-pill-nav {
-    position: static !important;
-    top: auto !important;
-    bottom: auto !important;
-    right: auto !important;
-  }
-  .nav-cluster .info-btn,
-  .info-btn {
-    position: static !important;
-    bottom: auto !important;
-    right: auto !important;
-  }
-
-  /* Main pill — compact glass outer container */
+  /* Compact pill outer container */
   .pill-nav-inner {
-    border-radius: 20px;
-    padding: 4px;
-    gap: 3px;
-    overflow: visible;
+    border-radius: 18px;
+    padding: 5px;
+    gap: 0px;
   }
 
-  /* Each item — smaller glass square */
+  /* Compact slider */
+  .pill-nav-slider {
+    top: 5px;
+    bottom: 5px;
+    border-radius: 12px;
+  }
+
+  /* Compact items */
   .pill-nav-item {
     padding: 9px 9px;
-    border-radius: 13px;
+    border-radius: 12px;
     flex-shrink: 1;
     min-width: 0;
-    height: auto;
   }
-  .pill-nav-home {
-    padding: 7px 9px !important;
-    border-radius: 13px !important;
-    min-width: 0;
-    height: auto;
-  }
-  .pill-nav-home-logo { width: 26px; height: 26px; }
 
-  /* Side buttons — compact, match pill height */
-  .info-btn { padding: 4px; }
-  .info-btn-inner {
-    padding: 9px 11px;
-    font-size: 13px;
-    min-width: 28px;
-  }
-  .cart-pill-btn { padding: 4px; }
-  .cart-pill-btn-inner { padding: 9px 10px; }
-  .cart-pill-badge { top: 4px; right: 4px; }
+  /* Home button compact */
+  .pill-nav-home { padding: 6px 7px; }
+  .pill-nav-home-logo { width: 24px; height: 24px; }
 
-  /* Site canvas: full viewport width so hero fills screen */
+  /* Badge position on mobile */
+  .cart-pill-badge { top: 3px; right: 3px; width: 6px; height: 6px; }
+
+  /* Intro pill on mobile */
+  .nav-intro-pill {
+    top: clamp(10px, 2.5vw, 16px) !important;
+    padding: 12px 20px;
+  }
+  .nav-intro-text { font-size: 11px; letter-spacing: 0.10em; }
+
+  /* Site canvas: full viewport width */
   .site-canvas { width: 100vw; }
 
   /* Hero fills 88vw */
@@ -1052,10 +917,9 @@
     max-width: 88vw !important;
   }
 
-  /* No bottom padding — nav is at top */
   main { padding-bottom: env(safe-area-inset-bottom, 0px); }
 
-  /* Modal fades content behind the TOP nav */
+  /* Modal fades content behind the top nav */
   .modal-scroll-bare {
     mask-image: linear-gradient(to bottom, transparent 0, transparent 60px, black 90px);
     -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 60px, black 90px);
@@ -1090,5 +954,5 @@
   .review-card-top { flex-wrap: wrap; }
 
   /* Light mode */
-  .tmm-light .pill-nav-inner { border-radius: 20px; }
+  .tmm-light .pill-nav-inner { border-radius: 18px; }
 }

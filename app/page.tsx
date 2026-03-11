@@ -126,39 +126,53 @@ export default function Home() {
   const [logoFlipping, setLogoFlipping] = useState(false)
   const [cartShaking, setCartShaking] = useState(false)
   const [infoOpen, setInfoOpen] = useState(false)
+  // 0 = intro text showing | 1 = text fading out | 2 = nav visible
+  const [navIntro, setNavIntro] = useState(0)
   const lastTapRef = useRef<number>(0)
   const swipeTouchStartX = useRef<number>(0)
-  // Left-to-right swipe order for the pill nav
+  // Left-to-right swipe order for the pill nav (middle 5 items)
   const SWIPE_ORDER: ModalType[] = ["play", "music", null, "showcase", "reviews"]
 
-  // Slider refs — only the 5 items IN the main nav pill
+  // Site-load intro: text pill → fade → nav icons
+  useEffect(() => {
+    const t1 = setTimeout(() => setNavIntro(1), 1800)
+    const t2 = setTimeout(() => setNavIntro(2), 2400)
+    return () => { clearTimeout(t1); clearTimeout(t2) }
+  }, [])
+
+  // Slider refs — all 7 items in the unified pill
   const navInnerRef = useRef<HTMLDivElement>(null)
+  const btnInfoRef  = useRef<HTMLButtonElement>(null)
   const btnPlayRef  = useRef<HTMLButtonElement>(null)
   const btnMusicRef = useRef<HTMLButtonElement>(null)
   const btnHomeRef  = useRef<HTMLButtonElement>(null)
   const btnShowRef  = useRef<HTMLButtonElement>(null)
   const btnRevRef   = useRef<HTMLButtonElement>(null)
-  const [sliderStyle, setSliderStyle] = useState({ left: 0, width: 72 })
+  const btnCartRef  = useRef<HTMLButtonElement>(null)
+  const [sliderStyle, setSliderStyle] = useState({ left: 0, width: 52 })
   const [sliderReady, setSliderReady] = useState(false)
 
   const measureSlider = useCallback((skipTransition = false) => {
     const inner = navInnerRef.current
     if (!inner) return
     const refMap: Record<string, React.RefObject<HTMLButtonElement | null>> = {
-      play: btnPlayRef, music: btnMusicRef, home: btnHomeRef,
-      showcase: btnShowRef, reviews: btnRevRef,
+      info: btnInfoRef, play: btnPlayRef, music: btnMusicRef, home: btnHomeRef,
+      showcase: btnShowRef, reviews: btnRevRef, cart: btnCartRef,
     }
-    const key = activeModal === "collect" ? "home" : (activeModal ?? "home")
+    let key: string
+    if (infoOpen) key = "info"
+    else if (activeModal === "collect") key = "cart"
+    else key = activeModal ?? "home"
     const btn = refMap[key]?.current
     if (!btn) return
     const btnRect   = btn.getBoundingClientRect()
     const innerRect = inner.getBoundingClientRect()
     setSliderStyle({ left: btnRect.left - innerRect.left, width: btnRect.width })
     if (skipTransition) setTimeout(() => setSliderReady(true), 0)
-  }, [activeModal])
+  }, [activeModal, infoOpen])
 
   useEffect(() => { measureSlider(true) }, []) // eslint-disable-line
-  useEffect(() => { if (sliderReady) measureSlider(false) }, [activeModal, sliderReady, measureSlider])
+  useEffect(() => { if (sliderReady) measureSlider(false) }, [activeModal, infoOpen, sliderReady, measureSlider])
   useEffect(() => {
     const onResize = () => measureSlider(false)
     window.addEventListener("resize", onResize)
@@ -224,163 +238,187 @@ export default function Home() {
         {/* ── INFO POPUP ── */}
         <InfoPopup open={infoOpen} onClose={() => setInfoOpen(false)} />
 
-        {/* ── NAV CLUSTER: ! info · main pill · cart pill ── */}
-        <div className="nav-cluster">
-
-        {/* ? / ! INFO BUTTON — left side of cluster */}
-        <button
-          className={`info-btn${infoOpen ? " info-btn--active" : ""}`}
-          onClick={() => setInfoOpen(v => !v)}
-          aria-label="About"
-          aria-expanded={infoOpen}
+        {/* ── SITE LOAD INTRO TEXT PILL ── */}
+        <div
+          className="nav-intro-pill"
+          style={{
+            opacity: navIntro === 0 ? 1 : 0,
+            transition: "opacity 0.55s ease",
+          }}
+          aria-hidden="true"
         >
-          <span className="info-btn-inner">{infoOpen ? "!" : "?"}</span>
-        </button>
+          <span className="nav-intro-text">THE MARSHALL MAFIA</span>
+        </div>
 
-        {/* ── MAIN FLOATING PILL NAV ── */}
-        <nav
-          className="pill-nav"
-          onTouchStart={(e) => { swipeTouchStartX.current = e.touches[0].clientX }}
-          onTouchEnd={(e) => {
-            const dx = e.changedTouches[0].clientX - swipeTouchStartX.current
-            if (Math.abs(dx) < 48) return
-            const current: ModalType = infoOpen ? null : (activeModal === "collect" ? null : activeModal)
-            let cur = SWIPE_ORDER.indexOf(current)
-            if (cur === -1) cur = 2 // fallback to home centre
-            const idx = dx < 0
-              ? Math.min(cur + 1, SWIPE_ORDER.length - 1)
-              : Math.max(cur - 1, 0)
-            const next = SWIPE_ORDER[idx]
-            setInfoOpen(false)
-            next === null ? closeModal() : openModal(next)
+        {/* ── NAV CLUSTER: unified pill — all 7 items ── */}
+        <div
+          className="nav-cluster"
+          style={{
+            opacity: navIntro < 2 ? 0 : 1,
+            transition: "opacity 0.6s ease",
           }}
         >
-          <div className="pill-nav-inner" ref={navInnerRef}>
-            <span
-              className="pill-nav-slider"
-              style={{
-                left: sliderStyle.left,
-                width: sliderStyle.width,
-                transition: sliderReady
-                  ? "left 0.38s cubic-bezier(0.34,1.15,0.64,1), width 0.38s cubic-bezier(0.34,1.15,0.64,1)"
-                  : "none",
-              }}
-              aria-hidden="true"
-            />
-
-            {/* PLAY */}
-            <button ref={btnPlayRef}
-              className={`pill-nav-item${activeModal === "play" ? " pill-nav-item--active" : ""}`}
-              onClick={() => activeModal === "play" ? closeModal() : openModal("play")}
-              aria-label="Play"
-            >
-              {activeModal === "play" ? (
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                  <rect x="4" y="2" width="4.5" height="16" rx="1.5"/>
-                  <rect x="11.5" y="2" width="4.5" height="16" rx="1.5"/>
-                </svg>
-              ) : (
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M4 2.5L17.5 10 4 17.5V2.5Z"/>
-                </svg>
-              )}
-            </button>
-
-            {/* MUSIC */}
-            <button ref={btnMusicRef}
-              className={`pill-nav-item${activeModal === "music" ? " pill-nav-item--active" : ""}`}
-              onClick={() => activeModal === "music" ? closeModal() : openModal("music")}
-              aria-label="Music"
-            >
-              {activeModal === "music" ? (
-                // Speaker with 3 sound waves — modal open / playing
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M10 3.75a.75.75 0 00-1.264-.546L4.703 7H3.167a.75.75 0 00-.7.48A6.985 6.985 0 002 10c0 .905.184 1.768.468 2.52.111.29.39.48.7.48h1.535l4.033 3.796A.75.75 0 0010 16.25V3.75zM15.95 5.05a.75.75 0 00-1.06 1.06A6.5 6.5 0 0116.95 10a6.5 6.5 0 01-2.06 3.89.75.75 0 001.06 1.06A8 8 0 0018.45 10a8 8 0 00-2.5-4.95zM13.596 7.404a.75.75 0 00-1.06 1.06 3.5 3.5 0 010 4.95.75.75 0 001.06 1.06 5 5 0 000-7.07z"/>
-                </svg>
-              ) : (
-                // Muted speaker — default state
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M9.547 3.062A.75.75 0 0110 3.75v12.5a.75.75 0 01-1.264.546L4.703 13H3.167a.75.75 0 01-.7-.48A6.985 6.985 0 012 10c0-.905.184-1.768.468-2.52a.75.75 0 01.699-.48h1.535l4.033-3.796a.75.75 0 01.812-.142zM13.28 7.22a.75.75 0 10-1.06 1.06L13.94 10l-1.72 1.72a.75.75 0 001.06 1.06L15 11.06l1.72 1.72a.75.75 0 101.06-1.06L16.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L15 8.94l-1.72-1.72z"/>
-                </svg>
-              )}
-            </button>
-
-            {/* HOME — eyes logo */}
-            <button ref={btnHomeRef}
-              className="pill-nav-item pill-nav-home"
-              onClick={() => { closeModal(); handleLogoTap() }}
-              aria-label="Home"
-            >
-              <img
-                src="/tmm_themarshallmafia_logo.svg"
-                alt="TMM"
-                className={[
-                  "pill-nav-home-logo",
-                  logoFlipping ? "logo-flip-anim" : "",
-                  !logoFlipping && lightMode ? "logo-flipped" : "",
-                ].filter(Boolean).join(" ")}
-                draggable={false}
-              />
-            </button>
-
-            {/* SHOWCASE */}
-            <button ref={btnShowRef}
-              className={`pill-nav-item${activeModal === "showcase" ? " pill-nav-item--active" : ""}`}
-              onClick={() => activeModal === "showcase" ? closeModal() : openModal("showcase")}
-              aria-label="Showcase"
-            >
-              {activeModal === "showcase" ? (
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M1 5.25A2.25 2.25 0 013.25 3h13.5A2.25 2.25 0 0119 5.25v9.5A2.25 2.25 0 0116.75 17H3.25A2.25 2.25 0 011 14.75v-9.5zm1.5 5.81v3.69c0 .414.336.75.75.75h13.5a.75.75 0 00.75-.75v-2.69l-2.22-2.219a.75.75 0 00-1.06 0l-1.91 1.909.47.47a.75.75 0 11-1.06 1.06L6.53 8.091a.75.75 0 00-1.06 0l-2.97 2.97zM12 7a1 1 0 11-2 0 1 1 0 012 0z"/>
-                </svg>
-              ) : (
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M1 8a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 018.07 3h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0016.07 6H17a2 2 0 012 2v7a2 2 0 01-2 2H3a2 2 0 01-2-2V8zm13.5 3a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM10 14a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/>
-                </svg>
-              )}
-            </button>
-
-            {/* REVIEWS */}
-            <button ref={btnRevRef}
-              className={`pill-nav-item${activeModal === "reviews" ? " pill-nav-item--active" : ""}`}
-              onClick={() => activeModal === "reviews" ? closeModal() : openModal("reviews")}
-              aria-label="Reviews"
-            >
-              {activeModal === "reviews" ? (
-                <svg width="21" height="21" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
-              ) : (
-                <svg width="21" height="21" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M10 2c-2.236 0-4.43.18-6.57.524C1.993 2.755 1 4.014 1 5.426v5.148c0 1.413.993 2.67 2.43 2.902.848.137 1.705.248 2.57.331v3.443a.75.75 0 001.28.53l3.58-3.579a.78.78 0 01.527-.224 41.202 41.202 0 005.183-.5c1.437-.232 2.43-1.49 2.43-2.903V5.426c0-1.413-.993-2.67-2.43-2.902A41.289 41.289 0 0010 2zm0 7a1 1 0 110-2 1 1 0 010 2zM7 9a1 1 0 110-2 1 1 0 010 2zm7 0a1 1 0 110-2 1 1 0 010 2z"/>
-                </svg>
-              )}
-            </button>
-          </div>
-        </nav>
-
-        {/* ── CART PILL — right side of cluster ── */}
-        <nav className="cart-pill-nav">
-          <button
-            className={`cart-pill-btn${activeModal === "collect" ? " cart-pill-btn--active" : ""}${cartShaking ? " cart-pill-btn--shake" : ""}`}
-            onClick={() => activeModal === "collect" ? closeModal() : openModal("collect")}
-            aria-label="Collect"
+          <nav
+            className="pill-nav"
+            style={{ pointerEvents: navIntro < 2 ? "none" : undefined }}
+            onTouchStart={(e) => { swipeTouchStartX.current = e.touches[0].clientX }}
+            onTouchEnd={(e) => {
+              const dx = e.changedTouches[0].clientX - swipeTouchStartX.current
+              if (Math.abs(dx) < 48) return
+              const current: ModalType = infoOpen ? null : (activeModal === "collect" ? null : activeModal)
+              let cur = SWIPE_ORDER.indexOf(current)
+              if (cur === -1) cur = 2
+              const idx = dx < 0
+                ? Math.min(cur + 1, SWIPE_ORDER.length - 1)
+                : Math.max(cur - 1, 0)
+              const next = SWIPE_ORDER[idx]
+              setInfoOpen(false)
+              next === null ? closeModal() : openModal(next)
+            }}
           >
-            <span className="cart-pill-btn-inner">
-              {activeModal === "collect" ? (
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M2.5 4A1.5 1.5 0 001 5.5v1h18v-1A1.5 1.5 0 0017.5 4h-15zM19 8.5H1v5A1.5 1.5 0 002.5 15h15a1.5 1.5 0 001.5-1.5v-5zM3 13.25a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75zm4.75-.75a.75.75 0 000 1.5h2.5a.75.75 0 000-1.5h-2.5z"/>
-                </svg>
-              ) : (
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M7 6V5a3 3 0 016 0v1h3.5A.5.5 0 0117 6.5l-1.5 10a.5.5 0 01-.5.5H5a.5.5 0 01-.5-.45L3 6.5A.5.5 0 013.5 6H7zm2 0V5a1 1 0 012 0v1H9zm0 3a1 1 0 112 0 1 1 0 01-2 0z"/>
-                </svg>
-              )}
-            </span>
-            <span className="cart-pill-badge" aria-hidden="true" />
-          </button>
-        </nav>
+            <div className="pill-nav-inner" ref={navInnerRef}>
 
+              {/* ── Sliding glass indicator ── */}
+              <span
+                className="pill-nav-slider"
+                style={{
+                  left: sliderStyle.left,
+                  width: sliderStyle.width,
+                  transition: sliderReady
+                    ? "left 0.38s cubic-bezier(0.34,1.15,0.64,1), width 0.38s cubic-bezier(0.34,1.15,0.64,1)"
+                    : "none",
+                }}
+                aria-hidden="true"
+              />
+
+              {/* INFO — ℹ️ circle (default) / ❕ exclamation circle (active) */}
+              <button ref={btnInfoRef}
+                className={`pill-nav-item${infoOpen ? " pill-nav-item--active" : ""}`}
+                onClick={() => { closeModal(); setInfoOpen(v => !v) }}
+                aria-label="About"
+                aria-expanded={infoOpen}
+              >
+                {infoOpen ? (
+                  // Exclamation circle — active state
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"/>
+                  </svg>
+                ) : (
+                  // Info circle — default state
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z"/>
+                  </svg>
+                )}
+              </button>
+
+              {/* PLAY */}
+              <button ref={btnPlayRef}
+                className={`pill-nav-item${activeModal === "play" ? " pill-nav-item--active" : ""}`}
+                onClick={() => activeModal === "play" ? closeModal() : openModal("play")}
+                aria-label="Play"
+              >
+                {activeModal === "play" ? (
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <rect x="4" y="2" width="4.5" height="16" rx="1.5"/>
+                    <rect x="11.5" y="2" width="4.5" height="16" rx="1.5"/>
+                  </svg>
+                ) : (
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M4 2.5L17.5 10 4 17.5V2.5Z"/>
+                  </svg>
+                )}
+              </button>
+
+              {/* MUSIC */}
+              <button ref={btnMusicRef}
+                className={`pill-nav-item${activeModal === "music" ? " pill-nav-item--active" : ""}`}
+                onClick={() => activeModal === "music" ? closeModal() : openModal("music")}
+                aria-label="Music"
+              >
+                {activeModal === "music" ? (
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10 3.75a.75.75 0 00-1.264-.546L4.703 7H3.167a.75.75 0 00-.7.48A6.985 6.985 0 002 10c0 .905.184 1.768.468 2.52.111.29.39.48.7.48h1.535l4.033 3.796A.75.75 0 0010 16.25V3.75zM15.95 5.05a.75.75 0 00-1.06 1.06A6.5 6.5 0 0116.95 10a6.5 6.5 0 01-2.06 3.89.75.75 0 001.06 1.06A8 8 0 0018.45 10a8 8 0 00-2.5-4.95zM13.596 7.404a.75.75 0 00-1.06 1.06 3.5 3.5 0 010 4.95.75.75 0 001.06 1.06 5 5 0 000-7.07z"/>
+                  </svg>
+                ) : (
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.547 3.062A.75.75 0 0110 3.75v12.5a.75.75 0 01-1.264.546L4.703 13H3.167a.75.75 0 01-.7-.48A6.985 6.985 0 012 10c0-.905.184-1.768.468-2.52a.75.75 0 01.699-.48h1.535l4.033-3.796a.75.75 0 01.812-.142zM13.28 7.22a.75.75 0 10-1.06 1.06L13.94 10l-1.72 1.72a.75.75 0 001.06 1.06L15 11.06l1.72 1.72a.75.75 0 101.06-1.06L16.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L15 8.94l-1.72-1.72z"/>
+                  </svg>
+                )}
+              </button>
+
+              {/* HOME — eyes logo */}
+              <button ref={btnHomeRef}
+                className="pill-nav-item pill-nav-home"
+                onClick={() => { closeModal(); setInfoOpen(false); handleLogoTap() }}
+                aria-label="Home"
+              >
+                <img
+                  src="/tmm_themarshallmafia_logo.svg"
+                  alt="TMM"
+                  className={[
+                    "pill-nav-home-logo",
+                    logoFlipping ? "logo-flip-anim" : "",
+                    !logoFlipping && lightMode ? "logo-flipped" : "",
+                  ].filter(Boolean).join(" ")}
+                  draggable={false}
+                />
+              </button>
+
+              {/* SHOWCASE */}
+              <button ref={btnShowRef}
+                className={`pill-nav-item${activeModal === "showcase" ? " pill-nav-item--active" : ""}`}
+                onClick={() => activeModal === "showcase" ? closeModal() : openModal("showcase")}
+                aria-label="Showcase"
+              >
+                {activeModal === "showcase" ? (
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M1 5.25A2.25 2.25 0 013.25 3h13.5A2.25 2.25 0 0119 5.25v9.5A2.25 2.25 0 0116.75 17H3.25A2.25 2.25 0 011 14.75v-9.5zm1.5 5.81v3.69c0 .414.336.75.75.75h13.5a.75.75 0 00.75-.75v-2.69l-2.22-2.219a.75.75 0 00-1.06 0l-1.91 1.909.47.47a.75.75 0 11-1.06 1.06L6.53 8.091a.75.75 0 00-1.06 0l-2.97 2.97zM12 7a1 1 0 11-2 0 1 1 0 012 0z"/>
+                  </svg>
+                ) : (
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M1 8a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 018.07 3h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0016.07 6H17a2 2 0 012 2v7a2 2 0 01-2 2H3a2 2 0 01-2-2V8zm13.5 3a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM10 14a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/>
+                  </svg>
+                )}
+              </button>
+
+              {/* REVIEWS */}
+              <button ref={btnRevRef}
+                className={`pill-nav-item${activeModal === "reviews" ? " pill-nav-item--active" : ""}`}
+                onClick={() => activeModal === "reviews" ? closeModal() : openModal("reviews")}
+                aria-label="Reviews"
+              >
+                {activeModal === "reviews" ? (
+                  <svg width="21" height="21" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                ) : (
+                  <svg width="21" height="21" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M10 2c-2.236 0-4.43.18-6.57.524C1.993 2.755 1 4.014 1 5.426v5.148c0 1.413.993 2.67 2.43 2.902.848.137 1.705.248 2.57.331v3.443a.75.75 0 001.28.53l3.58-3.579a.78.78 0 01.527-.224 41.202 41.202 0 005.183-.5c1.437-.232 2.43-1.49 2.43-2.903V5.426c0-1.413-.993-2.67-2.43-2.902A41.289 41.289 0 0010 2zm0 7a1 1 0 110-2 1 1 0 010 2zM7 9a1 1 0 110-2 1 1 0 010 2zm7 0a1 1 0 110-2 1 1 0 010 2z"/>
+                  </svg>
+                )}
+              </button>
+
+              {/* CART */}
+              <button ref={btnCartRef}
+                className={`pill-nav-item${activeModal === "collect" ? " pill-nav-item--active" : ""}${cartShaking ? " pill-nav-item--shake" : ""}`}
+                onClick={() => activeModal === "collect" ? closeModal() : openModal("collect")}
+                aria-label="Collect"
+                style={{ position: "relative" }}
+              >
+                {activeModal === "collect" ? (
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M2.5 4A1.5 1.5 0 001 5.5v1h18v-1A1.5 1.5 0 0017.5 4h-15zM19 8.5H1v5A1.5 1.5 0 002.5 15h15a1.5 1.5 0 001.5-1.5v-5zM3 13.25a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75zm4.75-.75a.75.75 0 000 1.5h2.5a.75.75 0 000-1.5h-2.5z"/>
+                  </svg>
+                ) : (
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M7 6V5a3 3 0 016 0v1h3.5A.5.5 0 0117 6.5l-1.5 10a.5.5 0 01-.5.5H5a.5.5 0 01-.5-.45L3 6.5A.5.5 0 013.5 6H7zm2 0V5a1 1 0 012 0v1H9zm0 3a1 1 0 112 0 1 1 0 01-2 0z"/>
+                  </svg>
+                )}
+                <span className="cart-pill-badge" aria-hidden="true" />
+              </button>
+
+            </div>
+          </nav>
         </div>{/* end .nav-cluster */}
 
         {/* ==================== PLAY MODAL ==================== */}
