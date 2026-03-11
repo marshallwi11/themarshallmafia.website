@@ -212,12 +212,12 @@ export default function Home() {
 
         {/* ? / ! INFO BUTTON — left side of cluster */}
         <button
-          className="info-btn"
+          className={`info-btn${infoOpen ? " info-btn--active" : ""}`}
           onClick={() => setInfoOpen(v => !v)}
           aria-label="About"
           aria-expanded={infoOpen}
         >
-          {infoOpen ? "!" : "?"}
+          <span className="info-btn-inner">{infoOpen ? "!" : "?"}</span>
         </button>
 
         {/* ── MAIN FLOATING PILL NAV ── */}
@@ -336,15 +336,17 @@ export default function Home() {
             onClick={() => activeModal === "collect" ? closeModal() : openModal("collect")}
             aria-label="Collect"
           >
-            {activeModal === "collect" ? (
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" clipRule="evenodd" d="M2.5 4A1.5 1.5 0 001 5.5v1h18v-1A1.5 1.5 0 0017.5 4h-15zM19 8.5H1v5A1.5 1.5 0 002.5 15h15a1.5 1.5 0 001.5-1.5v-5zM3 13.25a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75zm4.75-.75a.75.75 0 000 1.5h2.5a.75.75 0 000-1.5h-2.5z"/>
-              </svg>
-            ) : (
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" clipRule="evenodd" d="M7 6V5a3 3 0 016 0v1h3.5A.5.5 0 0117 6.5l-1.5 10a.5.5 0 01-.5.5H5a.5.5 0 01-.5-.45L3 6.5A.5.5 0 013.5 6H7zm2 0V5a1 1 0 012 0v1H9zm0 3a1 1 0 112 0 1 1 0 01-2 0z"/>
-              </svg>
-            )}
+            <span className="cart-pill-btn-inner">
+              {activeModal === "collect" ? (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M2.5 4A1.5 1.5 0 001 5.5v1h18v-1A1.5 1.5 0 0017.5 4h-15zM19 8.5H1v5A1.5 1.5 0 002.5 15h15a1.5 1.5 0 001.5-1.5v-5zM3 13.25a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75zm4.75-.75a.75.75 0 000 1.5h2.5a.75.75 0 000-1.5h-2.5z"/>
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M7 6V5a3 3 0 016 0v1h3.5A.5.5 0 0117 6.5l-1.5 10a.5.5 0 01-.5.5H5a.5.5 0 01-.5-.45L3 6.5A.5.5 0 013.5 6H7zm2 0V5a1 1 0 012 0v1H9zm0 3a1 1 0 112 0 1 1 0 01-2 0z"/>
+                </svg>
+              )}
+            </span>
             <span className="cart-pill-badge" aria-hidden="true" />
           </button>
         </nav>
