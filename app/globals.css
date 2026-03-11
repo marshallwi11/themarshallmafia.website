@@ -199,10 +199,9 @@
   .hero-lottie {
     animation: heroFadeIn 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
-  /* Light mode: invert SVG so white eyes + white shapes become dark/black */
-  .hero-lottie--light {
-    filter: invert(1);
-  }
+  /* Light mode invert is now handled by a wrapper div in LottieHero
+     to avoid conflict with heroFadeIn forwards fill — nothing needed here */
+  .hero-lottie--light {}
   @keyframes heroFadeIn {
     0%   { opacity: 0; filter: blur(18px) brightness(0); transform: scale(0.96); }
     40%  { opacity: 0.15; }
@@ -245,13 +244,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 14px 18px;
+    padding: 14px 22px;
     border-radius: 100px;
     color: rgba(255, 255, 255, 0.55);
     font-family: 'MarkerBold', sans-serif;
     font-size: 16px;
     transition: color 0.2s ease;
-    min-width: 20px;
+    min-width: 48px;
   }
   .info-btn:hover .info-btn-inner { color: rgba(255, 255, 255, 0.9); }
   /* Active: dark inner pill — mirrors pill-nav-slider */

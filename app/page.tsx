@@ -35,11 +35,14 @@ function LottieHero({ flipping, lightMode }: { flipping: boolean; lightMode: boo
   const heroClass = [
     "select-none pointer-events-none w-[84vw] max-w-[1175px] aspect-square hero-lottie",
     flipping ? "hero-flip-anim" : "",
-    lightMode && !flipping ? "hero-lottie--light" : "",
   ].filter(Boolean).join(" ")
 
+  // Wrap in a parent div for the invert — the heroFadeIn animation's `forwards`
+  // fill locks filter on the inner element, so we isolate invert on the wrapper.
   return (
-    <div ref={containerRef} className={heroClass} aria-label="The Marshall Mafia" />
+    <div style={lightMode && !flipping ? { filter: "invert(1)" } : undefined}>
+      <div ref={containerRef} className={heroClass} aria-label="The Marshall Mafia" />
+    </div>
   )
 }
 
