@@ -210,14 +210,14 @@ export default function Home() {
         {/* ── NAV CLUSTER: ! info · main pill · cart pill ── */}
         <div className="nav-cluster">
 
-        {/* ! INFO BUTTON — left side of cluster */}
+        {/* ? / ! INFO BUTTON — left side of cluster */}
         <button
           className="info-btn"
           onClick={() => setInfoOpen(v => !v)}
           aria-label="About"
           aria-expanded={infoOpen}
         >
-          !
+          {infoOpen ? "!" : "?"}
         </button>
 
         {/* ── MAIN FLOATING PILL NAV ── */}
@@ -316,9 +316,15 @@ export default function Home() {
               onClick={() => activeModal === "reviews" ? closeModal() : openModal("reviews")}
               aria-label="Reviews"
             >
-              <svg width="21" height="21" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M10 1.5l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.77l-4.78 2.51.91-5.32L2.27 7.12l5.34-.78z"/>
-              </svg>
+              {activeModal === "reviews" ? (
+                <svg width="21" height="21" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+              ) : (
+                <svg width="21" height="21" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M10 2c-2.236 0-4.43.18-6.57.524C1.993 2.755 1 4.014 1 5.426v5.148c0 1.413.993 2.67 2.43 2.902.848.137 1.705.248 2.57.331v3.443a.75.75 0 001.28.53l3.58-3.579a.78.78 0 01.527-.224 41.202 41.202 0 005.183-.5c1.437-.232 2.43-1.49 2.43-2.903V5.426c0-1.413-.993-2.67-2.43-2.902A41.289 41.289 0 0010 2zm0 7a1 1 0 110-2 1 1 0 010 2zM7 9a1 1 0 110-2 1 1 0 010 2zm7 0a1 1 0 110-2 1 1 0 010 2z"/>
+                </svg>
+              )}
             </button>
           </div>
         </nav>
