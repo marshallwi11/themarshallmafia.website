@@ -33,7 +33,7 @@ function LottieHero({ flipping, lightMode }: { flipping: boolean; lightMode: boo
   }, [])
 
   const heroClass = [
-    "select-none pointer-events-none w-[84vw] max-w-[1175px] aspect-square hero-lottie",
+    "select-none pointer-events-none w-full aspect-square hero-lottie",
     flipping ? "hero-flip-anim" : "",
   ].filter(Boolean).join(" ")
 
@@ -203,7 +203,7 @@ export default function Home() {
     <>
       <div className={`tmm-backdrop${lightMode ? " tmm-backdrop--light" : ""}`} aria-hidden="true" />
 
-      <main className={`h-screen w-screen overflow-hidden relative flex flex-col items-center justify-center${lightMode ? " tmm-light" : ""}`}>
+      <main className={`site-canvas${lightMode ? " tmm-light" : ""}`}>
 
         <LottieHero flipping={logoFlipping} lightMode={lightMode} />
 
@@ -361,7 +361,7 @@ export default function Home() {
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
             <div className="modal-scroll-bare animate-modal-in">
-              <div className="max-w-[675px] mx-auto pb-[80px] px-4 sm:px-6" style={{display:"flex",flexDirection:"column",gap:"clamp(24px,5vw,50px)"}}>
+              <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(24px,5vw,50px)"}}>
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">HOW TO PLAY</span><span className="play-block-subtitle">INSTRUCTIONS</span></div>
                   <p className="play-block-body">In The Marshall Mafia, <span className="text-tmm-cream">Villagers</span> must Identify, expose and vote out all <span className="text-tmm-red">Mafia</span> members, while the <span className="text-tmm-red">Mafia{"'"}s</span> goal is to secretly eliminate all <span className="text-tmm-cream">Villagers</span> until they outnumber them.</p>
@@ -462,7 +462,7 @@ export default function Home() {
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
             <div className="modal-scroll-bare animate-modal-in">
-              <div className="w-full max-w-[600px] mx-auto px-4 sm:px-6 pb-[80px]">
+              <div className="modal-content-pane">
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="music-modal-header">
                     <span className="play-block-title">LISTEN</span>
@@ -518,7 +518,7 @@ export default function Home() {
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
             <div className="modal-scroll-bare animate-modal-in">
-              <div className="max-w-[600px] mx-auto px-4 sm:px-6 pb-[80px]" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
+              <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">REVIEWS</span><span className="play-block-subtitle">WHAT THEY SAY</span></div>
                   <div className="reviews-summary">

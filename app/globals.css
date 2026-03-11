@@ -13,6 +13,9 @@
 }
 
 :root {
+  /* ── Site-wide layout column — matches nav cluster width ── */
+  --site-w: min(92vw, 540px);
+
   --background: #000000;
   --foreground: #ffffff;
   --card: #000000;
@@ -193,6 +196,33 @@
   }
 
   .tmm-light { background: transparent; }
+
+  /* ── Site canvas — invisible centred column, width = nav cluster ── */
+  .site-canvas {
+    position: relative;
+    z-index: 1;
+    width: var(--site-w);
+    margin: 0 auto;
+    /* tall enough for the viewport; flex-col centres the hero vertically */
+    min-height: 100svh;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* top padding reserves room for the fixed nav cluster */
+    padding-top: calc(clamp(16px, 3vw, 28px) + 62px + clamp(20px, 3vw, 32px));
+    box-sizing: border-box;
+  }
+
+  /* ── Shared modal content pane — width locked to --site-w ── */
+  .modal-content-pane {
+    width: 100%;
+    max-width: var(--site-w);
+    margin: 0 auto;
+    padding: 0 clamp(12px, 3vw, 20px) clamp(60px, 10vw, 80px);
+  }
+
   main { position: relative; z-index: 1; }
 
   /* ── Hero Lottie ──────────────────────────────────────────────────── */
@@ -699,9 +729,9 @@
 
   /* ── Showcase modal ──────────────────────────────────────────────── */
   .showcase-list {
-    max-width: 600px;
+    max-width: var(--site-w);
     margin: 0 auto;
-    padding: 0 clamp(12px, 4vw, 24px) clamp(60px, 10vw, 80px);
+    padding: 0 clamp(12px, 3vw, 20px) clamp(60px, 10vw, 80px);
     display: flex;
     flex-direction: column;
     gap: clamp(16px, 4vw, 32px);
@@ -804,9 +834,9 @@
 
   /* ── Collect modal ───────────────────────────────────────────────── */
   .collect-list {
-    max-width: 560px;
+    max-width: var(--site-w);
     margin: 0 auto;
-    padding: 0 clamp(12px, 4vw, 24px) clamp(60px, 10vw, 80px);
+    padding: 0 clamp(12px, 3vw, 20px) clamp(60px, 10vw, 80px);
     display: flex;
     flex-direction: column;
     gap: clamp(16px, 4vw, 32px);
