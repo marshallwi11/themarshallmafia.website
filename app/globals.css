@@ -258,10 +258,10 @@
     backdrop-filter: blur(32px) saturate(1.8);
     -webkit-backdrop-filter: blur(32px) saturate(1.8);
     border-radius: 100px;
-    border: 1px solid rgba(255, 255, 255, 0.13);
+    border: 1px solid rgba(255, 255, 255, 0.10);
     box-shadow:
-      0 0 0 0.5px rgba(255,255,255,0.07),
-      inset 0 1px 0 rgba(255,255,255,0.12),
+      0 0 0 0.5px rgba(255,255,255,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.10),
       0 10px 40px rgba(0,0,0,0.55);
     cursor: pointer;
     flex-shrink: 0;
@@ -407,10 +407,10 @@
     backdrop-filter: blur(32px) saturate(1.8);
     -webkit-backdrop-filter: blur(32px) saturate(1.8);
     border-radius: 100px;
-    border: 1px solid rgba(255, 255, 255, 0.13);
+    border: 1px solid rgba(255, 255, 255, 0.10);
     box-shadow:
-      0 0 0 0.5px rgba(255,255,255,0.07),
-      inset 0 1px 0 rgba(255,255,255,0.12),
+      0 0 0 0.5px rgba(255,255,255,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.10),
       0 10px 40px rgba(0,0,0,0.55);
     cursor: pointer;
   }
@@ -492,14 +492,14 @@
     align-items: center;
     gap: 2px;
     padding: 7px 10px;
-    background: rgba(22, 22, 22, 0.6);
+    background: rgba(22, 22, 22, 0.65);
     backdrop-filter: blur(32px) saturate(1.8);
     -webkit-backdrop-filter: blur(32px) saturate(1.8);
     border-radius: 100px;
-    border: 1px solid rgba(255, 255, 255, 0.13);
+    border: 1px solid rgba(255, 255, 255, 0.10);
     box-shadow:
-      0 0 0 0.5px rgba(255,255,255,0.07),
-      inset 0 1px 0 rgba(255,255,255,0.12),
+      0 0 0 0.5px rgba(255,255,255,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.10),
       0 10px 40px rgba(0,0,0,0.55);
     overflow: hidden; /* clip slider so it never escapes */
   }
@@ -669,7 +669,7 @@
     display: flex;
     flex-direction: column;
     gap: clamp(12px, 2.5vw, 18px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.10);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }
@@ -739,7 +739,7 @@
   .showcase-card {
     border-radius: clamp(15px, 3vw, 24px);
     background: rgba(52, 52, 52, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.10);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     padding: clamp(8px, 2.5vw, 16px);
@@ -953,119 +953,93 @@
 }
 
 /* =====================================================================
-   MOBILE — ≤ 600px: bottom accordion nav bar
+   MOBILE — ≤ 600px: compact top nav bar (cluster stays together)
    ===================================================================== */
 @media (max-width: 600px) {
 
-  /* ── Dissolve the cluster — children revert to their own fixed positions ── */
-  .nav-cluster {
-    display: contents;
-  }
+  /* ── Nav cluster stays as a flex row at the TOP — no dissolving ── */
+  .nav-cluster { gap: 5px; }
 
-  /* ── Cart pill: moves to bottom-right above the nav bar on mobile ── */
-  .nav-cluster .cart-pill-nav,
-  .cart-pill-nav {
-    position: fixed;
-    top: auto;
-    bottom: 68px;
-    right: 12px;
-  }
-  .cart-pill-btn { padding: 4px; }
-  .cart-pill-btn-inner { padding: 10px 12px; }
-
-  /* ── Info btn: adjusts for mobile nav ── */
-  .nav-cluster .info-btn,
-  .info-btn {
-    position: fixed;
-    top: auto;
-    bottom: 78px;
-    right: 68px; /* left of cart pill */
-    padding: 4px;
-    border-radius: 50%;
-  }
-  .info-btn .info-btn-inner {
-    padding: 8px 10px;
-    font-size: 14px;
-    min-width: unset;
-  }
-
-  /* ── Info popup: revert to bottom-right anchor on mobile ── */
-  .info-popup {
-    top: auto;
-    bottom: clamp(132px, 20vw, 152px);
-    left: auto;
-    right: clamp(12px, 4vw, 40px);
-    transform: none;
-    transform-origin: bottom right;
-  }
-
-  /* ── Pill nav becomes bottom bar ── */
-  .nav-cluster .pill-nav,
-  .pill-nav {
-    position: fixed;
-    top: auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    transform: none;
-    max-width: 100%;
-    padding: 0;
-  }
+  /* Main pill — compact, stays pill-shaped at top */
   .pill-nav-inner {
-    border-radius: 20px 20px 0 0;
-    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+    border-radius: 100px;
+    padding: 5px 5px;
     gap: 0;
-    justify-content: space-around;
-    width: 100%;
-    border-bottom: none;
     overflow: hidden;
   }
+  /* Hide the sliding underline on mobile (no room) */
   .pill-nav-slider { display: none; }
 
   .pill-nav-item {
-    flex: 1;
-    padding: 10px 4px;
+    padding: 10px 6px;
+    flex-shrink: 1;
     min-width: 0;
-    height: 50px;
+    height: auto;
   }
   .pill-nav-home {
-    flex: 1;
-    padding: 8px 4px;
-    height: 50px;
+    padding: 8px 5px;
     min-width: 0;
+    height: auto;
   }
-  .pill-nav-home-logo { width: 30px; height: 30px; }
+  .pill-nav-home-logo { width: 27px; height: 27px; }
 
+  /* Side buttons — scaled to match pill height */
+  .info-btn { padding: 5px; }
+  .info-btn-inner {
+    padding: 10px 12px;
+    font-size: 14px;
+    min-width: 32px;
+  }
+  .cart-pill-btn { padding: 5px; }
+  .cart-pill-btn-inner { padding: 10px 11px; }
+  .cart-pill-badge { top: 5px; right: 5px; }
+
+  /* Site canvas: full viewport width so hero fills screen */
+  .site-canvas { width: 100vw; }
+
+  /* Hero fills 88vw */
   .hero-lottie {
-    width: 92vw !important;
-    max-width: 92vw !important;
+    width: 88vw !important;
+    max-width: 88vw !important;
   }
-  main { padding-bottom: 70px; }
 
-  .modal-scroll-bare > div { padding-top: 24px; }
-  /* Mobile: nav is at the bottom — fade content behind it instead */
+  /* No bottom padding — nav is at top now */
+  main { padding-bottom: env(safe-area-inset-bottom, 0px); }
+
+  /* Modal fades content behind the TOP nav */
   .modal-scroll-bare {
-    mask-image: linear-gradient(to top, transparent 0, transparent 62px, black 90px);
-    -webkit-mask-image: linear-gradient(to top, transparent 0, transparent 62px, black 90px);
+    mask-image: linear-gradient(to bottom, transparent 0, transparent 68px, black 100px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 68px, black 100px);
   }
+  .modal-scroll-bare > div {
+    padding-top: clamp(88px, 14vw, 108px);
+    padding-bottom: env(safe-area-inset-bottom, 24px);
+  }
+
+  /* Cards */
   .play-card { border-radius: 16px; padding: 18px 16px; gap: 10px; }
   .play-card-pill { padding: 14px 18px; border-radius: 60px; }
 
+  /* Music grid */
   .music-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .music-tile-icon { width: 72px; height: 72px; border-radius: 20px; }
   .music-tile-label { font-size: 10px; }
 
-  .showcase-list { padding: 0 10px 80px; gap: 14px; }
+  /* Showcase / Collect */
+  .showcase-list { padding: 0 10px 40px; gap: 14px; }
   .showcase-card { border-radius: 12px; padding: 8px; }
-  .collect-list  { padding: 0 10px 80px; gap: 14px; }
+  .collect-list  { padding: 0 10px 40px; gap: 14px; }
 
+  /* Typography */
   .play-block-title    { font-size: 15px; }
   .play-block-subtitle { font-size: 13px; }
   .play-block-body     { font-size: 13px; line-height: 1.5; }
 
+  /* Reviews */
   .reviews-summary { flex-direction: column; gap: 16px; }
   .reviews-score-number { font-size: 42px; }
   .review-card-top { flex-wrap: wrap; }
 
-  .tmm-light .pill-nav-inner { border-radius: 20px 20px 0 0; }
+  /* Light mode pill stays rounded */
+  .tmm-light .pill-nav-inner { border-radius: 100px; }
 }

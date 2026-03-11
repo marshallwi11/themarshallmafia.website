@@ -82,15 +82,26 @@ const SHOWCASE_INFO = [
 function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
   if (!open) return null
   return (
-    <div className="info-popup-overlay" onClick={onClose}>
-      <div className="info-popup" onClick={e => e.stopPropagation()}>
-        <div className="info-popup-inner">
-          {SHOWCASE_INFO.map((item, i) => (
-            <div key={i} className="info-popup-item">
-              <span className="info-popup-num">0{i + 1}</span>
-              <p className="play-block-body" style={{ margin: 0, fontSize: "13px", lineHeight: 1.5 }}>{item.text}</p>
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-backdrop" />
+      <div className="modal-scroll-bare animate-modal-in">
+        <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <div className="play-card-header">
+              <span className="play-block-title">ABOUT</span>
+              <span className="play-block-subtitle">THE GAME</span>
             </div>
-          ))}
+            {SHOWCASE_INFO.map((item, i) => (
+              <div key={i} className="info-popup-item">
+                <span className="info-popup-num">0{i + 1}</span>
+                <p className="play-block-body" style={{margin:0}}>{item.text}</p>
+              </div>
+            ))}
+          </div>
+          <div className="play-card-pill" onClick={e => e.stopPropagation()}>
+            <span className="play-block-title">the marshall mafia</span>
+            <span className="play-block-subtitle">est. 2025</span>
+          </div>
         </div>
       </div>
     </div>
@@ -116,6 +127,9 @@ export default function Home() {
   const [cartShaking, setCartShaking] = useState(false)
   const [infoOpen, setInfoOpen] = useState(false)
   const lastTapRef = useRef<number>(0)
+  const swipeTouchStartX = useRef<number>(0)
+  // Left-to-right swipe order for the pill nav
+  const SWIPE_ORDER: ModalType[] = ["play", "music", null, "showcase", "reviews"]
 
   // Slider refs — only the 5 items IN the main nav pill
   const navInnerRef = useRef<HTMLDivElement>(null)
@@ -224,7 +238,23 @@ export default function Home() {
         </button>
 
         {/* ── MAIN FLOATING PILL NAV ── */}
-        <nav className="pill-nav">
+        <nav
+          className="pill-nav"
+          onTouchStart={(e) => { swipeTouchStartX.current = e.touches[0].clientX }}
+          onTouchEnd={(e) => {
+            const dx = e.changedTouches[0].clientX - swipeTouchStartX.current
+            if (Math.abs(dx) < 48) return
+            const current: ModalType = infoOpen ? null : (activeModal === "collect" ? null : activeModal)
+            let cur = SWIPE_ORDER.indexOf(current)
+            if (cur === -1) cur = 2 // fallback to home centre
+            const idx = dx < 0
+              ? Math.min(cur + 1, SWIPE_ORDER.length - 1)
+              : Math.max(cur - 1, 0)
+            const next = SWIPE_ORDER[idx]
+            setInfoOpen(false)
+            next === null ? closeModal() : openModal(next)
+          }}
+        >
           <div className="pill-nav-inner" ref={navInnerRef}>
             <span
               className="pill-nav-slider"
