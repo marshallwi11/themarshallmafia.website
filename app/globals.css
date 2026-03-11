@@ -591,6 +591,9 @@
     overflow-x: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    /* Fade content that scrolls behind the top nav bar */
+    mask-image: linear-gradient(to bottom, transparent 0, transparent 68px, black 100px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 68px, black 100px);
   }
   .modal-scroll-bare::-webkit-scrollbar { display: none; }
   .modal-scroll-bare > div {
@@ -983,6 +986,11 @@
   main { padding-bottom: 70px; }
 
   .modal-scroll-bare > div { padding-top: 24px; }
+  /* Mobile: nav is at the bottom — fade content behind it instead */
+  .modal-scroll-bare {
+    mask-image: linear-gradient(to top, transparent 0, transparent 62px, black 90px);
+    -webkit-mask-image: linear-gradient(to top, transparent 0, transparent 62px, black 90px);
+  }
   .play-card { border-radius: 16px; padding: 18px 16px; gap: 10px; }
   .play-card-pill { padding: 14px 18px; border-radius: 60px; }
 

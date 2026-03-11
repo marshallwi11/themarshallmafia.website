@@ -241,9 +241,16 @@ export default function Home() {
               onClick={() => activeModal === "play" ? closeModal() : openModal("play")}
               aria-label="Play"
             >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M4 2.5L17.5 10 4 17.5V2.5Z"/>
-              </svg>
+              {activeModal === "play" ? (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                  <rect x="4" y="2" width="4.5" height="16" rx="1.5"/>
+                  <rect x="11.5" y="2" width="4.5" height="16" rx="1.5"/>
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M4 2.5L17.5 10 4 17.5V2.5Z"/>
+                </svg>
+              )}
             </button>
 
             {/* MUSIC */}
@@ -252,13 +259,20 @@ export default function Home() {
               onClick={() => activeModal === "music" ? closeModal() : openModal("music")}
               aria-label="Music"
             >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                <rect x="6" y="3" width="13" height="2.5" rx="1.25"/>
-                <rect x="6" y="3" width="2.5" height="11" rx="1.25"/>
-                <rect x="16.5" y="3" width="2.5" height="9" rx="1.25"/>
-                <ellipse cx="8" cy="16.5" rx="3.5" ry="2.5"/>
-                <ellipse cx="18.5" cy="14.5" rx="3.5" ry="2.5"/>
-              </svg>
+              {activeModal === "music" ? (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <rect x="10.5" y="3" width="2.5" height="13" rx="1.25"/>
+                  <ellipse cx="9" cy="17.5" rx="4" ry="2.8" transform="rotate(-25 9 17.5)"/>
+                </svg>
+              ) : (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style={{transform:"scaleX(-1)"}}>
+                  <rect x="6" y="3" width="13" height="2.5" rx="1.25"/>
+                  <rect x="6" y="3" width="2.5" height="11" rx="1.25"/>
+                  <rect x="16.5" y="3" width="2.5" height="9" rx="1.25"/>
+                  <ellipse cx="8" cy="16.5" rx="3.5" ry="2.5"/>
+                  <ellipse cx="18.5" cy="14.5" rx="3.5" ry="2.5"/>
+                </svg>
+              )}
             </button>
 
             {/* HOME — eyes logo */}
@@ -285,12 +299,15 @@ export default function Home() {
               onClick={() => activeModal === "showcase" ? closeModal() : openModal("showcase")}
               aria-label="Showcase"
             >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                <rect x="2" y="2" width="7" height="7" rx="1"/>
-                <rect x="11" y="2" width="7" height="7" rx="1"/>
-                <rect x="2" y="11" width="7" height="7" rx="1"/>
-                <rect x="11" y="11" width="7" height="7" rx="1"/>
-              </svg>
+              {activeModal === "showcase" ? (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M1 5.25A2.25 2.25 0 013.25 3h13.5A2.25 2.25 0 0119 5.25v9.5A2.25 2.25 0 0116.75 17H3.25A2.25 2.25 0 011 14.75v-9.5zm1.5 5.81v3.69c0 .414.336.75.75.75h13.5a.75.75 0 00.75-.75v-2.69l-2.22-2.219a.75.75 0 00-1.06 0l-1.91 1.909.47.47a.75.75 0 11-1.06 1.06L6.53 8.091a.75.75 0 00-1.06 0l-2.97 2.97zM12 7a1 1 0 11-2 0 1 1 0 012 0z"/>
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M1 8a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 018.07 3h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0016.07 6H17a2 2 0 012 2v7a2 2 0 01-2 2H3a2 2 0 01-2-2V8zm13.5 3a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM10 14a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/>
+                </svg>
+              )}
             </button>
 
             {/* REVIEWS */}
@@ -313,9 +330,15 @@ export default function Home() {
             onClick={() => activeModal === "collect" ? closeModal() : openModal("collect")}
             aria-label="Collect"
           >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" clipRule="evenodd" d="M7 6V5a3 3 0 016 0v1h3.5A.5.5 0 0117 6.5l-1.5 10a.5.5 0 01-.5.5H5a.5.5 0 01-.5-.45L3 6.5A.5.5 0 013.5 6H7zm2 0V5a1 1 0 012 0v1H9zm0 3a1 1 0 112 0 1 1 0 01-2 0z"/>
-            </svg>
+            {activeModal === "collect" ? (
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" clipRule="evenodd" d="M2.5 4A1.5 1.5 0 001 5.5v1h18v-1A1.5 1.5 0 0017.5 4h-15zM19 8.5H1v5A1.5 1.5 0 002.5 15h15a1.5 1.5 0 001.5-1.5v-5zM3 13.25a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75zm4.75-.75a.75.75 0 000 1.5h2.5a.75.75 0 000-1.5h-2.5z"/>
+              </svg>
+            ) : (
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" clipRule="evenodd" d="M7 6V5a3 3 0 016 0v1h3.5A.5.5 0 0117 6.5l-1.5 10a.5.5 0 01-.5.5H5a.5.5 0 01-.5-.45L3 6.5A.5.5 0 013.5 6H7zm2 0V5a1 1 0 012 0v1H9zm0 3a1 1 0 112 0 1 1 0 01-2 0z"/>
+              </svg>
+            )}
             <span className="cart-pill-badge" aria-hidden="true" />
           </button>
         </nav>
