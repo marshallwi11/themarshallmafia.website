@@ -247,39 +247,40 @@
     100% { opacity: 1; filter: blur(0px); }
   }
 
-  /* ── Site load intro text pill ──────────────────────────────────────── */
+  /* ── Site load intro text pill — same glass as nav, wide bold text ── */
   .nav-intro-pill {
     position: fixed;
     top: clamp(16px, 3vw, 28px);
     left: 50%;
     transform: translateX(-50%);
     z-index: 60;
-    background: rgba(18, 18, 18, 0.70);
-    backdrop-filter: blur(32px) saturate(1.8);
-    -webkit-backdrop-filter: blur(32px) saturate(1.8);
-    border-radius: 100px;
+    background: rgba(52, 52, 52, 0.25);
+    backdrop-filter: blur(24px) saturate(1.6);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    border-radius: 1000px;
     border: 1px solid rgba(255, 255, 255, 0.10);
     box-shadow:
       0 0 0 0.5px rgba(255,255,255,0.06),
-      inset 0 1px 0 rgba(255,255,255,0.10),
-      0 10px 40px rgba(0,0,0,0.55);
-    padding: 16px 28px;
+      inset 0 1px 0 rgba(255,255,255,0.08),
+      0 8px 32px rgba(0,0,0,0.40);
+    padding: 21px 36px;
     pointer-events: none;
     white-space: nowrap;
   }
   .nav-intro-text {
     font-family: 'MarkerBold', sans-serif;
-    font-size: 13px;
-    letter-spacing: 0.12em;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: clamp(15px, 3.2vw, 22px);
+    line-height: 1.0;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.92);
     white-space: nowrap;
     display: block;
   }
   .tmm-light .nav-intro-pill {
-    background: rgba(220, 218, 213, 0.80);
+    background: rgba(220, 218, 213, 0.45);
     border-color: rgba(0, 0, 0, 0.08);
   }
-  .tmm-light .nav-intro-text { color: rgba(0, 0, 0, 0.7); }
+  .tmm-light .nav-intro-text { color: rgba(0, 0, 0, 0.75); }
 
   /* ── INFO POPUP ────────────────────────────────────────────────────── */
   .info-popup-overlay {
@@ -399,37 +400,37 @@
     position: relative;
     display: flex;
     align-items: center;
-    gap: 2px;
-    padding: 8px;
-    background: rgba(18, 18, 18, 0.70);
-    backdrop-filter: blur(32px) saturate(1.8);
-    -webkit-backdrop-filter: blur(32px) saturate(1.8);
-    border-radius: 100px;
+    gap: 4px;
+    padding: 10px 12px;
+    background: rgba(52, 52, 52, 0.25);
+    backdrop-filter: blur(24px) saturate(1.6);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    border-radius: 1000px;
     border: 1px solid rgba(255, 255, 255, 0.10);
     box-shadow:
       0 0 0 0.5px rgba(255,255,255,0.06),
-      inset 0 1px 0 rgba(255,255,255,0.10),
-      0 10px 40px rgba(0,0,0,0.55);
+      inset 0 1px 0 rgba(255,255,255,0.08),
+      0 8px 32px rgba(0,0,0,0.40);
     overflow: visible;
   }
 
-  /* ── Sliding glass pill indicator — animated behind active item ── */
+  /* ── Sliding squircle indicator — slides behind active item ── */
   .pill-nav-slider {
     position: absolute;
-    top: 8px;
-    bottom: 8px;
-    background: rgba(28, 28, 28, 0.92);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 100px;
+    top: 10px;
+    bottom: 10px;
+    background: rgba(22, 22, 22, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 16px;
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.12),
-      0 3px 16px rgba(0,0,0,0.55);
+      inset 0 1px 0 rgba(255,255,255,0.10),
+      0 2px 12px rgba(0,0,0,0.60);
     pointer-events: none;
     z-index: 0;
     /* left + width controlled via JS */
   }
 
-  /* ── Transparent nav items — slider provides the active highlight ── */
+  /* ── Nav items — subtle dark circle background each ── */
   .pill-nav-item {
     position: relative;
     z-index: 1;
@@ -437,17 +438,24 @@
     align-items: center;
     justify-content: center;
     padding: 12px 14px;
-    background: transparent;
+    background: rgba(0, 0, 0, 0.12);
     border: none;
     cursor: pointer;
     border-radius: 100px;
     color: rgba(255, 255, 255, 0.45);
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, background 0.2s ease;
     white-space: nowrap;
     flex-shrink: 0;
   }
-  .pill-nav-item:hover { color: rgba(255, 255, 255, 0.85); }
-  .pill-nav-item--active { color: #ffffff; }
+  .pill-nav-item:hover {
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(0, 0, 0, 0.22);
+  }
+  /* Active: remove individual bg — squircle slider handles it */
+  .pill-nav-item--active {
+    color: #ffffff;
+    background: transparent;
+  }
   .pill-nav-item--active svg {
     animation: navIconPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
@@ -457,8 +465,11 @@
     100% { transform: scale(1); }
   }
 
-  /* Home button — slightly less side-padding to keep logo proportional */
-  .pill-nav-home { padding: 8px 10px; }
+  /* Home button — slightly less side-padding, transparent so slider is clear */
+  .pill-nav-home {
+    padding: 8px 10px;
+    background: transparent;
+  }
   .pill-nav-home-logo {
     width: 34px;
     height: 34px;
@@ -490,21 +501,29 @@
 
   /* Light mode nav */
   .tmm-light .pill-nav-inner {
-    background: rgba(220, 218, 213, 0.80);
+    background: rgba(200, 198, 193, 0.35);
     border-color: rgba(0, 0, 0, 0.08);
     box-shadow:
-      0 0 0 0.5px rgba(0,0,0,0.05),
-      inset 0 1px 0 rgba(255,255,255,0.7),
-      0 8px 32px rgba(0,0,0,0.10);
+      0 0 0 0.5px rgba(0,0,0,0.04),
+      inset 0 1px 0 rgba(255,255,255,0.6),
+      0 8px 32px rgba(0,0,0,0.08);
   }
   .tmm-light .pill-nav-slider {
-    background: rgba(200, 196, 190, 0.95);
-    border-color: rgba(0, 0, 0, 0.12);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 2px 8px rgba(0,0,0,0.10);
+    background: rgba(168, 164, 158, 0.92);
+    border-color: rgba(0, 0, 0, 0.10);
+    border-radius: 16px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 2px 8px rgba(0,0,0,0.08);
   }
-  .tmm-light .pill-nav-item { color: rgba(0, 0, 0, 0.40); }
+  .tmm-light .pill-nav-item {
+    background: rgba(0, 0, 0, 0.05);
+    color: rgba(0, 0, 0, 0.40);
+  }
   .tmm-light .pill-nav-item:hover { color: rgba(0, 0, 0, 0.85); }
-  .tmm-light .pill-nav-item--active { color: rgba(0, 0, 0, 0.88); }
+  .tmm-light .pill-nav-item--active {
+    color: rgba(0, 0, 0, 0.88);
+    background: transparent;
+  }
+  .tmm-light .pill-nav-home { background: transparent; }
 
   /* ── Modal system ────────────────────────────────────────────────── */
   .modal-overlay {
@@ -874,39 +893,39 @@
 
   /* Compact pill outer container */
   .pill-nav-inner {
-    border-radius: 18px;
-    padding: 5px;
-    gap: 0px;
+    border-radius: 1000px;
+    padding: 6px 8px;
+    gap: 2px;
   }
 
-  /* Compact slider */
+  /* Compact slider — squircle */
   .pill-nav-slider {
-    top: 5px;
-    bottom: 5px;
+    top: 6px;
+    bottom: 6px;
     border-radius: 12px;
   }
 
   /* Compact items */
   .pill-nav-item {
-    padding: 9px 9px;
-    border-radius: 12px;
+    padding: 8px 8px;
+    border-radius: 100px;
     flex-shrink: 1;
     min-width: 0;
   }
 
   /* Home button compact */
-  .pill-nav-home { padding: 6px 7px; }
+  .pill-nav-home { padding: 5px 7px; }
   .pill-nav-home-logo { width: 24px; height: 24px; }
 
   /* Badge position on mobile */
   .cart-pill-badge { top: 3px; right: 3px; width: 6px; height: 6px; }
 
-  /* Intro pill on mobile */
+  /* Intro pill on mobile — height matches compact nav */
   .nav-intro-pill {
     top: clamp(10px, 2.5vw, 16px) !important;
-    padding: 12px 20px;
+    padding: 16px 22px;
   }
-  .nav-intro-text { font-size: 11px; letter-spacing: 0.10em; }
+  .nav-intro-text { font-size: 13px; letter-spacing: 0.08em; }
 
   /* Site canvas: full viewport width */
   .site-canvas { width: 100vw; }
