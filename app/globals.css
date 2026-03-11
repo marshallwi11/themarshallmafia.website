@@ -218,90 +218,173 @@
     100% { opacity: 1; filter: blur(0px); }
   }
 
-  /* ── CART DOT — floats to the left of the pill nav ───────────────── */
-  /* Positioned absolutely relative to the pill-nav-wrapper (which is the
-     fixed pill-nav). We use a sibling approach: cart-dot is fixed too,
-     centred vertically with the nav, offset to the left. */
-  .cart-dot {
+  /* ── ! INFO BUTTON — bottom right of hero, above nav ────────────── */
+  .info-btn {
     position: fixed;
-    /* vertically align with nav top */
-    top: clamp(16px, 3vw, 28px);
-    /* horizontally: centre of screen minus half-nav-width minus gap minus dot-size.
-       We use a CSS custom property trick: translate to be right of left edge */
-    left: 50%;
-    /* Push left past the nav. Nav is roughly 320px wide, so ~160px from centre + 16px gap + 22px */
-    transform: translateX(calc(-50% - 198px));
-    z-index: 60;
-    width: 46px;
-    height: 46px;
+    bottom: clamp(90px, 14vw, 110px);
+    right: clamp(20px, 5vw, 48px);
+    z-index: 62;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
-    background: rgba(22, 22, 22, 0.72);
-    backdrop-filter: blur(32px) saturate(1.8);
-    -webkit-backdrop-filter: blur(32px) saturate(1.8);
+    background: rgba(22, 22, 22, 0.65);
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
     border: 1px solid rgba(255, 255, 255, 0.13);
-    box-shadow:
-      0 0 0 0.5px rgba(255,255,255,0.07),
-      inset 0 1px 0 rgba(255,255,255,0.1),
-      0 8px 28px rgba(0,0,0,0.45);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.1);
+    color: rgba(255, 255, 255, 0.55);
+    font-family: 'MarkerBold', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+  .info-btn:hover { color: #ffffff; background: rgba(34,34,34,0.9); }
+  .tmm-light .info-btn {
+    background: rgba(245,244,240,0.85);
+    border-color: rgba(0,0,0,0.1);
+    color: rgba(0,0,0,0.5);
+  }
+  .tmm-light .info-btn:hover { color: #111111; background: rgba(255,255,255,0.95); }
+
+  /* ── INFO POPUP ────────────────────────────────────────────────────── */
+  .info-popup-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 61;
+    pointer-events: auto;
+  }
+  .info-popup {
+    position: fixed;
+    bottom: clamp(132px, 20vw, 152px);
+    right: clamp(12px, 4vw, 40px);
+    z-index: 63;
+    width: clamp(260px, 72vw, 340px);
+    animation: popupIn 0.22s cubic-bezier(0.34,1.2,0.64,1);
+    transform-origin: bottom right;
+  }
+  @keyframes popupIn {
+    from { opacity: 0; transform: scale(0.88); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .info-popup-inner {
+    background: rgba(22,22,22,0.82);
+    backdrop-filter: blur(28px) saturate(1.8);
+    -webkit-backdrop-filter: blur(28px) saturate(1.8);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 18px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+  .tmm-light .info-popup-inner {
+    background: rgba(255,255,255,0.88);
+    border-color: rgba(0,0,0,0.08);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  }
+  .info-popup-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .info-popup-num {
+    font-family: 'MarkerBold', sans-serif;
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    flex-shrink: 0;
+    padding-top: 2px;
+    letter-spacing: 0.04em;
+  }
+  .tmm-light .info-popup-num { color: rgba(0,0,0,0.25); }
+
+  /* ── CART PILL NAV — right side of screen, mirrors main pill ──────── */
+  .cart-pill-nav {
+    position: fixed;
+    top: clamp(16px, 3vw, 28px);
+    right: clamp(16px, 3vw, 28px);
+    z-index: 60;
+  }
+  .cart-pill-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 18px;
+    background: rgba(22, 22, 22, 0.6);
+    backdrop-filter: blur(32px) saturate(1.8);
+    -webkit-backdrop-filter: blur(32px) saturate(1.8);
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    box-shadow:
+      0 0 0 0.5px rgba(255,255,255,0.07),
+      inset 0 1px 0 rgba(255,255,255,0.12),
+      0 10px 40px rgba(0,0,0,0.55);
+    color: rgba(255, 255, 255, 0.4);
     cursor: pointer;
-    color: rgba(255, 255, 255, 0.45);
-    transition: color 0.22s ease, background 0.22s ease, transform 0.22s ease;
+    transition: color 0.22s ease, background 0.22s ease;
   }
-  .cart-dot:hover {
-    color: rgba(255, 255, 255, 0.9);
-    background: rgba(30, 30, 30, 0.85);
-  }
-  /* Active state — bright + filled */
-  .cart-dot--active {
+  .cart-pill-btn:hover { color: rgba(255,255,255,0.85); }
+  .cart-pill-btn--active {
     color: #ffffff !important;
-    background: rgba(28, 28, 28, 0.95) !important;
-    border-color: rgba(255,255,255,0.22);
+    background: rgba(28,28,28,0.92) !important;
+    border-color: rgba(255,255,255,0.2);
   }
-  /* Subtle shake animation — gentler than the old collect shake */
-  .cart-dot--shake {
+  /* Active: slide a dark pill behind icon (mirrors pill-nav-slider look) */
+  .cart-pill-btn--active::before {
+    content: '';
+    position: absolute;
+    inset: 7px;
+    border-radius: 100px;
+    background: rgba(28,28,28,0.92);
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 3px 16px rgba(0,0,0,0.55);
+    z-index: -1;
+  }
+  /* Shake animation */
+  .cart-pill-btn--shake {
     animation: cartWiggle 0.9s cubic-bezier(0.36, 0.07, 0.19, 0.97);
   }
   @keyframes cartWiggle {
-    0%,  100% { transform: translateX(calc(-50% - 198px)) rotate(0deg); }
-    15%        { transform: translateX(calc(-50% - 198px)) rotate(-5deg); }
-    30%        { transform: translateX(calc(-50% - 198px)) rotate(4deg); }
-    45%        { transform: translateX(calc(-50% - 198px)) rotate(-3deg); }
-    60%        { transform: translateX(calc(-50% - 198px)) rotate(2deg); }
-    75%        { transform: translateX(calc(-50% - 198px)) rotate(-1deg); }
+    0%,  100% { transform: rotate(0deg); }
+    15%        { transform: rotate(-5deg); }
+    30%        { transform: rotate(4deg); }
+    45%        { transform: rotate(-3deg); }
+    60%        { transform: rotate(2deg); }
+    75%        { transform: rotate(-1deg); }
   }
-  /* Red badge on cart dot */
-  .cart-dot-badge {
+  /* Red badge */
+  .cart-pill-badge {
     position: absolute;
-    top: 6px;
-    right: 6px;
-    width: 9px;
-    height: 9px;
+    top: 7px;
+    right: 7px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     background: var(--tmm-red);
-    border: 2px solid rgba(22, 22, 22, 0.9);
+    border: 1.5px solid rgba(22,22,22,0.9);
     pointer-events: none;
   }
-
-  /* Light mode cart dot */
-  .tmm-light .cart-dot {
-    background: rgba(245, 244, 240, 0.85);
-    border-color: rgba(0, 0, 0, 0.1);
-    color: rgba(0, 0, 0, 0.45);
+  /* Light mode cart pill */
+  .tmm-light .cart-pill-btn {
+    background: rgba(245,244,240,0.85);
+    border-color: rgba(0,0,0,0.1);
+    color: rgba(0,0,0,0.4);
     box-shadow:
       0 0 0 0.5px rgba(0,0,0,0.06),
       inset 0 1px 0 rgba(255,255,255,0.8),
-      0 8px 28px rgba(0,0,0,0.1);
+      0 8px 32px rgba(0,0,0,0.12);
   }
-  .tmm-light .cart-dot:hover { color: #000000; background: rgba(255,255,255,0.9); }
-  .tmm-light .cart-dot--active {
-    background: rgba(28,28,28,0.9) !important;
+  .tmm-light .cart-pill-btn:hover { color: rgba(0,0,0,0.85); }
+  .tmm-light .cart-pill-btn--active {
+    background: rgba(28,28,28,0.88) !important;
     color: #ffffff !important;
-    border-color: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.18);
   }
-  .tmm-light .cart-dot-badge { border-color: rgba(245,244,240,0.9); }
+  .tmm-light .cart-pill-badge { border-color: rgba(245,244,240,0.9); }
 
   /* ── Floating Pill Nav ────────────────────────────────────────────── */
   .pill-nav {
@@ -311,7 +394,7 @@
     transform: translateX(-50%);
     z-index: 60;
     pointer-events: auto;
-    max-width: calc(100vw - 100px); /* leave room for cart dot */
+    max-width: calc(100vw - 180px); /* leave room for cart pill on right */
   }
   .pill-nav-inner {
     position: relative;
@@ -647,13 +730,12 @@
     justify-content: space-between;
     gap: 12px;
   }
+  /* release-tag: inherits play-block-body size, just dimmed colour */
   .release-tag {
-    font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(11px, 2.5vw, 14px);
-    color: rgba(255, 255, 255, 0.38);
+    color: rgba(255, 255, 255, 0.38) !important;
     white-space: nowrap;
   }
-  .tmm-light .release-tag { color: rgba(0, 0, 0, 0.4); }
+  .tmm-light .release-tag { color: rgba(0, 0, 0, 0.38) !important; }
 
   /* ── Collect modal ───────────────────────────────────────────────── */
   .collect-list {
@@ -780,23 +862,18 @@
    ===================================================================== */
 @media (max-width: 600px) {
 
-  /* ── Cart dot: repositions to bottom-left corner on mobile ── */
-  .cart-dot {
+  /* ── Cart pill: moves to bottom-right above the nav bar on mobile ── */
+  .cart-pill-nav {
     top: auto;
-    bottom: 16px;
-    left: 16px;
-    transform: none;
-    width: 52px;
-    height: 52px;
+    bottom: 68px;
+    right: 12px;
   }
-  .cart-dot--active { transform: none !important; }
-  @keyframes cartWiggle {
-    0%,  100% { transform: none rotate(0deg); }
-    15%        { transform: rotate(-5deg); }
-    30%        { transform: rotate(4deg); }
-    45%        { transform: rotate(-3deg); }
-    60%        { transform: rotate(2deg); }
-    75%        { transform: rotate(-1deg); }
+  .cart-pill-btn { padding: 12px 14px; }
+
+  /* ── Info btn: adjusts for mobile nav ── */
+  .info-btn {
+    bottom: 78px;
+    right: 68px; /* left of cart pill */
   }
 
   /* ── Pill nav becomes bottom bar ── */
