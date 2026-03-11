@@ -204,7 +204,13 @@ export default function Home() {
 
         <LottieHero flipping={logoFlipping} lightMode={lightMode} />
 
-        {/* ── ! INFO BUTTON — fixed bottom-right of hero area ── */}
+        {/* ── INFO POPUP ── */}
+        <InfoPopup open={infoOpen} onClose={() => setInfoOpen(false)} />
+
+        {/* ── NAV CLUSTER: ! info · main pill · cart pill ── */}
+        <div className="nav-cluster">
+
+        {/* ! INFO BUTTON — left side of cluster */}
         <button
           className="info-btn"
           onClick={() => setInfoOpen(v => !v)}
@@ -213,23 +219,6 @@ export default function Home() {
         >
           !
         </button>
-
-        {/* ── INFO POPUP ── */}
-        <InfoPopup open={infoOpen} onClose={() => setInfoOpen(false)} />
-
-        {/* ── CART PILL — separate pill on the right side of the screen ── */}
-        <nav className="cart-pill-nav">
-          <button
-            className={`cart-pill-btn${activeModal === "collect" ? " cart-pill-btn--active" : ""}${cartShaking ? " cart-pill-btn--shake" : ""}`}
-            onClick={() => activeModal === "collect" ? closeModal() : openModal("collect")}
-            aria-label="Collect"
-          >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" clipRule="evenodd" d="M7 6V5a3 3 0 016 0v1h3.5A.5.5 0 0117 6.5l-1.5 10a.5.5 0 01-.5.5H5a.5.5 0 01-.5-.45L3 6.5A.5.5 0 013.5 6H7zm2 0V5a1 1 0 012 0v1H9zm0 3a1 1 0 112 0 1 1 0 01-2 0z"/>
-            </svg>
-            <span className="cart-pill-badge" aria-hidden="true" />
-          </button>
-        </nav>
 
         {/* ── MAIN FLOATING PILL NAV ── */}
         <nav className="pill-nav">
@@ -316,6 +305,22 @@ export default function Home() {
             </button>
           </div>
         </nav>
+
+        {/* ── CART PILL — right side of cluster ── */}
+        <nav className="cart-pill-nav">
+          <button
+            className={`cart-pill-btn${activeModal === "collect" ? " cart-pill-btn--active" : ""}${cartShaking ? " cart-pill-btn--shake" : ""}`}
+            onClick={() => activeModal === "collect" ? closeModal() : openModal("collect")}
+            aria-label="Collect"
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" clipRule="evenodd" d="M7 6V5a3 3 0 016 0v1h3.5A.5.5 0 0117 6.5l-1.5 10a.5.5 0 01-.5.5H5a.5.5 0 01-.5-.45L3 6.5A.5.5 0 013.5 6H7zm2 0V5a1 1 0 012 0v1H9zm0 3a1 1 0 112 0 1 1 0 01-2 0z"/>
+            </svg>
+            <span className="cart-pill-badge" aria-hidden="true" />
+          </button>
+        </nav>
+
+        </div>{/* end .nav-cluster */}
 
         {/* ==================== PLAY MODAL ==================== */}
         {activeModal === "play" && (

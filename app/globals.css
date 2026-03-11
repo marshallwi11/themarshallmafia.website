@@ -134,7 +134,7 @@
    ===================================================================== */
 @layer utilities {
 
-  /* Dark backdrop — original purple/dark tones */
+  /* Dark backdrop — TMM blue tones */
   .tmm-backdrop {
     position: fixed;
     inset: 0;
@@ -148,9 +148,9 @@
     position: absolute;
     inset: -20%;
     background:
-      radial-gradient(ellipse 75% 60% at 15% 25%, rgba(80,20,120,0.7) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 55% at 85% 75%, rgba(10,45,90,0.6) 0%, transparent 58%),
-      radial-gradient(ellipse 50% 45% at 50% 50%, rgba(50,10,70,0.35) 0%, transparent 70%);
+      radial-gradient(ellipse 75% 60% at 15% 25%, rgba(0,100,190,0.65) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 55% at 85% 75%, rgba(0,55,120,0.55) 0%, transparent 58%),
+      radial-gradient(ellipse 50% 45% at 50% 50%, rgba(0,80,160,0.3) 0%, transparent 70%);
     animation: backdropDrift 22s ease-in-out infinite alternate;
   }
   .tmm-backdrop::after {
@@ -158,25 +158,25 @@
     position: absolute;
     inset: -20%;
     background:
-      radial-gradient(ellipse 40% 35% at 70% 20%, rgba(20,60,110,0.45) 0%, transparent 55%),
-      radial-gradient(ellipse 35% 30% at 25% 80%, rgba(90,30,80,0.4) 0%, transparent 50%);
+      radial-gradient(ellipse 40% 35% at 70% 20%, rgba(0,128,197,0.45) 0%, transparent 55%),
+      radial-gradient(ellipse 35% 30% at 25% 80%, rgba(0,60,130,0.35) 0%, transparent 50%);
     animation: backdropDrift2 28s ease-in-out infinite alternate;
   }
 
-  /* Light backdrop — soft white/cream, no blue tint */
+  /* Light backdrop — TMM red tints */
   .tmm-backdrop--light {
     background: #f5f4f0;
   }
   .tmm-backdrop--light::before {
     background:
-      radial-gradient(ellipse 75% 60% at 15% 25%, rgba(220,200,180,0.45) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 55% at 85% 75%, rgba(200,195,185,0.35) 0%, transparent 58%),
-      radial-gradient(ellipse 50% 45% at 50% 50%, rgba(210,205,195,0.25) 0%, transparent 70%);
+      radial-gradient(ellipse 75% 60% at 15% 25%, rgba(227,0,11,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 55% at 85% 75%, rgba(227,0,11,0.08) 0%, transparent 58%),
+      radial-gradient(ellipse 50% 45% at 50% 50%, rgba(227,0,11,0.06) 0%, transparent 70%);
   }
   .tmm-backdrop--light::after {
     background:
-      radial-gradient(ellipse 40% 35% at 70% 20%, rgba(215,210,200,0.3) 0%, transparent 55%),
-      radial-gradient(ellipse 35% 30% at 25% 80%, rgba(200,195,185,0.25) 0%, transparent 50%);
+      radial-gradient(ellipse 40% 35% at 70% 20%, rgba(227,0,11,0.09) 0%, transparent 55%),
+      radial-gradient(ellipse 35% 30% at 25% 80%, rgba(200,0,10,0.07) 0%, transparent 50%);
   }
 
   @keyframes backdropDrift {
@@ -218,34 +218,41 @@
     100% { opacity: 1; filter: blur(0px); }
   }
 
-  /* ── ! INFO BUTTON — bottom right of hero, above nav ────────────── */
+  /* ── ! INFO BUTTON — same pill style as cart btn ────────────────── */
   .info-btn {
-    position: fixed;
-    bottom: clamp(90px, 14vw, 110px);
-    right: clamp(20px, 5vw, 48px);
-    z-index: 62;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: rgba(22, 22, 22, 0.65);
-    backdrop-filter: blur(20px) saturate(1.6);
-    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 18px;
+    background: rgba(22, 22, 22, 0.6);
+    backdrop-filter: blur(32px) saturate(1.8);
+    -webkit-backdrop-filter: blur(32px) saturate(1.8);
+    border-radius: 100px;
     border: 1px solid rgba(255, 255, 255, 0.13);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.1);
+    box-shadow:
+      0 0 0 0.5px rgba(255,255,255,0.07),
+      inset 0 1px 0 rgba(255,255,255,0.12),
+      0 10px 40px rgba(0,0,0,0.55);
     color: rgba(255, 255, 255, 0.55);
     font-family: 'MarkerBold', sans-serif;
     font-size: 16px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transition: color 0.2s ease, background 0.2s ease;
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    z-index: auto;
   }
   .info-btn:hover { color: #ffffff; background: rgba(34,34,34,0.9); }
   .tmm-light .info-btn {
     background: rgba(245,244,240,0.85);
     border-color: rgba(0,0,0,0.1);
     color: rgba(0,0,0,0.5);
+    box-shadow:
+      0 0 0 0.5px rgba(0,0,0,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.8),
+      0 8px 32px rgba(0,0,0,0.12);
   }
   .tmm-light .info-btn:hover { color: #111111; background: rgba(255,255,255,0.95); }
 
@@ -258,12 +265,14 @@
   }
   .info-popup {
     position: fixed;
-    bottom: clamp(132px, 20vw, 152px);
-    right: clamp(12px, 4vw, 40px);
+    /* sit just below the nav cluster (top + ~70px for cluster height + gap) */
+    top: calc(clamp(16px, 3vw, 28px) + 70px);
+    /* align with the ! button (leftmost item in cluster) */
+    left: calc(50% - 230px);
     z-index: 63;
     width: clamp(260px, 72vw, 340px);
     animation: popupIn 0.22s cubic-bezier(0.34,1.2,0.64,1);
-    transform-origin: bottom right;
+    transform-origin: top left;
   }
   @keyframes popupIn {
     from { opacity: 0; transform: scale(0.88); }
@@ -301,11 +310,40 @@
   }
   .tmm-light .info-popup-num { color: rgba(0,0,0,0.25); }
 
-  /* ── CART PILL NAV — right side of screen, mirrors main pill ──────── */
-  .cart-pill-nav {
+  /* ── NAV CLUSTER — info btn · main pill · cart pill, all inline centered ── */
+  .nav-cluster {
     position: fixed;
     top: clamp(16px, 3vw, 28px);
-    right: clamp(16px, 3vw, 28px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    pointer-events: none;
+  }
+  .nav-cluster > * { pointer-events: auto; }
+
+  /* Pill nav de-fixed inside cluster */
+  .nav-cluster .pill-nav {
+    position: static;
+    top: auto;
+    left: auto;
+    transform: none;
+    z-index: auto;
+    max-width: none;
+  }
+
+  /* Cart pill de-fixed inside cluster */
+  .nav-cluster .cart-pill-nav {
+    position: static;
+    top: auto;
+    right: auto;
+    z-index: auto;
+  }
+
+  /* ── CART PILL NAV ──────────────────────────────────────────────────── */
+  .cart-pill-nav {
     z-index: 60;
   }
   .cart-pill-btn {
@@ -394,7 +432,6 @@
     transform: translateX(-50%);
     z-index: 60;
     pointer-events: auto;
-    max-width: calc(100vw - 180px); /* leave room for cart pill on right */
   }
   .pill-nav-inner {
     position: relative;
@@ -512,10 +549,12 @@
   }
   .tmm-light .pill-nav-item { color: rgba(0, 0, 0, 0.4); }
   .tmm-light .pill-nav-item:hover { color: rgba(0, 0, 0, 0.85); }
-  .tmm-light .pill-nav-item--active { color: #ffffff !important; }
+  .tmm-light .pill-nav-item--active { color: rgba(0, 0, 0, 0.88) !important; }
+  /* Light mode slider matches nav background — black eyes logo stays visible */
   .tmm-light .pill-nav-slider {
-    background: rgba(28, 28, 28, 0.88);
-    border-color: rgba(255,255,255,0.18);
+    background: rgba(232, 229, 224, 0.9);
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 2px 8px rgba(0,0,0,0.06);
   }
 
   /* ── Modal system ────────────────────────────────────────────────── */
@@ -862,8 +901,15 @@
    ===================================================================== */
 @media (max-width: 600px) {
 
+  /* ── Dissolve the cluster — children revert to their own fixed positions ── */
+  .nav-cluster {
+    display: contents;
+  }
+
   /* ── Cart pill: moves to bottom-right above the nav bar on mobile ── */
+  .nav-cluster .cart-pill-nav,
   .cart-pill-nav {
+    position: fixed;
     top: auto;
     bottom: 68px;
     right: 12px;
@@ -871,13 +917,32 @@
   .cart-pill-btn { padding: 12px 14px; }
 
   /* ── Info btn: adjusts for mobile nav ── */
+  .nav-cluster .info-btn,
   .info-btn {
+    position: fixed;
+    top: auto;
     bottom: 78px;
     right: 68px; /* left of cart pill */
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border-radius: 50%;
+  }
+
+  /* ── Info popup: revert to bottom-right anchor on mobile ── */
+  .info-popup {
+    top: auto;
+    bottom: clamp(132px, 20vw, 152px);
+    left: auto;
+    right: clamp(12px, 4vw, 40px);
+    transform: none;
+    transform-origin: bottom right;
   }
 
   /* ── Pill nav becomes bottom bar ── */
+  .nav-cluster .pill-nav,
   .pill-nav {
+    position: fixed;
     top: auto;
     bottom: 0;
     left: 0;
