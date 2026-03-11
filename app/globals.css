@@ -40,11 +40,11 @@
   --tmm-yellow: #F8AC00;
   --tmm-purple: #9152E6;
 
-  --color-kill: var(--tmm-red);
+  --color-kill:  var(--tmm-red);
   --color-guess: var(--tmm-blue);
-  --color-save: var(--tmm-green);
-  --color-wild: var(--tmm-yellow);
-  --color-ally: var(--tmm-cream);
+  --color-save:  var(--tmm-green);
+  --color-wild:  var(--tmm-yellow);
+  --color-ally:  var(--tmm-cream);
 
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
@@ -124,34 +124,33 @@
   body {
     @apply text-foreground;
     font-family: 'MarkerBold', sans-serif;
-    background: #000814;
+    background: #000000;
   }
   html { scroll-behavior: smooth; }
 }
 
 /* =====================================================================
-   ANIMATED GLASS BACKDROP — TMM BLUE tinted
+   ANIMATED GLASS BACKDROP
    ===================================================================== */
 @layer utilities {
 
-  /* ── Backdrop ─────────────────────────────────────────────────────── */
+  /* Dark backdrop — original purple/dark tones */
   .tmm-backdrop {
     position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    background: #000814;
+    background: #000000;
     overflow: hidden;
   }
-  /* Dark mode: deep blue/purple tint */
   .tmm-backdrop::before {
     content: '';
     position: absolute;
     inset: -20%;
     background:
-      radial-gradient(ellipse 70% 55% at 18% 28%, rgba(0,80,160,0.72) 0%, transparent 58%),
-      radial-gradient(ellipse 55% 50% at 82% 72%, rgba(0,50,120,0.62) 0%, transparent 55%),
-      radial-gradient(ellipse 48% 42% at 50% 50%, rgba(0,30,90,0.38) 0%, transparent 68%);
+      radial-gradient(ellipse 75% 60% at 15% 25%, rgba(80,20,120,0.7) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 55% at 85% 75%, rgba(10,45,90,0.6) 0%, transparent 58%),
+      radial-gradient(ellipse 50% 45% at 50% 50%, rgba(50,10,70,0.35) 0%, transparent 70%);
     animation: backdropDrift 22s ease-in-out infinite alternate;
   }
   .tmm-backdrop::after {
@@ -159,59 +158,56 @@
     position: absolute;
     inset: -20%;
     background:
-      radial-gradient(ellipse 38% 32% at 68% 18%, rgba(0,128,197,0.38) 0%, transparent 52%),
-      radial-gradient(ellipse 32% 28% at 22% 82%, rgba(0,60,140,0.32) 0%, transparent 48%);
+      radial-gradient(ellipse 40% 35% at 70% 20%, rgba(20,60,110,0.45) 0%, transparent 55%),
+      radial-gradient(ellipse 35% 30% at 25% 80%, rgba(90,30,80,0.4) 0%, transparent 50%);
     animation: backdropDrift2 28s ease-in-out infinite alternate;
   }
 
-  /* Light mode backdrop: soft sky blue */
+  /* Light backdrop — soft white/cream, no blue tint */
   .tmm-backdrop--light {
-    background: #dff0fa;
+    background: #f5f4f0;
   }
   .tmm-backdrop--light::before {
     background:
-      radial-gradient(ellipse 70% 55% at 18% 28%, rgba(0,128,197,0.22) 0%, transparent 58%),
-      radial-gradient(ellipse 55% 50% at 82% 72%, rgba(0,100,180,0.18) 0%, transparent 55%),
-      radial-gradient(ellipse 48% 42% at 50% 50%, rgba(0,80,160,0.12) 0%, transparent 68%);
+      radial-gradient(ellipse 75% 60% at 15% 25%, rgba(220,200,180,0.45) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 55% at 85% 75%, rgba(200,195,185,0.35) 0%, transparent 58%),
+      radial-gradient(ellipse 50% 45% at 50% 50%, rgba(210,205,195,0.25) 0%, transparent 70%);
   }
   .tmm-backdrop--light::after {
     background:
-      radial-gradient(ellipse 38% 32% at 68% 18%, rgba(0,128,197,0.15) 0%, transparent 52%),
-      radial-gradient(ellipse 32% 28% at 22% 82%, rgba(0,80,160,0.12) 0%, transparent 48%);
+      radial-gradient(ellipse 40% 35% at 70% 20%, rgba(215,210,200,0.3) 0%, transparent 55%),
+      radial-gradient(ellipse 35% 30% at 25% 80%, rgba(200,195,185,0.25) 0%, transparent 50%);
   }
 
   @keyframes backdropDrift {
-    0%   { transform: translate(0%, 0%) scale(1); opacity: 0.85; }
+    0%   { transform: translate(0%, 0%) scale(1);    opacity: 0.85; }
     33%  { transform: translate(2.5%, -1.5%) scale(1.04); opacity: 1; }
-    66%  { transform: translate(-1.5%, 2%) scale(0.97); opacity: 0.9; }
-    100% { transform: translate(1%, -2%) scale(1.02); opacity: 0.95; }
+    66%  { transform: translate(-1.5%, 2%) scale(0.97);  opacity: 0.9; }
+    100% { transform: translate(1%, -2%) scale(1.02);    opacity: 0.95; }
   }
   @keyframes backdropDrift2 {
-    0%   { transform: translate(0%, 0%) scale(1); opacity: 0.7; }
+    0%   { transform: translate(0%, 0%) scale(1);    opacity: 0.7; }
     40%  { transform: translate(-2%, 1.5%) scale(1.05); opacity: 0.9; }
-    70%  { transform: translate(1.5%, -1%) scale(0.96); opacity: 0.8; }
-    100% { transform: translate(-1%, 2%) scale(1.03); opacity: 0.85; }
+    70%  { transform: translate(1.5%, -1%) scale(0.96);  opacity: 0.8; }
+    100% { transform: translate(-1%, 2%) scale(1.03);    opacity: 0.85; }
   }
 
-  /* Light mode main bg */
   .tmm-light { background: transparent; }
   main { position: relative; z-index: 1; }
 
   /* ── Hero Lottie ──────────────────────────────────────────────────── */
-  /* Dark: SVG renders white on dark bg — just fade in */
   .hero-lottie {
     animation: heroFadeIn 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
-  /* Light: invert the SVG so white eyes become dark/visible */
+  /* Light mode: invert SVG so white eyes + white shapes become dark/black */
   .hero-lottie--light {
-    filter: invert(1) hue-rotate(180deg) brightness(0.85);
+    filter: invert(1);
   }
   @keyframes heroFadeIn {
     0%   { opacity: 0; filter: blur(18px) brightness(0); transform: scale(0.96); }
     40%  { opacity: 0.15; }
     100% { opacity: 1; filter: blur(0px) brightness(1); transform: scale(1); }
   }
-  /* Blur pulse on mode switch */
   .hero-flip-anim {
     animation: heroBlip 0.42s ease-in-out forwards;
   }
@@ -222,6 +218,91 @@
     100% { opacity: 1; filter: blur(0px); }
   }
 
+  /* ── CART DOT — floats to the left of the pill nav ───────────────── */
+  /* Positioned absolutely relative to the pill-nav-wrapper (which is the
+     fixed pill-nav). We use a sibling approach: cart-dot is fixed too,
+     centred vertically with the nav, offset to the left. */
+  .cart-dot {
+    position: fixed;
+    /* vertically align with nav top */
+    top: clamp(16px, 3vw, 28px);
+    /* horizontally: centre of screen minus half-nav-width minus gap minus dot-size.
+       We use a CSS custom property trick: translate to be right of left edge */
+    left: 50%;
+    /* Push left past the nav. Nav is roughly 320px wide, so ~160px from centre + 16px gap + 22px */
+    transform: translateX(calc(-50% - 198px));
+    z-index: 60;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(22, 22, 22, 0.72);
+    backdrop-filter: blur(32px) saturate(1.8);
+    -webkit-backdrop-filter: blur(32px) saturate(1.8);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    box-shadow:
+      0 0 0 0.5px rgba(255,255,255,0.07),
+      inset 0 1px 0 rgba(255,255,255,0.1),
+      0 8px 28px rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.45);
+    transition: color 0.22s ease, background 0.22s ease, transform 0.22s ease;
+  }
+  .cart-dot:hover {
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(30, 30, 30, 0.85);
+  }
+  /* Active state — bright + filled */
+  .cart-dot--active {
+    color: #ffffff !important;
+    background: rgba(28, 28, 28, 0.95) !important;
+    border-color: rgba(255,255,255,0.22);
+  }
+  /* Subtle shake animation — gentler than the old collect shake */
+  .cart-dot--shake {
+    animation: cartWiggle 0.9s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+  }
+  @keyframes cartWiggle {
+    0%,  100% { transform: translateX(calc(-50% - 198px)) rotate(0deg); }
+    15%        { transform: translateX(calc(-50% - 198px)) rotate(-5deg); }
+    30%        { transform: translateX(calc(-50% - 198px)) rotate(4deg); }
+    45%        { transform: translateX(calc(-50% - 198px)) rotate(-3deg); }
+    60%        { transform: translateX(calc(-50% - 198px)) rotate(2deg); }
+    75%        { transform: translateX(calc(-50% - 198px)) rotate(-1deg); }
+  }
+  /* Red badge on cart dot */
+  .cart-dot-badge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--tmm-red);
+    border: 2px solid rgba(22, 22, 22, 0.9);
+    pointer-events: none;
+  }
+
+  /* Light mode cart dot */
+  .tmm-light .cart-dot {
+    background: rgba(245, 244, 240, 0.85);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.45);
+    box-shadow:
+      0 0 0 0.5px rgba(0,0,0,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.8),
+      0 8px 28px rgba(0,0,0,0.1);
+  }
+  .tmm-light .cart-dot:hover { color: #000000; background: rgba(255,255,255,0.9); }
+  .tmm-light .cart-dot--active {
+    background: rgba(28,28,28,0.9) !important;
+    color: #ffffff !important;
+    border-color: rgba(255,255,255,0.2);
+  }
+  .tmm-light .cart-dot-badge { border-color: rgba(245,244,240,0.9); }
+
   /* ── Floating Pill Nav ────────────────────────────────────────────── */
   .pill-nav {
     position: fixed;
@@ -230,65 +311,59 @@
     transform: translateX(-50%);
     z-index: 60;
     pointer-events: auto;
-    /* prevent overflow beyond nav bounds */
-    max-width: calc(100vw - 24px);
+    max-width: calc(100vw - 100px); /* leave room for cart dot */
   }
   .pill-nav-inner {
     position: relative;
     display: flex;
     align-items: center;
-    /* no gap so buttons are flush — padding gives the visual gap */
     gap: 2px;
-    padding: 6px 8px;
-    background: rgba(10, 15, 30, 0.72);
+    padding: 7px 10px;
+    background: rgba(22, 22, 22, 0.6);
     backdrop-filter: blur(32px) saturate(1.8);
     -webkit-backdrop-filter: blur(32px) saturate(1.8);
     border-radius: 100px;
-    border: 1px solid rgba(0, 128, 197, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.13);
     box-shadow:
-      0 0 0 0.5px rgba(0,128,197,0.1),
-      inset 0 1px 0 rgba(255,255,255,0.1),
+      0 0 0 0.5px rgba(255,255,255,0.07),
+      inset 0 1px 0 rgba(255,255,255,0.12),
       0 10px 40px rgba(0,0,0,0.55);
-    /* critical: clip slider to pill bounds */
-    overflow: hidden;
+    overflow: hidden; /* clip slider so it never escapes */
   }
 
-  /* Sliding pill — sits inside overflow:hidden container so it can't escape */
+  /* Sliding pill — original dark glass */
   .pill-nav-slider {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    height: calc(100% - 12px); /* fill inner height minus top+bottom padding */
+    height: calc(100% - 14px);
     border-radius: 100px;
-    background: rgba(0, 80, 160, 0.85);
-    border: 1px solid rgba(0, 128, 197, 0.5);
+    background: rgba(28, 28, 28, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.15),
-      0 3px 16px rgba(0,80,160,0.4);
+      inset 0 1px 0 rgba(255,255,255,0.12),
+      0 3px 16px rgba(0,0,0,0.55);
     pointer-events: none;
     z-index: 0;
-    /* No min-width — width is set exactly to button width via JS */
   }
 
-  /* Nav items — all same height, centred icons */
   .pill-nav-item {
     position: relative;
     z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Uniform padding — slider width = button width so it centres perfectly */
     padding: 14px 18px;
     border: none;
     background: none;
     cursor: pointer;
     border-radius: 100px;
-    color: rgba(255, 255, 255, 0.38);
+    color: rgba(255, 255, 255, 0.4);
     transition: color 0.22s ease;
     white-space: nowrap;
     flex-shrink: 0;
   }
-  .pill-nav-item:hover { color: rgba(255, 255, 255, 0.75); }
+  .pill-nav-item:hover { color: rgba(255, 255, 255, 0.8); }
   .pill-nav-item--active { color: #ffffff !important; }
   .pill-nav-item--active svg {
     animation: navIconPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -299,7 +374,6 @@
     100% { transform: scale(1); }
   }
 
-  /* Home button — slightly wider for the logo */
   .pill-nav-home {
     position: relative;
     z-index: 1;
@@ -315,7 +389,6 @@
     flex-shrink: 0;
   }
   .pill-nav-home:hover { background: none !important; transform: scale(1.06); }
-
   .pill-nav-home-logo {
     width: 38px;
     height: 38px;
@@ -329,70 +402,38 @@
   }
 
   /* ── Logo flip / light mode ─────────────────────────────────────── */
+  /* Light mode: invert the white SVG eyes to black */
   .logo-flipped {
+    filter: invert(1);
     transform: scaleY(-1);
-    /* light mode: darken the SVG so it's visible on light bg */
-    filter: invert(1) brightness(0.15);
   }
+  /* The flip animation ends at the flipped+inverted state */
   .logo-flip-anim {
-    animation: eyesBlipPulse 0.5s ease-in-out forwards;
+    animation: eyesBlip 0.5s ease-in-out forwards;
   }
-  @keyframes eyesBlipPulse {
-    0%   { transform: scaleY(1);  filter: blur(0px) brightness(1);    opacity: 1; }
-    20%  { transform: scaleY(0.1); filter: blur(4px) brightness(2);   opacity: 0.6; }
-    45%  { transform: scaleY(0);  filter: blur(8px) brightness(3);    opacity: 0; }
-    55%  { transform: scaleY(0);  filter: blur(8px) brightness(3);    opacity: 0; }
-    80%  { transform: scaleY(0.1); filter: blur(4px) brightness(2);   opacity: 0.6; }
-    100% { transform: scaleY(-1); filter: blur(0px) brightness(0.15); opacity: 1; }
+  @keyframes eyesBlip {
+    0%   { transform: scaleY(1);  filter: none;     opacity: 1; }
+    40%  { transform: scaleY(0);  filter: blur(6px); opacity: 0; }
+    60%  { transform: scaleY(0);  filter: blur(6px); opacity: 0; }
+    100% { transform: scaleY(-1); filter: none;      opacity: 1; }
   }
 
-  /* Collect button needs relative for the dot */
-  .pill-nav-collect { position: relative; }
-
-  /* Red dot */
-  .collect-dot {
-    position: absolute;
-    top: 50%;
-    right: 50%;
-    transform: translate(155%, -115%);
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--tmm-red);
-    border: 2px solid rgba(10, 15, 30, 0.9);
-    z-index: 3;
-    pointer-events: none;
-  }
-
-  /* Collect shake */
-  .collect-icon-shake {
-    animation: collectShake 0.7s cubic-bezier(0.36, 0.07, 0.19, 0.97);
-  }
-  @keyframes collectShake {
-    0%, 100% { transform: rotate(0deg); }
-    20%  { transform: rotate(-9deg); }
-    40%  { transform: rotate(8deg); }
-    60%  { transform: rotate(-6deg); }
-    80%  { transform: rotate(4deg); }
-  }
-
-  /* ── Light mode nav ──────────────────────────────────────────────── */
+  /* Light mode nav — original light-on-white style, no blue */
   .tmm-light .pill-nav-inner {
-    background: rgba(220, 240, 255, 0.82);
-    border-color: rgba(0, 128, 197, 0.3);
+    background: rgba(245, 244, 240, 0.85);
+    border-color: rgba(0, 0, 0, 0.1);
     box-shadow:
-      0 0 0 0.5px rgba(0,128,197,0.15),
-      inset 0 1px 0 rgba(255,255,255,0.9),
-      0 8px 32px rgba(0,60,120,0.15);
+      0 0 0 0.5px rgba(0,0,0,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.8),
+      0 8px 32px rgba(0,0,0,0.12);
   }
-  .tmm-light .pill-nav-item { color: rgba(0, 40, 80, 0.45); }
-  .tmm-light .pill-nav-item:hover { color: rgba(0, 40, 80, 0.85); }
+  .tmm-light .pill-nav-item { color: rgba(0, 0, 0, 0.4); }
+  .tmm-light .pill-nav-item:hover { color: rgba(0, 0, 0, 0.85); }
   .tmm-light .pill-nav-item--active { color: #ffffff !important; }
   .tmm-light .pill-nav-slider {
-    background: rgba(0, 100, 180, 0.88);
-    border-color: rgba(0, 128, 197, 0.6);
+    background: rgba(28, 28, 28, 0.88);
+    border-color: rgba(255,255,255,0.18);
   }
-  .tmm-light .collect-dot { border-color: rgba(220, 240, 255, 0.9); }
 
   /* ── Modal system ────────────────────────────────────────────────── */
   .modal-overlay {
@@ -403,16 +444,18 @@
     align-items: center;
     justify-content: center;
   }
+  /* Neutral dark backdrop — no blue tint */
   .modal-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(0, 8, 20, 0.5);
+    background: rgba(0, 0, 0, 0.35);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     animation: fadeIn 0.25s ease-out;
   }
+  /* Light mode backdrop — neutral frosted white */
   .tmm-light .modal-backdrop {
-    background: rgba(200, 230, 255, 0.55);
+    background: rgba(240, 238, 234, 0.6);
   }
   @keyframes fadeIn {
     from { opacity: 0; }
@@ -440,15 +483,15 @@
     to   { opacity: 1; transform: scale(1) translateY(0); }
   }
 
-  /* ── Play cards ──────────────────────────────────────────────────── */
+  /* ── Play cards — original neutral dark glass, no blue ───────────── */
   .play-card {
-    background: rgba(0, 20, 60, 0.45);
+    background: rgba(52, 52, 52, 0.25);
     border-radius: clamp(19px, 3.6vw, 29px);
     padding: clamp(20px, 5vw, 50px);
     display: flex;
     flex-direction: column;
     gap: clamp(12px, 2.5vw, 18px);
-    border: 1px solid rgba(0, 128, 197, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }
@@ -459,30 +502,28 @@
     margin-bottom: 8px;
   }
   .play-card-pill {
-    background: rgba(0, 20, 60, 0.4);
+    background: rgba(52, 52, 52, 0.25);
     border-radius: 100px;
     padding: clamp(14px, 3vw, 28px) clamp(20px, 5vw, 50px);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid rgba(0, 128, 197, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.05);
   }
   .play-card-divider {
     border: none;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin: 6px 0;
   }
-
-  /* Light mode cards */
   .tmm-light .play-card {
-    background: rgba(255, 255, 255, 0.72);
-    border-color: rgba(0, 128, 197, 0.2);
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 0, 0, 0.08);
   }
   .tmm-light .play-card-pill {
-    background: rgba(255, 255, 255, 0.72);
-    border-color: rgba(0, 128, 197, 0.2);
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 0, 0, 0.08);
   }
-  .tmm-light .play-card-divider { border-color: rgba(0, 80, 160, 0.12); }
+  .tmm-light .play-card-divider { border-color: rgba(0, 0, 0, 0.1); }
 
   /* ── Typography ──────────────────────────────────────────────────── */
   .play-block-title {
@@ -504,9 +545,9 @@
     color: #ffffff;
     text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
   }
-  .tmm-light .play-block-title   { color: #071428; }
-  .tmm-light .play-block-subtitle { color: rgba(0, 50, 100, 0.5); }
-  .tmm-light .play-block-body    { color: #071428; text-shadow: none; }
+  .tmm-light .play-block-title    { color: #111111; }
+  .tmm-light .play-block-subtitle { color: rgba(0, 0, 0, 0.4); }
+  .tmm-light .play-block-body     { color: #111111; text-shadow: none; }
 
   /* ── Showcase modal ──────────────────────────────────────────────── */
   .showcase-list {
@@ -519,15 +560,15 @@
   }
   .showcase-card {
     border-radius: clamp(15px, 3vw, 24px);
-    background: rgba(0, 20, 60, 0.38);
-    border: 1px solid rgba(0, 128, 197, 0.16);
+    background: rgba(52, 52, 52, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.07);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     padding: clamp(8px, 2.5vw, 16px);
     box-sizing: border-box;
   }
   .showcase-img-well {
-    background: rgba(220, 228, 240, 0.92);
+    background: rgba(230, 228, 224, 0.92);
     border-radius: clamp(8px, 1.5vw, 14px);
     overflow: hidden;
     width: 100%;
@@ -542,8 +583,8 @@
     object-fit: cover;
   }
   .tmm-light .showcase-card {
-    background: rgba(255, 255, 255, 0.68);
-    border-color: rgba(0, 128, 197, 0.18);
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(0, 0, 0, 0.08);
   }
 
   /* ── Music modal ─────────────────────────────────────────────────── */
@@ -591,7 +632,7 @@
     text-align: center;
     line-height: 1.2;
   }
-  .tmm-light .music-tile-label { color: rgba(0, 40, 100, 0.55); }
+  .tmm-light .music-tile-label { color: rgba(0, 0, 0, 0.45); }
 
   /* Releases */
   .releases-list {
@@ -606,14 +647,13 @@
     justify-content: space-between;
     gap: 12px;
   }
-  /* Release tags (EP / ALBUM / SOUNDTRACKS) — explicitly grey */
   .release-tag {
     font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(11px, 2.5vw, 14px) !important;
-    color: rgba(255, 255, 255, 0.38) !important;
+    font-size: clamp(11px, 2.5vw, 14px);
+    color: rgba(255, 255, 255, 0.38);
     white-space: nowrap;
   }
-  .tmm-light .release-tag { color: rgba(0, 40, 100, 0.45) !important; }
+  .tmm-light .release-tag { color: rgba(0, 0, 0, 0.4); }
 
   /* ── Collect modal ───────────────────────────────────────────────── */
   .collect-list {
@@ -650,7 +690,7 @@
     line-height: 1;
     color: #ffffff;
   }
-  .tmm-light .reviews-score-number { color: #071428; }
+  .tmm-light .reviews-score-number { color: #111111; }
   .reviews-bars {
     flex: 1;
     display: flex;
@@ -671,7 +711,7 @@
     text-align: right;
     flex-shrink: 0;
   }
-  .tmm-light .review-bar-label { color: rgba(0, 40, 100, 0.5); }
+  .tmm-light .review-bar-label { color: rgba(0, 0, 0, 0.45); }
   .review-bar-track {
     flex: 1;
     height: 6px;
@@ -679,12 +719,11 @@
     border-radius: 100px;
     overflow: hidden;
   }
-  .tmm-light .review-bar-track { background: rgba(0, 80, 160, 0.1); }
+  .tmm-light .review-bar-track { background: rgba(0, 0, 0, 0.08); }
   .review-bar-fill {
     height: 100%;
     background: var(--tmm-yellow);
     border-radius: 100px;
-    transition: width 0.6s cubic-bezier(0.34, 1.15, 0.64, 1);
   }
   .review-bar-count {
     font-family: 'MarkerBold', sans-serif;
@@ -693,7 +732,7 @@
     width: 12px;
     flex-shrink: 0;
   }
-  .tmm-light .review-bar-count { color: rgba(0, 40, 100, 0.45); }
+  .tmm-light .review-bar-count { color: rgba(0, 0, 0, 0.38); }
   .review-card-top {
     display: flex;
     align-items: center;
@@ -703,7 +742,7 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: rgba(0, 128, 197, 0.35);
+    background: rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -711,11 +750,12 @@
     font-size: 16px;
     color: #ffffff;
     flex-shrink: 0;
-    border: 1px solid rgba(0, 128, 197, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.12);
   }
   .tmm-light .review-avatar {
-    background: rgba(0, 128, 197, 0.18);
-    color: #0060aa;
+    background: rgba(0, 0, 0, 0.06);
+    color: #333333;
+    border-color: rgba(0, 0, 0, 0.1);
   }
 
   /* ── TMM brand colour utilities ──────────────────────────────────── */
@@ -732,15 +772,34 @@
   .text-wild  { color: var(--tmm-yellow); }
   .text-ally  { color: var(--tmm-cream); }
   .text-muted { color: rgba(255, 255, 255, 0.35); }
-  .tmm-light .text-muted { color: rgba(0, 40, 100, 0.4); }
+  .tmm-light .text-muted { color: rgba(0, 0, 0, 0.35); }
 }
 
 /* =====================================================================
-   MOBILE — ≤ 600px: accordion nav replaces pill nav
+   MOBILE — ≤ 600px: bottom accordion nav bar
    ===================================================================== */
 @media (max-width: 600px) {
 
-  /* ── Pill nav becomes bottom accordion bar ── */
+  /* ── Cart dot: repositions to bottom-left corner on mobile ── */
+  .cart-dot {
+    top: auto;
+    bottom: 16px;
+    left: 16px;
+    transform: none;
+    width: 52px;
+    height: 52px;
+  }
+  .cart-dot--active { transform: none !important; }
+  @keyframes cartWiggle {
+    0%,  100% { transform: none rotate(0deg); }
+    15%        { transform: rotate(-5deg); }
+    30%        { transform: rotate(4deg); }
+    45%        { transform: rotate(-3deg); }
+    60%        { transform: rotate(2deg); }
+    75%        { transform: rotate(-1deg); }
+  }
+
+  /* ── Pill nav becomes bottom bar ── */
   .pill-nav {
     top: auto;
     bottom: 0;
@@ -751,66 +810,41 @@
     padding: 0;
   }
   .pill-nav-inner {
-    border-radius: 24px 24px 0 0;
-    padding: 10px 8px 10px;
+    border-radius: 20px 20px 0 0;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
     gap: 0;
     justify-content: space-around;
-    /* extend to fill width */
     width: 100%;
     border-bottom: none;
+    overflow: hidden;
   }
-  /* Hide slider on mobile — active state shown by icon colour only */
   .pill-nav-slider { display: none; }
 
-  /* Nav items: tighter, fill width evenly */
   .pill-nav-item {
     flex: 1;
     padding: 10px 4px;
     min-width: 0;
-    height: 52px;
-    font-size: 0; /* hide any text labels */
+    height: 50px;
   }
-  .pill-nav-item--active { color: #ffffff !important; }
   .pill-nav-home {
     flex: 1;
     padding: 8px 4px;
-    height: 52px;
+    height: 50px;
     min-width: 0;
   }
   .pill-nav-home-logo { width: 30px; height: 30px; }
 
-  /* Collect dot rescaled */
-  .collect-dot {
-    width: 8px; height: 8px;
-    transform: translate(150%, -105%);
-  }
-
-  /* Hero: slightly smaller on mobile */
   .hero-lottie {
     width: 92vw !important;
     max-width: 92vw !important;
   }
+  main { padding-bottom: 70px; }
 
-  /* Push hero up so the bottom nav doesn't cover it */
-  main {
-    padding-bottom: 72px;
-  }
-
-  /* Modal: open from bottom, full-screen */
-  .modal-scroll-bare > div {
-    padding-top: 20px;
-  }
-  .play-card {
-    border-radius: 16px;
-    padding: 18px 16px;
-    gap: 10px;
-  }
+  .modal-scroll-bare > div { padding-top: 24px; }
+  .play-card { border-radius: 16px; padding: 18px 16px; gap: 10px; }
   .play-card-pill { padding: 14px 18px; border-radius: 60px; }
 
-  .music-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
+  .music-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .music-tile-icon { width: 72px; height: 72px; border-radius: 20px; }
   .music-tile-label { font-size: 10px; }
 
@@ -826,8 +860,5 @@
   .reviews-score-number { font-size: 42px; }
   .review-card-top { flex-wrap: wrap; }
 
-  /* Light mode mobile nav */
-  .tmm-light .pill-nav-inner {
-    border-radius: 24px 24px 0 0;
-  }
+  .tmm-light .pill-nav-inner { border-radius: 20px 20px 0 0; }
 }
