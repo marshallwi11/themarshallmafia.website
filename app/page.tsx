@@ -293,17 +293,14 @@ export default function Home() {
               aria-label="Music"
             >
               {activeModal === "music" ? (
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                  <rect x="10.5" y="3" width="2.5" height="13" rx="1.25"/>
-                  <ellipse cx="9" cy="17.5" rx="4" ry="2.8" transform="rotate(-25 9 17.5)"/>
+                // Speaker with 3 sound waves — modal open / playing
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10 3.75a.75.75 0 00-1.264-.546L4.703 7H3.167a.75.75 0 00-.7.48A6.985 6.985 0 002 10c0 .905.184 1.768.468 2.52.111.29.39.48.7.48h1.535l4.033 3.796A.75.75 0 0010 16.25V3.75zM15.95 5.05a.75.75 0 00-1.06 1.06A6.5 6.5 0 0116.95 10a6.5 6.5 0 01-2.06 3.89.75.75 0 001.06 1.06A8 8 0 0018.45 10a8 8 0 00-2.5-4.95zM13.596 7.404a.75.75 0 00-1.06 1.06 3.5 3.5 0 010 4.95.75.75 0 001.06 1.06 5 5 0 000-7.07z"/>
                 </svg>
               ) : (
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style={{transform:"scaleX(-1)"}}>
-                  <rect x="6" y="3" width="13" height="2.5" rx="1.25"/>
-                  <rect x="6" y="3" width="2.5" height="11" rx="1.25"/>
-                  <rect x="16.5" y="3" width="2.5" height="9" rx="1.25"/>
-                  <ellipse cx="8" cy="16.5" rx="3.5" ry="2.5"/>
-                  <ellipse cx="18.5" cy="14.5" rx="3.5" ry="2.5"/>
+                // Muted speaker — default state
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M9.547 3.062A.75.75 0 0110 3.75v12.5a.75.75 0 01-1.264.546L4.703 13H3.167a.75.75 0 01-.7-.48A6.985 6.985 0 012 10c0-.905.184-1.768.468-2.52a.75.75 0 01.699-.48h1.535l4.033-3.796a.75.75 0 01.812-.142zM13.28 7.22a.75.75 0 10-1.06 1.06L13.94 10l-1.72 1.72a.75.75 0 001.06 1.06L15 11.06l1.72 1.72a.75.75 0 101.06-1.06L16.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L15 8.94l-1.72-1.72z"/>
                 </svg>
               )}
             </button>
