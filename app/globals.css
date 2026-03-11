@@ -3,7 +3,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Custom marker font */
 @font-face {
   font-family: 'MarkerBold';
   src: url('/fonts/asset_font_bold_marker.otf') format('opentype'),
@@ -33,7 +32,6 @@
   --ring: #ffffff;
   --radius: 1.5rem;
 
-  /* === TMM BRAND COLOURS === */
   --tmm-brown:  #7E3C05;
   --tmm-cream:  #DBAB7F;
   --tmm-red:    #E3000B;
@@ -63,41 +61,6 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
 }
 
 @theme inline {
@@ -157,44 +120,38 @@
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
+  * { @apply border-border outline-ring/50; }
   body {
     @apply text-foreground;
     font-family: 'MarkerBold', sans-serif;
-    background: #000000; /* fallback; backdrop div provides the real bg */
+    background: #000814;
   }
-  html {
-    scroll-behavior: smooth;
-  }
+  html { scroll-behavior: smooth; }
 }
 
-/* =============================================
-   LIQUID GLASS + MODAL SYSTEM
-   ============================================= */
-
+/* =====================================================================
+   ANIMATED GLASS BACKDROP — TMM BLUE tinted
+   ===================================================================== */
 @layer utilities {
 
-  /* ===================================================
-     ANIMATED GLASS BACKDROP — fixed layer behind everything
-     =================================================== */
+  /* ── Backdrop ─────────────────────────────────────────────────────── */
   .tmm-backdrop {
     position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    background: #000000;
+    background: #000814;
     overflow: hidden;
   }
+  /* Dark mode: deep blue/purple tint */
   .tmm-backdrop::before {
     content: '';
     position: absolute;
     inset: -20%;
     background:
-      radial-gradient(ellipse 75% 60% at 15% 25%, rgba(80,20,120,0.7) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 55% at 85% 75%, rgba(10,45,90,0.6) 0%, transparent 58%),
-      radial-gradient(ellipse 50% 45% at 50% 50%, rgba(50,10,70,0.35) 0%, transparent 70%);
+      radial-gradient(ellipse 70% 55% at 18% 28%, rgba(0,80,160,0.72) 0%, transparent 58%),
+      radial-gradient(ellipse 55% 50% at 82% 72%, rgba(0,50,120,0.62) 0%, transparent 55%),
+      radial-gradient(ellipse 48% 42% at 50% 50%, rgba(0,30,90,0.38) 0%, transparent 68%);
     animation: backdropDrift 22s ease-in-out infinite alternate;
   }
   .tmm-backdrop::after {
@@ -202,31 +159,70 @@
     position: absolute;
     inset: -20%;
     background:
-      radial-gradient(ellipse 40% 35% at 70% 20%, rgba(20,60,110,0.45) 0%, transparent 55%),
-      radial-gradient(ellipse 35% 30% at 25% 80%, rgba(90,30,80,0.4) 0%, transparent 50%);
+      radial-gradient(ellipse 38% 32% at 68% 18%, rgba(0,128,197,0.38) 0%, transparent 52%),
+      radial-gradient(ellipse 32% 28% at 22% 82%, rgba(0,60,140,0.32) 0%, transparent 48%);
     animation: backdropDrift2 28s ease-in-out infinite alternate;
   }
+
+  /* Light mode backdrop: soft sky blue */
+  .tmm-backdrop--light {
+    background: #dff0fa;
+  }
+  .tmm-backdrop--light::before {
+    background:
+      radial-gradient(ellipse 70% 55% at 18% 28%, rgba(0,128,197,0.22) 0%, transparent 58%),
+      radial-gradient(ellipse 55% 50% at 82% 72%, rgba(0,100,180,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse 48% 42% at 50% 50%, rgba(0,80,160,0.12) 0%, transparent 68%);
+  }
+  .tmm-backdrop--light::after {
+    background:
+      radial-gradient(ellipse 38% 32% at 68% 18%, rgba(0,128,197,0.15) 0%, transparent 52%),
+      radial-gradient(ellipse 32% 28% at 22% 82%, rgba(0,80,160,0.12) 0%, transparent 48%);
+  }
+
   @keyframes backdropDrift {
-    0%   { transform: translate(0%,    0%)   scale(1);    opacity: 0.85; }
-    33%  { transform: translate(2.5%,  -1.5%) scale(1.04); opacity: 1; }
-    66%  { transform: translate(-1.5%, 2%)   scale(0.97); opacity: 0.9; }
-    100% { transform: translate(1%,    -2%)  scale(1.02); opacity: 0.95; }
+    0%   { transform: translate(0%, 0%) scale(1); opacity: 0.85; }
+    33%  { transform: translate(2.5%, -1.5%) scale(1.04); opacity: 1; }
+    66%  { transform: translate(-1.5%, 2%) scale(0.97); opacity: 0.9; }
+    100% { transform: translate(1%, -2%) scale(1.02); opacity: 0.95; }
   }
   @keyframes backdropDrift2 {
-    0%   { transform: translate(0%,   0%)   scale(1);    opacity: 0.7; }
-    40%  { transform: translate(-2%,  1.5%) scale(1.05); opacity: 0.9; }
-    70%  { transform: translate(1.5%, -1%)  scale(0.96); opacity: 0.8; }
-    100% { transform: translate(-1%,  2%)   scale(1.03); opacity: 0.85; }
+    0%   { transform: translate(0%, 0%) scale(1); opacity: 0.7; }
+    40%  { transform: translate(-2%, 1.5%) scale(1.05); opacity: 0.9; }
+    70%  { transform: translate(1.5%, -1%) scale(0.96); opacity: 0.8; }
+    100% { transform: translate(-1%, 2%) scale(1.03); opacity: 0.85; }
   }
 
-  /* main has no bg — backdrop div provides it.
-     All direct children need z-index above the fixed backdrop (z:0) */
-  .tmm-light { background: #ffffff; }
+  /* Light mode main bg */
+  .tmm-light { background: transparent; }
   main { position: relative; z-index: 1; }
 
-  /* ===================================================
-     FLOATING PILL NAV — TOP CENTRE, ALWAYS VISIBLE
-     =================================================== */
+  /* ── Hero Lottie ──────────────────────────────────────────────────── */
+  /* Dark: SVG renders white on dark bg — just fade in */
+  .hero-lottie {
+    animation: heroFadeIn 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  /* Light: invert the SVG so white eyes become dark/visible */
+  .hero-lottie--light {
+    filter: invert(1) hue-rotate(180deg) brightness(0.85);
+  }
+  @keyframes heroFadeIn {
+    0%   { opacity: 0; filter: blur(18px) brightness(0); transform: scale(0.96); }
+    40%  { opacity: 0.15; }
+    100% { opacity: 1; filter: blur(0px) brightness(1); transform: scale(1); }
+  }
+  /* Blur pulse on mode switch */
+  .hero-flip-anim {
+    animation: heroBlip 0.42s ease-in-out forwards;
+  }
+  @keyframes heroBlip {
+    0%   { opacity: 1; filter: blur(0px); }
+    45%  { opacity: 0; filter: blur(24px); }
+    55%  { opacity: 0; filter: blur(24px); }
+    100% { opacity: 1; filter: blur(0px); }
+  }
+
+  /* ── Floating Pill Nav ────────────────────────────────────────────── */
   .pill-nav {
     position: fixed;
     top: clamp(16px, 3vw, 28px);
@@ -234,77 +230,141 @@
     transform: translateX(-50%);
     z-index: 60;
     pointer-events: auto;
+    /* prevent overflow beyond nav bounds */
+    max-width: calc(100vw - 24px);
   }
   .pill-nav-inner {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 4px;
-    padding: 7px 10px;
-    background: rgba(22, 22, 22, 0.6);
+    /* no gap so buttons are flush — padding gives the visual gap */
+    gap: 2px;
+    padding: 6px 8px;
+    background: rgba(10, 15, 30, 0.72);
     backdrop-filter: blur(32px) saturate(1.8);
     -webkit-backdrop-filter: blur(32px) saturate(1.8);
     border-radius: 100px;
-    border: 1px solid rgba(255, 255, 255, 0.13);
+    border: 1px solid rgba(0, 128, 197, 0.22);
     box-shadow:
-      0 0 0 0.5px rgba(255,255,255,0.07),
-      inset 0 1px 0 rgba(255,255,255,0.12),
+      0 0 0 0.5px rgba(0,128,197,0.1),
+      inset 0 1px 0 rgba(255,255,255,0.1),
       0 10px 40px rgba(0,0,0,0.55);
+    /* critical: clip slider to pill bounds */
+    overflow: hidden;
   }
 
-  /* Sliding pill — width+left transition so it morphs between items */
+  /* Sliding pill — sits inside overflow:hidden container so it can't escape */
   .pill-nav-slider {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    height: 58px;
+    height: calc(100% - 12px); /* fill inner height minus top+bottom padding */
     border-radius: 100px;
-    background: rgba(28, 28, 28, 0.92);
-    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(0, 80, 160, 0.85);
+    border: 1px solid rgba(0, 128, 197, 0.5);
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.12),
-      0 3px 16px rgba(0,0,0,0.55);
+      inset 0 1px 0 rgba(255,255,255,0.15),
+      0 3px 16px rgba(0,80,160,0.4);
     pointer-events: none;
-    min-width: 80px; /* always pill-shaped, never squashes to a circle */
     z-index: 0;
+    /* No min-width — width is set exactly to button width via JS */
   }
 
-  /* Each nav item */
+  /* Nav items — all same height, centred icons */
   .pill-nav-item {
     position: relative;
     z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 16px 20px;
+    /* Uniform padding — slider width = button width so it centres perfectly */
+    padding: 14px 18px;
     border: none;
     background: none;
     cursor: pointer;
     border-radius: 100px;
-    color: rgba(255,255,255,0.4);
+    color: rgba(255, 255, 255, 0.38);
     transition: color 0.22s ease;
-    min-width: 62px;
-    height: 58px;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
-  .pill-nav-item:hover {
-    color: rgba(255,255,255,0.8);
-  }
-
-  /* Active state — bright white */
-  .pill-nav-item--active {
-    color: #ffffff !important;
-  }
+  .pill-nav-item:hover { color: rgba(255, 255, 255, 0.75); }
+  .pill-nav-item--active { color: #ffffff !important; }
   .pill-nav-item--active svg {
-    animation: navIconPop 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    animation: navIconPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-
   @keyframes navIconPop {
     0%   { transform: scale(0.8); }
     60%  { transform: scale(1.18); }
     100% { transform: scale(1); }
   }
 
-  /* Collect icon shake */
+  /* Home button — slightly wider for the logo */
+  .pill-nav-home {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    background: none !important;
+    border: none;
+    cursor: pointer;
+    border-radius: 100px;
+    transition: transform 0.22s ease;
+    flex-shrink: 0;
+  }
+  .pill-nav-home:hover { background: none !important; transform: scale(1.06); }
+
+  .pill-nav-home-logo {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+    position: relative;
+    z-index: 1;
+    transition: filter 0.3s ease;
+  }
+
+  /* ── Logo flip / light mode ─────────────────────────────────────── */
+  .logo-flipped {
+    transform: scaleY(-1);
+    /* light mode: darken the SVG so it's visible on light bg */
+    filter: invert(1) brightness(0.15);
+  }
+  .logo-flip-anim {
+    animation: eyesBlipPulse 0.5s ease-in-out forwards;
+  }
+  @keyframes eyesBlipPulse {
+    0%   { transform: scaleY(1);  filter: blur(0px) brightness(1);    opacity: 1; }
+    20%  { transform: scaleY(0.1); filter: blur(4px) brightness(2);   opacity: 0.6; }
+    45%  { transform: scaleY(0);  filter: blur(8px) brightness(3);    opacity: 0; }
+    55%  { transform: scaleY(0);  filter: blur(8px) brightness(3);    opacity: 0; }
+    80%  { transform: scaleY(0.1); filter: blur(4px) brightness(2);   opacity: 0.6; }
+    100% { transform: scaleY(-1); filter: blur(0px) brightness(0.15); opacity: 1; }
+  }
+
+  /* Collect button needs relative for the dot */
+  .pill-nav-collect { position: relative; }
+
+  /* Red dot */
+  .collect-dot {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(155%, -115%);
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--tmm-red);
+    border: 2px solid rgba(10, 15, 30, 0.9);
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  /* Collect shake */
   .collect-icon-shake {
     animation: collectShake 0.7s cubic-bezier(0.36, 0.07, 0.19, 0.97);
   }
@@ -316,90 +376,25 @@
     80%  { transform: rotate(4deg); }
   }
 
-  /* Red notification dot — sits on the top-right of the bag icon itself */
-  .collect-dot {
-    position: absolute;
-    /* align with top-right of the SVG icon, roughly */
-    top: 50%;
-    right: 50%;
-    transform: translate(160%, -110%);
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--tmm-red);
-    border: 2px solid rgba(22,22,22,0.92);
-    z-index: 3;
-    pointer-events: none;
+  /* ── Light mode nav ──────────────────────────────────────────────── */
+  .tmm-light .pill-nav-inner {
+    background: rgba(220, 240, 255, 0.82);
+    border-color: rgba(0, 128, 197, 0.3);
+    box-shadow:
+      0 0 0 0.5px rgba(0,128,197,0.15),
+      inset 0 1px 0 rgba(255,255,255,0.9),
+      0 8px 32px rgba(0,60,120,0.15);
   }
+  .tmm-light .pill-nav-item { color: rgba(0, 40, 80, 0.45); }
+  .tmm-light .pill-nav-item:hover { color: rgba(0, 40, 80, 0.85); }
+  .tmm-light .pill-nav-item--active { color: #ffffff !important; }
+  .tmm-light .pill-nav-slider {
+    background: rgba(0, 100, 180, 0.88);
+    border-color: rgba(0, 128, 197, 0.6);
+  }
+  .tmm-light .collect-dot { border-color: rgba(220, 240, 255, 0.9); }
 
-  /* TMM centre home button */
-  .pill-nav-home {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 14px;
-    min-width: 72px;
-    height: 58px;
-    background: none !important;
-    border: none;
-    cursor: pointer;
-    border-radius: 100px;
-    transition: transform 0.22s ease;
-  }
-  .pill-nav-home:hover {
-    background: none !important;
-    transform: scale(1.06);
-  }
-  .pill-nav-home-logo {
-    width: 42px;
-    height: 42px;
-    object-fit: contain;
-    display: block;
-    user-select: none;
-    -webkit-user-drag: none;
-    position: relative;
-    z-index: 1;
-  }
-  /* Collect button needs position:relative for dot */
-  .pill-nav-collect {
-    position: relative;
-  }
-
-  /* ===================================================
-     MODAL CLOSE BUTTON
-     =================================================== */
-  .modal-close-btn {
-    position: fixed;
-    top: clamp(80px, 14vw, 100px);
-    right: 20px;
-    z-index: 60;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.12);
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .modal-close-btn:hover { background: rgba(255,255,255,0.22); }
-
-  @media (max-width: 480px) {
-    .modal-close-btn {
-      background: transparent;
-      width: 32px;
-      height: 32px;
-    }
-    .modal-close-btn:hover { background: transparent; opacity: 0.6; }
-  }
-
-  /* ===================================================
-     MODAL SYSTEM
-     =================================================== */
+  /* ── Modal system ────────────────────────────────────────────────── */
   .modal-overlay {
     position: fixed;
     inset: 0;
@@ -408,65 +403,112 @@
     align-items: center;
     justify-content: center;
   }
-
   .modal-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.35);
+    background: rgba(0, 8, 20, 0.5);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     animation: fadeIn 0.25s ease-out;
   }
-
+  .tmm-light .modal-backdrop {
+    background: rgba(200, 230, 255, 0.55);
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
   .modal-scroll-bare {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     z-index: 1;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
+  .modal-scroll-bare::-webkit-scrollbar { display: none; }
   .modal-scroll-bare > div {
     padding-top: clamp(100px, 16vw, 120px);
     min-height: 100%;
   }
-  .modal-scroll-bare::-webkit-scrollbar { display: none; }
-
-  .modal-content {
-    position: relative;
-    width: calc(100% - 48px);
-    max-width: 720px;
-    height: calc(100% - 100px);
-    margin-top: 70px;
-    overflow: hidden;
-    border-radius: 38px;
-    background: rgba(18, 18, 18, 0.65);
-    backdrop-filter: blur(60px) saturate(1.8);
-    -webkit-backdrop-filter: blur(60px) saturate(1.8);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow:
-      0 0 0 0.5px rgba(255, 255, 255, 0.06),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.08),
-      0 25px 60px -12px rgba(0, 0, 0, 0.5);
+  .animate-modal-in {
+    animation: modalIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
   }
 
-  .modal-scroll {
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+  /* ── Play cards ──────────────────────────────────────────────────── */
+  .play-card {
+    background: rgba(0, 20, 60, 0.45);
+    border-radius: clamp(19px, 3.6vw, 29px);
+    padding: clamp(20px, 5vw, 50px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(12px, 2.5vw, 18px);
+    border: 1px solid rgba(0, 128, 197, 0.18);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
-  .modal-scroll::-webkit-scrollbar { display: none; }
+  .play-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .play-card-pill {
+    background: rgba(0, 20, 60, 0.4);
+    border-radius: 100px;
+    padding: clamp(14px, 3vw, 28px) clamp(20px, 5vw, 50px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid rgba(0, 128, 197, 0.15);
+  }
+  .play-card-divider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 6px 0;
+  }
 
-  /* ===================================================
-     SHOWCASE
-     =================================================== */
+  /* Light mode cards */
+  .tmm-light .play-card {
+    background: rgba(255, 255, 255, 0.72);
+    border-color: rgba(0, 128, 197, 0.2);
+  }
+  .tmm-light .play-card-pill {
+    background: rgba(255, 255, 255, 0.72);
+    border-color: rgba(0, 128, 197, 0.2);
+  }
+  .tmm-light .play-card-divider { border-color: rgba(0, 80, 160, 0.12); }
+
+  /* ── Typography ──────────────────────────────────────────────────── */
+  .play-block-title {
+    font-family: 'MarkerBold', sans-serif;
+    font-size: clamp(16px, 3.5vw, 22px);
+    line-height: 1.35;
+    color: #ffffff;
+  }
+  .play-block-subtitle {
+    font-family: 'MarkerBold', sans-serif;
+    font-size: clamp(14px, 3vw, 22px);
+    line-height: 1.35;
+    color: rgba(255, 255, 255, 0.38);
+  }
+  .play-block-body {
+    font-family: 'MarkerBold', sans-serif;
+    font-size: clamp(13px, 3vw, 16px);
+    line-height: 1.55;
+    color: #ffffff;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  .tmm-light .play-block-title   { color: #071428; }
+  .tmm-light .play-block-subtitle { color: rgba(0, 50, 100, 0.5); }
+  .tmm-light .play-block-body    { color: #071428; text-shadow: none; }
+
+  /* ── Showcase modal ──────────────────────────────────────────────── */
   .showcase-list {
     max-width: 600px;
     margin: 0 auto;
@@ -477,16 +519,15 @@
   }
   .showcase-card {
     border-radius: clamp(15px, 3vw, 24px);
-    width: 100%;
-    background: rgba(52,52,52,0.25);
-    border: 1px solid rgba(255,255,255,0.07);
+    background: rgba(0, 20, 60, 0.38);
+    border: 1px solid rgba(0, 128, 197, 0.16);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     padding: clamp(8px, 2.5vw, 16px);
     box-sizing: border-box;
   }
   .showcase-img-well {
-    background: rgba(230, 228, 224, 0.92);
+    background: rgba(220, 228, 240, 0.92);
     border-radius: clamp(8px, 1.5vw, 14px);
     overflow: hidden;
     width: 100%;
@@ -500,10 +541,12 @@
     display: block;
     object-fit: cover;
   }
+  .tmm-light .showcase-card {
+    background: rgba(255, 255, 255, 0.68);
+    border-color: rgba(0, 128, 197, 0.18);
+  }
 
-  /* ===================================================
-     MUSIC MODAL
-     =================================================== */
+  /* ── Music modal ─────────────────────────────────────────────────── */
   .music-modal-header {
     display: flex;
     align-items: center;
@@ -524,14 +567,10 @@
     transition: transform 0.15s ease, opacity 0.15s ease;
     text-decoration: none;
   }
-  .music-tile:hover {
-    transform: scale(1.05);
-    opacity: 1;
-  }
+  .music-tile:hover { transform: scale(1.05); }
   .music-tile-icon {
     width: clamp(64px, 18vw, 96px);
     height: clamp(64px, 18vw, 96px);
-    /* iOS app icon superellipse: ~22.5% of size */
     border-radius: clamp(14px, 3.2vw, 22px);
     overflow: hidden;
     flex-shrink: 0;
@@ -543,19 +582,18 @@
     display: block;
     transition: transform 0.4s cubic-bezier(0.34, 1.15, 0.64, 1);
   }
-  .music-tile:hover .music-tile-img {
-    transform: scale(1.12);
-  }
+  .music-tile:hover .music-tile-img { transform: scale(1.12); }
   .music-tile-label {
     font-family: 'MarkerBold', sans-serif;
     font-size: 11px;
     letter-spacing: 0.06em;
-    color: rgba(255,255,255,0.5);
+    color: rgba(255, 255, 255, 0.5);
     text-align: center;
     line-height: 1.2;
   }
+  .tmm-light .music-tile-label { color: rgba(0, 40, 100, 0.55); }
 
-  /* Releases list */
+  /* Releases */
   .releases-list {
     display: flex;
     flex-direction: column;
@@ -568,15 +606,16 @@
     justify-content: space-between;
     gap: 12px;
   }
+  /* Release tags (EP / ALBUM / SOUNDTRACKS) — explicitly grey */
   .release-tag {
+    font-family: 'MarkerBold', sans-serif;
     font-size: clamp(11px, 2.5vw, 14px) !important;
+    color: rgba(255, 255, 255, 0.38) !important;
     white-space: nowrap;
-    color: rgba(255,255,255,0.4) !important;
   }
+  .tmm-light .release-tag { color: rgba(0, 40, 100, 0.45) !important; }
 
-  /* ===================================================
-     COLLECT MODAL
-     =================================================== */
+  /* ── Collect modal ───────────────────────────────────────────────── */
   .collect-list {
     max-width: 560px;
     margin: 0 auto;
@@ -585,301 +624,101 @@
     flex-direction: column;
     gap: clamp(16px, 4vw, 32px);
   }
-  .collect-img-well {
-    background: rgba(230, 228, 224, 0.92);
-    border-radius: 20px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 32px;
-    margin-top: 4px;
-  }
-  .collect-img {
-    max-width: 100%;
-    max-height: 320px;
-    width: auto;
-    height: auto;
-    display: block;
-    object-fit: contain;
-  }
 
-  /* ===================================================
-     PLAY CARDS
-     =================================================== */
-  .play-card-divider {
-    border: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    margin: 6px 0;
-  }
-  .play-card-pill {
-    background: rgba(52, 52, 52, 0.25);
-    border-radius: 100px;
-    padding: clamp(14px, 3vw, 28px) clamp(20px, 5vw, 50px);
+  /* ── Reviews modal ───────────────────────────────────────────────── */
+  .star-rating {
     display: flex;
+    gap: 2px;
     align-items: center;
-    justify-content: space-between;
-    border: 1px solid rgba(255, 255, 255, 0.05);
   }
-  .play-card {
-    background: rgba(52, 52, 52, 0.25);
-    border-radius: clamp(19px, 3.6vw, 29px);
-    padding: clamp(20px, 5vw, 50px);
+  .reviews-summary {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-top: 8px;
+  }
+  .reviews-score {
     display: flex;
     flex-direction: column;
-    gap: clamp(12px, 2.5vw, 18px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-  }
-  .play-card-header {
-    display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 8px;
+    gap: 6px;
+    flex-shrink: 0;
   }
-
-  /* ===================================================
-     GLASS BLOCKS
-     =================================================== */
-  .glass-block {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: 36px;
-    padding: 40px 44px;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
-      0 0 0 0.5px rgba(255, 255, 255, 0.03);
-  }
-  .glass-block-showcase {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: 42px;
-    padding: 28px;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
-      0 0 0 0.5px rgba(255, 255, 255, 0.03);
-  }
-
-  /* ===================================================
-     TYPOGRAPHY
-     =================================================== */
-  .play-block-title {
+  .reviews-score-number {
     font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(16px, 3.5vw, 22px);
-    line-height: 1.35;
-    color: #FFFFFF;
+    font-size: clamp(36px, 8vw, 52px);
+    line-height: 1;
+    color: #ffffff;
   }
-  .play-block-subtitle {
-    font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(14px, 3vw, 22px);
-    line-height: 1.35;
-    color: #7B7B7B;
-  }
-  .play-block-body {
-    font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(13px, 3vw, 16px);
-    line-height: 1.55;
-    color: #FFFFFF;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  }
-
-  /* ===================================================
-     INPUTS & BUTTONS
-     =================================================== */
-  .collect-input {
-    width: 100%;
-    padding: 14px 18px;
-    border-radius: 16px;
-    font-family: 'MarkerBold', sans-serif;
-    font-size: 14px;
-    color: white;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    outline: none;
-    transition: background 0.15s ease, border-color 0.15s ease;
-  }
-  .collect-input::placeholder { color: rgba(255, 255, 255, 0.25); }
-  .collect-input:focus {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.14);
-  }
-  .checkout-btn {
-    height: 48px;
-    border-radius: 12px;
+  .tmm-light .reviews-score-number { color: #071428; }
+  .reviews-bars {
+    flex: 1;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 6px;
     justify-content: center;
-    cursor: pointer;
-    border: none;
-    transition: opacity 0.15s ease;
   }
-  .checkout-btn:hover { opacity: 0.85; }
-  .player-btn {
+  .review-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .review-bar-label {
+    font-family: 'MarkerBold', sans-serif;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+    width: 10px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .tmm-light .review-bar-label { color: rgba(0, 40, 100, 0.5); }
+  .review-bar-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .tmm-light .review-bar-track { background: rgba(0, 80, 160, 0.1); }
+  .review-bar-fill {
+    height: 100%;
+    background: var(--tmm-yellow);
+    border-radius: 100px;
+    transition: width 0.6s cubic-bezier(0.34, 1.15, 0.64, 1);
+  }
+  .review-bar-count {
+    font-family: 'MarkerBold', sans-serif;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.38);
+    width: 12px;
+    flex-shrink: 0;
+  }
+  .tmm-light .review-bar-count { color: rgba(0, 40, 100, 0.45); }
+  .review-card-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .review-avatar {
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
+    background: rgba(0, 128, 197, 0.35);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: white;
-    cursor: pointer;
-    transition: background 0.15s ease, transform 0.1s ease;
+    font-family: 'MarkerBold', sans-serif;
+    font-size: 16px;
+    color: #ffffff;
+    flex-shrink: 0;
+    border: 1px solid rgba(0, 128, 197, 0.4);
   }
-  .player-btn:hover { background: rgba(255, 255, 255, 0.1); transform: scale(1.05); }
-  .player-btn:active { transform: scale(0.96); }
-
-  /* ===================================================
-     ANIMATIONS
-     =================================================== */
-  .animate-modal-in {
-    animation: modalIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  @keyframes modalIn {
-    from { opacity: 0; transform: scale(0.95) translateY(10px); }
-    to   { opacity: 1; transform: scale(1) translateY(0); }
+  .tmm-light .review-avatar {
+    background: rgba(0, 128, 197, 0.18);
+    color: #0060aa;
   }
 
-  /* ===================================================
-     LOGO FLIP ANIMATION
-     =================================================== */
-  /* Nav eyes — flipped state (upside down) */
-  .logo-flipped {
-    transform: scaleY(-1);
-  }
-  /* Nav eyes — blip transition: squish to nothing, swap, unsquish */
-  .logo-flip-anim {
-    animation: eyesBlip 0.42s ease-in-out forwards;
-  }
-  @keyframes eyesBlip {
-    0%   { transform: scaleY(1);  filter: blur(0px);   opacity: 1; }
-    45%  { transform: scaleY(0);  filter: blur(6px);   opacity: 0; }
-    55%  { transform: scaleY(0);  filter: blur(6px);   opacity: 0; }
-    100% { transform: scaleY(-1); filter: blur(0px);   opacity: 1; }
-  }
-
-  /* Hero GIF — mix-blend-mode:screen makes black pixels invisible,
-     white eyes stay white against any dark background */
-  .hero-gif {
-    mix-blend-mode: screen;
-    animation: heroFadeIn 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-  @keyframes heroFadeIn {
-    0%   { opacity: 0; filter: blur(18px) brightness(0); transform: scale(0.96); }
-    40%  { opacity: 0.15; }
-    100% { opacity: 1; filter: blur(0px)  brightness(1); transform: scale(1); }
-  }
-  /* Hero GIF — blur pulse on mode switch */
-  .hero-flip-anim {
-    animation: heroBlip 0.42s ease-in-out forwards;
-  }
-  @keyframes heroBlip {
-    0%   { opacity: 1; filter: blur(0px); }
-    45%  { opacity: 0; filter: blur(24px); }
-    55%  { opacity: 0; filter: blur(24px); }
-    100% { opacity: 1; filter: blur(0px); }
-  }
-
-  /* ===================================================
-     DARK / LIGHT MODE BASE
-     =================================================== */
-
-  /* Light mode — nav pill */
-  .tmm-light .pill-nav-inner {
-    background: rgba(245, 245, 245, 0.85);
-    border-color: rgba(0,0,0,0.1);
-    box-shadow:
-      0 0 0 0.5px rgba(0,0,0,0.06),
-      inset 0 1px 0 rgba(255,255,255,0.8),
-      0 8px 32px rgba(0,0,0,0.12);
-  }
-  .tmm-light .pill-nav-item {
-    color: rgba(0,0,0,0.4);
-  }
-  .tmm-light .pill-nav-item:hover {
-    color: #000000;
-    background: rgba(0,0,0,0.06);
-  }
-  .tmm-light .pill-nav-item--active {
-    color: #ffffff !important;
-  }
-  /* light mode: slider pill goes dark so eyes stay visible */
-  .tmm-light .pill-nav-slider {
-    background: rgba(30,30,30,0.88);
-  }
-
-  /* Light mode — modal backdrop */
-  .tmm-light .modal-backdrop {
-    background: rgba(240, 238, 234, 0.6);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-  }
-
-  /* Light mode — play cards */
-  .tmm-light .play-card {
-    background: rgba(255,255,255,0.7);
-    border-color: rgba(0,0,0,0.08);
-  }
-  .tmm-light .play-card-pill {
-    background: rgba(255,255,255,0.7);
-    border-color: rgba(0,0,0,0.08);
-  }
-  .tmm-light .play-block-title {
-    color: #111111;
-  }
-  .tmm-light .play-block-subtitle {
-    color: #888888;
-  }
-  .tmm-light .play-block-body {
-    color: #111111;
-    text-shadow: none;
-  }
-  .tmm-light .play-card-divider {
-    border-color: rgba(0,0,0,0.1);
-  }
-
-  /* Light mode — showcase cards */
-  .tmm-light .showcase-card {
-    background: rgba(255,255,255,0.6);
-    border-color: rgba(0,0,0,0.08);
-  }
-  .tmm-light .showcase-img-well {
-    background: rgba(220,218,214,0.9);
-  }
-
-  /* Light mode — music tiles */
-  .tmm-light .music-tile-label {
-    color: rgba(0,0,0,0.45);
-  }
-  .tmm-light .music-tile:hover {
-    opacity: 0.75;
-  }
-
-  /* Light mode — modal close button */
-  .tmm-light .modal-close-btn {
-    background: rgba(0,0,0,0.08);
-  }
-  .tmm-light .modal-close-btn:hover {
-    background: rgba(0,0,0,0.15);
-  }
-  .tmm-light .modal-close-btn svg path {
-    stroke: #111111;
-  }
-
-  /* Light mode — collect dot border adapts */
-  .tmm-light .collect-dot {
-    border-color: rgba(245,245,245,0.9);
-  }
-
-  /* ===================================================
-     TMM BRAND COLOUR UTILITIES
-     =================================================== */
+  /* ── TMM brand colour utilities ──────────────────────────────────── */
   .text-tmm-brown  { color: var(--tmm-brown); }
   .text-tmm-cream  { color: var(--tmm-cream); }
   .text-tmm-red    { color: var(--tmm-red); }
@@ -892,64 +731,103 @@
   .text-save  { color: var(--tmm-green); }
   .text-wild  { color: var(--tmm-yellow); }
   .text-ally  { color: var(--tmm-cream); }
-  .text-muted { color: rgba(255,255,255,0.35); }
+  .text-muted { color: rgba(255, 255, 255, 0.35); }
+  .tmm-light .text-muted { color: rgba(0, 40, 100, 0.4); }
 }
 
-/* ===================================================
-   MOBILE OVERRIDES ≤480px
-   =================================================== */
-@media (max-width: 480px) {
+/* =====================================================================
+   MOBILE — ≤ 600px: accordion nav replaces pill nav
+   ===================================================================== */
+@media (max-width: 600px) {
+
+  /* ── Pill nav becomes bottom accordion bar ── */
+  .pill-nav {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    max-width: 100%;
+    padding: 0;
+  }
+  .pill-nav-inner {
+    border-radius: 24px 24px 0 0;
+    padding: 10px 8px 10px;
+    gap: 0;
+    justify-content: space-around;
+    /* extend to fill width */
+    width: 100%;
+    border-bottom: none;
+  }
+  /* Hide slider on mobile — active state shown by icon colour only */
+  .pill-nav-slider { display: none; }
+
+  /* Nav items: tighter, fill width evenly */
+  .pill-nav-item {
+    flex: 1;
+    padding: 10px 4px;
+    min-width: 0;
+    height: 52px;
+    font-size: 0; /* hide any text labels */
+  }
+  .pill-nav-item--active { color: #ffffff !important; }
+  .pill-nav-home {
+    flex: 1;
+    padding: 8px 4px;
+    height: 52px;
+    min-width: 0;
+  }
+  .pill-nav-home-logo { width: 30px; height: 30px; }
+
+  /* Collect dot rescaled */
+  .collect-dot {
+    width: 8px; height: 8px;
+    transform: translate(150%, -105%);
+  }
+
+  /* Hero: slightly smaller on mobile */
+  .hero-lottie {
+    width: 92vw !important;
+    max-width: 92vw !important;
+  }
+
+  /* Push hero up so the bottom nav doesn't cover it */
+  main {
+    padding-bottom: 72px;
+  }
+
+  /* Modal: open from bottom, full-screen */
   .modal-scroll-bare > div {
-    padding-top: 90px;
+    padding-top: 20px;
   }
   .play-card {
-    border-radius: 17px;
-    padding: 18px;
+    border-radius: 16px;
+    padding: 18px 16px;
     gap: 10px;
   }
-  .play-card-pill {
-    padding: 14px 20px;
-    border-radius: 60px;
-  }
+  .play-card-pill { padding: 14px 18px; border-radius: 60px; }
+
   .music-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
-  .music-tile-icon {
-    width: 72px;
-    height: 72px;
-    border-radius: 22px;
-  }
+  .music-tile-icon { width: 72px; height: 72px; border-radius: 20px; }
   .music-tile-label { font-size: 10px; }
-  .showcase-img-well,
-  .collect-img-well { border-radius: 7px; }
-  .showcase-card {
-    border-radius: 12px;
-    padding: 8px;
-  }
-  .collect-list {
-    gap: 16px;
-    padding: 0 12px 60px;
-  }
+
+  .showcase-list { padding: 0 10px 80px; gap: 14px; }
+  .showcase-card { border-radius: 12px; padding: 8px; }
+  .collect-list  { padding: 0 10px 80px; gap: 14px; }
+
   .play-block-title    { font-size: 15px; }
   .play-block-subtitle { font-size: 13px; }
   .play-block-body     { font-size: 13px; line-height: 1.5; }
 
-  /* Pill nav scales down gracefully on narrow screens */
-  .pill-nav-item {
-    padding: 10px 12px;
-    min-width: 44px;
-    height: 48px;
-  }
-  .pill-nav-home {
-    min-width: 56px;
-    height: 48px;
-  }
-  .pill-nav-slider {
-    height: 48px;
-  }
-  .pill-nav-home-logo {
-    width: 32px;
-    height: 32px;
+  .reviews-summary { flex-direction: column; gap: 16px; }
+  .reviews-score-number { font-size: 42px; }
+  .review-card-top { flex-wrap: wrap; }
+
+  /* Light mode mobile nav */
+  .tmm-light .pill-nav-inner {
+    border-radius: 24px 24px 0 0;
   }
 }
