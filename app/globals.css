@@ -428,17 +428,19 @@
     overflow: visible;
   }
 
-  /* ── Sliding pill indicator — slides behind active item ── */
+  /* ── Sliding pill indicator — transparent glass border, no fill ── */
   .pill-nav-slider {
     position: absolute;
     top: 10px;
     bottom: 10px;
-    background: rgba(22, 22, 22, 0.88);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: transparent;
+    border: 1.5px solid rgba(255, 255, 255, 0.45);
     border-radius: 1000px;
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.10),
-      0 2px 12px rgba(0,0,0,0.60);
+      inset 0 1px 0 rgba(255,255,255,0.18),
+      0 0 0 0.5px rgba(255,255,255,0.10),
+      0 2px 12px rgba(0,0,0,0.20);
+    backdrop-filter: blur(0px);
     pointer-events: none;
     z-index: 0;
     /* left + width controlled via JS */
@@ -532,10 +534,10 @@
       0 8px 32px rgba(0,0,0,0.12);
   }
   .tmm-light .pill-nav-slider {
-    background: rgba(0, 0, 0, 0.18);
-    border-color: rgba(0, 0, 0, 0.12);
+    background: transparent;
+    border-color: rgba(0, 0, 0, 0.35);
     border-radius: 1000px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 2px 8px rgba(0,0,0,0.14);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 0 0 0.5px rgba(0,0,0,0.08);
   }
   .tmm-light .pill-nav-item {
     background: transparent;
