@@ -9,7 +9,7 @@ import { EmbeddedCheckout, EmbeddedCheckoutProvider } from "@stripe/react-stripe
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 // ── Lottie hero ───────────────────────────────────────────────────────────────
-function LottieHero({ flipping, lightMode }: { flipping: boolean; lightMode: boolean }) {
+function LottieHero({ lightMode }: { lightMode: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const animRef = useRef<AnimationItem | null>(null)
 
@@ -32,16 +32,10 @@ function LottieHero({ flipping, lightMode }: { flipping: boolean; lightMode: boo
     }
   }, [])
 
-  const heroClass = [
-    "select-none pointer-events-none w-full aspect-square hero-lottie",
-    flipping ? "hero-flip-anim" : "",
-  ].filter(Boolean).join(" ")
-
-  // Wrap in a parent div for the invert — the heroFadeIn animation's `forwards`
-  // fill locks filter on the inner element, so we isolate invert on the wrapper.
+  // Invert instantly on mode switch — no blur/fade animation on the hero
   return (
-    <div style={lightMode && !flipping ? { filter: "invert(1)" } : undefined}>
-      <div ref={containerRef} className={heroClass} aria-label="The Marshall Mafia" />
+    <div style={lightMode ? { filter: "invert(1)" } : undefined}>
+      <div ref={containerRef} className="select-none pointer-events-none w-full aspect-square hero-lottie" aria-label="The Marshall Mafia" />
     </div>
   )
 }
@@ -219,7 +213,7 @@ export default function Home() {
 
       <main className={`site-canvas${lightMode ? " tmm-light" : ""}`}>
 
-        <LottieHero flipping={logoFlipping} lightMode={lightMode} />
+        <LottieHero lightMode={lightMode} />
 
         {/* ── INFO POPUP ── */}
         <InfoPopup open={infoOpen} onClose={() => setInfoOpen(false)} />

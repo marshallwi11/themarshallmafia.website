@@ -14,7 +14,7 @@
 
 :root {
   /* ── Site-wide layout column — matches nav cluster width ── */
-  --site-w: min(92vw, 540px);
+  --site-w: min(94vw, 600px);
 
   --background: #000000;
   --foreground: #ffffff;
@@ -166,20 +166,20 @@
     animation: backdropDrift2 28s ease-in-out infinite alternate;
   }
 
-  /* Light backdrop — TMM red tints */
+  /* Light backdrop — TMM red tints (much stronger) */
   .tmm-backdrop--light {
     background: #f5f4f0;
   }
   .tmm-backdrop--light::before {
     background:
-      radial-gradient(ellipse 75% 60% at 15% 25%, rgba(227,0,11,0.12) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 55% at 85% 75%, rgba(227,0,11,0.08) 0%, transparent 58%),
-      radial-gradient(ellipse 50% 45% at 50% 50%, rgba(227,0,11,0.06) 0%, transparent 70%);
+      radial-gradient(ellipse 75% 60% at 15% 25%, rgba(227,0,11,0.38) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 55% at 85% 75%, rgba(227,0,11,0.28) 0%, transparent 58%),
+      radial-gradient(ellipse 50% 45% at 50% 50%, rgba(227,0,11,0.18) 0%, transparent 70%);
   }
   .tmm-backdrop--light::after {
     background:
-      radial-gradient(ellipse 40% 35% at 70% 20%, rgba(227,0,11,0.09) 0%, transparent 55%),
-      radial-gradient(ellipse 35% 30% at 25% 80%, rgba(200,0,10,0.07) 0%, transparent 50%);
+      radial-gradient(ellipse 40% 35% at 70% 20%, rgba(227,0,11,0.30) 0%, transparent 55%),
+      radial-gradient(ellipse 35% 30% at 25% 80%, rgba(200,0,10,0.22) 0%, transparent 50%);
   }
 
   @keyframes backdropDrift {
@@ -210,8 +210,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* top padding reserves room for the fixed nav cluster */
-    padding-top: calc(clamp(16px, 3vw, 28px) + 62px + clamp(20px, 3vw, 32px));
+    /* Symmetric padding keeps hero at true viewport center.
+       Nav is position:fixed + glass so it overlays gracefully. */
+    padding-top: calc(clamp(16px, 3vw, 28px) + 72px);
+    padding-bottom: calc(clamp(16px, 3vw, 28px) + 72px);
     box-sizing: border-box;
   }
 
@@ -576,32 +578,35 @@
     to   { opacity: 1; transform: scale(1) translateY(0); }
   }
 
-  /* ── Play cards — original neutral dark glass, no blue ───────────── */
+  /* ── Play cards — consistent glass matching nav ──────────────────── */
   .play-card {
     background: rgba(52, 52, 52, 0.25);
-    border-radius: clamp(19px, 3.6vw, 29px);
-    padding: clamp(20px, 5vw, 50px);
+    border-radius: clamp(19px, 3.6vw, 28px);
+    padding: clamp(20px, 4vw, 32px);
     display: flex;
     flex-direction: column;
-    gap: clamp(12px, 2.5vw, 18px);
+    gap: clamp(12px, 2.5vw, 16px);
     border: 1px solid rgba(255, 255, 255, 0.10);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(24px) saturate(1.6);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.06);
   }
   .play-card-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
   }
   .play-card-pill {
     background: rgba(52, 52, 52, 0.25);
     border-radius: 100px;
-    padding: clamp(14px, 3vw, 28px) clamp(20px, 5vw, 50px);
+    padding: clamp(14px, 3vw, 22px) clamp(20px, 4vw, 36px);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(24px) saturate(1.6);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
   }
   .play-card-divider {
     border: none;
@@ -618,25 +623,28 @@
   }
   .tmm-light .play-card-divider { border-color: rgba(0, 0, 0, 0.1); }
 
-  /* ── Typography ──────────────────────────────────────────────────── */
+  /* ── Typography — consistent sizing across all cards ────────────── */
   .play-block-title {
     font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(16px, 3.5vw, 22px);
-    line-height: 1.35;
+    font-size: clamp(15px, 3vw, 20px);
+    line-height: 1.3;
+    letter-spacing: 0.03em;
     color: #ffffff;
   }
   .play-block-subtitle {
     font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(14px, 3vw, 22px);
-    line-height: 1.35;
+    font-size: clamp(13px, 2.5vw, 16px);
+    line-height: 1.3;
+    letter-spacing: 0.03em;
     color: rgba(255, 255, 255, 0.38);
   }
   .play-block-body {
     font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(13px, 3vw, 16px);
-    line-height: 1.55;
+    font-size: clamp(13px, 2.4vw, 15px);
+    line-height: 1.6;
+    letter-spacing: 0.02em;
     color: #ffffff;
-    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
   }
   .tmm-light .play-block-title    { color: #111111; }
   .tmm-light .play-block-subtitle { color: rgba(0, 0, 0, 0.4); }
@@ -652,12 +660,12 @@
     gap: clamp(16px, 4vw, 32px);
   }
   .showcase-card {
-    border-radius: clamp(15px, 3vw, 24px);
+    border-radius: clamp(18px, 3.5vw, 28px);
     background: rgba(52, 52, 52, 0.25);
     border: 1px solid rgba(255, 255, 255, 0.10);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    padding: clamp(8px, 2.5vw, 16px);
+    backdrop-filter: blur(24px) saturate(1.6);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    padding: clamp(16px, 3.5vw, 24px);
     box-sizing: border-box;
   }
   .showcase-img-well {
@@ -949,8 +957,8 @@
   }
 
   /* Cards */
-  .play-card { border-radius: 16px; padding: 18px 16px; gap: 10px; }
-  .play-card-pill { padding: 14px 18px; border-radius: 60px; }
+  .play-card { border-radius: 18px; padding: 18px 16px; gap: 10px; }
+  .play-card-pill { padding: 14px 20px; border-radius: 100px; }
 
   /* Music grid */
   .music-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
@@ -959,13 +967,13 @@
 
   /* Showcase / Collect */
   .showcase-list { padding: 0 10px 40px; gap: 14px; }
-  .showcase-card { border-radius: 12px; padding: 8px; }
+  .showcase-card { border-radius: 14px; padding: 12px; }
   .collect-list  { padding: 0 10px 40px; gap: 14px; }
 
   /* Typography */
-  .play-block-title    { font-size: 15px; }
-  .play-block-subtitle { font-size: 13px; }
-  .play-block-body     { font-size: 13px; line-height: 1.5; }
+  .play-block-title    { font-size: 14px; letter-spacing: 0.03em; }
+  .play-block-subtitle { font-size: 12px; letter-spacing: 0.03em; }
+  .play-block-body     { font-size: 13px; line-height: 1.55; }
 
   /* Reviews */
   .reviews-summary { flex-direction: column; gap: 16px; }
