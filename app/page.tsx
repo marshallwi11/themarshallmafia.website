@@ -121,8 +121,8 @@ export default function Home() {
 
   // Site-load intro: text pill → fade → nav icons
   useEffect(() => {
-    const t1 = setTimeout(() => setNavIntro(1), 1800)
-    const t2 = setTimeout(() => setNavIntro(2), 2400)
+    const t1 = setTimeout(() => setNavIntro(1), 2200)
+    const t2 = setTimeout(() => setNavIntro(2), 3800)
     return () => { clearTimeout(t1); clearTimeout(t2) }
   }, [])
 
@@ -255,8 +255,8 @@ export default function Home() {
                   width: sliderStyle.width,
                   opacity: navIntro < 2 ? 0 : 1,
                   transition: sliderReady
-                    ? "left 0.38s cubic-bezier(0.34,1.15,0.64,1), width 0.38s cubic-bezier(0.34,1.15,0.64,1), opacity 0.5s ease"
-                    : "opacity 0.5s ease",
+                    ? "left 0.72s cubic-bezier(0.65,0,0.35,1), width 0.72s cubic-bezier(0.65,0,0.35,1), opacity 0.9s cubic-bezier(0.65,0,0.35,1)"
+                    : "opacity 0.9s cubic-bezier(0.65,0,0.35,1)",
                 }}
                 aria-hidden="true"
               />
@@ -273,7 +273,7 @@ export default function Home() {
                   pointerEvents: "none",
                   zIndex: 2,
                   opacity: navIntro < 2 ? 1 : 0,
-                  transition: "opacity 0.55s ease",
+                  transition: "opacity 1.4s cubic-bezier(0.65,0,0.35,1)",
                 }}
               >
                 <span className="nav-intro-text">THE MARSHALL MAFIA</span>
@@ -286,7 +286,7 @@ export default function Home() {
                 justifyContent: "space-between",
                 width: "100%",
                 opacity: navIntro < 2 ? 0 : 1,
-                transition: "opacity 0.6s ease",
+                transition: "opacity 1.2s cubic-bezier(0.65,0,0.35,1)",
               }}>
 
               {/* INFO — ℹ️ circle (default) / ❕ exclamation circle (active) */}
