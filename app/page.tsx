@@ -511,7 +511,7 @@ export default function Home() {
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="music-modal-header">
                     <span className="play-block-title">LISTEN</span>
-                    <span className="play-block-subtitle" style={{fontSize:"14px"}}>play the full experience</span>
+                    <span className="play-block-subtitle">play the full experience</span>
                   </div>
                   <div className="music-grid">
                     {[

@@ -249,13 +249,20 @@
     100% { opacity: 1; filter: blur(0px); }
   }
 
-  /* ── Site load intro text pill — same glass as nav, wide bold text ── */
+  /* ── Site load intro text pill — exact same size as icon nav bar ── */
   .nav-intro-pill {
     position: fixed;
     top: clamp(16px, 3vw, 28px);
     left: 50%;
     transform: translateX(-50%);
     z-index: 60;
+    /* Width matches the nav bar / modal containers */
+    min-width: min(var(--site-w), calc(100vw - 16px));
+    /* Height: nav inner padding (10px each side) + button height (48px) */
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: rgba(52, 52, 52, 0.25);
     backdrop-filter: blur(24px) saturate(1.6);
     -webkit-backdrop-filter: blur(24px) saturate(1.6);
@@ -265,13 +272,14 @@
       0 0 0 0.5px rgba(255,255,255,0.06),
       inset 0 1px 0 rgba(255,255,255,0.08),
       0 8px 32px rgba(0,0,0,0.40);
-    padding: 21px 36px;
+    padding: 0 36px;
     pointer-events: none;
     white-space: nowrap;
+    box-sizing: border-box;
   }
   .nav-intro-text {
     font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(15px, 3.2vw, 22px);
+    font-size: clamp(16px, 3.2vw, 22px);
     line-height: 1.0;
     letter-spacing: 0.08em;
     color: rgba(255, 255, 255, 0.92);
@@ -402,8 +410,11 @@
     position: relative;
     display: flex;
     align-items: center;
-    gap: 4px;
-    padding: 10px 12px;
+    justify-content: space-evenly;
+    gap: 0;
+    /* Match modal container width */
+    min-width: min(var(--site-w), calc(100vw - 16px));
+    padding: 10px 14px;
     background: rgba(52, 52, 52, 0.25);
     backdrop-filter: blur(24px) saturate(1.6);
     -webkit-backdrop-filter: blur(24px) saturate(1.6);
@@ -413,6 +424,7 @@
       0 0 0 0.5px rgba(255,255,255,0.06),
       inset 0 1px 0 rgba(255,255,255,0.08),
       0 8px 32px rgba(0,0,0,0.40);
+    box-sizing: border-box;
     overflow: visible;
   }
 
@@ -432,31 +444,36 @@
     /* left + width controlled via JS */
   }
 
-  /* ── Nav items — Figma: rgba(52,52,52,0.25) circle bg each ── */
+  /* ── Nav items — perfect circles, transparent bg, ring border ── */
   .pill-nav-item {
     position: relative;
     z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 12px;
-    background: rgba(52, 52, 52, 0.25);
-    border: none;
+    /* Fixed square = perfect circle at border-radius: 1000px */
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    box-sizing: border-box;
+    background: transparent;
+    border: 1.5px solid rgba(255, 255, 255, 0.22);
     cursor: pointer;
     border-radius: 1000px;
     color: rgba(255, 255, 255, 0.55);
-    transition: color 0.2s ease, background 0.2s ease;
-    white-space: nowrap;
+    transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
     flex-shrink: 0;
   }
   .pill-nav-item:hover {
-    color: rgba(255, 255, 255, 0.85);
-    background: rgba(52, 52, 52, 0.40);
+    color: rgba(255, 255, 255, 0.88);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.45);
   }
-  /* Active: keep same bg visible under slider (slider is behind z-index) */
+  /* Active: slider (behind) provides the fill; border fades out */
   .pill-nav-item--active {
     color: #ffffff;
     background: transparent;
+    border-color: transparent;
   }
   .pill-nav-item--active svg {
     animation: navIconPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -467,10 +484,14 @@
     100% { transform: scale(1); }
   }
 
-  /* Home button — wider oval matching Figma 136×63 proportions */
+  /* Home button — wider oval, transparent bg, same ring border */
   .pill-nav-home {
-    padding: 10px 22px;
-    background: rgba(52, 52, 52, 0.25);
+    width: auto;
+    min-width: 80px;
+    height: 48px;
+    padding: 0 20px;
+    background: transparent;
+    border: 1.5px solid rgba(255, 255, 255, 0.22);
   }
   .pill-nav-home-logo {
     width: 34px;
@@ -501,7 +522,7 @@
     100% { transform: scaleY(-1); filter: none;      opacity: 1; }
   }
 
-  /* Light mode nav — same pill bg as dark per Figma, black icons */
+  /* Light mode nav — transparent circles with dark ring borders */
   .tmm-light .pill-nav-inner {
     background: rgba(52, 52, 52, 0.25);
     border-color: rgba(0, 0, 0, 0.10);
@@ -511,21 +532,30 @@
       0 8px 32px rgba(0,0,0,0.12);
   }
   .tmm-light .pill-nav-slider {
-    background: rgba(0, 0, 0, 0.22);
-    border-color: rgba(0, 0, 0, 0.14);
+    background: rgba(0, 0, 0, 0.18);
+    border-color: rgba(0, 0, 0, 0.12);
     border-radius: 1000px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 2px 8px rgba(0,0,0,0.18);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 2px 8px rgba(0,0,0,0.14);
   }
   .tmm-light .pill-nav-item {
-    background: rgba(52, 52, 52, 0.25);
+    background: transparent;
+    border-color: rgba(0, 0, 0, 0.22);
     color: rgba(0, 0, 0, 0.55);
   }
-  .tmm-light .pill-nav-item:hover { color: #000000; background: rgba(52, 52, 52, 0.40); }
+  .tmm-light .pill-nav-item:hover {
+    color: #000000;
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.45);
+  }
   .tmm-light .pill-nav-item--active {
     color: #000000;
     background: transparent;
+    border-color: transparent;
   }
-  .tmm-light .pill-nav-home { background: rgba(52, 52, 52, 0.25); }
+  .tmm-light .pill-nav-home {
+    background: transparent;
+    border-color: rgba(0, 0, 0, 0.22);
+  }
 
   /* ── Modal system ────────────────────────────────────────────────── */
   .modal-overlay {
@@ -623,17 +653,17 @@
   }
   .tmm-light .play-card-divider { border-color: rgba(0, 0, 0, 0.1); }
 
-  /* ── Typography — consistent sizing across all cards ────────────── */
+  /* ── Typography — title and subtitle same size, differentiated by colour ── */
   .play-block-title {
     font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(15px, 3vw, 20px);
+    font-size: clamp(14px, 2.6vw, 17px);
     line-height: 1.3;
     letter-spacing: 0.03em;
     color: #ffffff;
   }
   .play-block-subtitle {
     font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(13px, 2.5vw, 16px);
+    font-size: clamp(14px, 2.6vw, 17px);
     line-height: 1.3;
     letter-spacing: 0.03em;
     color: rgba(255, 255, 255, 0.38);
@@ -902,38 +932,43 @@
   /* Compact pill outer container */
   .pill-nav-inner {
     border-radius: 1000px;
-    padding: 6px 8px;
-    gap: 2px;
+    padding: 8px 10px;
+    gap: 0;
+    justify-content: space-evenly;
+    min-width: calc(100vw - 16px);
   }
 
-  /* Compact slider — fully circular */
+  /* Compact slider */
   .pill-nav-slider {
-    top: 6px;
-    bottom: 6px;
+    top: 8px;
+    bottom: 8px;
     border-radius: 1000px;
   }
 
-  /* Compact items */
+  /* Compact items — circles */
   .pill-nav-item {
-    padding: 8px 8px;
-    border-radius: 100px;
-    flex-shrink: 1;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    flex-shrink: 0;
     min-width: 0;
   }
 
   /* Home button compact */
-  .pill-nav-home { padding: 5px 7px; }
-  .pill-nav-home-logo { width: 24px; height: 24px; }
+  .pill-nav-home { width: auto; min-width: 60px; height: 40px; padding: 0 14px; }
+  .pill-nav-home-logo { width: 26px; height: 26px; }
 
   /* Badge position on mobile */
   .cart-pill-badge { top: 3px; right: 3px; width: 6px; height: 6px; }
 
-  /* Intro pill on mobile — height matches compact nav */
+  /* Intro pill on mobile — height + width matches compact nav */
   .nav-intro-pill {
     top: clamp(10px, 2.5vw, 16px) !important;
-    padding: 16px 22px;
+    height: 56px;
+    min-width: calc(100vw - 16px);
+    padding: 0 20px;
   }
-  .nav-intro-text { font-size: 13px; letter-spacing: 0.08em; }
+  .nav-intro-text { font-size: 14px; letter-spacing: 0.08em; }
 
   /* Site canvas: full viewport width */
   .site-canvas { width: 100vw; }
@@ -970,9 +1005,9 @@
   .showcase-card { border-radius: 14px; padding: 12px; }
   .collect-list  { padding: 0 10px 40px; gap: 14px; }
 
-  /* Typography */
-  .play-block-title    { font-size: 14px; letter-spacing: 0.03em; }
-  .play-block-subtitle { font-size: 12px; letter-spacing: 0.03em; }
+  /* Typography — same size both sides on mobile */
+  .play-block-title    { font-size: 13px; letter-spacing: 0.03em; }
+  .play-block-subtitle { font-size: 13px; letter-spacing: 0.03em; }
   .play-block-body     { font-size: 13px; line-height: 1.55; }
 
   /* Reviews */
