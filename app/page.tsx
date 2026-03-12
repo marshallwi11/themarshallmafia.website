@@ -276,7 +276,21 @@ export default function Home() {
                   transition: "opacity 1.4s cubic-bezier(0.65,0,0.35,1)",
                 }}
               >
-                <span className="nav-intro-text">THE MARSHALL MAFIA</span>
+                {/* frosted glass halo behind the text */}
+                <span style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "0 22px",
+                  height: "38px",
+                  borderRadius: "1000px",
+                  backdropFilter: "blur(18px) saturate(1.8)",
+                  WebkitBackdropFilter: "blur(18px) saturate(1.8)",
+                  background: "rgba(255,255,255,0.06)",
+                  border: "1px solid rgba(255,255,255,0.10)",
+                }}>
+                  <span className="nav-intro-text">THE MARSHALL MAFIA</span>
+                </span>
               </div>
 
               {/* ── All icon buttons — fade in after intro text fades out ── */}
