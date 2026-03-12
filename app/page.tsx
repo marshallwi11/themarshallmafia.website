@@ -655,7 +655,7 @@ export default function Home() {
                     </div>
                     <p className="play-block-body" style={{fontWeight:"bold",marginBottom:"-4px"}}>{t.title}</p>
                     <p className="play-block-body" style={{marginBottom:"4px"}}>{t.body}</p>
-                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:"8px",paddingTop:"8px",borderTop:"1px solid rgba(255,255,255,0.07)"}}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:"8px"}}>
                       <span className="play-block-title">purchases</span>
                       <span className="play-block-subtitle">verified</span>
                     </div>
