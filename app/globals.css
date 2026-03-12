@@ -258,8 +258,17 @@
     color: rgba(255, 255, 255, 0.92);
     white-space: nowrap;
     display: block;
+    text-shadow:
+      0 0 18px rgba(255, 255, 255, 0.55),
+      0 0 40px rgba(255, 255, 255, 0.30),
+      0 0 80px rgba(255, 255, 255, 0.15);
   }
-  .tmm-light .nav-intro-text { color: rgba(0, 0, 0, 0.75); }
+  .tmm-light .nav-intro-text {
+    color: rgba(0, 0, 0, 0.75);
+    text-shadow:
+      0 0 18px rgba(0, 0, 0, 0.18),
+      0 0 40px rgba(0, 0, 0, 0.10);
+  }
 
   /* ── INFO POPUP ────────────────────────────────────────────────────── */
   .info-popup-overlay {
