@@ -261,7 +261,7 @@ export default function Home() {
                 aria-hidden="true"
               />
 
-              {/* ── Intro text overlay — fades out to reveal icons ── */}
+              {/* ── Intro text overlay — blurs icons behind, fades out to reveal them ── */}
               <div
                 aria-hidden="true"
                 style={{
@@ -272,6 +272,9 @@ export default function Home() {
                   justifyContent: "center",
                   pointerEvents: "none",
                   zIndex: 2,
+                  backdropFilter: "blur(10px)",
+                  WebkitBackdropFilter: "blur(10px)",
+                  borderRadius: "1000px",
                   opacity: navIntro < 2 ? 1 : 0,
                   transition: "opacity 1.4s cubic-bezier(0.65,0,0.35,1)",
                 }}
