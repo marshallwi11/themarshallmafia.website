@@ -219,10 +219,7 @@ export default function Home() {
 
       <main className={`site-canvas${lightMode ? " tmm-light" : ""}`}>
 
-        <div className="hero-glass-wrap">
-          <div className="hero-glass-layer" />
-          <LottieHero lightMode={lightMode} />
-        </div>
+        <LottieHero lightMode={lightMode} />
 
         {/* ── INFO POPUP ── */}
         <InfoPopup open={infoOpen} onClose={() => setInfoOpen(false)} />
