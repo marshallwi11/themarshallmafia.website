@@ -653,8 +653,7 @@ export default function Home() {
                       </div>
                       <div style={{flexShrink:0}}><StarRating rating={t.rating} /></div>
                     </div>
-                    <p className="play-block-body" style={{fontWeight:"bold",marginBottom:"-4px"}}>{t.title}</p>
-                    <p className="play-block-body">{t.body}</p>
+                    <p className="play-block-body"><span style={{fontWeight:"bold"}}>{t.title},</span> {t.body}</p>
                   </div>
                 ))}
                 <div className="play-card-pill" onClick={e => e.stopPropagation()}>
