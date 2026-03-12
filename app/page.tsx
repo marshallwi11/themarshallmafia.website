@@ -101,11 +101,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
 type ModalType = "play" | "showcase" | "music" | "collect" | "reviews" | null
 
 const TESTIMONIALS = [
-  { name: "Sophie R.", handle: "@sophieplays", rating: 5, title: "Best game night ever", body: "We played this with 10 people and couldn't stop laughing. The Mafia had us completely fooled for three rounds — pure chaos in the best way. Already ordered a second copy for friends." },
-  { name: "James T.", handle: "@jamest_uk", rating: 5, title: "Instant classic", body: "The music card is a genius touch — it actually makes sleeping players stay quiet. Card quality is brilliant and the artwork is slick. Would give 6 stars if I could." },
-  { name: "Priya K.", handle: "@priyakplays", rating: 4, title: "Incredibly addictive", body: "Played it at a birthday party and we went through 8 rounds before anyone wanted to stop. The Jester role is hilarious — someone actually won by convincing the village they were Mafia." },
-  { name: "Liam O.", handle: "@liamoconnor", rating: 5, title: "High quality, high drama", body: "The art direction on the cards is stunning. Every role feels balanced and the rule card system means you can customise difficulty. Genuinely the best social deduction game I own." },
-  { name: "Mia C.", handle: "@miac_games", rating: 5, title: "We played 12 rounds in one sitting", body: "That says everything. The pacing is perfect — sleep phase builds tension, discussion gets loud, voting is ruthless. Marshall role rotated every game and everyone loved being in control." },
+  { name: "Isabella M.", handle: "@isabellaM", rating: 5, title: "Amazing for group bonding", body: "I played this game with my youth group and it was amazing. Really helped everyone to get to know each other and created fun memories." },
 ]
 
 export default function Home() {
