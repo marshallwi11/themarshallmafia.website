@@ -64,21 +64,6 @@ function StarRating({ rating, max = 5 }: { rating: number; max?: number }) {
 }
 
 // ── Showcase info popup ───────────────────────────────────────────────────────
-const SHOWCASE_INFO = [
-  {
-    img: 1,
-    text: <>The <span className="text-tmm-red">Marshall Mafia</span> is a social deduction card game where players secretly take on the roles of <span className="text-tmm-red">Mafia</span> members or <span className="text-tmm-cream">Villagers</span>, and through rounds of sleeping, discussion and voting, the <span className="text-tmm-cream">Villagers</span> must identify and eliminate the <span className="text-tmm-red">Mafia</span> before they are outnumbered.</>,
-  },
-  {
-    img: 2,
-    text: <>Discover the hidden secrets of the game! — Learn how roles are assigned, master the rules of <span className="text-tmm-red">Mafia</span> vs. <span className="text-tmm-cream">Villagers</span>, and get familiar with the game{"'"}s core phases.</>,
-  },
-  {
-    img: 3,
-    text: <>From the silence of the Sleep Phase to the heated debates in Discussion, and the all-important Vote — sharpen your strategy to outsmart your rivals!</>,
-  },
-]
-
 function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
   if (!open) return null
   return (
@@ -88,15 +73,20 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
         <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
-              <span className="play-block-title">ABOUT</span>
-              <span className="play-block-subtitle">THE GAME</span>
+              <span className="play-block-title">OBJECTIVE</span>
+              <span className="play-block-subtitle">INFORMATION</span>
             </div>
-            {SHOWCASE_INFO.map((item, i) => (
-              <div key={i} className="info-popup-item">
-                <span className="info-popup-num">0{i + 1}</span>
-                <p className="play-block-body" style={{margin:0}}>{item.text}</p>
-              </div>
-            ))}
+            <div style={{display:"flex",flexDirection:"column",gap:"clamp(14px,3vw,22px)"}}>
+              <p className="play-block-body" style={{margin:0}}>
+                The <span className="text-tmm-cream">Marshall</span> <span className="text-tmm-red">Mafia</span> is a social deduction card game where players secretly take on the roles of <span className="text-tmm-red">Mafia</span> members or <span className="text-tmm-brown">Villagers</span>, and through rounds of sleeping, discussion and voting, the <span className="text-tmm-brown">Villagers</span> must identify and eliminate the <span className="text-tmm-red">Mafia</span> before they are outnumbered.
+              </p>
+              <p className="play-block-body" style={{margin:0}}>
+                Discover the hidden secrets of the game! — Learn how roles are assigned, master the rules of <span className="text-tmm-red">Mafia</span> vs. <span className="text-tmm-brown">Villagers</span>, and get familiar with the game{"'"}s core phases.
+              </p>
+              <p className="play-block-body" style={{margin:0}}>
+                From the silence of the Sleep Phase to the heated debates in Discussion, and the all-important Vote — sharpen your strategy to outsmart your rivals!
+              </p>
+            </div>
           </div>
           <div className="play-card-pill" onClick={e => e.stopPropagation()}>
             <span className="play-block-title">the marshall mafia</span>
@@ -348,7 +338,7 @@ export default function Home() {
 
               {/* HOME — eyes logo */}
               <button ref={btnHomeRef}
-                className="pill-nav-item pill-nav-home"
+                className={`pill-nav-item pill-nav-home${(activeModal === null && !infoOpen) ? " pill-nav-item--active" : ""}`}
                 onClick={() => { closeModal(); setInfoOpen(false); handleLogoTap() }}
                 aria-label="Home"
               >

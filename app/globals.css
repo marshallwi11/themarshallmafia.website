@@ -414,14 +414,14 @@
     overflow: visible;
   }
 
-  /* ── Sliding squircle indicator — slides behind active item ── */
+  /* ── Sliding pill indicator — slides behind active item ── */
   .pill-nav-slider {
     position: absolute;
     top: 10px;
     bottom: 10px;
     background: rgba(22, 22, 22, 0.88);
     border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 16px;
+    border-radius: 1000px;
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,0.10),
       0 2px 12px rgba(0,0,0,0.60);
@@ -430,28 +430,28 @@
     /* left + width controlled via JS */
   }
 
-  /* ── Nav items — subtle dark circle background each ── */
+  /* ── Nav items — Figma: rgba(52,52,52,0.25) circle bg each ── */
   .pill-nav-item {
     position: relative;
     z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 14px;
-    background: rgba(0, 0, 0, 0.12);
+    padding: 12px 12px;
+    background: rgba(52, 52, 52, 0.25);
     border: none;
     cursor: pointer;
-    border-radius: 100px;
-    color: rgba(255, 255, 255, 0.45);
+    border-radius: 1000px;
+    color: rgba(255, 255, 255, 0.55);
     transition: color 0.2s ease, background 0.2s ease;
     white-space: nowrap;
     flex-shrink: 0;
   }
   .pill-nav-item:hover {
     color: rgba(255, 255, 255, 0.85);
-    background: rgba(0, 0, 0, 0.22);
+    background: rgba(52, 52, 52, 0.40);
   }
-  /* Active: remove individual bg — squircle slider handles it */
+  /* Active: keep same bg visible under slider (slider is behind z-index) */
   .pill-nav-item--active {
     color: #ffffff;
     background: transparent;
@@ -465,10 +465,10 @@
     100% { transform: scale(1); }
   }
 
-  /* Home button — slightly less side-padding, transparent so slider is clear */
+  /* Home button — wider oval matching Figma 136×63 proportions */
   .pill-nav-home {
-    padding: 8px 10px;
-    background: transparent;
+    padding: 10px 22px;
+    background: rgba(52, 52, 52, 0.25);
   }
   .pill-nav-home-logo {
     width: 34px;
@@ -499,31 +499,31 @@
     100% { transform: scaleY(-1); filter: none;      opacity: 1; }
   }
 
-  /* Light mode nav */
+  /* Light mode nav — same pill bg as dark per Figma, black icons */
   .tmm-light .pill-nav-inner {
-    background: rgba(200, 198, 193, 0.35);
-    border-color: rgba(0, 0, 0, 0.08);
+    background: rgba(52, 52, 52, 0.25);
+    border-color: rgba(0, 0, 0, 0.10);
     box-shadow:
       0 0 0 0.5px rgba(0,0,0,0.04),
-      inset 0 1px 0 rgba(255,255,255,0.6),
-      0 8px 32px rgba(0,0,0,0.08);
+      inset 0 1px 0 rgba(255,255,255,0.25),
+      0 8px 32px rgba(0,0,0,0.12);
   }
   .tmm-light .pill-nav-slider {
-    background: rgba(168, 164, 158, 0.92);
-    border-color: rgba(0, 0, 0, 0.10);
-    border-radius: 16px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 2px 8px rgba(0,0,0,0.08);
+    background: rgba(0, 0, 0, 0.22);
+    border-color: rgba(0, 0, 0, 0.14);
+    border-radius: 1000px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 2px 8px rgba(0,0,0,0.18);
   }
   .tmm-light .pill-nav-item {
-    background: rgba(0, 0, 0, 0.05);
-    color: rgba(0, 0, 0, 0.40);
+    background: rgba(52, 52, 52, 0.25);
+    color: rgba(0, 0, 0, 0.55);
   }
-  .tmm-light .pill-nav-item:hover { color: rgba(0, 0, 0, 0.85); }
+  .tmm-light .pill-nav-item:hover { color: #000000; background: rgba(52, 52, 52, 0.40); }
   .tmm-light .pill-nav-item--active {
-    color: rgba(0, 0, 0, 0.88);
+    color: #000000;
     background: transparent;
   }
-  .tmm-light .pill-nav-home { background: transparent; }
+  .tmm-light .pill-nav-home { background: rgba(52, 52, 52, 0.25); }
 
   /* ── Modal system ────────────────────────────────────────────────── */
   .modal-overlay {
@@ -898,11 +898,11 @@
     gap: 2px;
   }
 
-  /* Compact slider — squircle */
+  /* Compact slider — fully circular */
   .pill-nav-slider {
     top: 6px;
     bottom: 6px;
-    border-radius: 12px;
+    border-radius: 1000px;
   }
 
   /* Compact items */
@@ -972,6 +972,6 @@
   .reviews-score-number { font-size: 42px; }
   .review-card-top { flex-wrap: wrap; }
 
-  /* Light mode */
-  .tmm-light .pill-nav-inner { border-radius: 18px; }
+  /* Light mode — keep pill radius consistent */
+  .tmm-light .pill-nav-inner { border-radius: 1000px; }
 }
