@@ -257,7 +257,7 @@
     transform: translateX(-50%);
     z-index: 60;
     /* Width matches the nav bar / modal containers */
-    min-width: min(var(--site-w), calc(100vw - 16px));
+    width: min(var(--site-w), calc(100vw - 16px));
     /* Height: nav inner padding (10px each side) + button height (48px) */
     height: 68px;
     display: flex;
@@ -410,11 +410,11 @@
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
     gap: 0;
-    /* Match modal container width */
-    min-width: min(var(--site-w), calc(100vw - 16px));
-    padding: 10px 14px;
+    /* Pin to exactly the same width as modal containers */
+    width: min(var(--site-w), calc(100vw - 16px));
+    padding: 10px 12px;
     background: rgba(52, 52, 52, 0.25);
     backdrop-filter: blur(24px) saturate(1.6);
     -webkit-backdrop-filter: blur(24px) saturate(1.6);
@@ -934,8 +934,8 @@
     border-radius: 1000px;
     padding: 8px 10px;
     gap: 0;
-    justify-content: space-evenly;
-    min-width: calc(100vw - 16px);
+    justify-content: space-between;
+    width: calc(100vw - 16px);
   }
 
   /* Compact slider */

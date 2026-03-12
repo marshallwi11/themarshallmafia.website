@@ -70,10 +70,16 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
               <span className="play-block-title">OBJECTIVE</span>
               <span className="play-block-subtitle">INFORMATION</span>
             </div>
+            <p className="play-block-body" style={{margin:0}}>
+              The <span className="text-tmm-cream">Marshall</span> <span className="text-tmm-red">Mafia</span> is a social deduction card game where players secretly take on the roles of <span className="text-tmm-red">Mafia</span> members or <span className="text-tmm-brown">Villagers</span>, and through rounds of sleeping, discussion and voting, the <span className="text-tmm-brown">Villagers</span> must identify and eliminate the <span className="text-tmm-red">Mafia</span> before they are outnumbered.
+            </p>
+          </div>
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <div className="play-card-header">
+              <span className="play-block-title">READY</span>
+              <span className="play-block-subtitle">click play*</span>
+            </div>
             <div style={{display:"flex",flexDirection:"column",gap:"clamp(14px,3vw,22px)"}}>
-              <p className="play-block-body" style={{margin:0}}>
-                The <span className="text-tmm-cream">Marshall</span> <span className="text-tmm-red">Mafia</span> is a social deduction card game where players secretly take on the roles of <span className="text-tmm-red">Mafia</span> members or <span className="text-tmm-brown">Villagers</span>, and through rounds of sleeping, discussion and voting, the <span className="text-tmm-brown">Villagers</span> must identify and eliminate the <span className="text-tmm-red">Mafia</span> before they are outnumbered.
-              </p>
               <p className="play-block-body" style={{margin:0}}>
                 Discover the hidden secrets of the game! — Learn how roles are assigned, master the rules of <span className="text-tmm-red">Mafia</span> vs. <span className="text-tmm-brown">Villagers</span>, and get familiar with the game{"'"}s core phases.
               </p>
