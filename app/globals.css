@@ -1012,6 +1012,7 @@
 
   /* Reviews */
   .reviews-summary { flex-direction: column; gap: 16px; }
+  .reviews-bars { width: 100%; }
   .reviews-score-number { font-size: 42px; }
   .review-card-top { flex-wrap: nowrap; align-items: center; }
 

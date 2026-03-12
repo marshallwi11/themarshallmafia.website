@@ -626,7 +626,14 @@ export default function Home() {
                 {TESTIMONIALS.map((t, i) => (
                   <div key={i} className="play-card" onClick={e => e.stopPropagation()}>
                     <div className="review-card-top">
-                      <div className="review-avatar">{t.name[0]}</div>
+                      <div className="review-avatar" style={{background:"rgba(255,255,255,0.08)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+                        {/* happy eyes (normal) for >3 stars, angry/sad (flipped) for ≤3 stars */}
+                        <img
+                          src="/tmm_themarshallmafia_logo.svg"
+                          alt=""
+                          style={{width:"22px",height:"auto",display:"block",transform: t.rating > 3 ? "none" : "scaleY(-1)"}}
+                        />
+                      </div>
                       <div style={{minWidth:0,flex:"1 1 0"}}>
                         <p className="play-block-body" style={{margin:0,lineHeight:1.2,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{t.name}</p>
                         <span className="play-block-subtitle" style={{fontSize:"12px"}}>{t.handle}</span>
@@ -635,9 +642,9 @@ export default function Home() {
                     </div>
                     <p className="play-block-body" style={{fontWeight:"bold",marginBottom:"-4px"}}>{t.title}</p>
                     <p className="play-block-body" style={{marginBottom:"4px"}}>{t.body}</p>
-                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:"4px"}}>
-                      <span className="play-block-title" style={{fontSize:"11px",opacity:0.9}}>left purchases</span>
-                      <span className="play-block-subtitle" style={{fontSize:"11px"}}>verified</span>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:"8px",paddingTop:"8px",borderTop:"1px solid rgba(255,255,255,0.07)"}}>
+                      <span className="play-block-title">purchases</span>
+                      <span className="play-block-subtitle">verified</span>
                     </div>
                   </div>
                 ))}
