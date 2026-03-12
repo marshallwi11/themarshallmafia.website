@@ -1013,7 +1013,7 @@
   /* Reviews */
   .reviews-summary { flex-direction: column; gap: 16px; }
   .reviews-score-number { font-size: 42px; }
-  .review-card-top { flex-wrap: wrap; }
+  .review-card-top { flex-wrap: nowrap; align-items: center; }
 
   /* Light mode — keep pill radius consistent */
   .tmm-light .pill-nav-inner { border-radius: 1000px; }

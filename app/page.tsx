@@ -101,7 +101,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
 type ModalType = "play" | "showcase" | "music" | "collect" | "reviews" | null
 
 const TESTIMONIALS = [
-  { name: "Isabella M.", handle: "@isabellaM", rating: 5, title: "Amazing for group bonding", body: "I played this game with my youth group and it was amazing. Really helped everyone to get to know each other and created fun memories." },
+  { name: "Isabella M", handle: "@ella_m", rating: 5, title: "Amazing for group bonding", body: "The Marshall Mafia is amazing for group bonding, I played this game with my youth group and it was amazing... it really helped everyone to get to know each other and created fun memories!" },
 ]
 
 export default function Home() {
@@ -627,20 +627,20 @@ export default function Home() {
                   <div key={i} className="play-card" onClick={e => e.stopPropagation()}>
                     <div className="review-card-top">
                       <div className="review-avatar">{t.name[0]}</div>
-                      <div>
-                        <p className="play-block-body" style={{margin:0,lineHeight:1.2}}>{t.name}</p>
+                      <div style={{minWidth:0,flex:"1 1 0"}}>
+                        <p className="play-block-body" style={{margin:0,lineHeight:1.2,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{t.name}</p>
                         <span className="play-block-subtitle" style={{fontSize:"12px"}}>{t.handle}</span>
                       </div>
-                      <div style={{marginLeft:"auto"}}><StarRating rating={t.rating} /></div>
+                      <div style={{flexShrink:0}}><StarRating rating={t.rating} /></div>
                     </div>
                     <p className="play-block-body" style={{fontWeight:"bold",marginBottom:"-4px"}}>{t.title}</p>
-                    <p className="play-block-body">{t.body}</p>
+                    <p className="play-block-body" style={{marginBottom:"4px"}}>{t.body}</p>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:"4px"}}>
+                      <span className="play-block-title" style={{fontSize:"11px",opacity:0.9}}>left purchases</span>
+                      <span className="play-block-subtitle" style={{fontSize:"11px"}}>verified</span>
+                    </div>
                   </div>
                 ))}
-                <div className="play-card-pill" onClick={e => e.stopPropagation()}>
-                  <span className="play-block-title">verified purchases</span>
-                  <span className="play-block-subtitle">tmm store</span>
-                </div>
               </div>
             </div>
           </div>
