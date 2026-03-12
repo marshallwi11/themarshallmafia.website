@@ -71,7 +71,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
               <span className="play-block-subtitle">INFORMATION</span>
             </div>
             <p className="play-block-body" style={{margin:0}}>
-              The <span className="text-tmm-cream">Marshall</span> <span className="text-tmm-red">Mafia</span> is a social deduction card game where players secretly take on the roles of <span className="text-tmm-red">Mafia</span> members or <span className="text-tmm-brown">Villagers</span>, and through rounds of sleeping, discussion and voting, the <span className="text-tmm-brown">Villagers</span> must identify and eliminate the <span className="text-tmm-red">Mafia</span> before they are outnumbered.
+              <span style={{color:"#ffffff"}}>The Marshall Mafia</span> is a social deduction card game where players secretly take on the roles of <span className="text-tmm-red">Mafia</span> members or <span className="text-tmm-brown">Villagers</span>, and through rounds of sleeping, discussion and voting, the <span className="text-tmm-brown">Villagers</span> must identify and eliminate the <span className="text-tmm-red">Mafia</span> before they are outnumbered.
             </p>
           </div>
           <div className="play-card" onClick={e => e.stopPropagation()}>
