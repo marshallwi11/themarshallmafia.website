@@ -227,6 +227,38 @@
 
   main { position: relative; z-index: 1; }
 
+  /* ── Hero glass container ────────────────────────────────────────── */
+  .hero-glass-wrap {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Frosted glass disc — sits behind the Lottie, above the backdrop gradient */
+  .hero-glass-layer {
+    position: absolute;
+    inset: 12%;
+    border-radius: 50%;
+    backdrop-filter: blur(72px) saturate(1.6);
+    -webkit-backdrop-filter: blur(72px) saturate(1.6);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    pointer-events: none;
+    z-index: 0;
+  }
+  /* Light mode — slightly warmer tint */
+  .tmm-light .hero-glass-layer {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+  /* Keep Lottie above the glass layer */
+  .hero-glass-wrap > div:last-child {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+
   /* ── Hero Lottie ──────────────────────────────────────────────────── */
   .hero-lottie {
     animation: heroFadeIn 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;

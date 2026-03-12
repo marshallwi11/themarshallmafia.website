@@ -32,9 +32,9 @@ function LottieHero({ lightMode }: { lightMode: boolean }) {
     }
   }, [])
 
-  // Invert instantly on mode switch — no blur/fade animation on the hero
+  // Dark mode: flip eyes right-side up. Light mode: invert colours only.
   return (
-    <div style={lightMode ? { filter: "invert(1)" } : undefined}>
+    <div style={lightMode ? { filter: "invert(1)" } : { transform: "scaleY(-1)" }}>
       <div ref={containerRef} className="select-none pointer-events-none w-full aspect-square hero-lottie" aria-label="The Marshall Mafia" />
     </div>
   )
@@ -219,7 +219,10 @@ export default function Home() {
 
       <main className={`site-canvas${lightMode ? " tmm-light" : ""}`}>
 
-        <LottieHero lightMode={lightMode} />
+        <div className="hero-glass-wrap">
+          <div className="hero-glass-layer" />
+          <LottieHero lightMode={lightMode} />
+        </div>
 
         {/* ── INFO POPUP ── */}
         <InfoPopup open={infoOpen} onClose={() => setInfoOpen(false)} />
