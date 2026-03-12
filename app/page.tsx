@@ -121,8 +121,8 @@ export default function Home() {
 
   // Site-load intro: text pill → fade → nav icons
   useEffect(() => {
-    const t1 = setTimeout(() => setNavIntro(1), 1400)  // text starts fading
-    const t2 = setTimeout(() => setNavIntro(2), 2300)  // icons appear only after text is fully gone
+    const t1 = setTimeout(() => setNavIntro(1), 2000)  // text starts fading
+    const t2 = setTimeout(() => setNavIntro(2), 3100)  // icons appear only after text is fully gone
     return () => { clearTimeout(t1); clearTimeout(t2) }
   }, [])
 
