@@ -250,33 +250,6 @@
   }
 
   /* ── Site load intro text pill — exact same size as icon nav bar ── */
-  .nav-intro-pill {
-    position: fixed;
-    top: clamp(16px, 3vw, 28px);
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 60;
-    /* Width matches the nav bar / modal containers */
-    width: min(var(--site-w), calc(100vw - 16px));
-    /* Height: nav inner padding (10px each side) + button height (48px) */
-    height: 68px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(52, 52, 52, 0.25);
-    backdrop-filter: blur(24px) saturate(1.6);
-    -webkit-backdrop-filter: blur(24px) saturate(1.6);
-    border-radius: 1000px;
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    box-shadow:
-      0 0 0 0.5px rgba(255,255,255,0.06),
-      inset 0 1px 0 rgba(255,255,255,0.08),
-      0 8px 32px rgba(0,0,0,0.40);
-    padding: 0 36px;
-    pointer-events: none;
-    white-space: nowrap;
-    box-sizing: border-box;
-  }
   .nav-intro-text {
     font-family: 'MarkerBold', sans-serif;
     font-size: clamp(16px, 3.2vw, 22px);
@@ -285,10 +258,6 @@
     color: rgba(255, 255, 255, 0.92);
     white-space: nowrap;
     display: block;
-  }
-  .tmm-light .nav-intro-pill {
-    background: rgba(220, 218, 213, 0.45);
-    border-color: rgba(0, 0, 0, 0.08);
   }
   .tmm-light .nav-intro-text { color: rgba(0, 0, 0, 0.75); }
 
@@ -963,13 +932,6 @@
   /* Badge position on mobile */
   .cart-pill-badge { top: 3px; right: 3px; width: 6px; height: 6px; }
 
-  /* Intro pill on mobile — height + width matches compact nav */
-  .nav-intro-pill {
-    top: clamp(10px, 2.5vw, 16px) !important;
-    height: 56px;
-    min-width: calc(100vw - 16px);
-    padding: 0 20px;
-  }
   .nav-intro-text { font-size: 14px; letter-spacing: 0.08em; }
 
   /* Site canvas: full viewport width */

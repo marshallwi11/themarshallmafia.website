@@ -224,29 +224,12 @@ export default function Home() {
         {/* ── INFO POPUP ── */}
         <InfoPopup open={infoOpen} onClose={() => setInfoOpen(false)} />
 
-        {/* ── SITE LOAD INTRO TEXT PILL ── */}
-        <div
-          className="nav-intro-pill"
-          style={{
-            opacity: navIntro === 0 ? 1 : 0,
-            transition: "opacity 0.55s ease",
-          }}
-          aria-hidden="true"
-        >
-          <span className="nav-intro-text">THE MARSHALL MAFIA</span>
-        </div>
-
         {/* ── NAV CLUSTER: unified pill — all 7 items ── */}
-        <div
-          className="nav-cluster"
-          style={{
-            opacity: navIntro < 2 ? 0 : 1,
-            transition: "opacity 0.6s ease",
-          }}
-        >
+        <div className="nav-cluster">
           <nav
             className="pill-nav"
             style={{ pointerEvents: navIntro < 2 ? "none" : undefined }}
+
             onTouchStart={(e) => { swipeTouchStartX.current = e.touches[0].clientX }}
             onTouchEnd={(e) => {
               const dx = e.changedTouches[0].clientX - swipeTouchStartX.current
@@ -270,12 +253,41 @@ export default function Home() {
                 style={{
                   left: sliderStyle.left,
                   width: sliderStyle.width,
+                  opacity: navIntro < 2 ? 0 : 1,
                   transition: sliderReady
-                    ? "left 0.38s cubic-bezier(0.34,1.15,0.64,1), width 0.38s cubic-bezier(0.34,1.15,0.64,1)"
-                    : "none",
+                    ? "left 0.38s cubic-bezier(0.34,1.15,0.64,1), width 0.38s cubic-bezier(0.34,1.15,0.64,1), opacity 0.5s ease"
+                    : "opacity 0.5s ease",
                 }}
                 aria-hidden="true"
               />
+
+              {/* ── Intro text overlay — fades out to reveal icons ── */}
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  pointerEvents: "none",
+                  zIndex: 2,
+                  opacity: navIntro < 2 ? 1 : 0,
+                  transition: "opacity 0.55s ease",
+                }}
+              >
+                <span className="nav-intro-text">THE MARSHALL MAFIA</span>
+              </div>
+
+              {/* ── All icon buttons — fade in after intro text fades out ── */}
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                opacity: navIntro < 2 ? 0 : 1,
+                transition: "opacity 0.6s ease",
+              }}>
 
               {/* INFO — ℹ️ circle (default) / ❕ exclamation circle (active) */}
               <button ref={btnInfoRef}
@@ -403,7 +415,8 @@ export default function Home() {
                 <span className="cart-pill-badge" aria-hidden="true" />
               </button>
 
-            </div>
+              </div>{/* end buttons wrapper */}
+            </div>{/* end pill-nav-inner */}
           </nav>
         </div>{/* end .nav-cluster */}
 
