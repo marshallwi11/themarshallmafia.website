@@ -121,8 +121,8 @@ export default function Home() {
 
   // Site-load intro: text pill → fade → nav icons
   useEffect(() => {
-    const t1 = setTimeout(() => setNavIntro(1), 2200)
-    const t2 = setTimeout(() => setNavIntro(2), 3800)
+    const t1 = setTimeout(() => setNavIntro(1), 1400)  // text starts fading
+    const t2 = setTimeout(() => setNavIntro(2), 2300)  // icons appear only after text is fully gone
     return () => { clearTimeout(t1); clearTimeout(t2) }
   }, [])
 
@@ -255,8 +255,8 @@ export default function Home() {
                   width: sliderStyle.width,
                   opacity: navIntro < 2 ? 0 : 1,
                   transition: sliderReady
-                    ? "left 0.72s cubic-bezier(0.65,0,0.35,1), width 0.72s cubic-bezier(0.65,0,0.35,1), opacity 0.9s cubic-bezier(0.65,0,0.35,1)"
-                    : "opacity 0.9s cubic-bezier(0.65,0,0.35,1)",
+                    ? "left 0.72s cubic-bezier(0.65,0,0.35,1), width 0.72s cubic-bezier(0.65,0,0.35,1), opacity 0.7s cubic-bezier(0.65,0,0.35,1)"
+                    : "opacity 0.7s cubic-bezier(0.65,0,0.35,1)",
                 }}
                 aria-hidden="true"
               />
@@ -276,7 +276,7 @@ export default function Home() {
                   WebkitBackdropFilter: "blur(10px)",
                   borderRadius: "1000px",
                   opacity: navIntro < 2 ? 1 : 0,
-                  transition: "opacity 1.4s cubic-bezier(0.65,0,0.35,1)",
+                  transition: "opacity 0.7s cubic-bezier(0.65,0,0.35,1)",
                 }}
               >
                 <span className="nav-intro-text">THE MARSHALL MAFIA</span>
@@ -289,7 +289,7 @@ export default function Home() {
                 justifyContent: "space-between",
                 width: "100%",
                 opacity: navIntro < 2 ? 0 : 1,
-                transition: "opacity 1.2s cubic-bezier(0.65,0,0.35,1)",
+                transition: "opacity 0.7s cubic-bezier(0.65,0,0.35,1)",
               }}>
 
               {/* INFO — ℹ️ circle (default) / ❕ exclamation circle (active) */}
