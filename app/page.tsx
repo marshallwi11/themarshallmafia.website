@@ -9,7 +9,7 @@ import { EmbeddedCheckout, EmbeddedCheckoutProvider } from "@stripe/react-stripe
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 // ── Lottie hero ───────────────────────────────────────────────────────────────
-function LottieHero({ lightMode }: { lightMode: boolean }) {
+function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const animRef = useRef<AnimationItem | null>(null)
 
@@ -32,10 +32,15 @@ function LottieHero({ lightMode }: { lightMode: boolean }) {
     }
   }, [])
 
-  // Dark mode: flip eyes right-side up. Light mode: invert colours only.
+  // Opacity fades to 0 while logoFading; transform/filter swap while invisible.
   return (
     <div className="hero-rise-wrapper">
-      <div style={lightMode ? { filter: "invert(1)" } : { transform: "scaleY(-1)" }}>
+      <div style={{
+        transform: lightMode ? undefined : "scaleY(-1)",
+        filter: lightMode ? "invert(1)" : undefined,
+        opacity: logoFading ? 0 : 1,
+        transition: "opacity 0.18s linear",
+      }}>
         <div ref={containerRef} className="select-none pointer-events-none w-full aspect-square hero-lottie" aria-label="The Marshall Mafia" />
       </div>
     </div>
@@ -111,7 +116,7 @@ export default function Home() {
   const [stripeClientSecret, setStripeClientSecret] = useState<string | null>(null)
   const [stripeLoading, setStripeLoading] = useState(false)
   const [lightMode, setLightMode] = useState(false)
-  const [logoFlipping, setLogoFlipping] = useState(false)
+  const [logoFading, setLogoFading] = useState(false)
   const [cartShaking, setCartShaking] = useState(false)
   const [infoOpen, setInfoOpen] = useState(false)
   // 0 = intro text showing | 1 = text fading out | 2 = nav visible
@@ -170,9 +175,12 @@ export default function Home() {
   const handleLogoTap = useCallback(() => {
     const now = Date.now()
     if (now - lastTapRef.current < 400) {
-      setLogoFlipping(true)
-      setTimeout(() => setLightMode(m => !m), 250)
-      setTimeout(() => setLogoFlipping(false), 520)
+      // Fade out → swap mode while invisible → fade back in
+      setLogoFading(true)
+      setTimeout(() => {
+        setLightMode(m => !m)
+        setLogoFading(false)
+      }, 200)
     }
     lastTapRef.current = now
   }, [])
@@ -221,7 +229,7 @@ export default function Home() {
 
       <main className={`site-canvas${lightMode ? " tmm-light" : ""}`}>
 
-        <LottieHero lightMode={lightMode} />
+        <LottieHero lightMode={lightMode} logoFading={logoFading} />
 
         {/* ── INFO POPUP ── */}
         <InfoPopup open={infoOpen} onClose={() => setInfoOpen(false)} />
@@ -355,16 +363,20 @@ export default function Home() {
                 onClick={() => { closeModal(); setInfoOpen(false); handleLogoTap() }}
                 aria-label="Home"
               >
-                <img
-                  src="/tmm_themarshallmafia_logo.svg"
-                  alt="TMM"
-                  className={[
-                    "pill-nav-home-logo",
-                    logoFlipping ? "logo-flip-anim" : "",
-                    !logoFlipping && lightMode ? "logo-flipped" : "",
-                  ].filter(Boolean).join(" ")}
-                  draggable={false}
-                />
+                <div style={{
+                  transform: lightMode ? "scaleY(-1)" : undefined,
+                  filter: lightMode ? "invert(1)" : undefined,
+                  opacity: logoFading ? 0 : 1,
+                  transition: "opacity 0.18s linear",
+                  lineHeight: 0,
+                }}>
+                  <img
+                    src="/tmm_themarshallmafia_logo.svg"
+                    alt="TMM"
+                    className="pill-nav-home-logo"
+                    draggable={false}
+                  />
+                </div>
               </button>
 
               {/* SHOWCASE */}

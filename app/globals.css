@@ -251,16 +251,6 @@
     40%  { opacity: 0.15; }
     100% { opacity: 1; filter: blur(0px) brightness(1); }
   }
-  .hero-flip-anim {
-    animation: heroBlip 0.42s ease-in-out forwards;
-  }
-  @keyframes heroBlip {
-    0%   { opacity: 1; filter: blur(0px); }
-    45%  { opacity: 0; filter: blur(24px); }
-    55%  { opacity: 0; filter: blur(24px); }
-    100% { opacity: 1; filter: blur(0px); }
-  }
-
   /* ── Site load intro text pill — exact same size as icon nav bar ── */
   .nav-intro-text {
     font-family: 'MarkerBold', sans-serif;
@@ -486,24 +476,6 @@
     -webkit-user-drag: none;
     position: relative;
     z-index: 1;
-    transition: filter 0.3s ease;
-  }
-
-  /* ── Logo flip / light mode ─────────────────────────────────────── */
-  /* Light mode: invert the white SVG eyes to black */
-  .logo-flipped {
-    filter: invert(1);
-    transform: scaleY(-1);
-  }
-  /* The flip animation ends at the flipped+inverted state */
-  .logo-flip-anim {
-    animation: eyesBlip 0.5s ease-in-out forwards;
-  }
-  @keyframes eyesBlip {
-    0%   { transform: scaleY(1);  filter: none;     opacity: 1; }
-    40%  { transform: scaleY(0);  filter: blur(6px); opacity: 0; }
-    60%  { transform: scaleY(0);  filter: blur(6px); opacity: 0; }
-    100% { transform: scaleY(-1); filter: none;      opacity: 1; }
   }
 
   /* Light mode nav — mirrors dark mode: glass pill, no item borders, slider only */
