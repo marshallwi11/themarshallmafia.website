@@ -382,7 +382,7 @@
     justify-content: space-between;
     gap: 0;
     /* Pin to exactly the same width as modal containers */
-    width: min(var(--site-w), calc(100vw - 16px));
+    width: var(--site-w);
     padding: 10px 12px;
     background: rgba(52, 52, 52, 0.25);
     backdrop-filter: blur(24px) saturate(1.6);
@@ -628,14 +628,14 @@
   /* ── Typography — title and subtitle same size, differentiated by colour ── */
   .play-block-title {
     font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(14px, 2.6vw, 17px);
+    font-size: clamp(17px, 3.25vw, 21px);
     line-height: 1.3;
     letter-spacing: 0.03em;
     color: #ffffff;
   }
   .play-block-subtitle {
     font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(14px, 2.6vw, 17px);
+    font-size: clamp(17px, 3.25vw, 21px);
     line-height: 1.3;
     letter-spacing: 0.03em;
     color: rgba(255, 255, 255, 0.38);
@@ -907,7 +907,7 @@
     padding: 8px 10px;
     gap: 0;
     justify-content: space-between;
-    width: calc(100vw - 16px);
+    width: var(--site-w);
   }
 
   /* Compact slider */
@@ -971,8 +971,8 @@
   .collect-list  { padding: 0 10px 40px; gap: 14px; }
 
   /* Typography — same size both sides on mobile */
-  .play-block-title    { font-size: 13px; letter-spacing: 0.03em; }
-  .play-block-subtitle { font-size: 13px; letter-spacing: 0.03em; }
+  .play-block-title    { font-size: 16px; letter-spacing: 0.03em; }
+  .play-block-subtitle { font-size: 16px; letter-spacing: 0.03em; }
   .play-block-body     { font-size: 13px; line-height: 1.55; }
 
   /* Reviews */
