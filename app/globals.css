@@ -137,62 +137,28 @@
    ===================================================================== */
 @layer utilities {
 
-  /* Dark backdrop — TMM blue tones */
+  /* Dark backdrop — animated black + TMM blue gradient */
   .tmm-backdrop {
     position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    background: #000000;
-    overflow: hidden;
-  }
-  .tmm-backdrop::before {
-    content: '';
-    position: absolute;
-    inset: -20%;
-    background:
-      radial-gradient(ellipse 75% 60% at 15% 25%, rgba(0,100,190,0.65) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 55% at 85% 75%, rgba(0,55,120,0.55) 0%, transparent 58%),
-      radial-gradient(ellipse 50% 45% at 50% 50%, rgba(0,80,160,0.3) 0%, transparent 70%);
-    animation: backdropDrift 22s ease-in-out infinite alternate;
-  }
-  .tmm-backdrop::after {
-    content: '';
-    position: absolute;
-    inset: -20%;
-    background:
-      radial-gradient(ellipse 40% 35% at 70% 20%, rgba(0,128,197,0.45) 0%, transparent 55%),
-      radial-gradient(ellipse 35% 30% at 25% 80%, rgba(0,60,130,0.35) 0%, transparent 50%);
-    animation: backdropDrift2 28s ease-in-out infinite alternate;
+    background: linear-gradient(300deg, #000000, #0780c4, #000000, #0780c4, #000000, #000000);
+    background-size: 360% 360%;
+    animation: gradient-animation 48s ease infinite;
   }
 
-  /* Light backdrop — TMM red tints (much stronger) */
+  /* Light backdrop — animated white + TMM red gradient */
   .tmm-backdrop--light {
-    background: #f5f4f0;
-  }
-  .tmm-backdrop--light::before {
-    background:
-      radial-gradient(ellipse 75% 60% at 15% 25%, rgba(227,0,11,0.38) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 55% at 85% 75%, rgba(227,0,11,0.28) 0%, transparent 58%),
-      radial-gradient(ellipse 50% 45% at 50% 50%, rgba(227,0,11,0.18) 0%, transparent 70%);
-  }
-  .tmm-backdrop--light::after {
-    background:
-      radial-gradient(ellipse 40% 35% at 70% 20%, rgba(227,0,11,0.30) 0%, transparent 55%),
-      radial-gradient(ellipse 35% 30% at 25% 80%, rgba(200,0,10,0.22) 0%, transparent 50%);
+    background: linear-gradient(300deg, #ffffff, #E3000B, #ffffff, #E3000B, #ffffff, #ffffff);
+    background-size: 360% 360%;
+    animation: gradient-animation 48s ease infinite;
   }
 
-  @keyframes backdropDrift {
-    0%   { transform: translate(0%, 0%) scale(1);    opacity: 0.85; }
-    33%  { transform: translate(2.5%, -1.5%) scale(1.04); opacity: 1; }
-    66%  { transform: translate(-1.5%, 2%) scale(0.97);  opacity: 0.9; }
-    100% { transform: translate(1%, -2%) scale(1.02);    opacity: 0.95; }
-  }
-  @keyframes backdropDrift2 {
-    0%   { transform: translate(0%, 0%) scale(1);    opacity: 0.7; }
-    40%  { transform: translate(-2%, 1.5%) scale(1.05); opacity: 0.9; }
-    70%  { transform: translate(1.5%, -1%) scale(0.96);  opacity: 0.8; }
-    100% { transform: translate(-1%, 2%) scale(1.03);    opacity: 0.85; }
+  @keyframes gradient-animation {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 
   .tmm-light { background: transparent; }
