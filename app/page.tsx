@@ -504,16 +504,19 @@ export default function Home() {
                 {/* BOX 7 — PHASE 2. DISCUSSION */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">PHASE 2.</span><span className="play-block-subtitle">discussion</span></div>
-                  <p className="play-block-body">All players open their eyes and begin arguing, accusing, or defending themselves based on what they believe has happened during the Sleep Phase. The <span className="text-tmm-cream">Marshall</span> should set a timer (Recommended 3 minutes) for this phase, they can also stop the discussions at a natural moment to keep the phase concise and intense.</p>
+                  <p className="play-block-body">All players open their eyes and begin arguing, accusing, or defending themselves based on what they believe has happened during the Sleep Phase.</p>
+                  <p className="play-block-body">The <span className="text-tmm-cream">Marshall</span> should set a timer (Recommended 3 minutes) for this phase. They can also stop the discussions at a natural moment to keep the phase concise and intense.</p>
                   <p className="play-block-body">Players are free to speculate, but players must not reveal their card (if a player is caught showing their card to another player, they are instantly eliminated.</p>
                 </div>
 
                 {/* BOX 8 — PHASE 3. VOTE */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">PHASE 3.</span><span className="play-block-subtitle">VOTE</span></div>
-                  <p className="play-block-body">After the discussion, players proceed straight to the voting. Each <span className="text-tmm-brown">VILLAGER</span> ROLE votes to eliminate someone they suspect is <span className="text-tmm-red">Mafia</span>, while the <span className="text-tmm-red">Mafia</span> aim to deceive <span className="text-tmm-brown">Villagers</span> into voting out their own.</p>
-                  <p className="play-block-body">Each player is allowed to make a single vote, on anyone they choose. when a player casts a vote for another player - the player who has been voted for must hold up a finger for each vote received.</p>
-                  <p className="play-block-body">If the vote ties, a re-vote occurs between the tied players (depending on chosen Rule Cards*). The player with the most votes is immediately eliminated from the game, and their character is revealed (also depending on chosen Rule Cards*).</p>
+                  <p className="play-block-body">After the discussion, players proceed straight to the voting.</p>
+                  <p className="play-block-body">Each <span className="text-tmm-brown">VILLAGER</span> role votes to eliminate someone they suspect is <span className="text-tmm-red">Mafia</span>, while the <span className="text-tmm-red">Mafia</span> aim to deceive <span className="text-tmm-brown">Villagers</span> into voting out their own.</p>
+                  <p className="play-block-body">Each player is allowed to make a single vote, on anyone they choose. When a player casts a vote for another player - the player who has been voted for must hold up a finger for each vote received.</p>
+                  <p className="play-block-body">If the vote ties, a re-vote occurs between the tied players (depending on chosen <span className="text-muted">Rule Cards*</span>).</p>
+                  <p className="play-block-body">The player with the most votes is immediately eliminated from the game, and their character is revealed (also depending on chosen <span className="text-muted">Rule Cards*</span>).</p>
                 </div>
 
                 {/* BOX 9 — ROUNDS */}
