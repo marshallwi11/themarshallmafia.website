@@ -381,8 +381,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 0;
-    /* Pin to exactly the same width as modal containers */
-    width: var(--site-w);
+    /* Match the modal card width — site-w minus the content-pane side padding */
+    width: calc(var(--site-w) - 2 * clamp(12px, 3vw, 20px));
     padding: 10px 12px;
     background: rgba(52, 52, 52, 0.25);
     backdrop-filter: blur(24px) saturate(1.6);
@@ -911,7 +911,7 @@
     padding: 8px 10px;
     gap: 0;
     justify-content: space-between;
-    width: var(--site-w);
+    width: calc(var(--site-w) - 2 * clamp(12px, 3vw, 20px));
   }
 
   /* Compact slider */
