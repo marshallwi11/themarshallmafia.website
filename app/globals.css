@@ -651,16 +651,17 @@
     gap: clamp(10px, 2vw, 14px);
   }
   .play-rules-list li {
-    display: flex;
-    gap: clamp(10px, 2vw, 14px);
-    align-items: flex-start;
+    position: relative;
+    padding-left: clamp(18px, 3vw, 24px);
   }
   .play-rules-list li::before {
     content: '•';
+    position: absolute;
+    left: 0;
+    top: 0;
     color: rgba(255, 255, 255, 0.45);
     font-size: 1.1em;
     line-height: 1.6;
-    flex-shrink: 0;
   }
   .tmm-light .play-rules-list li::before { color: rgba(0, 0, 0, 0.35); }
 
