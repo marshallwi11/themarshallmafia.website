@@ -137,20 +137,38 @@
    ===================================================================== */
 @layer utilities {
 
-  /* Dark backdrop — mostly black, blue as a single accent highlight */
+  /* Dark backdrop — mostly black, blue as a narrow diffused accent band */
   .tmm-backdrop {
     position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    background: linear-gradient(300deg, #000000, #000000, #020c18, #0780c4, #000000, #000000);
+    background: linear-gradient(
+      300deg,
+      #000000 0%,
+      #000000 43%,
+      #020d1e 47%,
+      #0780c4 50%,
+      #020d1e 53%,
+      #000000 57%,
+      #000000 100%
+    );
     background-size: 360% 360%;
     animation: gradient-animation 48s ease infinite;
   }
 
-  /* Light backdrop — mostly white, red as a single accent highlight */
+  /* Light backdrop — mostly white, red as a narrow diffused accent band */
   .tmm-backdrop--light {
-    background: linear-gradient(300deg, #ffffff, #ffffff, #fff4f4, #E3000B, #ffffff, #ffffff);
+    background: linear-gradient(
+      300deg,
+      #ffffff 0%,
+      #ffffff 43%,
+      #fff3f3 47%,
+      #E3000B 50%,
+      #fff3f3 53%,
+      #ffffff 57%,
+      #ffffff 100%
+    );
     background-size: 360% 360%;
     animation: gradient-animation 48s ease infinite;
   }
@@ -444,7 +462,7 @@
   /* Text label inside the home button */
   .pill-nav-home-text {
     font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(9px, 2vw, 12px);
+    font-size: clamp(11px, 2.5vw, 15px);
     letter-spacing: 0.08em;
     white-space: nowrap;
     color: rgba(255, 255, 255, 0.92);
@@ -773,48 +791,51 @@
   }
   .tmm-light .release-tag { color: rgba(0, 0, 0, 0.38) !important; }
 
-  /* ── Collect modal — pack selector ──────────────────────────────── */
-  .pack-selector-pill {
+  /* ── Collect modal — pack selector (two separate pills) ─────────── */
+  .pack-pills-row {
     display: flex;
-    align-items: stretch;
-    border-radius: 100px;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    gap: clamp(10px, 2.5vw, 16px);
+  }
+  .pack-pill-btn {
+    flex: 1;
+    padding: clamp(14px, 3vw, 22px) clamp(12px, 2.5vw, 20px);
     background: rgba(52, 52, 52, 0.25);
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
     backdrop-filter: blur(24px) saturate(1.6);
     -webkit-backdrop-filter: blur(24px) saturate(1.6);
     box-shadow: 0 8px 32px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.06);
-  }
-  .pack-selector-btn {
-    flex: 1;
-    padding: clamp(14px, 3vw, 22px) clamp(14px, 3vw, 20px);
     font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(12px, 2.5vw, 15px);
+    font-size: clamp(14px, 3vw, 17px);
     letter-spacing: 0.04em;
-    color: rgba(255, 255, 255, 0.45);
-    background: transparent;
-    border: none;
+    color: rgba(255, 255, 255, 0.50);
     cursor: pointer;
-    transition: color 0.2s ease, background 0.2s ease;
+    transition: color 0.2s ease, border-color 0.2s ease, backdrop-filter 0.2s ease;
     text-align: center;
     white-space: nowrap;
   }
-  .pack-selector-btn:hover { color: rgba(255, 255, 255, 0.80); background: rgba(255,255,255,0.05); }
-  .pack-selector-btn--active { color: #ffffff; background: rgba(255,255,255,0.08); }
-  .pack-selector-divider {
-    width: 1px;
-    background: rgba(255, 255, 255, 0.08);
-    flex-shrink: 0;
-    margin: 10px 0;
+  .pack-pill-btn:hover {
+    color: rgba(255, 255, 255, 0.88);
+    border-color: rgba(255, 255, 255, 0.28);
   }
-  .tmm-light .pack-selector-pill {
-    background: rgba(255, 255, 255, 0.7);
+  .pack-pill-btn--active {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.38);
+    backdrop-filter: blur(48px) saturate(2.2);
+    -webkit-backdrop-filter: blur(48px) saturate(2.2);
+  }
+  .tmm-light .pack-pill-btn {
+    background: rgba(255, 255, 255, 0.60);
     border-color: rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, 0.45);
   }
-  .tmm-light .pack-selector-btn { color: rgba(0, 0, 0, 0.45); }
-  .tmm-light .pack-selector-btn:hover { color: #000000; background: rgba(0,0,0,0.04); }
-  .tmm-light .pack-selector-btn--active { color: #000000; background: rgba(0,0,0,0.06); }
-  .tmm-light .pack-selector-divider { background: rgba(0, 0, 0, 0.08); }
+  .tmm-light .pack-pill-btn:hover { color: #000000; border-color: rgba(0,0,0,0.22); }
+  .tmm-light .pack-pill-btn--active {
+    color: #000000;
+    border-color: rgba(0,0,0,0.30);
+    backdrop-filter: blur(48px) saturate(2.2);
+    -webkit-backdrop-filter: blur(48px) saturate(2.2);
+  }
 
   /* ── Collect modal ───────────────────────────────────────────────── */
   .collect-list {
@@ -909,8 +930,8 @@
     gap: 12px;
   }
   .review-avatar {
-    width: 36px;
-    height: 36px;
+    width: 47px;
+    height: 47px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.1);
     display: flex;
@@ -932,29 +953,26 @@
   .add-review-btn {
     display: block;
     width: 100%;
-    margin-top: clamp(12px, 2.5vw, 18px);
-    padding: clamp(10px, 2vw, 14px) 0;
+    margin-top: clamp(10px, 2vw, 14px);
+    padding: clamp(8px, 1.6vw, 11px) 0;
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid transparent;
     border-radius: 100px;
-    color: rgba(255, 255, 255, 0.45);
+    color: rgba(255, 255, 255, 0.38);
     cursor: pointer;
     text-align: center;
     letter-spacing: 0.06em;
     transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
   }
   .add-review-btn:hover {
-    color: rgba(255, 255, 255, 0.88);
-    border-color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.75);
+    border-color: rgba(255, 255, 255, 0.28);
     background: rgba(255, 255, 255, 0.04);
   }
-  .tmm-light .add-review-btn {
-    border-color: rgba(0, 0, 0, 0.10);
-    color: rgba(0, 0, 0, 0.40);
-  }
+  .tmm-light .add-review-btn { color: rgba(0, 0, 0, 0.32); }
   .tmm-light .add-review-btn:hover {
-    color: #000000;
-    border-color: rgba(0, 0, 0, 0.30);
+    color: rgba(0, 0, 0, 0.70);
+    border-color: rgba(0, 0, 0, 0.22);
     background: rgba(0, 0, 0, 0.03);
   }
 

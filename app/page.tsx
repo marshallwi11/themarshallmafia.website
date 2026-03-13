@@ -118,6 +118,7 @@ export default function Home() {
   const [lightMode, setLightMode] = useState(false)
   const [logoFading, setLogoFading] = useState(false)
   const [packSelected, setPackSelected] = useState<"standard" | "expansion" | null>(null)
+  const [reviewComing, setReviewComing] = useState(false)
   const [cartShaking, setCartShaking] = useState(false)
   const [infoOpen, setInfoOpen] = useState(false)
   // 0 = intro text showing | 1 = text fading out | 2 = nav visible
@@ -689,16 +690,16 @@ export default function Home() {
                           </div>
                         )
                       })}
+                      <button
+                        className="play-block-body add-review-btn"
+                        onClick={e => { e.stopPropagation(); setReviewComing(true) }}
+                      >
+                        {reviewComing ? "COMING SOON!" : "+ add a review"}
+                      </button>
                     </div>
                   </div>
                     )
                   })()}
-                  <button
-                    className="play-block-body add-review-btn"
-                    onClick={e => e.stopPropagation()}
-                  >
-                    + add a review
-                  </button>
                 </div>
                 {TESTIMONIALS.map((t, i) => (
                   <div key={i} className="play-card" onClick={e => e.stopPropagation()}>
@@ -707,10 +708,10 @@ export default function Home() {
                         <img
                           src="/tmm_themarshallmafia_logo.svg"
                           alt=""
-                          style={{width:"22px",height:"auto",display:"block",transform: t.rating > 3 ? "scaleY(-1)" : "none"}}
+                          style={{width:"29px",height:"auto",display:"block",transform: t.rating > 3 ? "scaleY(-1)" : "none"}}
                         />
                       </div>
-                      <div style={{minWidth:0,flex:"1 1 0"}}>
+                      <div style={{minWidth:0,flex:"1 1 0",display:"flex",flexDirection:"column",justifyContent:"space-between",height:"47px"}}>
                         <p className="play-block-body" style={{margin:0,lineHeight:1.2,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{t.name}</p>
                         <span className="play-block-subtitle" style={{fontSize:"12px"}}>{t.handle}</span>
                       </div>
@@ -735,17 +736,16 @@ export default function Home() {
             <div className="modal-scroll-bare animate-modal-in">
               <div className="collect-list" onClick={e => e.stopPropagation()}>
 
-                {/* ── Pack selector — split pill ── */}
-                <div className="pack-selector-pill">
+                {/* ── Pack selector — two separate pills ── */}
+                <div className="pack-pills-row">
                   <button
-                    className={`pack-selector-btn${packSelected === "standard" ? " pack-selector-btn--active" : ""}`}
+                    className={`pack-pill-btn${packSelected === "standard" ? " pack-pill-btn--active" : ""}`}
                     onClick={() => setPackSelected("standard")}
                   >
                     STANDARD PACK
                   </button>
-                  <div className="pack-selector-divider" aria-hidden="true" />
                   <button
-                    className={`pack-selector-btn${packSelected === "expansion" ? " pack-selector-btn--active" : ""}`}
+                    className={`pack-pill-btn${packSelected === "expansion" ? " pack-pill-btn--active" : ""}`}
                     onClick={() => setPackSelected("expansion")}
                   >
                     EXPANSION PACK
