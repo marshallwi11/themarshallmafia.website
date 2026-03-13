@@ -484,17 +484,20 @@ export default function Home() {
                   <div className="play-card-header"><span className="play-block-title">PHASES</span><span className="play-block-subtitle">1, 2 &amp; 3</span></div>
                   <p className="play-block-body">Each round in The <span className="text-tmm-cream">Marshall</span> <span className="text-tmm-red">Mafia</span> consists of three phases.</p>
                   <p className="play-block-body">1. SLEEP → 2. DiscussioN → 3. Vote</p>
-                  <p className="play-block-body">If the games go to quickly or too many players are getting eliminated each night, the role groups (e.g. if there are 2+ <span className="text-tmm-green">Angels</span>, 2+ <span className="text-tmm-red">Mafia</span>, 2+ <span className="text-tmm-blue">Detectives</span>) each type of role (<span className="text-tmm-red">KILL</span>, <span className="text-tmm-blue">GUESS</span>, <span className="text-tmm-green">SAVE</span>, <span className="text-tmm-yellow">WILD</span>) must decide one player to do their action on.</p>
+                  <p className="play-block-body">If the games go to quickly or too many players are getting eliminated each night, the role groups (e.g. if there are 2+ <span className="text-tmm-green">Angels</span>, 2+ <span className="text-tmm-red">Mafia</span>, 2+ <span className="text-tmm-blue">Detectives</span>)</p>
+                  <p className="play-block-body" style={{marginTop:"clamp(8px,2vw,12px)"}}>each type of role (<span className="text-tmm-red">KILL</span>, <span className="text-tmm-blue">GUESS</span>, <span className="text-tmm-green">SAVE</span>, <span className="text-tmm-yellow">WILD</span>) must decide one player to do their action on.</p>
                 </div>
 
                 {/* BOX 6 — PHASE 1. SLEEP */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">PHASE 1.</span><span className="play-block-subtitle">SLEEP</span></div>
                   <p className="play-block-body">This is the secretive action phase. All players close their eyes, and the <span className="text-tmm-cream">Marshall</span> calls specific character roles to perform their actions in a set order:</p>
-                  <p className="play-block-body"><span className="text-tmm-red">KILL</span> — The <span className="text-tmm-red">Mafia</span> choose a player to eliminate.</p>
-                  <p className="play-block-body"><span className="text-tmm-blue">GUESS</span> — The <span className="text-tmm-blue">Detective</span> (or similar roles) attempt to discover another player{"'"}s identity.</p>
-                  <p className="play-block-body"><span className="text-tmm-green">SAVE</span> — The <span className="text-tmm-green">Angel</span> (or similar roles) can protect one player from elimination.</p>
-                  <p className="play-block-body"><span className="text-tmm-yellow">WILD</span> — Any other special roles perform their actions (depending on game customisation).</p>
+                  <ul className="play-block-body play-rules-list">
+                    <li><span className="text-tmm-red">KILL</span> — The <span className="text-tmm-red">Mafia</span> choose a player to eliminate.</li>
+                    <li><span className="text-tmm-blue">GUESS</span> — The <span className="text-tmm-blue">Detective</span> (or similar roles) attempt to discover another player{"'"}s identity.</li>
+                    <li><span className="text-tmm-green">SAVE</span> — The <span className="text-tmm-green">Angel</span> (or similar roles) can protect one player from elimination.</li>
+                    <li><span className="text-tmm-yellow">WILD</span> — Any other special roles perform their actions (depending on game customisation).</li>
+                  </ul>
                   <p className="play-block-body">After all actions are completed, the <span className="text-tmm-cream">Marshall</span> announces the result of the night{"'"}s activities (who has been eliminated, if anyone was saved... without naming the player of course, etc.).</p>
                 </div>
 
