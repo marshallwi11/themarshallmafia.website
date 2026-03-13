@@ -713,9 +713,9 @@
   }
   .music-tile:hover { transform: scale(1.05); }
   .music-tile-icon {
-    width: clamp(64px, 18vw, 96px);
-    height: clamp(64px, 18vw, 96px);
-    border-radius: clamp(14px, 3.2vw, 22px);
+    width: clamp(51px, 14.4vw, 77px);
+    height: clamp(51px, 14.4vw, 77px);
+    border-radius: clamp(11px, 2.6vw, 18px);
     overflow: hidden;
     flex-shrink: 0;
   }
@@ -962,7 +962,7 @@
 
   /* Music grid */
   .music-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .music-tile-icon { width: 72px; height: 72px; border-radius: 20px; }
+  .music-tile-icon { width: 58px; height: 58px; border-radius: 16px; }
   .music-tile-label { font-size: 10px; }
 
   /* Showcase / Collect */
