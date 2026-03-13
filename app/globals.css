@@ -341,10 +341,10 @@
   /* ── Cart badge (inside unified pill) ───────────────────────────────── */
   .cart-pill-badge {
     position: absolute;
-    top: 6px;
-    right: 6px;
-    width: 14px;
-    height: 14px;
+    top: 7px;
+    right: 7px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background: var(--tmm-red);
     border: 1.5px solid rgba(18, 18, 18, 0.85);
@@ -931,7 +931,7 @@
   .pill-nav-home-logo { width: 26px; height: 26px; }
 
   /* Badge position on mobile */
-  .cart-pill-badge { top: 5px; right: 5px; width: 12px; height: 12px; }
+  .cart-pill-badge { top: 6px; right: 6px; width: 9px; height: 9px; }
 
   .nav-intro-text { font-size: 14px; letter-spacing: 0.08em; }
 
