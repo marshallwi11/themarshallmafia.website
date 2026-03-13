@@ -34,8 +34,10 @@ function LottieHero({ lightMode }: { lightMode: boolean }) {
 
   // Dark mode: flip eyes right-side up. Light mode: invert colours only.
   return (
-    <div style={lightMode ? { filter: "invert(1)" } : { transform: "scaleY(-1)" }}>
-      <div ref={containerRef} className="select-none pointer-events-none w-full aspect-square hero-lottie" aria-label="The Marshall Mafia" />
+    <div className="hero-rise-wrapper">
+      <div style={lightMode ? { filter: "invert(1)" } : { transform: "scaleY(-1)" }}>
+        <div ref={containerRef} className="select-none pointer-events-none w-full aspect-square hero-lottie" aria-label="The Marshall Mafia" />
+      </div>
     </div>
   )
 }
