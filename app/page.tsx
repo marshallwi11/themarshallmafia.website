@@ -123,8 +123,8 @@ export default function Home() {
 
   // Site-load intro: text pill → fade → nav icons
   useEffect(() => {
-    const t1 = setTimeout(() => setNavIntro(1), 2000)  // text starts fading
-    const t2 = setTimeout(() => setNavIntro(2), 3100)  // icons appear only after text is fully gone
+    const t1 = setTimeout(() => setNavIntro(1), 1000)  // text starts fading (1s hold)
+    const t2 = setTimeout(() => setNavIntro(2), 1800)  // icons appear only after text is fully gone (~0.7s fade)
     return () => { clearTimeout(t1); clearTimeout(t2) }
   }, [])
 
@@ -430,7 +430,7 @@ export default function Home() {
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
             <div className="modal-scroll-bare animate-modal-in">
-              <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(24px,5vw,50px)"}}>
+              <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
                 {/* BOX 1 — HOW TO PLAY */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">HOW TO PLAY</span><span className="play-block-subtitle">INSTRUCTIONS</span></div>
