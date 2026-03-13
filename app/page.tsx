@@ -448,15 +448,15 @@ export default function Home() {
                 {/* BOX 3 — RULES */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">RULES</span><span className="play-block-subtitle">(SEE RULES CARD*)</span></div>
-                  <p className="play-block-body">At the start of the game, players agree on selected (Rule Cards*), This allows for players who have played different rules to agree on how the game will be played.</p>
+                  <p className="play-block-body">At the start of the game, players agree on selected (<span className="text-muted">Rule Cards*</span>), This allows for players who have played different rules to agree on how the game will be played.</p>
                   <p className="play-block-body">PLAYERS MUST CLOSE Their EYES &amp; Remain Silent DURING THE SLEEP PHASE</p>
                   <p className="play-block-body">DURING THE SLEEP PHASE The <span className="text-tmm-cream">MARSHALL</span> ROLE must not SPEAK Directly TOWARDS Each AWOKEN Player, otherwise all players know which role a player has.</p>
                   <p className="play-block-body">AWOKEN Players SILENTLY POINT &amp; CONFIRM Decisions WITH THE <span className="text-tmm-cream">MARSHALL</span>, by hand signals or mouthing their choice to the <span className="text-tmm-cream">Marshall</span> overseeing the game.</p>
-                  <p className="play-block-body">Do not cheat If you die, PICK a "DEATH CARD" FROM THE PACK, hold it to show other players you are eliminated from the game.</p>
+                  <p className="play-block-body">Do not cheat If you die, PICK a {'"'}<span className="text-tmm-red">DEATH CARD</span>{'"'} FROM THE PACK, hold it to show other players you are eliminated from the game.</p>
                   <p className="play-block-body">Timed discussion period (3 minutes recommended, though it does not have to be*), to keep the rounds short and allow the game to be more decisive.</p>
                   <p className="play-block-body">Voting order must switch each round, to avoid the same players voting last, stopping them having an advantage.</p>
                   <p className="play-block-body">The <span className="text-tmm-cream">MARSHALL</span> role SHOULD change each GAME, so all players have a chance at playing.</p>
-                  <p className="play-block-body">SCAN the "<span className="text-tmm-yellow">MUSIC CARD</span>" to make the GAME more enjoyable (helps the restless "sleeping" of players in the night)</p>
+                  <p className="play-block-body">SCAN the {'"'}<span className="text-tmm-green">MUSIC CARD</span>{'"'} to make the GAME more enjoyable (helps the restless {'"'}sleeping{'"'} of players in the night)</p>
                 </div>
 
                 {/* BOX 4 — CHARACTERS */}
