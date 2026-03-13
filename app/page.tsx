@@ -440,7 +440,9 @@ export default function Home() {
                 {/* BOX 2 — SETUP */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">SETUP</span><span className="play-block-subtitle">(SEE PLAY CARD*)</span></div>
-                  <p className="play-block-body">The <span className="text-tmm-cream">Marshall</span> shuffles the character cards (chosen by the players*) and hands one to each player. These cards determine whether a player is a <span className="text-tmm-brown">Villager</span>, <span className="text-tmm-red">Mafia</span>, or has a special role (see Character Cards* for details on each character{"'"}s abilities). Note - all Players must keep their character roles secret. Use the (<span className="text-tmm-yellow">Music Card*</span>) as an added bonus, it is used for the game ambience (stopping voting on players that make noise while asleep &amp; puts players in the mood to continue playing).</p>
+                  <p className="play-block-body">The <span className="text-tmm-cream">Marshall</span> shuffles the character cards (chosen by the players*) and hands one to each player. These cards determine whether a player is a <span className="text-tmm-brown">Villager</span>, <span className="text-tmm-red">Mafia</span>, or has a special role (see <span className="text-muted">Character Cards*</span> for details on each character{"'"}s abilities).</p>
+                  <p className="play-block-body" style={{marginTop:"clamp(8px,2vw,12px)"}}>Note - all Players must keep their character roles secret.</p>
+                  <p className="play-block-body" style={{marginTop:"clamp(8px,2vw,12px)"}}>Use the (<span className="text-tmm-green">Music Card*</span>) as an added bonus, it is used for the game ambience (stopping voting on players that make noise while asleep &amp; puts players in the mood to continue playing).</p>
                 </div>
 
                 {/* BOX 3 — RULES */}
