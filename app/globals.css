@@ -596,6 +596,21 @@
     to   { opacity: 1; transform: scale(1) translateY(0); }
   }
 
+  /* ── Scroll reveal — cards animate in as they enter the modal viewport ── */
+  @supports (animation-timeline: view()) {
+    .play-card,
+    .showcase-card,
+    .play-card-pill {
+      animation: scrollReveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 28%;
+    }
+    @keyframes scrollReveal {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  }
+
   /* ── Play cards — consistent glass matching nav ──────────────────── */
   .play-card {
     background: rgba(52, 52, 52, 0.25);
@@ -613,7 +628,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 4px;
+    margin-bottom: clamp(12px, 2.4vw, 16px);
   }
   .play-card-pill {
     background: rgba(52, 52, 52, 0.25);
