@@ -769,9 +769,18 @@
   .reviews-summary {
     display: flex;
     align-items: flex-start;
-    gap: 24px;
+    gap: 0;
     margin-top: 8px;
   }
+  .reviews-divider {
+    width: 1px;
+    align-self: stretch;
+    background: rgba(255, 255, 255, 0.10);
+    flex-shrink: 0;
+    margin: 0 clamp(16px, 4vw, 28px);
+    border-radius: 100px;
+  }
+  .tmm-light .reviews-divider { background: rgba(0, 0, 0, 0.08); }
   .reviews-score {
     display: flex;
     flex-direction: column;
@@ -970,6 +979,7 @@
 
   /* Reviews */
   .reviews-summary { flex-direction: column; gap: 16px; }
+  .reviews-divider { width: auto; height: 1px; margin: 4px 0; align-self: stretch; }
   .reviews-bars { width: 100%; }
   .reviews-score-number { font-size: 42px; }
   .review-card-top { flex-wrap: nowrap; align-items: center; }

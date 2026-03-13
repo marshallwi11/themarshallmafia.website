@@ -649,13 +649,14 @@ export default function Home() {
             <div className="modal-scroll-bare animate-modal-in">
               <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
                 <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">REVIEWS</span><span className="play-block-subtitle">WHAT THEY SAY</span></div>
+                  <div className="play-card-header"><span className="play-block-title">REVIEWS</span><span className="play-block-subtitle">RATING</span></div>
                   <div className="reviews-summary">
                     <div className="reviews-score">
                       <span className="reviews-score-number">4.8</span>
                       <StarRating rating={5} />
                       <span className="play-block-subtitle" style={{fontSize:"12px"}}>out of 5 · {TESTIMONIALS.length} reviews</span>
                     </div>
+                    <div className="reviews-divider" aria-hidden="true" />
                     <div className="reviews-bars">
                       {[5,4,3,2,1].map(n => {
                         const count = TESTIMONIALS.filter(t => t.rating === n).length
@@ -672,21 +673,23 @@ export default function Home() {
                   </div>
                 </div>
                 {TESTIMONIALS.map((t, i) => (
-                  <div key={i} className="play-card" onClick={e => e.stopPropagation()}>
+                  <div key={i} className="play-card" style={{position:"relative"}} onClick={e => e.stopPropagation()}>
+                    {/* Star rating pinned to top-right corner */}
+                    <div style={{position:"absolute",top:"clamp(18px,3.6vw,28px)",right:"clamp(20px,4.8vw,38px)"}}>
+                      <StarRating rating={t.rating} />
+                    </div>
                     <div className="review-card-top">
                       <div className="review-avatar" style={{background:"rgba(255,255,255,0.08)",display:"flex",alignItems:"center",justifyContent:"center"}}>
-                        {/* flipped = happy eyes (correct orientation), unflipped = sad — mirrors hero dark mode fix */}
                         <img
                           src="/tmm_themarshallmafia_logo.svg"
                           alt=""
                           style={{width:"22px",height:"auto",display:"block",transform: t.rating > 3 ? "scaleY(-1)" : "none"}}
                         />
                       </div>
-                      <div style={{minWidth:0,flex:"1 1 0"}}>
+                      <div style={{minWidth:0,flex:"1 1 0",paddingRight:"clamp(100px,28vw,130px)"}}>
                         <p className="play-block-body" style={{margin:0,lineHeight:1.2,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{t.name}</p>
                         <span className="play-block-subtitle" style={{fontSize:"12px"}}>{t.handle}</span>
                       </div>
-                      <div style={{flexShrink:0}}><StarRating rating={t.rating} /></div>
                     </div>
                     <p className="play-block-body"><span style={{fontWeight:"bold"}}>{t.title},</span> {t.body}</p>
                   </div>
