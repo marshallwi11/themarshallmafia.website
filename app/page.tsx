@@ -464,14 +464,19 @@ export default function Home() {
                 {/* BOX 4 — CHARACTERS */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">CHARACTERS</span><span className="play-block-subtitle">(SEE EACH ROLE CARD*)</span></div>
-                  <p className="play-block-body"><span className="text-tmm-cream">MARSHALL (1)</span> — The games host and all-seeing narrator. Players with roles wake up during the (Sleep Phase) and open their eyes - in the order called by <span className="text-tmm-cream">Marshall</span> (detailed above*), player then does their role action before closing their eyes again.</p>
-                  <p className="play-block-body"><span className="text-tmm-green">ANGEL (2)</span> — Pick player to save (Each Round).</p>
-                  <p className="play-block-body"><span className="text-tmm-blue">DETECTIVE (2)</span> — Pick player to guess if they are a <span className="text-tmm-red">mafia</span>, <span className="text-tmm-cream">Marshall</span> indicates Yes/No (Each Round).</p>
-                  <p className="play-block-body"><span className="text-tmm-green">DOCTOR (2)</span> — <span className="text-tmm-cream">Marshall</span> shows who the <span className="text-tmm-red">mafia</span> killed, save them Yes/No (Single Use).</p>
-                  <p className="play-block-body"><span className="text-tmm-yellow">JESTER (1)</span> — Get voted out to win the game.</p>
-                  <p className="play-block-body"><span className="text-tmm-red">MAFIA (3)</span> — Pick player to kill (Each Round).</p>
-                  <p className="play-block-body"><span className="text-tmm-yellow">SILENCER (1)</span> — Pick player to silence (Each Round).</p>
-                  <p className="play-block-body"><span className="text-tmm-brown">VILLAGER (10)</span> — Vote out <span className="text-tmm-red">mafia</span> to win.</p>
+                  <ul className="play-block-body play-rules-list">
+                    <li><span className="text-tmm-cream">MARSHALL (1)</span> — The games host and all-seeing narrator.</li>
+                  </ul>
+                  <p className="play-block-body">Players with roles wake up during the (Sleep Phase) and open their eyes - in the order called by <span className="text-tmm-cream">Marshall</span> (detailed above*), player then does their role action before closing their eyes again.</p>
+                  <ul className="play-block-body play-rules-list">
+                    <li><span className="text-tmm-green">ANGEL (2)</span> — Pick player to save (Each Round).</li>
+                    <li><span className="text-tmm-blue">DETECTIVE (2)</span> — Pick player to guess if they are a <span className="text-tmm-red">mafia</span>, <span className="text-tmm-cream">Marshall</span> indicates Yes/No (Each Round).</li>
+                    <li><span className="text-tmm-green">DOCTOR (2)</span> — <span className="text-tmm-cream">Marshall</span> shows who the <span className="text-tmm-red">mafia</span> killed, save them Yes/No (Single Use).</li>
+                    <li><span className="text-tmm-yellow">JESTER (1)</span> — Get voted out to win the game.</li>
+                    <li><span className="text-tmm-red">MAFIA (3)</span> — Pick player to kill (Each Round).</li>
+                    <li><span className="text-tmm-yellow">SILENCER (1)</span> — Pick player to silence (Each Round).</li>
+                    <li><span className="text-tmm-brown">VILLAGER (10)</span> — Vote out <span className="text-tmm-red">mafia</span> to win.</li>
+                  </ul>
                 </div>
 
                 {/* BOX 5 — PHASES */}
