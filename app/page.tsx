@@ -570,14 +570,17 @@ export default function Home() {
                   <div className="music-grid">
                     {[
                       { href:"https://open.spotify.com/playlist/3IciRcKF72CRT6MHI6C6Ry", src:"/images/tmm_music_spotify.jpg", label:"SPOTIFY" },
-                      { href:"https://music.apple.com/gb/artist/marshallwi11/1844826623", src:"/images/tmm_music_apple_music.jpg", label:"APPLE MUSIC" },
+                      { href:"https://music.apple.com/gb/artist/marshallwi11/1844826623", src:"/images/tmm_music_apple_music.jpg", label:"APPLE MUSIC", imgScale: 1.28 },
                       { href:"https://tidal.com/playlist/5f88e8b6-cded-4806-9c94-b22894328454", src:"/images/tmm_music_tidal.jpg", label:"TIDAL" },
                       { href:"https://music.amazon.co.uk/artists/B0FV93YR78/marshallwi11", src:"/images/tmm_music_amazon_music.jpg", label:"AMAZON MUSIC" },
                       { href:"https://link.deezer.com/s/32Ea3kbAJwzVroL9cvbDM", src:"/images/tmm_music_deezer.jpg", label:"DEEZER" },
                       { href:"https://www.youtube.com/playlist?list=PLg6v-S6qo4anyKTHrD3zxMAnkHGrSLDlJ", src:"/images/tmm_music_youtube.jpg", label:"YOUTUBE" },
-                    ].map(({ href, src, label }) => (
+                    ].map(({ href, src, label, imgScale }) => (
                       <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="music-tile">
-                        <div className="music-tile-icon"><img src={src} alt={label} className="music-tile-img" loading="eager" /></div>
+                        <div className="music-tile-icon">
+                          <img src={src} alt={label} className="music-tile-img" loading="eager"
+                            style={imgScale ? { transform: `scale(${imgScale})` } : undefined} />
+                        </div>
                         <span className="music-tile-label">{label}</span>
                       </a>
                     ))}
