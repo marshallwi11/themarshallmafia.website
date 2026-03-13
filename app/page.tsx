@@ -117,6 +117,7 @@ export default function Home() {
   const [stripeLoading, setStripeLoading] = useState(false)
   const [lightMode, setLightMode] = useState(false)
   const [logoFading, setLogoFading] = useState(false)
+  const [packSelected, setPackSelected] = useState<"standard" | "expansion" | null>(null)
   const [cartShaking, setCartShaking] = useState(false)
   const [infoOpen, setInfoOpen] = useState(false)
   // 0 = intro text showing | 1 = text fading out | 2 = nav visible
@@ -192,7 +193,7 @@ export default function Home() {
         setCartShaking(true)
         setTimeout(() => setCartShaking(false), 900)
       }
-    }, 10000)
+    }, 5000)
     return () => clearInterval(id)
   }, [activeModal])
 
@@ -213,15 +214,19 @@ export default function Home() {
   }, [activeModal])
 
   useEffect(() => {
-    if (activeModal === "collect" && !stripeClientSecret && !stripeLoading) {
+    if (activeModal === "collect" && packSelected === "standard" && !stripeClientSecret && !stripeLoading) {
       setStripeLoading(true)
       fetch("/api/checkout", { method: "POST" })
         .then(r => r.json())
         .then(d => { setStripeClientSecret(d.clientSecret); setStripeLoading(false) })
         .catch(() => setStripeLoading(false))
     }
-    if (activeModal !== "collect") { setStripeClientSecret(null); setStripeLoading(false) }
-  }, [activeModal])
+    if (activeModal !== "collect") {
+      setStripeClientSecret(null)
+      setStripeLoading(false)
+      setPackSelected(null)
+    }
+  }, [activeModal, packSelected])
 
   return (
     <>
@@ -357,7 +362,16 @@ export default function Home() {
                 )}
               </button>
 
-              {/* HOME — eyes logo */}
+              {/* HOME — text logo */}
+              <button ref={btnHomeRef}
+                className={`pill-nav-item pill-nav-home pill-nav-home--text${(activeModal === null && !infoOpen) ? " pill-nav-item--active" : ""}`}
+                onClick={() => { closeModal(); setInfoOpen(false); handleLogoTap() }}
+                aria-label="Home"
+              >
+                <span className="pill-nav-home-text">THE MARSHALL MAFIA</span>
+              </button>
+
+              {/* ── ALTERNATIVE: eyes logo version (keep for easy revert) ──
               <button ref={btnHomeRef}
                 className={`pill-nav-item pill-nav-home${(activeModal === null && !infoOpen) ? " pill-nav-item--active" : ""}`}
                 onClick={() => { closeModal(); setInfoOpen(false); handleLogoTap() }}
@@ -378,6 +392,7 @@ export default function Home() {
                   />
                 </div>
               </button>
+              ── END ALTERNATIVE ── */}
 
               {/* SHOWCASE */}
               <button ref={btnShowRef}
@@ -446,7 +461,7 @@ export default function Home() {
                 {/* BOX 1 — HOW TO PLAY */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">HOW TO PLAY</span><span className="play-block-subtitle">INSTRUCTIONS</span></div>
-                  <p className="play-block-body">In The <span className="text-tmm-cream">Marshall</span> <span className="text-tmm-red">Mafia</span>, <span className="text-tmm-brown">Villagers</span> must Identify, expose and vote out all <span className="text-tmm-red">Mafia</span> members, while the <span className="text-tmm-red">Mafia{"'"}s</span> goal is to secretly eliminate all <span className="text-tmm-brown">Villagers</span> until they outnumber them. The <span className="text-tmm-cream">Marshall</span> hosts the game, managing the flow of the rounds and overseeing the distribution of roles and actions.</p>
+                  <p className="play-block-body"><span style={{color:"#ffffff"}}>In The Marshall Mafia</span>, <span className="text-tmm-brown">Villagers</span> must Identify, expose and vote out all <span className="text-tmm-red">Mafia</span> members, while the <span className="text-tmm-red">Mafia{"'"}s</span> goal is to secretly eliminate all <span className="text-tmm-brown">Villagers</span> until they outnumber them. The <span className="text-tmm-cream">Marshall</span> hosts the game, managing the flow of the rounds and overseeing the distribution of roles and actions.</p>
                 </div>
 
                 {/* BOX 2 — SETUP */}
@@ -592,7 +607,7 @@ export default function Home() {
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="music-modal-header">
                     <span className="play-block-title">LISTEN</span>
-                    <span className="play-block-subtitle">play the full experience</span>
+                    <span className="play-block-subtitle">experience</span>
                   </div>
                   <div className="music-grid">
                     {[
@@ -623,7 +638,7 @@ export default function Home() {
                   <div className="releases-list">
                     <div className="release-row">
                       <span className="play-block-body">VOLUME 1</span>
-                      <span className="play-block-body release-tag">EP</span>
+                      <span className="play-block-body release-tag">Extended Playlist</span>
                     </div>
                     <hr className="play-card-divider" />
                     <div className="release-row">
@@ -650,15 +665,20 @@ export default function Home() {
               <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">REVIEWS</span><span className="play-block-subtitle">RATING</span></div>
+                  {(() => {
+                    const avg = TESTIMONIALS.reduce((s, t) => s + t.rating, 0) / TESTIMONIALS.length
+                    const avgDisplay = avg % 1 === 0 ? avg.toFixed(1) : avg.toFixed(1)
+                    const avgRounded = Math.round(avg)
+                    return (
                   <div className="reviews-summary">
                     <div className="reviews-score">
-                      <span className="reviews-score-number">4.8</span>
-                      <StarRating rating={5} />
+                      <span className="reviews-score-number">{avgDisplay}</span>
+                      <StarRating rating={avgRounded} />
                       <span className="play-block-subtitle" style={{fontSize:"12px"}}>out of 5 · {TESTIMONIALS.length} reviews</span>
                     </div>
                     <div className="reviews-divider" aria-hidden="true" />
                     <div className="reviews-bars">
-                      {[5,4,3,2,1].map(n => {
+                      {[5,4,3,2,1].filter(n => TESTIMONIALS.filter(t => t.rating === n).length > 0).map(n => {
                         const count = TESTIMONIALS.filter(t => t.rating === n).length
                         const pct = Math.round((count / TESTIMONIALS.length) * 100)
                         return (
@@ -671,25 +691,30 @@ export default function Home() {
                       })}
                     </div>
                   </div>
+                    )
+                  })()}
+                  <button
+                    className="play-block-body add-review-btn"
+                    onClick={e => e.stopPropagation()}
+                  >
+                    + add a review
+                  </button>
                 </div>
                 {TESTIMONIALS.map((t, i) => (
-                  <div key={i} className="play-card" style={{position:"relative"}} onClick={e => e.stopPropagation()}>
-                    {/* Star rating pinned to top-right corner */}
-                    <div style={{position:"absolute",top:"clamp(18px,3.6vw,28px)",right:"clamp(20px,4.8vw,38px)"}}>
-                      <StarRating rating={t.rating} />
-                    </div>
-                    <div className="review-card-top">
-                      <div className="review-avatar" style={{background:"rgba(255,255,255,0.08)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+                  <div key={i} className="play-card" onClick={e => e.stopPropagation()}>
+                    <div className="review-card-top" style={{alignItems:"flex-start"}}>
+                      <div className="review-avatar" style={{background:"rgba(255,255,255,0.08)",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
                         <img
                           src="/tmm_themarshallmafia_logo.svg"
                           alt=""
                           style={{width:"22px",height:"auto",display:"block",transform: t.rating > 3 ? "scaleY(-1)" : "none"}}
                         />
                       </div>
-                      <div style={{minWidth:0,flex:"1 1 0",paddingRight:"clamp(100px,28vw,130px)"}}>
+                      <div style={{minWidth:0,flex:"1 1 0"}}>
                         <p className="play-block-body" style={{margin:0,lineHeight:1.2,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{t.name}</p>
                         <span className="play-block-subtitle" style={{fontSize:"12px"}}>{t.handle}</span>
                       </div>
+                      <div style={{flexShrink:0,paddingTop:"2px"}}><StarRating rating={t.rating} /></div>
                     </div>
                     <p className="play-block-body"><span style={{fontWeight:"bold"}}>{t.title},</span> {t.body}</p>
                   </div>
@@ -709,24 +734,55 @@ export default function Home() {
             <div className="modal-backdrop" />
             <div className="modal-scroll-bare animate-modal-in">
               <div className="collect-list" onClick={e => e.stopPropagation()}>
-                <div className="play-card">
-                  <div className="play-card-header" style={{marginBottom:"20px"}}>
-                    <span className="play-block-title">CHECKOUT</span>
-                    <span className="play-block-subtitle">SECURE</span>
-                  </div>
-                  {stripeClientSecret ? (
-                    <div style={{borderRadius:"16px", overflow:"hidden"}}>
-                      <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret: stripeClientSecret }}>
-                        <EmbeddedCheckout />
-                      </EmbeddedCheckoutProvider>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-center py-8 gap-3">
-                      <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                      <span className="text-white/40 text-[13px]">Loading secure checkout...</span>
-                    </div>
-                  )}
+
+                {/* ── Pack selector — split pill ── */}
+                <div className="pack-selector-pill">
+                  <button
+                    className={`pack-selector-btn${packSelected === "standard" ? " pack-selector-btn--active" : ""}`}
+                    onClick={() => setPackSelected("standard")}
+                  >
+                    STANDARD PACK
+                  </button>
+                  <div className="pack-selector-divider" aria-hidden="true" />
+                  <button
+                    className={`pack-selector-btn${packSelected === "expansion" ? " pack-selector-btn--active" : ""}`}
+                    onClick={() => setPackSelected("expansion")}
+                  >
+                    EXPANSION PACK
+                  </button>
                 </div>
+
+                {/* ── Standard pack: stripe checkout ── */}
+                {packSelected === "standard" && (
+                  <div className="play-card">
+                    {stripeClientSecret ? (
+                      <div style={{borderRadius:"16px", overflow:"hidden"}}>
+                        <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret: stripeClientSecret }}>
+                          <EmbeddedCheckout />
+                        </EmbeddedCheckoutProvider>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center py-8 gap-3">
+                        <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                        <span className="text-white/40 text-[13px]">Loading secure checkout...</span>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* ── Expansion pack: coming soon ── */}
+                {packSelected === "expansion" && (
+                  <div className="play-card-pill" style={{justifyContent:"center"}}>
+                    <span className="play-block-title">COMING SOON!</span>
+                  </div>
+                )}
+
+                {/* ── Checkout / Secure pill — always visible ── */}
+                <div className="play-card-pill">
+                  <span className="play-block-title">CHECKOUT</span>
+                  <span className="play-block-subtitle">SECURE</span>
+                </div>
+
               </div>
             </div>
           </div>
