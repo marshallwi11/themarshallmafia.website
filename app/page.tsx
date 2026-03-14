@@ -171,7 +171,9 @@ function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading:
         opacity: logoFading ? 0 : 1,
         transition: "opacity 0.18s linear",
       }}>
-        <div ref={containerRef} className="select-none pointer-events-none w-full aspect-square hero-lottie" aria-label="The Marshall Mafia" />
+        <div className="hero-sequence-wrapper">
+          <div ref={containerRef} className="select-none pointer-events-none w-full aspect-square hero-lottie" aria-label="The Marshall Mafia" />
+        </div>
       </div>
     </div>
   )
@@ -409,7 +411,7 @@ export default function Home() {
                     : (activeModal === null && !infoOpen && !homeHovered) ? 0
                     : 1,
                   transition: sliderReady
-                    ? "left 0.72s cubic-bezier(0.65,0,0.35,1), width 0.72s cubic-bezier(0.65,0,0.35,1), opacity 0.3s ease"
+                    ? "left 0.36s cubic-bezier(0.34,1.18,0.64,1), width 0.36s cubic-bezier(0.34,1.18,0.64,1), opacity 0.3s ease"
                     : "opacity 0.3s ease",
                 }}
                 aria-hidden="true"
@@ -597,7 +599,7 @@ export default function Home() {
                     <path fillRule="evenodd" clipRule="evenodd" d="M7 6V5a3 3 0 016 0v1h3.5A.5.5 0 0117 6.5l-1.5 10a.5.5 0 01-.5.5H5a.5.5 0 01-.5-.45L3 6.5A.5.5 0 013.5 6H7zm2 0V5a1 1 0 012 0v1H9zm0 3a1 1 0 112 0 1 1 0 01-2 0z"/>
                   </svg>
                 )}
-                <span className="cart-pill-badge" aria-hidden="true" />
+                <span className={`cart-pill-badge${cartShaking ? " cart-pill-badge--pulse" : ""}`} aria-hidden="true" />
               </button>
 
               </div>{/* end buttons wrapper */}

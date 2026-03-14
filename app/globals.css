@@ -224,6 +224,49 @@
     40%  { opacity: 0.15; }
     100% { opacity: 1; filter: blur(0px) brightness(1); }
   }
+  /* ── Hero sequence loop — lifelike motion after initial rise ── */
+  /* Starts after heroRise (2.8s) finishes; loops continuously    */
+  .hero-sequence-wrapper {
+    width: 100%;
+    will-change: transform;
+    transform-origin: center center;
+    animation: heroSequence 11s ease-in-out infinite;
+    animation-delay: 3.2s;
+  }
+  @keyframes heroSequence {
+    /* Resting neutral */
+    0%    { transform: translate(0, 0)     scale(1, 1);    }
+
+    /* Squint-look left — eyes narrow, logo tilts left */
+    8%    { transform: translate(-6%, 2%)  scale(0.98, 0.78); }
+    18%   { transform: translate(-6%, 2%)  scale(0.98, 0.78); }
+
+    /* Sweep back through centre */
+    26%   { transform: translate(0, 0)     scale(1, 1);    }
+
+    /* Squint-look right */
+    34%   { transform: translate(6%, 2%)   scale(0.98, 0.78); }
+    44%   { transform: translate(6%, 2%)   scale(0.98, 0.78); }
+
+    /* Settle neutral */
+    52%   { transform: translate(0, 0)     scale(1, 1);    }
+
+    /* Zoom in — "getting closer to the screen surface" */
+    60%   { transform: translate(0, -3%)   scale(1.26, 1.26); }
+    70%   { transform: translate(0, -3%)   scale(1.26, 1.26); }
+
+    /* Zoom back to resting */
+    77%   { transform: translate(0, 0)     scale(1, 1);    }
+
+    /* Glance up-right toward cart, then two-beat nod */
+    83%   { transform: translate(7%, -11%) scale(1.05, 0.92); }
+    88%   { transform: translate(7%, -16%) scale(1.05, 0.86); }  /* nod peak */
+    92%   { transform: translate(6%, -10%) scale(1.04, 0.94); }  /* rebound */
+
+    /* Return home */
+    100%  { transform: translate(0, 0)     scale(1, 1);    }
+  }
+
   /* ── Site load intro text pill — exact same size as icon nav bar ── */
   .nav-intro-text {
     font-family: 'MarkerBold', sans-serif;
@@ -342,6 +385,19 @@
     60%        { transform: rotate(4deg); }
     70%        { transform: rotate(-2deg); }
     80%        { transform: rotate(1deg); }
+  }
+
+  /* Cart badge pulse — synced to shake so the dot swells big then settles */
+  .cart-pill-badge--pulse {
+    animation: badgePulse 0.9s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+  }
+  @keyframes badgePulse {
+    0%   { transform: scale(1); }
+    18%  { transform: scale(2.6); }
+    42%  { transform: scale(1.4); }
+    65%  { transform: scale(2.0); }
+    82%  { transform: scale(1.1); }
+    100% { transform: scale(1); }
   }
 
   /* ── Floating Pill Nav ────────────────────────────────────────────── */

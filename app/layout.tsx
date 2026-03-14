@@ -103,12 +103,14 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/icon.svg", sizes: "32x32" },
-      { url: "/icon.svg", sizes: "16x16" },
+      // Animated GIF favicons — dark/light OS preference
+      { url: "/themarshallmafia.black.gif", media: "(prefers-color-scheme: dark)",  type: "image/gif" },
+      { url: "/themarshallmafia.white.gif", media: "(prefers-color-scheme: light)", type: "image/gif" },
+      // Fallback (black) for browsers that ignore media queries on icons
+      { url: "/themarshallmafia.black.gif", type: "image/gif" },
     ],
-    apple: [{ url: "/icon.svg", sizes: "180x180" }],
-    shortcut: "/icon.svg",
+    apple: [{ url: "/themarshallmafia.black.gif", type: "image/gif" }],
+    shortcut: "/themarshallmafia.black.gif",
   },
   manifest: "/manifest.json",
 }
