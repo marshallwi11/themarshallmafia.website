@@ -177,7 +177,7 @@ function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading:
 }
 
 // ── Music Player ─────────────────────────────────────────────────────────────
-function MusicPlayer({ audioRef }: { audioRef: { current: HTMLAudioElement | null } }) {
+function MusicPlayer({ audioRef, lightMode }: { audioRef: { current: HTMLAudioElement | null }; lightMode: boolean }) {
   const [playing,  setPlaying]  = useState(false)
   const [progress, setProgress] = useState(0)       // 0..1
   const [elapsed,  setElapsed]  = useState(0)       // seconds
@@ -227,7 +227,10 @@ function MusicPlayer({ audioRef }: { audioRef: { current: HTMLAudioElement | nul
       {/* Controls — above seek bar, skip buttons greyed (single looping track) */}
       <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:"clamp(22px,5vw,34px)"}}>
         <button className="music-ctrl-btn music-ctrl-btn--disabled" aria-label="Previous track" aria-disabled="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+          {/* Skip-back: vertical bar left + left-pointing triangle */}
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/>
+          </svg>
         </button>
         <button className="music-ctrl-btn music-ctrl-btn--play" onClick={toggle} aria-label={playing ? "Pause" : "Play"}>
           {playing
@@ -236,7 +239,12 @@ function MusicPlayer({ audioRef }: { audioRef: { current: HTMLAudioElement | nul
           }
         </button>
         <button className="music-ctrl-btn music-ctrl-btn--disabled" aria-label="Next track" aria-disabled="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18 14.5 12 6 6v12zm2.5-6 6-4.35v8.7L8.5 12zM16 6h2v12h-2z"/></svg>
+          {/* Skip-forward: exact mirror of skip-back */}
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <g transform="scale(-1,1) translate(-24,0)">
+              <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/>
+            </g>
+          </svg>
         </button>
       </div>
 
@@ -244,21 +252,21 @@ function MusicPlayer({ audioRef }: { audioRef: { current: HTMLAudioElement | nul
       <div style={{display:"flex",flexDirection:"column",gap:"10px"}}>
         <input
           type="range" min="0" max="1" step="0.001" value={progress}
-          onChange={seek} className="music-range"
-          style={{"--pct": seekPct, "--track-fill": "rgba(255,255,255,0.90)"} as React.CSSProperties}
+          onChange={seek} className={`music-range${lightMode ? " music-range--light" : ""}`}
+          style={{"--pct": seekPct, "--track-fill": lightMode ? "rgba(0,0,0,0.62)" : "rgba(255,255,255,0.90)"} as React.CSSProperties}
           aria-label="Seek"
         />
         {/* Timestamps — bigger */}
         <div style={{display:"flex",justifyContent:"space-between"}}>
-          <span className="play-block-body" style={{fontSize:"clamp(13px,2.5vw,15px)",color:"rgba(255,255,255,0.55)"}}>{fmt(elapsed)}</span>
-          <span className="play-block-body" style={{fontSize:"clamp(13px,2.5vw,15px)",color:"rgba(255,255,255,0.55)"}}>{fmt(duration)}</span>
+          <span className="play-block-body" style={{fontSize:"clamp(13px,2.5vw,15px)",color: lightMode ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.55)"}}>{fmt(elapsed)}</span>
+          <span className="play-block-body" style={{fontSize:"clamp(13px,2.5vw,15px)",color: lightMode ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.55)"}}>{fmt(duration)}</span>
         </div>
       </div>
 
       {/* Track info — artist LEFT, song RIGHT, same line */}
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",gap:"12px"}}>
-        <p className="play-block-body" style={{margin:0,color:"#ffffff",whiteSpace:"nowrap"}}>marshallwi11</p>
-        <p className="play-block-body" style={{margin:0,fontSize:"clamp(11px,2vw,13px)",color:"rgba(255,255,255,0.38)",textAlign:"right"}}>the marshall mafia (theme tune)</p>
+        <p className="play-block-body" style={{margin:0,color: lightMode ? "#111111" : "#ffffff",whiteSpace:"nowrap"}}>marshallwi11</p>
+        <p className="play-block-body" style={{margin:0,fontSize:"clamp(11px,2vw,13px)",color: lightMode ? "rgba(0,0,0,0.40)" : "rgba(255,255,255,0.38)",textAlign:"right"}}>the marshall mafia (theme tune)</p>
       </div>
     </div>
   )
@@ -339,6 +347,9 @@ export default function Home() {
   const [cartShaking, setCartShaking] = useState(false)
   const [homeHovered, setHomeHovered] = useState(false)
   const [infoOpen, setInfoOpen] = useState(false)
+  const [modalSwitching, setModalSwitching] = useState(false)
+  const [showcaseIdx, setShowcaseIdx] = useState(0)
+  const [collectShaking, setCollectShaking] = useState(false)
   // 0 = intro text showing | 1 = text fading out | 2 = nav visible
   const [navIntro, setNavIntro] = useState(0)
   const lastTapRef = useRef<number>(0)
@@ -436,7 +447,16 @@ export default function Home() {
     return () => { audio.pause(); audio.src = ""; audioRef.current = null }
   }, [])
 
-  const openModal  = (m: ModalType) => { setInfoOpen(false); setActiveModal(m) }
+  const openModal = (m: ModalType) => {
+    setInfoOpen(false)
+    if (activeModal !== null && activeModal !== m) {
+      // Switching between modals — brief blur pulse to mask the swap
+      setModalSwitching(true)
+      setTimeout(() => { setActiveModal(m); setModalSwitching(false) }, 210)
+    } else {
+      setActiveModal(m)
+    }
+  }
   const closeModal = useCallback(() => setActiveModal(null), [])
 
   useEffect(() => {
@@ -450,6 +470,15 @@ export default function Home() {
   useEffect(() => {
     document.body.style.overflow = activeModal ? "hidden" : ""
     return () => { document.body.style.overflow = "" }
+  }, [activeModal])
+
+  // Shake the checkout card each time the collect modal opens
+  useEffect(() => {
+    if (activeModal === "collect") {
+      setCollectShaking(true)
+      const t = setTimeout(() => setCollectShaking(false), 600)
+      return () => clearTimeout(t)
+    }
   }, [activeModal])
 
   useEffect(() => {
@@ -474,6 +503,9 @@ export default function Home() {
       {/* OLD CSS backdrop (kept for easy revert — re-enable in globals.css "LEGACY BACKDROP" section too):
       <div className={`tmm-backdrop${lightMode ? " tmm-backdrop--light" : ""}`} aria-hidden="true" />
       */}
+
+      {/* Blur-pulse overlay — plays briefly when switching between open modals */}
+      {modalSwitching && <div className="modal-switch-pulse" aria-hidden="true" />}
 
       <main className={`site-canvas${lightMode ? " tmm-light" : ""}`}>
 
@@ -837,23 +869,44 @@ export default function Home() {
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
             <div className="modal-scroll-bare animate-modal-in">
-              {/* Images only — no text cards */}
-              <div className="showcase-list" onClick={e => e.stopPropagation()}>
-                {[1,2,3,4,5,6,7].map(n => (
-                  <div key={n} className="showcase-card">
-                    <div className="showcase-img-well">
-                      <Image
-                        src={`/images/tmm_picture_${n}.png`}
-                        alt={`The Marshall Mafia — image ${n}`}
-                        width={1200} height={900}
-                        loading={n === 1 ? "eager" : "lazy"}
-                        priority={n === 1}
-                        sizes="(max-width:600px) 100vw, 600px"
-                        style={{width:"100%",height:"auto"}}
-                      />
-                    </div>
+              <div className="modal-content-pane">
+                <div className="play-card" onClick={e => e.stopPropagation()}>
+                  <div className="play-card-header">
+                    <span className="play-block-title">SHOWCASE</span>
+                    <span className="play-block-subtitle">gallery</span>
                   </div>
-                ))}
+                  {/* Main large image */}
+                  <div className="showcase-img-well" style={{borderRadius:"clamp(8px,1.5vw,14px)"}}>
+                    <Image
+                      src={`/images/tmm_picture_${showcaseIdx + 1}.png`}
+                      alt={`The Marshall Mafia — image ${showcaseIdx + 1}`}
+                      width={1200} height={900}
+                      priority
+                      sizes="(max-width:600px) 100vw, 600px"
+                      style={{width:"100%",height:"auto",display:"block"}}
+                    />
+                  </div>
+                  {/* Thumbnail strip */}
+                  <div className="showcase-thumbs">
+                    {[0,1,2,3,4,5,6].map(i => (
+                      <button
+                        key={i}
+                        onClick={() => setShowcaseIdx(i)}
+                        className={`showcase-thumb${showcaseIdx === i ? " showcase-thumb--active" : ""}`}
+                        aria-label={`View image ${i + 1}`}
+                      >
+                        <Image
+                          src={`/images/tmm_picture_${i + 1}.png`}
+                          alt={`Thumbnail ${i + 1}`}
+                          width={200} height={150}
+                          loading="lazy"
+                          sizes="80px"
+                          style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -890,7 +943,7 @@ export default function Home() {
                 </div>
 
                 {/* ── Music player — controls the autoplay theme tune ── */}
-                <MusicPlayer audioRef={audioRef} />
+                <MusicPlayer audioRef={audioRef} lightMode={lightMode} />
 
                 {/* Releases — right side matches left side font size */}
                 <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
@@ -975,7 +1028,7 @@ export default function Home() {
                         <img
                           src="/tmm_themarshallmafia_logo.svg"
                           alt=""
-                          style={{width:"29px",height:"auto",display:"block",transform: t.rating > 3 ? "scaleY(-1)" : "none"}}
+                          style={{width:"29px",height:"auto",display:"block",transform: t.rating > 3 ? "scaleY(-1)" : "none", filter: lightMode ? "invert(1)" : "none"}}
                         />
                       </div>
                       <div style={{minWidth:0,flex:"1 1 0",display:"flex",flexDirection:"column",justifyContent:"space-between",height:"47px"}}>
@@ -1044,8 +1097,8 @@ export default function Home() {
                   </div>
                 )}
 
-                {/* ── Checkout / Secure pill — always visible ── */}
-                <div className="play-card-pill">
+                {/* ── Checkout / Secure pill — always visible, shakes when modal opens ── */}
+                <div className={`play-card-pill${collectShaking ? " play-card--shake" : ""}`}>
                   <span className="play-block-title">CHECKOUT</span>
                   <span className="play-block-subtitle">SECURE</span>
                 </div>

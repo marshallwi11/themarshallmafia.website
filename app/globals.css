@@ -388,23 +388,19 @@
     overflow: visible;
   }
 
-  /* ── Sliding pill indicator — transparent glass border, no fill ── */
-  /* Height matches the nav-item (48px) exactly so the ring is a true circle
-     on icon buttons and a pill on the wider home button. The top/bottom
-     values are half the nav-inner padding (10px) to vertically centre the ring. */
+  /* ── Sliding pill indicator — neumorphic raised/diffused, no border ── */
   .pill-nav-slider {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    height: 48px; /* matches .pill-nav-item height exactly */
-    background: transparent;
-    border: 1.5px solid rgba(255, 255, 255, 0.45);
+    height: 48px;
+    background: rgba(255,255,255,0.06);
+    border: none;
     border-radius: 1000px;
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.18),
-      0 0 0 0.5px rgba(255,255,255,0.10),
-      0 2px 12px rgba(0,0,0,0.20);
-    backdrop-filter: blur(0px);
+      -3px -3px 9px rgba(255,255,255,0.07),
+      3px 3px 9px rgba(0,0,0,0.55),
+      inset 0 1px 0 rgba(255,255,255,0.08);
     pointer-events: none;
     z-index: 0;
     /* left + width controlled via JS */
@@ -747,8 +743,8 @@
   }
   .music-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(10px, 3vw, 20px);
+    grid-template-columns: repeat(6, 1fr);
+    gap: clamp(8px, 2vw, 14px);
     margin-top: clamp(16px, 4vw, 24px);
   }
   .music-tile {
@@ -761,9 +757,9 @@
   }
   .music-tile:hover { transform: scale(1.05); }
   .music-tile-icon {
-    width: clamp(51px, 14.4vw, 77px);
-    height: clamp(51px, 14.4vw, 77px);
-    border-radius: clamp(11px, 2.6vw, 18px);
+    width: clamp(42px, 9.5vw, 62px);
+    height: clamp(42px, 9.5vw, 62px);
+    border-radius: clamp(9px, 2vw, 14px);
     overflow: hidden;
     flex-shrink: 0;
     border: 1px solid rgba(255, 255, 255, 0.14);
@@ -1111,6 +1107,90 @@
   .text-ally  { color: var(--tmm-cream); }
   .text-muted { color: rgba(255, 255, 255, 0.35); }
   .tmm-light .text-muted { color: rgba(0, 0, 0, 0.35); }
+
+  /* ── Modal switch blur-pulse overlay ─────────────────────────────── */
+  .modal-switch-pulse {
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    backdrop-filter: blur(48px) saturate(1.5);
+    -webkit-backdrop-filter: blur(48px) saturate(1.5);
+    pointer-events: none;
+    animation: switchPulse 0.42s ease-out forwards;
+  }
+  @keyframes switchPulse {
+    0%   { opacity: 0; }
+    28%  { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* ── Showcase thumbnail strip ────────────────────────────────────── */
+  .showcase-thumbs {
+    display: flex;
+    gap: clamp(6px, 1.5vw, 10px);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: clamp(10px, 2vw, 14px);
+  }
+  .showcase-thumb {
+    width: clamp(42px, 10vw, 58px);
+    height: clamp(42px, 10vw, 58px);
+    border-radius: clamp(7px, 1.5vw, 11px);
+    overflow: hidden;
+    background: transparent;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+    opacity: 0.45;
+    transition: border-color 0.15s ease, opacity 0.15s ease;
+  }
+  .showcase-thumb:hover {
+    opacity: 0.75;
+    border-color: rgba(255,255,255,0.28);
+  }
+  .showcase-thumb--active {
+    opacity: 1;
+    border-color: rgba(255,255,255,0.55);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.15);
+  }
+  .showcase-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .tmm-light .showcase-thumb:hover     { border-color: rgba(0,0,0,0.22); }
+  .tmm-light .showcase-thumb--active   { border-color: rgba(0,0,0,0.42); box-shadow: 0 0 0 1px rgba(0,0,0,0.08); }
+
+  /* ── Collect card shake on open ─────────────────────────────────── */
+  @keyframes collectShake {
+    0%,  100% { transform: translateX(0) rotate(0deg); }
+    10%        { transform: translateX(-7px) rotate(-1.5deg); }
+    25%        { transform: translateX(6px)  rotate(1.2deg); }
+    40%        { transform: translateX(-5px) rotate(-0.9deg); }
+    55%        { transform: translateX(4px)  rotate(0.6deg); }
+    70%        { transform: translateX(-2px) rotate(-0.3deg); }
+    85%        { transform: translateX(1px); }
+  }
+  .play-card--shake {
+    animation: collectShake 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  }
+
+  /* ── Light mode music range — unfilled track visible ─────────────── */
+  .tmm-light .music-range {
+    background: linear-gradient(
+      to right,
+      var(--track-fill, rgba(0,0,0,0.60)) var(--pct, 0%),
+      rgba(0,0,0,0.12) var(--pct, 0%)
+    );
+  }
+  .tmm-light .music-range::-moz-range-track {
+    background: rgba(0,0,0,0.12);
+  }
+  .tmm-light .music-range::-webkit-slider-runnable-track {
+    background: inherit;
+  }
 }
 
 /* =====================================================================
@@ -1199,9 +1279,9 @@
   .play-card { border-radius: 22px; padding: 22px 20px; gap: 10px; }
   .play-card-pill { padding: 14px 20px; border-radius: 100px; }
 
-  /* Music grid */
-  .music-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .music-tile-icon { width: 58px; height: 58px; border-radius: 16px; }
+  /* Music grid — 3 columns each row on mobile (2 rows of 3) */
+  .music-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .music-tile-icon { width: 52px; height: 52px; border-radius: 13px; }
   .music-tile-label { font-size: 10px; }
 
   /* Showcase / Collect */
