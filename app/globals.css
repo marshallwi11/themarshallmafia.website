@@ -1017,6 +1017,89 @@
     border-color: rgba(0, 0, 0, 0.1);
   }
 
+  /* ── Music player — range inputs & control buttons ──────────────── */
+  .music-range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 5px;
+    border-radius: 100px;
+    outline: none;
+    cursor: pointer;
+    border: none;
+    /* Fill set via CSS custom properties (--pct, --track-fill) on the element */
+    background: linear-gradient(
+      to right,
+      var(--track-fill, var(--tmm-yellow)) var(--pct, 0%),
+      rgba(255,255,255,0.12) var(--pct, 0%)
+    );
+  }
+  .music-range::-webkit-slider-runnable-track {
+    height: 5px;
+    border-radius: 100px;
+    background: inherit; /* inherits the gradient set on the input */
+  }
+  .music-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.40);
+    margin-top: -5.5px;
+  }
+  .music-range::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.40);
+  }
+  .music-range::-moz-range-track {
+    height: 5px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.12);
+  }
+  .tmm-light .music-range::-webkit-slider-thumb { background: #222222; }
+  .tmm-light .music-range::-moz-range-thumb      { background: #222222; }
+
+  /* Control buttons */
+  .music-ctrl-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.65);
+    padding: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  .music-ctrl-btn:hover { color: #ffffff; background: rgba(255,255,255,0.08); }
+  .music-ctrl-btn--play {
+    width: 52px;
+    height: 52px;
+    color: #ffffff;
+    background: rgba(255,255,255,0.12);
+  }
+  .music-ctrl-btn--play:hover { background: rgba(255,255,255,0.20); }
+  .music-ctrl-btn--disabled {
+    color: rgba(255,255,255,0.20) !important;
+    cursor: not-allowed !important;
+    pointer-events: none;
+  }
+  .tmm-light .music-ctrl-btn { color: rgba(0,0,0,0.55); }
+  .tmm-light .music-ctrl-btn:hover  { color: #000000; background: rgba(0,0,0,0.06); }
+  .tmm-light .music-ctrl-btn--play  { color: #000000; background: rgba(0,0,0,0.08); }
+  .tmm-light .music-ctrl-btn--play:hover { background: rgba(0,0,0,0.14); }
+  .tmm-light .music-ctrl-btn--disabled { color: rgba(0,0,0,0.18) !important; }
+
   /* ── Add review button ───────────────────────────────────────────── */
   .add-review-btn {
     display: block;
@@ -1085,39 +1168,40 @@
     transform: none !important;
   }
 
-  /* Compact pill outer container */
+  /* Compact pill outer container — full viewport width so 7 items fit */
   .pill-nav-inner {
     border-radius: 1000px;
-    padding: 8px 10px;
+    padding: 6px 8px;
     gap: 0;
     justify-content: space-between;
-    width: calc(var(--site-w) - 2 * clamp(12px, 3vw, 20px));
+    width: calc(100vw - 20px);
   }
 
-  /* Compact slider — keep height matching compact item height (40px) */
+  /* Compact slider — height matches compact item height (34px) */
   .pill-nav-slider {
-    height: 40px;
+    height: 34px;
     top: 50%;
     transform: translateY(-50%);
     border-radius: 1000px;
   }
 
-  /* Compact items — circles */
+  /* Compact items — circles, smaller to fit all 7 in the pill */
   .pill-nav-item {
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
     padding: 0;
     flex-shrink: 0;
     min-width: 0;
   }
 
   /* Home button compact */
-  .pill-nav-home { width: auto; min-width: 60px; height: 40px; padding: 0 14px; }
-  .pill-nav-home--text { min-width: 0; padding: 0 8px; }
-  .pill-nav-home-logo { width: 26px; height: 26px; }
+  .pill-nav-home { width: auto; min-width: 0; height: 34px; padding: 0 4px; }
+  .pill-nav-home--text { min-width: 0; padding: 0 4px; }
+  .pill-nav-home-text { font-size: 10px; }
+  .pill-nav-home-logo { width: 24px; height: 24px; }
 
   /* Badge position on mobile */
-  .cart-pill-badge { top: 6px; right: 6px; width: 9px; height: 9px; }
+  .cart-pill-badge { top: 4px; right: 4px; width: 8px; height: 8px; }
 
   .nav-intro-text { font-size: 17px; letter-spacing: 0.08em; }
 
@@ -1138,7 +1222,7 @@
     -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 62px, black 140px);
   }
   .modal-scroll-bare > div {
-    padding-top: clamp(80px, 14vw, 100px);
+    padding-top: 155px; /* push content clearly below nav + mask fade zone */
     padding-bottom: env(safe-area-inset-bottom, 24px);
   }
 

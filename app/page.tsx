@@ -179,6 +179,117 @@ function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading:
   )
 }
 
+// ── Music Player ─────────────────────────────────────────────────────────────
+function MusicPlayer({ audioRef }: { audioRef: { current: HTMLAudioElement | null } }) {
+  const [playing,  setPlaying]  = useState(false)
+  const [progress, setProgress] = useState(0)       // 0..1
+  const [elapsed,  setElapsed]  = useState(0)       // seconds
+  const [duration, setDuration] = useState(0)       // seconds
+  const [volume,   setVolume]   = useState(0.5)
+
+  useEffect(() => {
+    const a = audioRef.current
+    if (!a) return
+    const onTime  = () => { setElapsed(a.currentTime); if (a.duration) setProgress(a.currentTime / a.duration) }
+    const onMeta  = () => { if (!isNaN(a.duration)) setDuration(a.duration) }
+    const onPlay  = () => setPlaying(true)
+    const onPause = () => setPlaying(false)
+    a.addEventListener("timeupdate",     onTime)
+    a.addEventListener("loadedmetadata", onMeta)
+    a.addEventListener("durationchange", onMeta)
+    a.addEventListener("play",           onPlay)
+    a.addEventListener("pause",          onPause)
+    // Sync current state immediately
+    setPlaying(!a.paused)
+    setVolume(a.volume)
+    setElapsed(a.currentTime)
+    if (!isNaN(a.duration)) { setDuration(a.duration); if (a.duration) setProgress(a.currentTime / a.duration) }
+    return () => {
+      a.removeEventListener("timeupdate",     onTime)
+      a.removeEventListener("loadedmetadata", onMeta)
+      a.removeEventListener("durationchange", onMeta)
+      a.removeEventListener("play",           onPlay)
+      a.removeEventListener("pause",          onPause)
+    }
+  }, [audioRef])
+
+  const toggle = () => { const a = audioRef.current; if (!a) return; a.paused ? a.play().catch(() => {}) : a.pause() }
+  const seek   = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const a = audioRef.current; if (!a || !a.duration) return
+    const v = +e.target.value; a.currentTime = v * a.duration; setProgress(v)
+  }
+  const adjustVol = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const a = audioRef.current; if (!a) return
+    const v = +e.target.value; a.volume = v; setVolume(v)
+  }
+  const fmt = (s: number) => (!s || isNaN(s)) ? "0:00" : `${Math.floor(s / 60)}:${Math.floor(s % 60).toString().padStart(2, "0")}`
+
+  const seekPct = `${(progress * 100).toFixed(1)}%`
+  const volPct  = `${(volume   * 100).toFixed(1)}%`
+
+  return (
+    <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
+      {/* Header */}
+      <div className="play-card-header">
+        <span className="play-block-title">ARTIST</span>
+        <span className="play-block-subtitle">SONG</span>
+      </div>
+
+      {/* Seek / progress bar */}
+      <div style={{display:"flex",flexDirection:"column",gap:"8px"}}>
+        <input
+          type="range" min="0" max="1" step="0.001" value={progress}
+          onChange={seek} className="music-range"
+          style={{"--pct": seekPct, "--track-fill": "var(--tmm-yellow)"} as React.CSSProperties}
+          aria-label="Seek"
+        />
+        <div style={{display:"flex",justifyContent:"space-between"}}>
+          <span className="play-block-body" style={{fontSize:"11px",color:"rgba(255,255,255,0.40)"}}>{fmt(elapsed)}</span>
+          <span className="play-block-body" style={{fontSize:"11px",color:"rgba(255,255,255,0.40)"}}>{fmt(duration)}</span>
+        </div>
+      </div>
+
+      {/* Track info — artist below bar, song in grey */}
+      <div style={{display:"flex",flexDirection:"column",gap:"3px"}}>
+        <p className="play-block-body" style={{margin:0,color:"#ffffff"}}>marshallwi11</p>
+        <p className="play-block-body" style={{margin:0,fontSize:"clamp(11px,2vw,13px)",color:"rgba(255,255,255,0.38)"}}>the marshall mafia (theme tune)</p>
+      </div>
+
+      {/* Controls — skip buttons greyed (single looping track) */}
+      <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:"clamp(22px,5vw,34px)",marginTop:"2px"}}>
+        <button className="music-ctrl-btn music-ctrl-btn--disabled" aria-label="Previous track" aria-disabled="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+        </button>
+        <button className="music-ctrl-btn music-ctrl-btn--play" onClick={toggle} aria-label={playing ? "Pause" : "Play"}>
+          {playing
+            ? <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            : <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          }
+        </button>
+        <button className="music-ctrl-btn music-ctrl-btn--disabled" aria-label="Next track" aria-disabled="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18 14.5 12 6 6v12zm2.5-6 6-4.35v8.7L8.5 12zM16 6h2v12h-2z"/></svg>
+        </button>
+      </div>
+
+      {/* Volume slider */}
+      <div style={{display:"flex",alignItems:"center",gap:"10px"}}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style={{flexShrink:0,color:"rgba(255,255,255,0.38)"}}>
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+        </svg>
+        <input
+          type="range" min="0" max="1" step="0.01" value={volume}
+          onChange={adjustVol} className="music-range"
+          style={{flex:1, "--pct": volPct, "--track-fill": "rgba(255,255,255,0.65)"} as React.CSSProperties}
+          aria-label="Volume"
+        />
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style={{flexShrink:0,color:"rgba(255,255,255,0.38)"}}>
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+      </div>
+    </div>
+  )
+}
+
 // ── Star rating ───────────────────────────────────────────────────────────────
 function StarRating({ rating, max = 5 }: { rating: number; max?: number }) {
   return (
@@ -258,6 +369,7 @@ export default function Home() {
   const [navIntro, setNavIntro] = useState(0)
   const lastTapRef = useRef<number>(0)
   const swipeTouchStartX = useRef<number>(0)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
   // Left-to-right swipe order for the pill nav (middle 5 items)
   const SWIPE_ORDER: ModalType[] = ["play", "music", null, "showcase", "reviews"]
 
@@ -330,6 +442,25 @@ export default function Home() {
     }, 5000)
     return () => clearInterval(id)
   }, [activeModal])
+
+  // Theme tune — autoplay at 50% vol; falls back to first interaction if browser blocks
+  useEffect(() => {
+    const audio = new Audio("/tmm_theme_tune_audio.wav")
+    audio.volume = 0.5
+    audio.loop = true
+    audioRef.current = audio
+    const p = audio.play()
+    if (p !== undefined) {
+      p.catch(() => {
+        // Autoplay blocked — unlock on first user touch/click/key
+        const unlock = () => { audio.play().catch(() => {}) }
+        document.addEventListener("click",      unlock, { once: true })
+        document.addEventListener("touchstart", unlock, { once: true })
+        document.addEventListener("keydown",    unlock, { once: true })
+      })
+    }
+    return () => { audio.pause(); audio.src = ""; audioRef.current = null }
+  }, [])
 
   const openModal  = (m: ModalType) => { setInfoOpen(false); setActiveModal(m) }
   const closeModal = useCallback(() => setActiveModal(null), [])
@@ -784,6 +915,9 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
+
+                {/* ── Music player — controls the autoplay theme tune ── */}
+                <MusicPlayer audioRef={audioRef} />
 
                 {/* Releases — right side matches left side font size */}
                 <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
