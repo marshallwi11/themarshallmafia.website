@@ -445,7 +445,7 @@ export default function Home() {
 
   // Theme tune — autoplay at 50% vol; falls back to first interaction if browser blocks
   useEffect(() => {
-    const audio = new Audio("/tmm_theme_tune_audio.wav")
+    const audio = new Audio("/marshallwi11_themarshallmafia_song.mp3")
     audio.volume = 0.5
     audio.loop = true
     audioRef.current = audio
@@ -611,7 +611,6 @@ export default function Home() {
                     <rect x="11.5" y="2" width="4.5" height="16" rx="1.5"/>
                   </svg>
                 ) : (
-                  {/* Triangle shifted right 1.5px so its centroid sits at (10,10) */}
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M5.5 2.5L19 10 5.5 17.5V2.5Z"/>
                   </svg>
