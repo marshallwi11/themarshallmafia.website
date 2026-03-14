@@ -349,7 +349,6 @@ export default function Home() {
   const [infoOpen, setInfoOpen] = useState(false)
   const [modalSwitching, setModalSwitching] = useState(false)
   const [showcaseIdx, setShowcaseIdx] = useState(0)
-  const [collectShaking, setCollectShaking] = useState(false)
   // 0 = intro text showing | 1 = text fading out | 2 = nav visible
   const [navIntro, setNavIntro] = useState(0)
   const lastTapRef = useRef<number>(0)
@@ -452,7 +451,7 @@ export default function Home() {
     if (activeModal !== null && activeModal !== m) {
       // Switching between modals — brief blur pulse to mask the swap
       setModalSwitching(true)
-      setTimeout(() => { setActiveModal(m); setModalSwitching(false) }, 210)
+      setTimeout(() => { setActiveModal(m); setModalSwitching(false) }, 420)
     } else {
       setActiveModal(m)
     }
@@ -472,11 +471,11 @@ export default function Home() {
     return () => { document.body.style.overflow = "" }
   }, [activeModal])
 
-  // Shake the checkout card each time the collect modal opens
+  // Shake the cart nav icon when the collect modal is first opened
   useEffect(() => {
     if (activeModal === "collect") {
-      setCollectShaking(true)
-      const t = setTimeout(() => setCollectShaking(false), 600)
+      setCartShaking(true)
+      const t = setTimeout(() => setCartShaking(false), 900)
       return () => clearTimeout(t)
     }
   }, [activeModal])
@@ -875,15 +874,15 @@ export default function Home() {
                     <span className="play-block-title">SHOWCASE</span>
                     <span className="play-block-subtitle">gallery</span>
                   </div>
-                  {/* Main large image */}
+                  {/* Main large image — fixed 4:3 container, object-fit:cover so no size jumps */}
                   <div className="showcase-img-well" style={{borderRadius:"clamp(8px,1.5vw,14px)"}}>
                     <Image
                       src={`/images/tmm_picture_${showcaseIdx + 1}.png`}
                       alt={`The Marshall Mafia — image ${showcaseIdx + 1}`}
-                      width={1200} height={900}
+                      fill
                       priority
                       sizes="(max-width:600px) 100vw, 600px"
-                      style={{width:"100%",height:"auto",display:"block"}}
+                      style={{objectFit:"cover"}}
                     />
                   </div>
                   {/* Thumbnail strip */}
@@ -1097,8 +1096,8 @@ export default function Home() {
                   </div>
                 )}
 
-                {/* ── Checkout / Secure pill — always visible, shakes when modal opens ── */}
-                <div className={`play-card-pill${collectShaking ? " play-card--shake" : ""}`}>
+                {/* ── Checkout / Secure pill — always visible ── */}
+                <div className="play-card-pill">
                   <span className="play-block-title">CHECKOUT</span>
                   <span className="play-block-subtitle">SECURE</span>
                 </div>

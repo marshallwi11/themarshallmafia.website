@@ -719,13 +719,18 @@
     border-radius: clamp(8px, 1.5vw, 14px);
     overflow: hidden;
     width: 100%;
+    /* Fixed 4:3 aspect ratio — never shifts size between images */
+    aspect-ratio: 4 / 3;
+    position: relative;
     line-height: 0;
   }
   .showcase-img-well img,
   .showcase-img-well span,
   .showcase-img-well > * {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
     object-fit: cover;
   }
@@ -1113,14 +1118,15 @@
     position: fixed;
     inset: 0;
     z-index: 55;
-    backdrop-filter: blur(48px) saturate(1.5);
-    -webkit-backdrop-filter: blur(48px) saturate(1.5);
+    backdrop-filter: blur(52px) saturate(1.6);
+    -webkit-backdrop-filter: blur(52px) saturate(1.6);
     pointer-events: none;
-    animation: switchPulse 0.42s ease-out forwards;
+    animation: switchPulse 0.85s ease-in-out forwards;
   }
   @keyframes switchPulse {
     0%   { opacity: 0; }
-    28%  { opacity: 1; }
+    18%  { opacity: 1; }
+    72%  { opacity: 1; }
     100% { opacity: 0; }
   }
 
