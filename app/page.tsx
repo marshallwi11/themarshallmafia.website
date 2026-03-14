@@ -8,6 +8,128 @@ import { EmbeddedCheckout, EmbeddedCheckoutProvider } from "@stripe/react-stripe
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
+// ── Mesh Gradient Background (pure WebGL — no external deps) ─────────────────
+// Replaces the old CSS animated linear-gradient backdrop.
+// Old CSS version is preserved (commented out) in globals.css under "LEGACY BACKDROP".
+function MeshGradient({ lightMode }: { lightMode: boolean }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const lightRef  = useRef(lightMode)
+  useEffect(() => { lightRef.current = lightMode }, [lightMode])
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const gl = canvas.getContext("webgl", {
+      antialias: false, alpha: false, powerPreference: "low-power",
+    })
+    if (!gl) return
+
+    // Minimal vertex shader — full-screen triangle strip
+    const vsrc = `attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}`
+
+    // Fragment shader — organic mesh gradient via fbm warp + gaussian blobs
+    const fsrc = `precision mediump float;
+uniform float u_t;
+uniform vec2  u_r;
+uniform vec3  u_bg;
+uniform vec3  u_a;
+uniform vec3  u_b;
+float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5);}
+float n(vec2 p){
+  vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);
+  return mix(mix(h(i),h(i+vec2(1,0)),u.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),u.x),u.y);
+}
+float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<3;i++){v+=a*n(p);p*=2.;a*=.5;}return v;}
+void main(){
+  vec2 uv=gl_FragCoord.xy/u_r;
+  float t=u_t;
+  // Organic warp using fractional Brownian motion
+  vec2 d=vec2(fbm(uv*1.8+vec2(t*.08,t*.06)),fbm(uv*1.8+vec2(t*.06+3.7,t*.08+2.3)))*.3-.15;
+  vec2 w=clamp(uv+d,0.,1.);
+  // Slowly drifting corner anchors (UV space: 0,0=bottom-left 1,1=top-right)
+  vec2 pA=vec2(-.1,.9)+vec2(sin(t*.12)*.12,cos(t*.09)*.1); // top-left
+  vec2 pB=vec2(1.1,.1)+vec2(cos(t*.09)*.12,sin(t*.12)*.1); // bottom-right
+  float wA=exp(-dot(w-pA,w-pA)*3.5);
+  float wB=exp(-dot(w-pB,w-pB)*3.5);
+  vec3 col=u_bg+u_a*wA+u_b*wB;
+  gl_FragColor=vec4(clamp(col,0.,1.),1.);
+}`
+
+    function mkShader(type: number, src: string) {
+      const s = gl.createShader(type)!
+      gl.shaderSource(s, src); gl.compileShader(s); return s
+    }
+    const prog = gl.createProgram()!
+    gl.attachShader(prog, mkShader(gl.VERTEX_SHADER,   vsrc))
+    gl.attachShader(prog, mkShader(gl.FRAGMENT_SHADER, fsrc))
+    gl.linkProgram(prog); gl.useProgram(prog)
+
+    // Full-screen quad (triangle strip)
+    const buf = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf)
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW)
+    const aP = gl.getAttribLocation(prog, "p")
+    gl.enableVertexAttribArray(aP)
+    gl.vertexAttribPointer(aP, 2, gl.FLOAT, false, 0, 0)
+
+    const uT  = gl.getUniformLocation(prog, "u_t")
+    const uR  = gl.getUniformLocation(prog, "u_r")
+    const uBg = gl.getUniformLocation(prog, "u_bg")
+    const uA  = gl.getUniformLocation(prog, "u_a")
+    const uB  = gl.getUniformLocation(prog, "u_b")
+
+    // Render at half CSS resolution for GPU performance
+    function resize() {
+      canvas.width  = Math.max(1, Math.floor(window.innerWidth  / 2))
+      canvas.height = Math.max(1, Math.floor(window.innerHeight / 2))
+      gl.viewport(0, 0, canvas.width, canvas.height)
+    }
+    resize()
+    window.addEventListener("resize", resize)
+
+    const t0 = performance.now()
+    let raf = 0
+    function frame() {
+      // speed factor 0.5 — slow, meditative drift
+      const t = (performance.now() - t0) * 0.001 * 0.5
+      gl.uniform1f(uT, t)
+      gl.uniform2f(uR, canvas.width, canvas.height)
+      if (lightRef.current) {
+        // Light mode: near-white base, very faint warm tints at corners
+        gl.uniform3f(uBg, 0.97, 0.97, 0.97)
+        gl.uniform3f(uA,  0.03, 0.0,  0.0 ) // faint red top-left
+        gl.uniform3f(uB,  0.0,  0.0,  0.03) // faint blue bottom-right
+      } else {
+        // Dark mode: black base, barely-visible blue TL + dark-red BR
+        gl.uniform3f(uBg, 0.0,   0.0,   0.0  )
+        gl.uniform3f(uA,  0.0,   0.055, 0.13 ) // #000E21 — dark blue
+        gl.uniform3f(uB,  0.06,  0.0,   0.005) // #0F0001 — dark red
+      }
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
+      raf = requestAnimationFrame(frame)
+    }
+    raf = requestAnimationFrame(frame)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener("resize", resize)
+      try { gl.deleteProgram(prog); gl.deleteBuffer(buf) } catch (_) {}
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  return (
+    <canvas
+      ref={canvasRef}
+      aria-hidden="true"
+      style={{
+        position: "fixed", inset: 0,
+        width: "100%", height: "100%",
+        zIndex: 0, pointerEvents: "none", display: "block",
+      }}
+    />
+  )
+}
+
 // ── Lottie hero ───────────────────────────────────────────────────────────────
 function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -120,6 +242,7 @@ export default function Home() {
   const [packSelected, setPackSelected] = useState<"standard" | "expansion" | null>(null)
   const [reviewComing, setReviewComing] = useState(false)
   const [cartShaking, setCartShaking] = useState(false)
+  const [homeHovered, setHomeHovered] = useState(false)
   const [infoOpen, setInfoOpen] = useState(false)
   // 0 = intro text showing | 1 = text fading out | 2 = nav visible
   const [navIntro, setNavIntro] = useState(0)
@@ -231,7 +354,11 @@ export default function Home() {
 
   return (
     <>
+      {/* WebGL mesh gradient backdrop — replaces old CSS animated linear-gradient */}
+      <MeshGradient lightMode={lightMode} />
+      {/* OLD CSS backdrop (kept for easy revert — re-enable in globals.css "LEGACY BACKDROP" section too):
       <div className={`tmm-backdrop${lightMode ? " tmm-backdrop--light" : ""}`} aria-hidden="true" />
+      */}
 
       <main className={`site-canvas${lightMode ? " tmm-light" : ""}`}>
 
@@ -264,15 +391,18 @@ export default function Home() {
             <div className="pill-nav-inner" ref={navInnerRef}>
 
               {/* ── Sliding glass indicator ── */}
+              {/* Hides when home is the passive default (no modal open, not hovered) */}
               <span
                 className="pill-nav-slider"
                 style={{
                   left: sliderStyle.left,
                   width: sliderStyle.width,
-                  opacity: navIntro < 2 ? 0 : 1,
+                  opacity: navIntro < 2 ? 0
+                    : (activeModal === null && !infoOpen && !homeHovered) ? 0
+                    : 1,
                   transition: sliderReady
-                    ? "left 0.72s cubic-bezier(0.65,0,0.35,1), width 0.72s cubic-bezier(0.65,0,0.35,1), opacity 0.7s cubic-bezier(0.65,0,0.35,1)"
-                    : "opacity 0.7s cubic-bezier(0.65,0,0.35,1)",
+                    ? "left 0.72s cubic-bezier(0.65,0,0.35,1), width 0.72s cubic-bezier(0.65,0,0.35,1), opacity 0.3s ease"
+                    : "opacity 0.3s ease",
                 }}
                 aria-hidden="true"
               />
@@ -363,13 +493,17 @@ export default function Home() {
                 )}
               </button>
 
-              {/* HOME — text logo */}
+              {/* HOME — text logo; ring only visible on hover/press */}
               <button ref={btnHomeRef}
                 className={`pill-nav-item pill-nav-home pill-nav-home--text${(activeModal === null && !infoOpen) ? " pill-nav-item--active" : ""}`}
                 onClick={() => { closeModal(); setInfoOpen(false); handleLogoTap() }}
-                aria-label="Home"
+                onMouseEnter={() => setHomeHovered(true)}
+                onMouseLeave={() => setHomeHovered(false)}
+                aria-label="Home / double-tap to switch mode"
               >
-                <span className="pill-nav-home-text">THE MARSHALL MAFIA</span>
+                <span className="pill-nav-home-text">
+                  {homeHovered ? "LIGHT/DARK SWITCH" : "THE MARSHALL MAFIA"}
+                </span>
               </button>
 
               {/* ── ALTERNATIVE: eyes logo version (keep for easy revert) ──
@@ -683,12 +817,15 @@ export default function Home() {
                       {[5,4,3,2,1].filter(n => TESTIMONIALS.filter(t => t.rating === n).length > 0).map(n => {
                         const count = TESTIMONIALS.filter(t => t.rating === n).length
                         const pct = Math.round((count / TESTIMONIALS.length) * 100)
-                        const isTop = n === 5
+                        // Both label and count share yellow + same font size across all visible bars
+                        const labelStyle = { color: "var(--tmm-yellow)", fontSize: "clamp(15px,2.4vw,17px)" }
                         return (
                           <div key={n} className="review-bar-row">
-                            <span className="review-bar-label" style={isTop ? {color:"var(--tmm-yellow)",fontSize:"clamp(15px,2.4vw,17px)"} : {fontSize:"clamp(15px,2.4vw,17px)"}}>{n}</span>
-                            <div className="review-bar-track"><div className="review-bar-fill" style={{width:`${pct}%`,background: isTop ? "var(--tmm-yellow)" : "rgba(255,255,255,0.25)"}} /></div>
-                            <span className="review-bar-count" style={{fontSize:"clamp(13px,2vw,15px)"}}>{count}</span>
+                            <span className="review-bar-label" style={labelStyle}>{n}</span>
+                            <div className="review-bar-track">
+                              <div className="review-bar-fill" style={{ width:`${pct}%`, background:"var(--tmm-yellow)" }} />
+                            </div>
+                            <span className="review-bar-count" style={labelStyle}>{count}</span>
                           </div>
                         )
                       })}
@@ -720,7 +857,7 @@ export default function Home() {
                       </div>
                       <div style={{flexShrink:0,paddingTop:"2px"}}><StarRating rating={t.rating} /></div>
                     </div>
-                    <p className="play-block-body" style={{marginTop:"clamp(14px,3vw,20px)"}}><span style={{fontWeight:"bold"}}>{t.title},</span> {t.body}</p>
+                    <p className="play-block-body" style={{marginTop:"clamp(14px,3vw,20px)"}}>{t.body}</p>
                   </div>
                 ))}
                 <div className="play-card-pill" onClick={e => e.stopPropagation()}>
@@ -749,7 +886,7 @@ export default function Home() {
                   </button>
                   <button
                     className={`pack-pill-btn${packSelected === "expansion" ? " pack-pill-btn--active" : ""}`}
-                    onClick={() => setPackSelected("expansion")}
+                    onClick={() => { setPackSelected("expansion"); setLightMode(true) }}
                   >
                     EXPANSION PACK
                   </button>

@@ -133,51 +133,40 @@
 }
 
 /* =====================================================================
-   ANIMATED GLASS BACKDROP
+   LEGACY BACKDROP — CSS animated linear-gradient (kept for easy revert)
+   To restore: uncomment below AND swap the MeshGradient/backdrop div in page.tsx
    ===================================================================== */
+/*
 @layer utilities {
-
-  /* Dark backdrop — mostly black, blue as a narrow diffused accent band */
   .tmm-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background: linear-gradient(
       300deg,
-      #000000 0%,
-      #000000 43%,
-      #020d1e 47%,
-      #0780c4 50%,
-      #020d1e 53%,
-      #000000 57%,
-      #000000 100%
+      #000000 0%, #000000 43%, #020d1e 47%, #0780c4 50%, #020d1e 53%, #000000 57%, #000000 100%
     );
     background-size: 360% 360%;
     animation: gradient-animation 48s ease infinite;
   }
-
-  /* Light backdrop — mostly white, red as a narrow diffused accent band */
   .tmm-backdrop--light {
     background: linear-gradient(
       300deg,
-      #ffffff 0%,
-      #ffffff 43%,
-      #fff3f3 47%,
-      #E3000B 50%,
-      #fff3f3 53%,
-      #ffffff 57%,
-      #ffffff 100%
+      #ffffff 0%, #ffffff 43%, #fff3f3 47%, #E3000B 50%, #fff3f3 53%, #ffffff 57%, #ffffff 100%
     );
     background-size: 360% 360%;
     animation: gradient-animation 48s ease infinite;
   }
-
   @keyframes gradient-animation {
     0%   { background-position: 0% 50%; }
     50%  { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
+}
+*/
+
+/* =====================================================================
+   SITE CANVAS & GLOBAL LAYOUT
+   ===================================================================== */
+@layer utilities {
 
   .tmm-light { background: transparent; }
 
@@ -270,9 +259,9 @@
     to   { opacity: 1; transform: scale(1); }
   }
   .info-popup-inner {
-    background: rgba(22,22,22,0.82);
-    backdrop-filter: blur(28px) saturate(1.8);
-    -webkit-backdrop-filter: blur(28px) saturate(1.8);
+    background: rgba(16,16,16,0.88);
+    backdrop-filter: blur(52px) saturate(2);
+    -webkit-backdrop-filter: blur(52px) saturate(2);
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 18px;
     padding: 16px 18px;
@@ -373,15 +362,15 @@
     /* Match the modal card width — site-w minus the content-pane side padding */
     width: calc(var(--site-w) - 2 * clamp(12px, 3vw, 20px));
     padding: 10px 12px;
-    background: rgba(52, 52, 52, 0.25);
-    backdrop-filter: blur(24px) saturate(1.6);
-    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    background: rgba(22, 22, 22, 0.45);
+    backdrop-filter: blur(48px) saturate(2);
+    -webkit-backdrop-filter: blur(48px) saturate(2);
     border-radius: 1000px;
     border: 1px solid rgba(255, 255, 255, 0.10);
     box-shadow:
       0 0 0 0.5px rgba(255,255,255,0.06),
-      inset 0 1px 0 rgba(255,255,255,0.08),
-      0 8px 32px rgba(0,0,0,0.40);
+      inset 0 1px 0 rgba(255,255,255,0.10),
+      0 8px 40px rgba(0,0,0,0.55);
     box-sizing: border-box;
     overflow: visible;
   }
@@ -487,12 +476,14 @@
 
   /* Light mode nav — mirrors dark mode: glass pill, no item borders, slider only */
   .tmm-light .pill-nav-inner {
-    background: rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.55);
     border-color: rgba(0, 0, 0, 0.08);
     box-shadow:
       0 0 0 0.5px rgba(0,0,0,0.04),
-      inset 0 1px 0 rgba(255,255,255,0.55),
-      0 8px 32px rgba(0,0,0,0.10);
+      inset 0 1px 0 rgba(255,255,255,0.75),
+      0 8px 40px rgba(0,0,0,0.12);
+    backdrop-filter: blur(48px) saturate(2);
+    -webkit-backdrop-filter: blur(48px) saturate(2);
   }
   .tmm-light .pill-nav-slider {
     background: transparent;
@@ -533,18 +524,20 @@
     align-items: center;
     justify-content: center;
   }
-  /* Neutral dark backdrop — no blue tint */
+  /* Neutral dark backdrop — deep frosted blur */
   .modal-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(60px) saturate(1.4);
+    -webkit-backdrop-filter: blur(60px) saturate(1.4);
     animation: fadeIn 0.25s ease-out;
   }
   /* Light mode backdrop — neutral frosted white */
   .tmm-light .modal-backdrop {
-    background: rgba(240, 238, 234, 0.6);
+    background: rgba(240, 238, 234, 0.72);
+    backdrop-filter: blur(60px) saturate(1.4);
+    -webkit-backdrop-filter: blur(60px) saturate(1.4);
   }
   @keyframes fadeIn {
     from { opacity: 0; }
@@ -592,16 +585,16 @@
 
   /* ── Play cards — consistent glass matching nav ──────────────────── */
   .play-card {
-    background: rgba(52, 52, 52, 0.25);
+    background: rgba(30, 30, 30, 0.38);
     border-radius: clamp(24px, 4.5vw, 34px);
     padding: clamp(24px, 4.8vw, 38px);
     display: flex;
     flex-direction: column;
     gap: clamp(12px, 2.5vw, 16px);
     border: 1px solid rgba(255, 255, 255, 0.10);
-    backdrop-filter: blur(24px) saturate(1.6);
-    -webkit-backdrop-filter: blur(24px) saturate(1.6);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.06);
+    backdrop-filter: blur(44px) saturate(2);
+    -webkit-backdrop-filter: blur(44px) saturate(2);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.40), inset 0 1px 0 rgba(255,255,255,0.08);
   }
   .play-card-header {
     display: flex;
@@ -610,15 +603,15 @@
     margin-bottom: clamp(12px, 2.4vw, 16px);
   }
   .play-card-pill {
-    background: rgba(52, 52, 52, 0.25);
+    background: rgba(30, 30, 30, 0.38);
     border-radius: 100px;
     padding: clamp(14px, 3vw, 22px) clamp(20px, 4vw, 36px);
     display: flex;
     align-items: center;
     justify-content: space-between;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(24px) saturate(1.6);
-    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    backdrop-filter: blur(44px) saturate(2);
+    -webkit-backdrop-filter: blur(44px) saturate(2);
   }
   /* ── Rules bullet list ───────────────────────────────────────────── */
   .play-rules-list {
@@ -650,12 +643,17 @@
     margin: 6px 0;
   }
   .tmm-light .play-card {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.72);
     border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.90);
+    backdrop-filter: blur(44px) saturate(1.8);
+    -webkit-backdrop-filter: blur(44px) saturate(1.8);
   }
   .tmm-light .play-card-pill {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.72);
     border-color: rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(44px) saturate(1.8);
+    -webkit-backdrop-filter: blur(44px) saturate(1.8);
   }
   .tmm-light .play-card-divider { border-color: rgba(0, 0, 0, 0.1); }
 
@@ -697,10 +695,10 @@
   }
   .showcase-card {
     border-radius: clamp(22px, 4vw, 32px);
-    background: rgba(52, 52, 52, 0.25);
+    background: rgba(30, 30, 30, 0.38);
     border: 1px solid rgba(255, 255, 255, 0.10);
-    backdrop-filter: blur(24px) saturate(1.6);
-    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    backdrop-filter: blur(44px) saturate(2);
+    -webkit-backdrop-filter: blur(44px) saturate(2);
     padding: clamp(20px, 4vw, 28px);
     box-sizing: border-box;
   }
@@ -913,8 +911,8 @@
   }
   .tmm-light .review-bar-label { color: rgba(0, 0, 0, 0.45); }
   .review-bar-track {
-    width: clamp(70px, 14vw, 110px);
-    flex: none;
+    flex: 1;
+    min-width: 50px;
     height: 6px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 100px;

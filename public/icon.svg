@@ -1,26 +1,8 @@
 <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    @media (prefers-color-scheme: light) {
-      .background { fill: black; }
-      .foreground { fill: white; }
-    }
-    @media (prefers-color-scheme: dark) {
-      .background { fill: white; }
-      .foreground { fill: black; }
-    }
-  </style>
-  <g clip-path="url(#clip0_7960_43945)">
-    <rect class="background" width="180" height="180" rx="37" />
-    <g style="transform: scale(95%); transform-origin: center">
-      <path class="foreground"
-        d="M101.141 53H136.632C151.023 53 162.689 64.6662 162.689 79.0573V112.904H148.112V79.0573C148.112 78.7105 148.098 78.3662 148.072 78.0251L112.581 112.898C112.701 112.902 112.821 112.904 112.941 112.904H148.112V126.672H112.941C98.5504 126.672 86.5638 114.891 86.5638 100.5V66.7434H101.141V100.5C101.141 101.15 101.191 101.792 101.289 102.422L137.56 66.7816C137.255 66.7563 136.945 66.7434 136.632 66.7434H101.141V53Z" />
-      <path class="foreground"
-        d="M65.2926 124.136L14 66.7372H34.6355L64.7495 100.436V66.7372H80.1365V118.47C80.1365 126.278 70.4953 129.958 65.2926 124.136Z" />
-    </g>
+  <rect width="180" height="180" rx="37" fill="#000000"/>
+  <!-- TMM eyes logo — flipped vertically (angry/sad look), scaled and centred in 180×180 -->
+  <g transform="translate(15, 107) scale(0.9804, -0.9804)">
+    <path d="M31.5839 15.6672C23.549 15.9219 17.8647 10.4448 15.3432 0H0C1.1112 11.6761 6.23985 20.5499 16.3689 26.027C27.7374 32.141 38.9777 30.9946 49.4914 23.989C57.9109 18.3845 62.3557 10.19 63.3814 0H47.8673C46.0723 11.2939 38.2938 15.4124 31.6266 15.6672H31.5839Z" fill="white"/>
+    <path d="M120.609 15.6672C112.574 15.9219 106.889 10.4448 104.368 0H89.0247C90.1359 11.6761 95.2645 20.5499 105.394 26.027C116.762 32.141 128.002 30.9946 138.516 23.989C146.936 18.3845 151.38 10.19 152.406 0H136.892C135.097 11.2939 127.319 15.4124 120.651 15.6672H120.609Z" fill="white"/>
   </g>
-  <defs>
-    <clipPath id="clip0_7960_43945">
-      <rect width="180" height="180" fill="white" />
-    </clipPath>
-  </defs>
 </svg>

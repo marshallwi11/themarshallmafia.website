@@ -103,11 +103,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icon-light-32x32.png", media: "(prefers-color-scheme: light)" },
-      { url: "/icon-dark-32x32.png", media: "(prefers-color-scheme: dark)" },
       { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon.svg", sizes: "32x32" },
+      { url: "/icon.svg", sizes: "16x16" },
     ],
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    apple: [{ url: "/icon.svg", sizes: "180x180" }],
+    shortcut: "/icon.svg",
   },
   manifest: "/manifest.json",
 }
