@@ -224,49 +224,6 @@
     40%  { opacity: 0.15; }
     100% { opacity: 1; filter: blur(0px) brightness(1); }
   }
-  /* ── Hero sequence loop — lifelike motion after initial rise ── */
-  /* Starts after heroRise (2.8s) finishes; loops continuously    */
-  .hero-sequence-wrapper {
-    width: 100%;
-    will-change: transform;
-    transform-origin: center center;
-    animation: heroSequence 11s ease-in-out infinite;
-    animation-delay: 3.2s;
-  }
-  @keyframes heroSequence {
-    /* Resting neutral */
-    0%    { transform: translate(0, 0)     scale(1, 1);    }
-
-    /* Squint-look left — eyes narrow, logo tilts left */
-    8%    { transform: translate(-6%, 2%)  scale(0.98, 0.78); }
-    18%   { transform: translate(-6%, 2%)  scale(0.98, 0.78); }
-
-    /* Sweep back through centre */
-    26%   { transform: translate(0, 0)     scale(1, 1);    }
-
-    /* Squint-look right */
-    34%   { transform: translate(6%, 2%)   scale(0.98, 0.78); }
-    44%   { transform: translate(6%, 2%)   scale(0.98, 0.78); }
-
-    /* Settle neutral */
-    52%   { transform: translate(0, 0)     scale(1, 1);    }
-
-    /* Zoom in — "getting closer to the screen surface" */
-    60%   { transform: translate(0, -3%)   scale(1.26, 1.26); }
-    70%   { transform: translate(0, -3%)   scale(1.26, 1.26); }
-
-    /* Zoom back to resting */
-    77%   { transform: translate(0, 0)     scale(1, 1);    }
-
-    /* Glance up-right toward cart, then two-beat nod */
-    83%   { transform: translate(7%, -11%) scale(1.05, 0.92); }
-    88%   { transform: translate(7%, -16%) scale(1.05, 0.86); }  /* nod peak */
-    92%   { transform: translate(6%, -10%) scale(1.04, 0.94); }  /* rebound */
-
-    /* Return home */
-    100%  { transform: translate(0, 0)     scale(1, 1);    }
-  }
-
   /* ── Site load intro text pill — exact same size as icon nav bar ── */
   .nav-intro-text {
     font-family: 'MarkerBold', sans-serif;
@@ -763,7 +720,6 @@
     box-sizing: border-box;
   }
   .showcase-img-well {
-    background: rgba(230, 228, 224, 0.92);
     border-radius: clamp(8px, 1.5vw, 14px);
     overflow: hidden;
     width: 100%;
@@ -1067,37 +1023,50 @@
   .tmm-light .music-range::-webkit-slider-thumb { background: #222222; }
   .tmm-light .music-range::-moz-range-thumb      { background: #222222; }
 
-  /* Control buttons */
+  /* Control buttons — unbordered like nav items; border appears on hover/press */
   .music-ctrl-btn {
     background: transparent;
-    border: none;
+    border: 1.5px solid transparent;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255,255,255,0.65);
+    color: rgba(255,255,255,0.60);
     padding: 6px;
     border-radius: 50%;
     flex-shrink: 0;
-    transition: color 0.15s ease, background 0.15s ease;
+    transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
   }
-  .music-ctrl-btn:hover { color: #ffffff; background: rgba(255,255,255,0.08); }
+  .music-ctrl-btn:hover {
+    color: rgba(255,255,255,0.90);
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(255,255,255,0.45);
+  }
+  .music-ctrl-btn:active {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.55);
+  }
   .music-ctrl-btn--play {
     width: 52px;
     height: 52px;
-    color: #ffffff;
-    background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.85);
   }
-  .music-ctrl-btn--play:hover { background: rgba(255,255,255,0.20); }
+  .music-ctrl-btn--play:hover {
+    color: #ffffff;
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(255,255,255,0.45);
+  }
   .music-ctrl-btn--disabled {
     color: rgba(255,255,255,0.20) !important;
+    border-color: transparent !important;
     cursor: not-allowed !important;
     pointer-events: none;
   }
-  .tmm-light .music-ctrl-btn { color: rgba(0,0,0,0.55); }
-  .tmm-light .music-ctrl-btn:hover  { color: #000000; background: rgba(0,0,0,0.06); }
-  .tmm-light .music-ctrl-btn--play  { color: #000000; background: rgba(0,0,0,0.08); }
-  .tmm-light .music-ctrl-btn--play:hover { background: rgba(0,0,0,0.14); }
+  .tmm-light .music-ctrl-btn { color: rgba(0,0,0,0.50); border-color: transparent; }
+  .tmm-light .music-ctrl-btn:hover { color: #000000; background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.30); }
+  .tmm-light .music-ctrl-btn:active { background: rgba(0,0,0,0.10); border-color: rgba(0,0,0,0.40); }
+  .tmm-light .music-ctrl-btn--play { color: rgba(0,0,0,0.80); }
+  .tmm-light .music-ctrl-btn--play:hover { color: #000000; background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.30); }
   .tmm-light .music-ctrl-btn--disabled { color: rgba(0,0,0,0.18) !important; }
 
   /* ── Add review button ───────────────────────────────────────────── */

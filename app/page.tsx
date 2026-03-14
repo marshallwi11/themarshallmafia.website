@@ -100,18 +100,17 @@ void main(){
       gl.uniform1f(uT, t)
       gl.uniform2f(uR, canvas.width, canvas.height)
       if (lightRef.current) {
-        // Light mode: near-white base — TMM green TL, TMM yellow BR
-        // Mix formula: at corners these blend into the background at u_str intensity
-        gl.uniform1f(uStr, 0.45)            // 45% blend at corner peak
+        // Light mode: near-white base — muted TMM green TL, muted TMM yellow BR
+        gl.uniform1f(uStr, 0.28)            // 28% blend — softer presence
         gl.uniform3f(uBg,  0.97, 0.97, 0.97)
-        gl.uniform3f(uA,   0.17, 0.86, 0.31) // #2BDC4F TMM green (top-left)
-        gl.uniform3f(uB,   0.97, 0.675,0.0 ) // #F7AC00 TMM yellow (bottom-right)
+        gl.uniform3f(uA,   0.14, 0.68, 0.25) // muted green (top-left)
+        gl.uniform3f(uB,   0.95, 0.58, 0.0 ) // muted yellow (bottom-right)
       } else {
-        // Dark mode: black base — prominent TMM blue TL, TMM red BR
-        gl.uniform1f(uStr, 0.70)            // 70% blend at corner peak
+        // Dark mode: black base — muted TMM blue TL, muted TMM red BR
+        gl.uniform1f(uStr, 0.48)            // 48% blend — subtler than before
         gl.uniform3f(uBg,  0.0,  0.0,  0.0 )
-        gl.uniform3f(uA,   0.02, 0.28, 0.65) // rich blue (top-left)
-        gl.uniform3f(uB,   0.55, 0.02, 0.02) // rich red  (bottom-right)
+        gl.uniform3f(uA,   0.02, 0.20, 0.52) // muted blue (top-left)
+        gl.uniform3f(uB,   0.44, 0.02, 0.02) // muted red  (bottom-right)
       }
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
       raf = requestAnimationFrame(frame)
@@ -171,9 +170,7 @@ function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading:
         opacity: logoFading ? 0 : 1,
         transition: "opacity 0.18s linear",
       }}>
-        <div className="hero-sequence-wrapper">
-          <div ref={containerRef} className="select-none pointer-events-none w-full aspect-square hero-lottie" aria-label="The Marshall Mafia" />
-        </div>
+        <div ref={containerRef} className="select-none pointer-events-none w-full aspect-square hero-lottie" aria-label="The Marshall Mafia" />
       </div>
     </div>
   )
@@ -185,7 +182,6 @@ function MusicPlayer({ audioRef }: { audioRef: { current: HTMLAudioElement | nul
   const [progress, setProgress] = useState(0)       // 0..1
   const [elapsed,  setElapsed]  = useState(0)       // seconds
   const [duration, setDuration] = useState(0)       // seconds
-  const [volume,   setVolume]   = useState(0.5)
 
   useEffect(() => {
     const a = audioRef.current
@@ -199,9 +195,7 @@ function MusicPlayer({ audioRef }: { audioRef: { current: HTMLAudioElement | nul
     a.addEventListener("durationchange", onMeta)
     a.addEventListener("play",           onPlay)
     a.addEventListener("pause",          onPause)
-    // Sync current state immediately
     setPlaying(!a.paused)
-    setVolume(a.volume)
     setElapsed(a.currentTime)
     if (!isNaN(a.duration)) { setDuration(a.duration); if (a.duration) setProgress(a.currentTime / a.duration) }
     return () => {
@@ -218,14 +212,9 @@ function MusicPlayer({ audioRef }: { audioRef: { current: HTMLAudioElement | nul
     const a = audioRef.current; if (!a || !a.duration) return
     const v = +e.target.value; a.currentTime = v * a.duration; setProgress(v)
   }
-  const adjustVol = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const a = audioRef.current; if (!a) return
-    const v = +e.target.value; a.volume = v; setVolume(v)
-  }
   const fmt = (s: number) => (!s || isNaN(s)) ? "0:00" : `${Math.floor(s / 60)}:${Math.floor(s % 60).toString().padStart(2, "0")}`
 
   const seekPct = `${(progress * 100).toFixed(1)}%`
-  const volPct  = `${(volume   * 100).toFixed(1)}%`
 
   return (
     <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
@@ -235,28 +224,8 @@ function MusicPlayer({ audioRef }: { audioRef: { current: HTMLAudioElement | nul
         <span className="play-block-subtitle">SONG</span>
       </div>
 
-      {/* Seek / progress bar */}
-      <div style={{display:"flex",flexDirection:"column",gap:"8px"}}>
-        <input
-          type="range" min="0" max="1" step="0.001" value={progress}
-          onChange={seek} className="music-range"
-          style={{"--pct": seekPct, "--track-fill": "var(--tmm-yellow)"} as React.CSSProperties}
-          aria-label="Seek"
-        />
-        <div style={{display:"flex",justifyContent:"space-between"}}>
-          <span className="play-block-body" style={{fontSize:"11px",color:"rgba(255,255,255,0.40)"}}>{fmt(elapsed)}</span>
-          <span className="play-block-body" style={{fontSize:"11px",color:"rgba(255,255,255,0.40)"}}>{fmt(duration)}</span>
-        </div>
-      </div>
-
-      {/* Track info — artist below bar, song in grey */}
-      <div style={{display:"flex",flexDirection:"column",gap:"3px"}}>
-        <p className="play-block-body" style={{margin:0,color:"#ffffff"}}>marshallwi11</p>
-        <p className="play-block-body" style={{margin:0,fontSize:"clamp(11px,2vw,13px)",color:"rgba(255,255,255,0.38)"}}>the marshall mafia (theme tune)</p>
-      </div>
-
-      {/* Controls — skip buttons greyed (single looping track) */}
-      <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:"clamp(22px,5vw,34px)",marginTop:"2px"}}>
+      {/* Controls — above seek bar, skip buttons greyed (single looping track) */}
+      <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:"clamp(22px,5vw,34px)"}}>
         <button className="music-ctrl-btn music-ctrl-btn--disabled" aria-label="Previous track" aria-disabled="true">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
         </button>
@@ -271,20 +240,25 @@ function MusicPlayer({ audioRef }: { audioRef: { current: HTMLAudioElement | nul
         </button>
       </div>
 
-      {/* Volume slider */}
-      <div style={{display:"flex",alignItems:"center",gap:"10px"}}>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style={{flexShrink:0,color:"rgba(255,255,255,0.38)"}}>
-          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
-        </svg>
+      {/* Seek / progress bar — white */}
+      <div style={{display:"flex",flexDirection:"column",gap:"10px"}}>
         <input
-          type="range" min="0" max="1" step="0.01" value={volume}
-          onChange={adjustVol} className="music-range"
-          style={{flex:1, "--pct": volPct, "--track-fill": "rgba(255,255,255,0.65)"} as React.CSSProperties}
-          aria-label="Volume"
+          type="range" min="0" max="1" step="0.001" value={progress}
+          onChange={seek} className="music-range"
+          style={{"--pct": seekPct, "--track-fill": "rgba(255,255,255,0.90)"} as React.CSSProperties}
+          aria-label="Seek"
         />
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style={{flexShrink:0,color:"rgba(255,255,255,0.38)"}}>
-          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-        </svg>
+        {/* Timestamps — bigger */}
+        <div style={{display:"flex",justifyContent:"space-between"}}>
+          <span className="play-block-body" style={{fontSize:"clamp(13px,2.5vw,15px)",color:"rgba(255,255,255,0.55)"}}>{fmt(elapsed)}</span>
+          <span className="play-block-body" style={{fontSize:"clamp(13px,2.5vw,15px)",color:"rgba(255,255,255,0.55)"}}>{fmt(duration)}</span>
+        </div>
+      </div>
+
+      {/* Track info — artist LEFT, song RIGHT, same line */}
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",gap:"12px"}}>
+        <p className="play-block-body" style={{margin:0,color:"#ffffff",whiteSpace:"nowrap"}}>marshallwi11</p>
+        <p className="play-block-body" style={{margin:0,fontSize:"clamp(11px,2vw,13px)",color:"rgba(255,255,255,0.38)",textAlign:"right"}}>the marshall mafia (theme tune)</p>
       </div>
     </div>
   )
@@ -646,11 +620,11 @@ export default function Home() {
               >
                 <span className="pill-nav-home-text" style={{display:"grid"}}>
                   {/* Default text — always rendered (drives button width) */}
-                  <span style={{gridArea:"1/1", opacity: homeHovered ? 0 : 1, transition:"opacity 0.15s ease", whiteSpace:"nowrap"}}>
+                  <span style={{gridArea:"1/1", opacity: homeHovered ? 0 : 1, transition:"opacity 0.45s ease", whiteSpace:"nowrap"}}>
                     THE MARSHALL MAFIA
                   </span>
                   {/* Hover text — overlays in the same cell */}
-                  <span style={{gridArea:"1/1", opacity: homeHovered ? 1 : 0, transition:"opacity 0.15s ease", whiteSpace:"nowrap", textAlign:"center"}}>
+                  <span style={{gridArea:"1/1", opacity: homeHovered ? 1 : 0, transition:"opacity 0.45s ease", whiteSpace:"nowrap", textAlign:"center"}}>
                     NIGHT / DAY SWITCH
                   </span>
                 </span>
