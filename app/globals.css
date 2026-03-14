@@ -741,7 +741,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 0;
     transition: transform 0.15s ease, opacity 0.15s ease;
     text-decoration: none;
   }
@@ -752,6 +752,13 @@
     border-radius: clamp(11px, 2.6vw, 18px);
     overflow: hidden;
     flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 14px rgba(0,0,0,0.28);
+    box-sizing: border-box;
+  }
+  .tmm-light .music-tile-icon {
+    border-color: rgba(0, 0, 0, 0.10);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), 0 4px 14px rgba(0,0,0,0.10);
   }
   .music-tile-img {
     width: 100%;
@@ -806,35 +813,37 @@
     -webkit-backdrop-filter: blur(24px) saturate(1.6);
     box-shadow: 0 8px 32px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.06);
     font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(14px, 3vw, 17px);
-    letter-spacing: 0.04em;
+    font-size: clamp(19px, 3.5vw, 23px);
+    letter-spacing: 0.03em;
     color: rgba(255, 255, 255, 0.50);
     cursor: pointer;
-    transition: color 0.2s ease, border-color 0.2s ease, backdrop-filter 0.2s ease;
+    transition: color 0.2s ease, background 0.2s ease, backdrop-filter 0.3s ease;
     text-align: center;
     white-space: nowrap;
   }
   .pack-pill-btn:hover {
-    color: rgba(255, 255, 255, 0.88);
-    border-color: rgba(255, 255, 255, 0.28);
+    color: rgba(255, 255, 255, 0.80);
+    background: rgba(52, 52, 52, 0.35);
   }
   .pack-pill-btn--active {
     color: #ffffff;
-    border-color: rgba(255, 255, 255, 0.38);
-    backdrop-filter: blur(48px) saturate(2.2);
-    -webkit-backdrop-filter: blur(48px) saturate(2.2);
+    background: rgba(52, 52, 52, 0.55);
+    backdrop-filter: blur(64px) saturate(3);
+    -webkit-backdrop-filter: blur(64px) saturate(3);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.40), inset 0 1px 0 rgba(255,255,255,0.10);
   }
   .tmm-light .pack-pill-btn {
     background: rgba(255, 255, 255, 0.60);
     border-color: rgba(0, 0, 0, 0.08);
     color: rgba(0, 0, 0, 0.45);
   }
-  .tmm-light .pack-pill-btn:hover { color: #000000; border-color: rgba(0,0,0,0.22); }
+  .tmm-light .pack-pill-btn:hover { color: rgba(0,0,0,0.75); background: rgba(255,255,255,0.75); }
   .tmm-light .pack-pill-btn--active {
     color: #000000;
-    border-color: rgba(0,0,0,0.30);
-    backdrop-filter: blur(48px) saturate(2.2);
-    -webkit-backdrop-filter: blur(48px) saturate(2.2);
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: blur(64px) saturate(3);
+    -webkit-backdrop-filter: blur(64px) saturate(3);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.60);
   }
 
   /* ── Collect modal ───────────────────────────────────────────────── */
@@ -855,7 +864,7 @@
   }
   .reviews-summary {
     display: flex;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 0;
     margin-top: 8px;
   }
@@ -887,24 +896,25 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
-    justify-content: center;
+    justify-content: flex-start;
   }
   .review-bar-row {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   }
   .review-bar-label {
     font-family: 'MarkerBold', sans-serif;
-    font-size: 12px;
+    font-size: clamp(14px, 2.2vw, 16px);
     color: rgba(255, 255, 255, 0.45);
-    width: 10px;
+    width: 14px;
     text-align: right;
     flex-shrink: 0;
   }
   .tmm-light .review-bar-label { color: rgba(0, 0, 0, 0.45); }
   .review-bar-track {
-    flex: 1;
+    width: clamp(70px, 14vw, 110px);
+    flex: none;
     height: 6px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 100px;
@@ -918,9 +928,9 @@
   }
   .review-bar-count {
     font-family: 'MarkerBold', sans-serif;
-    font-size: 12px;
+    font-size: clamp(13px, 2vw, 15px);
     color: rgba(255, 255, 255, 0.38);
-    width: 12px;
+    width: 16px;
     flex-shrink: 0;
   }
   .tmm-light .review-bar-count { color: rgba(0, 0, 0, 0.38); }

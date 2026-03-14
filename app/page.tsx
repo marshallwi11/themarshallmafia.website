@@ -469,7 +469,9 @@ export default function Home() {
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">SETUP</span><span className="play-block-subtitle">(SEE PLAY CARD*)</span></div>
                   <p className="play-block-body">The <span className="text-tmm-cream">Marshall</span> shuffles the character cards (chosen by the players*) and hands one to each player. These cards determine whether a player is a <span className="text-tmm-brown">Villager</span>, <span className="text-tmm-red">Mafia</span>, or has a special role (see <span className="text-muted">Character Cards*</span> for details on each character{"'"}s abilities).</p>
-                  <p className="play-block-body" style={{marginTop:"clamp(8px,2vw,12px)"}}>Note - all Players must keep their character roles secret.</p>
+                  <ul className="play-rules-list" style={{marginTop:"clamp(8px,2vw,12px)"}}>
+                    <li className="play-block-body">All Players must keep their character roles secret.</li>
+                  </ul>
                   <p className="play-block-body" style={{marginTop:"clamp(8px,2vw,12px)"}}>Use the (<span className="text-tmm-green">Music Card*</span>) as an added bonus, it is used for the game ambience (stopping voting on players that make noise while asleep &amp; puts players in the mood to continue playing).</p>
                 </div>
 
@@ -619,12 +621,11 @@ export default function Home() {
                       { href:"https://link.deezer.com/s/32Ea3kbAJwzVroL9cvbDM", src:"/images/tmm_music_deezer.jpg", label:"DEEZER" },
                       { href:"https://www.youtube.com/playlist?list=PLg6v-S6qo4anyKTHrD3zxMAnkHGrSLDlJ", src:"/images/tmm_music_youtube.jpg", label:"YOUTUBE" },
                     ].map(({ href, src, label, imgScale }) => (
-                      <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="music-tile">
+                      <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="music-tile" aria-label={label}>
                         <div className="music-tile-icon">
                           <img src={src} alt={label} className="music-tile-img" loading="eager"
                             style={imgScale ? { transform: `scale(${imgScale})` } : undefined} />
                         </div>
-                        <span className="music-tile-label">{label}</span>
                       </a>
                     ))}
                   </div>
@@ -682,16 +683,18 @@ export default function Home() {
                       {[5,4,3,2,1].filter(n => TESTIMONIALS.filter(t => t.rating === n).length > 0).map(n => {
                         const count = TESTIMONIALS.filter(t => t.rating === n).length
                         const pct = Math.round((count / TESTIMONIALS.length) * 100)
+                        const isTop = n === 5
                         return (
                           <div key={n} className="review-bar-row">
-                            <span className="review-bar-label">{n}</span>
-                            <div className="review-bar-track"><div className="review-bar-fill" style={{width:`${pct}%`}} /></div>
-                            <span className="review-bar-count">{count}</span>
+                            <span className="review-bar-label" style={isTop ? {color:"var(--tmm-yellow)",fontSize:"clamp(15px,2.4vw,17px)"} : {fontSize:"clamp(15px,2.4vw,17px)"}}>{n}</span>
+                            <div className="review-bar-track"><div className="review-bar-fill" style={{width:`${pct}%`,background: isTop ? "var(--tmm-yellow)" : "rgba(255,255,255,0.25)"}} /></div>
+                            <span className="review-bar-count" style={{fontSize:"clamp(13px,2vw,15px)"}}>{count}</span>
                           </div>
                         )
                       })}
                       <button
                         className="play-block-body add-review-btn"
+                        style={{marginTop:"auto"}}
                         onClick={e => { e.stopPropagation(); setReviewComing(true) }}
                       >
                         {reviewComing ? "COMING SOON!" : "+ add a review"}
@@ -703,7 +706,7 @@ export default function Home() {
                 </div>
                 {TESTIMONIALS.map((t, i) => (
                   <div key={i} className="play-card" onClick={e => e.stopPropagation()}>
-                    <div className="review-card-top" style={{alignItems:"flex-start"}}>
+                    <div className="review-card-top" style={{alignItems:"flex-start",gap:"clamp(16px,3.5vw,22px)"}}>
                       <div className="review-avatar" style={{background:"rgba(255,255,255,0.08)",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
                         <img
                           src="/tmm_themarshallmafia_logo.svg"
@@ -717,7 +720,7 @@ export default function Home() {
                       </div>
                       <div style={{flexShrink:0,paddingTop:"2px"}}><StarRating rating={t.rating} /></div>
                     </div>
-                    <p className="play-block-body"><span style={{fontWeight:"bold"}}>{t.title},</span> {t.body}</p>
+                    <p className="play-block-body" style={{marginTop:"clamp(14px,3vw,20px)"}}><span style={{fontWeight:"bold"}}>{t.title},</span> {t.body}</p>
                   </div>
                 ))}
                 <div className="play-card-pill" onClick={e => e.stopPropagation()}>
