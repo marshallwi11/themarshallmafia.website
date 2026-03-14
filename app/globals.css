@@ -376,10 +376,14 @@
   }
 
   /* ── Sliding pill indicator — transparent glass border, no fill ── */
+  /* Height matches the nav-item (48px) exactly so the ring is a true circle
+     on icon buttons and a pill on the wider home button. The top/bottom
+     values are half the nav-inner padding (10px) to vertically centre the ring. */
   .pill-nav-slider {
     position: absolute;
-    top: 10px;
-    bottom: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 48px; /* matches .pill-nav-item height exactly */
     background: transparent;
     border: 1.5px solid rgba(255, 255, 255, 0.45);
     border-radius: 1000px;
@@ -1034,10 +1038,11 @@
     width: calc(var(--site-w) - 2 * clamp(12px, 3vw, 20px));
   }
 
-  /* Compact slider */
+  /* Compact slider — keep height matching compact item height (40px) */
   .pill-nav-slider {
-    top: 8px;
-    bottom: 8px;
+    height: 40px;
+    top: 50%;
+    transform: translateY(-50%);
     border-radius: 1000px;
   }
 

@@ -28,8 +28,10 @@ function MeshGradient({ lightMode }: { lightMode: boolean }) {
     const vsrc = `attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}`
 
     // Fragment shader — organic mesh gradient via fbm warp + gaussian blobs
+    // Uses mix-based blending so colours look rich on both dark AND light backgrounds
     const fsrc = `precision mediump float;
 uniform float u_t;
+uniform float u_str; // blend strength (0-1) — tuned per mode
 uniform vec2  u_r;
 uniform vec3  u_bg;
 uniform vec3  u_a;
@@ -46,13 +48,15 @@ void main(){
   // Organic warp using fractional Brownian motion
   vec2 d=vec2(fbm(uv*1.8+vec2(t*.08,t*.06)),fbm(uv*1.8+vec2(t*.06+3.7,t*.08+2.3)))*.3-.15;
   vec2 w=clamp(uv+d,0.,1.);
-  // Slowly drifting corner anchors (UV space: 0,0=bottom-left 1,1=top-right)
-  vec2 pA=vec2(-.1,.9)+vec2(sin(t*.12)*.12,cos(t*.09)*.1); // top-left
-  vec2 pB=vec2(1.1,.1)+vec2(cos(t*.09)*.12,sin(t*.12)*.1); // bottom-right
-  float wA=exp(-dot(w-pA,w-pA)*3.5);
-  float wB=exp(-dot(w-pB,w-pB)*3.5);
-  vec3 col=u_bg+u_a*wA+u_b*wB;
-  gl_FragColor=vec4(clamp(col,0.,1.),1.);
+  // Slowly drifting corner anchors (UV: 0,0=bottom-left  1,1=top-right)
+  vec2 pA=vec2(-.15,.95)+vec2(sin(t*.12)*.14,cos(t*.09)*.12); // top-left
+  vec2 pB=vec2(1.15,.05)+vec2(cos(t*.09)*.14,sin(t*.12)*.12); // bottom-right
+  // Wider blobs (2.6 vs 3.5) = more visible reach across the screen
+  float wA=clamp(exp(-dot(w-pA,w-pA)*2.6),0.,u_str);
+  float wB=clamp(exp(-dot(w-pB,w-pB)*2.6),0.,u_str);
+  // Mix-based blend: works on any background colour without overflow
+  vec3 col=mix(mix(u_bg,u_a,wA),u_b,wB);
+  gl_FragColor=vec4(col,1.);
 }`
 
     function mkShader(type: number, src: string) {
@@ -72,11 +76,12 @@ void main(){
     gl.enableVertexAttribArray(aP)
     gl.vertexAttribPointer(aP, 2, gl.FLOAT, false, 0, 0)
 
-    const uT  = gl.getUniformLocation(prog, "u_t")
-    const uR  = gl.getUniformLocation(prog, "u_r")
-    const uBg = gl.getUniformLocation(prog, "u_bg")
-    const uA  = gl.getUniformLocation(prog, "u_a")
-    const uB  = gl.getUniformLocation(prog, "u_b")
+    const uT   = gl.getUniformLocation(prog, "u_t")
+    const uStr = gl.getUniformLocation(prog, "u_str")
+    const uR   = gl.getUniformLocation(prog, "u_r")
+    const uBg  = gl.getUniformLocation(prog, "u_bg")
+    const uA   = gl.getUniformLocation(prog, "u_a")
+    const uB   = gl.getUniformLocation(prog, "u_b")
 
     // Render at half CSS resolution for GPU performance
     function resize() {
@@ -95,15 +100,18 @@ void main(){
       gl.uniform1f(uT, t)
       gl.uniform2f(uR, canvas.width, canvas.height)
       if (lightRef.current) {
-        // Light mode: near-white base, very faint warm tints at corners
-        gl.uniform3f(uBg, 0.97, 0.97, 0.97)
-        gl.uniform3f(uA,  0.03, 0.0,  0.0 ) // faint red top-left
-        gl.uniform3f(uB,  0.0,  0.0,  0.03) // faint blue bottom-right
+        // Light mode: near-white base — TMM green TL, TMM yellow BR
+        // Mix formula: at corners these blend into the background at u_str intensity
+        gl.uniform1f(uStr, 0.45)            // 45% blend at corner peak
+        gl.uniform3f(uBg,  0.97, 0.97, 0.97)
+        gl.uniform3f(uA,   0.17, 0.86, 0.31) // #2BDC4F TMM green (top-left)
+        gl.uniform3f(uB,   0.97, 0.675,0.0 ) // #F7AC00 TMM yellow (bottom-right)
       } else {
-        // Dark mode: black base, barely-visible blue TL + dark-red BR
-        gl.uniform3f(uBg, 0.0,   0.0,   0.0  )
-        gl.uniform3f(uA,  0.0,   0.055, 0.13 ) // #000E21 — dark blue
-        gl.uniform3f(uB,  0.06,  0.0,   0.005) // #0F0001 — dark red
+        // Dark mode: black base — prominent TMM blue TL, TMM red BR
+        gl.uniform1f(uStr, 0.70)            // 70% blend at corner peak
+        gl.uniform3f(uBg,  0.0,  0.0,  0.0 )
+        gl.uniform3f(uA,   0.02, 0.28, 0.65) // rich blue (top-left)
+        gl.uniform3f(uB,   0.55, 0.02, 0.02) // rich red  (bottom-right)
       }
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
       raf = requestAnimationFrame(frame)
@@ -470,8 +478,9 @@ export default function Home() {
                     <rect x="11.5" y="2" width="4.5" height="16" rx="1.5"/>
                   </svg>
                 ) : (
+                  {/* Triangle shifted right 1.5px so its centroid sits at (10,10) */}
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M4 2.5L17.5 10 4 17.5V2.5Z"/>
+                    <path d="M5.5 2.5L19 10 5.5 17.5V2.5Z"/>
                   </svg>
                 )}
               </button>
@@ -494,6 +503,8 @@ export default function Home() {
               </button>
 
               {/* HOME — text logo; ring only visible on hover/press */}
+              {/* Grid overlay trick: both texts stack in the same grid cell so the
+                  button width is always driven by the WIDER text — no layout shift */}
               <button ref={btnHomeRef}
                 className={`pill-nav-item pill-nav-home pill-nav-home--text${(activeModal === null && !infoOpen) ? " pill-nav-item--active" : ""}`}
                 onClick={() => { closeModal(); setInfoOpen(false); handleLogoTap() }}
@@ -501,8 +512,15 @@ export default function Home() {
                 onMouseLeave={() => setHomeHovered(false)}
                 aria-label="Home / double-tap to switch mode"
               >
-                <span className="pill-nav-home-text">
-                  {homeHovered ? "LIGHT/DARK SWITCH" : "THE MARSHALL MAFIA"}
+                <span className="pill-nav-home-text" style={{display:"grid"}}>
+                  {/* Default text — always rendered (drives button width) */}
+                  <span style={{gridArea:"1/1", opacity: homeHovered ? 0 : 1, transition:"opacity 0.15s ease", whiteSpace:"nowrap"}}>
+                    THE MARSHALL MAFIA
+                  </span>
+                  {/* Hover text — overlays in the same cell */}
+                  <span style={{gridArea:"1/1", opacity: homeHovered ? 1 : 0, transition:"opacity 0.15s ease", whiteSpace:"nowrap", textAlign:"center"}}>
+                    NIGHT / DAY SWITCH
+                  </span>
                 </span>
               </button>
 
@@ -719,7 +737,7 @@ export default function Home() {
                   <div key={n} className="showcase-card">
                     <div className="showcase-img-well">
                       <Image
-                        src={`/images/tmm_picture_${n}.jpg`}
+                        src={`/images/tmm_picture_${n}.png`}
                         alt={`The Marshall Mafia — image ${n}`}
                         width={1200} height={900}
                         loading={n === 1 ? "eager" : "lazy"}
@@ -810,11 +828,11 @@ export default function Home() {
                     <div className="reviews-score">
                       <span className="reviews-score-number">{avgDisplay}</span>
                       <StarRating rating={avgRounded} />
-                      <span className="play-block-subtitle" style={{fontSize:"12px"}}>out of 5 · {TESTIMONIALS.length} reviews</span>
+                      <span className="play-block-subtitle" style={{fontSize:"12px"}}>{TESTIMONIALS.length} reviews</span>
                     </div>
                     <div className="reviews-divider" aria-hidden="true" />
                     <div className="reviews-bars">
-                      {[5,4,3,2,1].filter(n => TESTIMONIALS.filter(t => t.rating === n).length > 0).map(n => {
+                      {[1,2,3,4,5].filter(n => TESTIMONIALS.filter(t => t.rating === n).length > 0).map(n => {
                         const count = TESTIMONIALS.filter(t => t.rating === n).length
                         const pct = Math.round((count / TESTIMONIALS.length) * 100)
                         // Both label and count share yellow + same font size across all visible bars
@@ -880,7 +898,7 @@ export default function Home() {
                 <div className="pack-pills-row">
                   <button
                     className={`pack-pill-btn${packSelected === "standard" ? " pack-pill-btn--active" : ""}`}
-                    onClick={() => setPackSelected("standard")}
+                    onClick={() => { setPackSelected("standard"); setLightMode(false) }}
                   >
                     STANDARD PACK
                   </button>
