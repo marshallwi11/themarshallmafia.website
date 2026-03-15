@@ -48,12 +48,12 @@ void main(){
   // Organic warp using fractional Brownian motion
   vec2 d=vec2(fbm(uv*1.8+vec2(t*.08,t*.06)),fbm(uv*1.8+vec2(t*.06+3.7,t*.08+2.3)))*.3-.15;
   vec2 w=clamp(uv+d,0.,1.);
-  // Slowly drifting corner anchors (UV: 0,0=bottom-left  1,1=top-right)
-  vec2 pA=vec2(-.15,.95)+vec2(sin(t*.12)*.14,cos(t*.09)*.12); // top-left
-  vec2 pB=vec2(1.15,.05)+vec2(cos(t*.09)*.14,sin(t*.12)*.12); // bottom-right
-  // Wider blobs (2.6 vs 3.5) = more visible reach across the screen
-  float wA=clamp(exp(-dot(w-pA,w-pA)*2.6),0.,u_str);
-  float wB=clamp(exp(-dot(w-pB,w-pB)*2.6),0.,u_str);
+  // Corner anchors pushed well off-canvas so colour stays at edges, centre stays black
+  vec2 pA=vec2(-.40,1.10)+vec2(sin(t*.12)*.12,cos(t*.09)*.10); // top-left corner
+  vec2 pB=vec2(1.40,-.10)+vec2(cos(t*.09)*.12,sin(t*.12)*.10); // bottom-right corner
+  // Higher falloff (3.6) = tighter blobs that don't bleed into the centre
+  float wA=clamp(exp(-dot(w-pA,w-pA)*3.6),0.,u_str);
+  float wB=clamp(exp(-dot(w-pB,w-pB)*3.6),0.,u_str);
   // Mix-based blend: works on any background colour without overflow
   vec3 col=mix(mix(u_bg,u_a,wA),u_b,wB);
   gl_FragColor=vec4(col,1.);
@@ -101,13 +101,13 @@ void main(){
       gl.uniform2f(uR, canvas.width, canvas.height)
       if (lightRef.current) {
         // Light mode: near-white base — muted TMM green TL, muted TMM yellow BR
-        gl.uniform1f(uStr, 0.28)            // 28% blend — softer presence
+        gl.uniform1f(uStr, 0.42)            // 42% — edges vibrant, centre stays near-white
         gl.uniform3f(uBg,  0.97, 0.97, 0.97)
         gl.uniform3f(uA,   0.14, 0.68, 0.25) // muted green (top-left)
         gl.uniform3f(uB,   0.95, 0.58, 0.0 ) // muted yellow (bottom-right)
       } else {
         // Dark mode: black base — muted TMM blue TL, muted TMM red BR
-        gl.uniform1f(uStr, 0.48)            // 48% blend — subtler than before
+        gl.uniform1f(uStr, 0.65)            // 65% — strong colour at edges, black centre
         gl.uniform3f(uBg,  0.0,  0.0,  0.0 )
         gl.uniform3f(uA,   0.02, 0.20, 0.52) // muted blue (top-left)
         gl.uniform3f(uB,   0.44, 0.02, 0.02) // muted red  (bottom-right)
@@ -503,8 +503,7 @@ export default function Home() {
       <div className={`tmm-backdrop${lightMode ? " tmm-backdrop--light" : ""}`} aria-hidden="true" />
       */}
 
-      {/* Blur-pulse overlay — plays briefly when switching between open modals */}
-      {modalSwitching && <div className="modal-switch-pulse" aria-hidden="true" />}
+      {/* Modal switching: fade/blur handled via .modal-content-out on each modal's scroll container */}
 
       <main className={`site-canvas${lightMode ? " tmm-light" : ""}`}>
 
@@ -746,7 +745,7 @@ export default function Home() {
         {activeModal === "play" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <div className="modal-scroll-bare animate-modal-in">
+            <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`}>
               <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
                 {/* BOX 1 — HOW TO PLAY */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
@@ -867,14 +866,14 @@ export default function Home() {
         {activeModal === "showcase" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <div className="modal-scroll-bare animate-modal-in">
+            <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`}>
               <div className="modal-content-pane">
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header">
                     <span className="play-block-title">SHOWCASE</span>
                     <span className="play-block-subtitle">gallery</span>
                   </div>
-                  {/* Main large image — fixed 4:3 container, object-fit:cover so no size jumps */}
+                  {/* Main large image — fixed 4:3 container, contain so full image is always visible */}
                   <div className="showcase-img-well" style={{borderRadius:"clamp(8px,1.5vw,14px)"}}>
                     <Image
                       src={`/images/tmm_picture_${showcaseIdx + 1}.png`}
@@ -882,7 +881,7 @@ export default function Home() {
                       fill
                       priority
                       sizes="(max-width:600px) 100vw, 600px"
-                      style={{objectFit:"cover"}}
+                      style={{objectFit:"contain"}}
                     />
                   </div>
                   {/* Thumbnail strip */}
@@ -915,7 +914,7 @@ export default function Home() {
         {activeModal === "music" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <div className="modal-scroll-bare animate-modal-in">
+            <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`}>
               <div className="modal-content-pane">
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="music-modal-header">
@@ -976,7 +975,7 @@ export default function Home() {
         {activeModal === "reviews" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <div className="modal-scroll-bare animate-modal-in">
+            <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`}>
               <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">REVIEWS</span><span className="play-block-subtitle">RATING</span></div>
@@ -1052,7 +1051,7 @@ export default function Home() {
         {activeModal === "collect" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <div className="modal-scroll-bare animate-modal-in">
+            <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`}>
               <div className="collect-list" onClick={e => e.stopPropagation()}>
 
                 {/* ── Pack selector — two separate pills ── */}

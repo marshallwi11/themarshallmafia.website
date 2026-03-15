@@ -388,21 +388,20 @@
     overflow: visible;
   }
 
-  /* ── Sliding pill indicator — soft diffused glow, no border or hard edge ── */
+  /* ── Sliding pill indicator — bordered glass ── */
   .pill-nav-slider {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     height: 48px;
-    /* Radial glow: bright centre fading to nothing — pure diffusion */
-    background: radial-gradient(ellipse at 50% 50%,
-      rgba(255,255,255,0.13) 0%,
-      rgba(255,255,255,0.06) 45%,
-      transparent 100%
-    );
-    border: none;
+    background: rgba(255,255,255,0.09);
+    border: 1.5px solid rgba(255,255,255,0.38);
     border-radius: 1000px;
-    box-shadow: 0 0 16px 4px rgba(255,255,255,0.06);
+    box-shadow:
+      0 2px 18px rgba(0,0,0,0.28),
+      inset 0 1px 0 rgba(255,255,255,0.18);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     pointer-events: none;
     z-index: 0;
     /* left + width controlled via JS */
@@ -501,12 +500,11 @@
     -webkit-backdrop-filter: blur(48px) saturate(2);
   }
   .tmm-light .pill-nav-slider {
-    background: radial-gradient(ellipse at 50% 50%,
-      rgba(0,0,0,0.09) 0%,
-      rgba(0,0,0,0.04) 45%,
-      transparent 100%
-    );
-    box-shadow: 0 0 14px 3px rgba(0,0,0,0.06);
+    background: rgba(255,255,255,0.60);
+    border: 1.5px solid rgba(0,0,0,0.14);
+    box-shadow:
+      0 2px 14px rgba(0,0,0,0.10),
+      inset 0 1px 0 rgba(255,255,255,0.85);
   }
   .tmm-light .pill-nav-item {
     background: transparent;
@@ -575,11 +573,18 @@
     min-height: 100%;
   }
   .animate-modal-in {
-    animation: modalIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: modalIn 0.38s cubic-bezier(0.16, 1, 0.3, 1);
   }
   @keyframes modalIn {
-    from { opacity: 0; transform: scale(0.95) translateY(10px); }
-    to   { opacity: 1; transform: scale(1) translateY(0); }
+    from { opacity: 0; filter: blur(6px); transform: scale(0.97) translateY(8px); }
+    to   { opacity: 1; filter: blur(0px); transform: scale(1)    translateY(0);   }
+  }
+  /* Scoped fade-out — applied to outgoing modal scroll container only, nav unaffected */
+  .modal-content-out {
+    opacity: 0 !important;
+    filter: blur(5px) !important;
+    transition: opacity 0.22s ease, filter 0.22s ease !important;
+    pointer-events: none;
   }
 
   /* ── Scroll reveal — cards animate in as they enter the modal viewport ── */
@@ -724,7 +729,7 @@
     aspect-ratio: 4 / 3;
     position: relative;
     line-height: 0;
-    background: rgba(0,0,0,0.25);
+    background: transparent;
   }
   .showcase-img-well img,
   .showcase-img-well span,
@@ -1115,27 +1120,7 @@
   .text-muted { color: rgba(255, 255, 255, 0.35); }
   .tmm-light .text-muted { color: rgba(0, 0, 0, 0.35); }
 
-  /* ── Modal switch blur-pulse overlay ─────────────────────────────── */
-  .modal-switch-pulse {
-    position: fixed;
-    inset: 0;
-    z-index: 55;
-    /* Gentle wash — soft blur + very faint white veil, not a heavy frost */
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    background: rgba(255,255,255,0.03);
-    pointer-events: none;
-    animation: switchPulse 0.75s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  }
-  .tmm-light .modal-switch-pulse {
-    background: rgba(0,0,0,0.03);
-  }
-  @keyframes switchPulse {
-    0%   { opacity: 0; }
-    22%  { opacity: 1; }
-    68%  { opacity: 1; }
-    100% { opacity: 0; }
-  }
+  /* modal-switch-pulse removed — fade/blur now scoped to .modal-content-out */
 
   /* ── Showcase thumbnail strip ────────────────────────────────────── */
   .showcase-thumbs {
