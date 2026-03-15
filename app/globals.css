@@ -128,8 +128,16 @@
     @apply text-foreground;
     font-family: 'MarkerBold', sans-serif;
     background: #000000;
+    overflow: hidden;
+    height: 100%;
+    overscroll-behavior: none;
   }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    overflow: hidden;
+    height: 100%;
+    overscroll-behavior: none;
+  }
 }
 
 /* =====================================================================
@@ -481,7 +489,7 @@
     width: 34px;
     height: 34px;
     object-fit: contain;
-    display: block;
+    display: none; /* hidden on desktop — shown on mobile via media query */
     user-select: none;
     -webkit-user-drag: none;
     position: relative;
@@ -1192,7 +1200,7 @@
 }
 
 /* =====================================================================
-   MOBILE — ≤ 600px: compact unified top pill nav
+   MOBILE — ≤ 600px: compact single-row pill nav with eyes icon
    ===================================================================== */
 @media (max-width: 600px) {
 
@@ -1215,74 +1223,67 @@
     transform: none !important;
   }
 
-  /* ── Two-row mobile nav: title on top, 6 icons below ── */
+  /* ── Single-row pill — same shape as desktop, compact ── */
   .pill-nav-inner {
-    border-radius: 20px;       /* rectangular pill for two-row layout */
-    padding: 10px 12px;
-    gap: 0;
-    flex-direction: column;    /* stack title row + icons row */
-    align-items: stretch;
-    /* Inherit desktop width formula — matches modal card width exactly */
+    border-radius: 1000px;    /* pill shape */
+    padding: 6px 8px;
+    flex-direction: row;      /* horizontal — single row */
+    align-items: center;
     height: auto;
+    /* Width inherits desktop formula — matches modal card width exactly */
   }
 
-  /* Buttons wrapper: wraps home (full-width) + 6 icons */
+  /* Buttons row: single line, spread across full width */
   .pill-nav-buttons {
-    flex-wrap: wrap !important;
-    justify-content: space-around !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
     align-items: center !important;
     gap: 0 !important;
   }
 
-  /* Home button — full-width title row at the top */
+  /* Home button — compact circle, same size as icon buttons */
   .pill-nav-home {
-    order: -1 !important;
-    width: 100% !important;
-    height: 26px !important;
-    justify-content: center !important;
-    border: none !important;
-    background: transparent !important;
+    order: 0 !important;
+    flex: 0 0 36px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 0 !important;
     padding: 0 !important;
-    margin-bottom: 8px !important;
+    margin-bottom: 0 !important;
     flex-shrink: 0 !important;
   }
-  .pill-nav-home--text { padding: 0 !important; }
-  .pill-nav-home-text  { font-size: 11px; letter-spacing: 0.12em; }
+  .pill-nav-home--text { padding: 0 !important; min-width: 0 !important; }
 
-  /* 6 icon buttons — fixed square so border-radius:1000px = perfect circle */
+  /* Show eyes logo, hide text inside home button */
+  .pill-nav-home .pill-nav-home-text { display: none !important; }
+  .pill-nav-home .pill-nav-home-logo { display: block !important; width: 26px !important; height: 26px !important; }
+
+  /* 6 icon buttons — fixed square circles */
   .pill-nav-item:not(.pill-nav-home) {
-    flex: 0 0 42px !important;
-    width: 42px !important;
-    height: 42px !important;
+    flex: 0 0 36px !important;
+    width: 36px !important;
+    height: 36px !important;
     padding: 0 !important;
     min-width: 0 !important;
   }
 
-  /* Slider hidden on mobile — use direct active styling on icons */
+  /* Slider hidden — direct active styling on buttons */
   .pill-nav-slider { display: none !important; }
 
-  /* Active icon: glass border directly on the button — same for dark + light */
-  .pill-nav-item--active:not(.pill-nav-home),
-  .pill-nav-item--active:not(.pill-nav-home):hover {
+  /* Active: glass circle on ALL items (including home icon) */
+  .pill-nav-item--active,
+  .pill-nav-item--active:hover {
     background: rgba(255,255,255,0.09) !important;
     border-color: rgba(255,255,255,0.38) !important;
   }
-  .tmm-light .pill-nav-item--active:not(.pill-nav-home),
-  .tmm-light .pill-nav-item--active:not(.pill-nav-home):hover {
+  .tmm-light .pill-nav-item--active,
+  .tmm-light .pill-nav-item--active:hover {
     background: rgba(255,255,255,0.60) !important;
     border-color: rgba(0,0,0,0.14) !important;
   }
 
-  /* Active home row: subtle underline so it reads as selected */
-  .pill-nav-item--active.pill-nav-home {
-    border-bottom: 1.5px solid rgba(255,255,255,0.35) !important;
-  }
-  .tmm-light .pill-nav-item--active.pill-nav-home {
-    border-bottom: 1.5px solid rgba(0,0,0,0.18) !important;
-  }
-
   /* Badge position on mobile */
-  .cart-pill-badge { top: 6px; right: 6px; width: 8px; height: 8px; }
+  .cart-pill-badge { top: 4px; right: 4px; width: 7px; height: 7px; }
 
   .nav-intro-text { font-size: 17px; letter-spacing: 0.08em; }
 
@@ -1293,10 +1294,9 @@
   .hero-lottie {
     width: 80vw !important;
     max-width: 80vw !important;
-    margin: 0 auto !important;  /* fix off-center on mobile */
+    margin: 0 auto !important;
     display: block !important;
   }
-  /* Ensure inner wrapper also centres the lottie block */
   .hero-rise-wrapper {
     display: flex !important;
     justify-content: center !important;
@@ -1305,13 +1305,13 @@
 
   main { padding-bottom: env(safe-area-inset-bottom, 0px); }
 
-  /* Modal fades content behind the two-row nav (now ~106px tall from screen top) */
+  /* Modal fade mask — single-row nav is ~64px from top (16px pos + 48px height) */
   .modal-scroll-bare {
-    mask-image: linear-gradient(to bottom, transparent 0, transparent 100px, black 130px);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 100px, black 130px);
+    mask-image: linear-gradient(to bottom, transparent 0, transparent 58px, black 80px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 58px, black 80px);
   }
   .modal-scroll-bare > div {
-    padding-top: 122px; /* nav (~106px) + 16px breathing room */
+    padding-top: 80px; /* nav bottom (~64px) + 16px breathing room */
     padding-bottom: env(safe-area-inset-bottom, 24px);
   }
 

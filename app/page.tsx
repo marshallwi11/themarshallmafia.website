@@ -648,6 +648,7 @@ export default function Home() {
                 onPointerLeave={() => setHomeHovered(false)}
                 aria-label="Home / double-tap to switch mode"
               >
+                {/* Text — desktop only (CSS hides on mobile) */}
                 <span className="pill-nav-home-text" style={{display:"grid"}}>
                   {/* Default text — always rendered (drives button width) */}
                   <span style={{gridArea:"1/1", opacity: homeHovered ? 0 : 1, transition:"opacity 0.45s ease", whiteSpace:"nowrap"}}>
@@ -658,6 +659,17 @@ export default function Home() {
                     NIGHT / DAY SWITCH
                   </span>
                 </span>
+                {/* Eyes logo — mobile only (CSS shows on mobile, hidden on desktop) */}
+                <img
+                  src="/tmm_themarshallmafia_logo.svg"
+                  alt=""
+                  className="pill-nav-home-logo"
+                  style={{
+                    transform: "scaleY(-1)",
+                    filter: lightMode ? "invert(1)" : undefined,
+                  }}
+                  draggable={false}
+                />
               </button>
 
               {/* ── ALTERNATIVE: eyes logo version (keep for easy revert) ──
