@@ -165,7 +165,7 @@ function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading:
   return (
     <div className="hero-rise-wrapper">
       <div style={{
-        transform: lightMode ? undefined : "scaleY(-1)",
+        transform: "scaleY(-1)",
         filter: lightMode ? "invert(1)" : undefined,
         opacity: logoFading ? 0 : 1,
         transition: "opacity 0.18s linear",
