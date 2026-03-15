@@ -844,6 +844,7 @@
     box-shadow: 0 8px 32px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.06);
     font-family: 'MarkerBold', sans-serif;
     font-size: clamp(19px, 3.5vw, 23px);
+    line-height: 1.3; /* match play-block-title line-height so heights align */
     letter-spacing: 0.03em;
     color: rgba(255, 255, 255, 0.50);
     cursor: pointer;
@@ -1315,9 +1316,12 @@
     padding-bottom: env(safe-area-inset-bottom, 24px);
   }
 
-  /* Cards */
-  .play-card { border-radius: 22px; padding: 22px 20px; gap: 10px; }
+  /* Cards — keep desktop padding/radius; no shrinking on mobile */
   .play-card-pill { padding: 14px 20px; border-radius: 100px; }
+
+  /* Pack selector pills stack vertically on mobile — full width, easier to tap */
+  .pack-pills-row { flex-direction: column; gap: 10px; }
+  .pack-pill-btn  { white-space: normal; }
 
   /* Music grid — 3 columns each row on mobile (2 rows of 3) */
   .music-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
@@ -1329,16 +1333,10 @@
   .showcase-card { border-radius: 18px; padding: 16px; }
   .collect-list  { padding: 0 10px 40px; gap: 14px; }
 
-  /* Typography — same size both sides on mobile */
-  .play-block-title    { font-size: 18px; letter-spacing: 0.03em; }
-  .play-block-subtitle { font-size: 18px; letter-spacing: 0.03em; }
-  .play-block-body     { font-size: 13px; line-height: 1.55; }
-
-  /* Reviews */
+  /* Reviews — stack vertically on mobile */
   .reviews-summary { flex-direction: column; gap: 16px; }
   .reviews-divider { width: auto; height: 1px; margin: 4px 0; align-self: stretch; }
   .reviews-bars { width: 100%; }
-  .reviews-score-number { font-size: 42px; }
   .review-card-top { flex-wrap: nowrap; align-items: center; }
 
 }
