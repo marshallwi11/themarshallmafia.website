@@ -165,7 +165,9 @@ function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading:
   return (
     <div className="hero-rise-wrapper">
       <div style={{
-        transform: "scaleY(-1)",
+        /* Dark mode: scaleY(-1) is the brand aesthetic (intentionally inverted eyes).
+           Light mode: eyes should be right-side-up/happy — no flip, just invert for colour. */
+        transform: lightMode ? undefined : "scaleY(-1)",
         filter: lightMode ? "invert(1)" : undefined,
         opacity: logoFading ? 0 : 1,
         transition: "opacity 0.18s linear",
@@ -667,8 +669,9 @@ export default function Home() {
                   style={{
                     transform: lightMode ? "scaleY(-1)" : undefined,
                     filter: lightMode ? "invert(1)" : undefined,
-                    opacity: logoFading ? 0 : 1,
-                    transition: "opacity 0.18s linear",
+                    /* Grey when inactive, bright on hover — mirrors icon button behaviour */
+                    opacity: logoFading ? 0 : (homeHovered ? 1 : 0.55),
+                    transition: logoFading ? "opacity 0.18s linear" : "opacity 0.2s ease",
                   }}
                   draggable={false}
                 />

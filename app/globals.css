@@ -1259,6 +1259,23 @@
   .pill-nav-home .pill-nav-home-text { display: none !important; }
   .pill-nav-home .pill-nav-home-logo { display: block !important; width: 28px !important; height: 28px !important; }
 
+  /* Logo active state: force full brightness (overrides React's 0.55 default) */
+  .pill-nav-item--active .pill-nav-home-logo { opacity: 1 !important; }
+
+  /* Home logo button: no background or border when inactive/unhovered —
+     keep it as a plain icon identical to the other icon buttons.
+     Only .pill-nav-item--active adds the glass circle ring. */
+  .pill-nav-home:not(.pill-nav-item--active),
+  .pill-nav-home:not(.pill-nav-item--active):hover {
+    background: transparent !important;
+    border-color: transparent !important;
+  }
+  .tmm-light .pill-nav-home:not(.pill-nav-item--active),
+  .tmm-light .pill-nav-home:not(.pill-nav-item--active):hover {
+    background: transparent !important;
+    border-color: transparent !important;
+  }
+
   /* 6 icon buttons — fixed square circles */
   .pill-nav-item:not(.pill-nav-home) {
     flex: 0 0 44px !important;
