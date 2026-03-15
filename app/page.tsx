@@ -574,7 +574,7 @@ export default function Home() {
               </div>
 
               {/* ── All icon buttons — fade in after intro text fades out ── */}
-              <div style={{
+              <div className="pill-nav-buttons" style={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
