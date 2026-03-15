@@ -665,8 +665,10 @@ export default function Home() {
                   alt=""
                   className="pill-nav-home-logo"
                   style={{
-                    transform: "scaleY(-1)",
+                    transform: lightMode ? "scaleY(-1)" : undefined,
                     filter: lightMode ? "invert(1)" : undefined,
+                    opacity: logoFading ? 0 : 1,
+                    transition: "opacity 0.18s linear",
                   }}
                   draggable={false}
                 />

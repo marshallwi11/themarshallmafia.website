@@ -1223,10 +1223,10 @@
     transform: none !important;
   }
 
-  /* ── Single-row pill — same shape as desktop, compact ── */
+  /* ── Single-row pill — same shape as desktop, same vertical height ── */
   .pill-nav-inner {
     border-radius: 1000px;    /* pill shape */
-    padding: 6px 8px;
+    padding: 10px 8px;        /* 10px top/bottom + 44px items = ~64px, same as desktop */
     flex-direction: row;      /* horizontal — single row */
     align-items: center;
     height: auto;
@@ -1241,12 +1241,12 @@
     gap: 0 !important;
   }
 
-  /* Home button — compact circle, same size as icon buttons */
+  /* Home button — circle, same size as icon buttons */
   .pill-nav-home {
     order: 0 !important;
-    flex: 0 0 36px !important;
-    width: 36px !important;
-    height: 36px !important;
+    flex: 0 0 44px !important;
+    width: 44px !important;
+    height: 44px !important;
     min-width: 0 !important;
     padding: 0 !important;
     margin-bottom: 0 !important;
@@ -1256,13 +1256,13 @@
 
   /* Show eyes logo, hide text inside home button */
   .pill-nav-home .pill-nav-home-text { display: none !important; }
-  .pill-nav-home .pill-nav-home-logo { display: block !important; width: 26px !important; height: 26px !important; }
+  .pill-nav-home .pill-nav-home-logo { display: block !important; width: 28px !important; height: 28px !important; }
 
   /* 6 icon buttons — fixed square circles */
   .pill-nav-item:not(.pill-nav-home) {
-    flex: 0 0 36px !important;
-    width: 36px !important;
-    height: 36px !important;
+    flex: 0 0 44px !important;
+    width: 44px !important;
+    height: 44px !important;
     padding: 0 !important;
     min-width: 0 !important;
   }
@@ -1305,13 +1305,13 @@
 
   main { padding-bottom: env(safe-area-inset-bottom, 0px); }
 
-  /* Modal fade mask — single-row nav is ~64px from top (16px pos + 48px height) */
+  /* Modal fade mask — single-row nav is ~74px from top (10px pos + 64px height) */
   .modal-scroll-bare {
-    mask-image: linear-gradient(to bottom, transparent 0, transparent 58px, black 80px);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 58px, black 80px);
+    mask-image: linear-gradient(to bottom, transparent 0, transparent 68px, black 90px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 68px, black 90px);
   }
   .modal-scroll-bare > div {
-    padding-top: 80px; /* nav bottom (~64px) + 16px breathing room */
+    padding-top: 90px; /* nav bottom (~74px) + 16px breathing room */
     padding-bottom: env(safe-area-inset-bottom, 24px);
   }
 
