@@ -569,7 +569,7 @@
   }
   .modal-scroll-bare::-webkit-scrollbar { display: none; }
   .modal-scroll-bare > div {
-    padding-top: clamp(125px, 20vw, 150px); /* 1.25× the previous 120px cap */
+    padding-top: clamp(102px, 14vw, 112px); /* nav bottom (~96px) + one card-gap */
     min-height: 100%;
   }
   .animate-modal-in {
@@ -1222,7 +1222,7 @@
     gap: 0;
     flex-direction: column;    /* stack title row + icons row */
     align-items: stretch;
-    width: calc(100vw - 20px);
+    /* Inherit desktop width formula — matches modal card width exactly */
     height: auto;
   }
 
@@ -1249,10 +1249,10 @@
   .pill-nav-home--text { padding: 0 !important; }
   .pill-nav-home-text  { font-size: 11px; letter-spacing: 0.12em; }
 
-  /* 6 icon buttons — even width, taller for easy tapping */
+  /* 6 icon buttons — fixed square so border-radius:1000px = perfect circle */
   .pill-nav-item:not(.pill-nav-home) {
-    flex: 1 !important;
-    width: auto !important;
+    flex: 0 0 42px !important;
+    width: 42px !important;
     height: 42px !important;
     padding: 0 !important;
     min-width: 0 !important;
@@ -1261,15 +1261,24 @@
   /* Slider hidden on mobile — use direct active styling on icons */
   .pill-nav-slider { display: none !important; }
 
-  /* Active icon: glass border directly on the button */
+  /* Active icon: glass border directly on the button — same for dark + light */
   .pill-nav-item--active:not(.pill-nav-home),
   .pill-nav-item--active:not(.pill-nav-home):hover {
     background: rgba(255,255,255,0.09) !important;
     border-color: rgba(255,255,255,0.38) !important;
   }
-  .tmm-light .pill-nav-item--active:not(.pill-nav-home) {
+  .tmm-light .pill-nav-item--active:not(.pill-nav-home),
+  .tmm-light .pill-nav-item--active:not(.pill-nav-home):hover {
     background: rgba(255,255,255,0.60) !important;
     border-color: rgba(0,0,0,0.14) !important;
+  }
+
+  /* Active home row: subtle underline so it reads as selected */
+  .pill-nav-item--active.pill-nav-home {
+    border-bottom: 1.5px solid rgba(255,255,255,0.35) !important;
+  }
+  .tmm-light .pill-nav-item--active.pill-nav-home {
+    border-bottom: 1.5px solid rgba(0,0,0,0.18) !important;
   }
 
   /* Badge position on mobile */
@@ -1332,6 +1341,4 @@
   .reviews-score-number { font-size: 42px; }
   .review-card-top { flex-wrap: nowrap; align-items: center; }
 
-  /* Light mode — keep pill radius consistent */
-  .tmm-light .pill-nav-inner { border-radius: 1000px; }
 }

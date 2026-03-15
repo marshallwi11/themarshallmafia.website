@@ -643,9 +643,9 @@ export default function Home() {
                   button width is always driven by the WIDER text — no layout shift */}
               <button ref={btnHomeRef}
                 className={`pill-nav-item pill-nav-home pill-nav-home--text${(activeModal === null && !infoOpen) ? " pill-nav-item--active" : ""}`}
-                onClick={() => { closeModal(); setInfoOpen(false); handleLogoTap() }}
-                onMouseEnter={() => setHomeHovered(true)}
-                onMouseLeave={() => setHomeHovered(false)}
+                onClick={() => { closeModal(); setInfoOpen(false); handleLogoTap(); setHomeHovered(false) }}
+                onPointerEnter={() => setHomeHovered(true)}
+                onPointerLeave={() => setHomeHovered(false)}
                 aria-label="Home / double-tap to switch mode"
               >
                 <span className="pill-nav-home-text" style={{display:"grid"}}>
