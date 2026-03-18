@@ -336,6 +336,7 @@ type ModalType = "play" | "showcase" | "music" | "collect" | "reviews" | null
 
 const TESTIMONIALS = [
   { name: "Isabella M", handle: "@ella_m", rating: 5, title: "Amazing for group bonding", body: "The Marshall Mafia is amazing for group bonding, I played this game with my youth group and it was amazing... it really helped everyone to get to know each other and created fun memories!" },
+  { name: "Samuel A", handle: "@sam.a", rating: 5, title: "There is nothing like this game on the market", body: "There is nothing like this game on the market. It's appeals to all ages, no-one is too young or too old to play… plus the background music makes the experience so much endless fun." },
 ]
 
 export default function Home() {
