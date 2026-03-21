@@ -335,8 +335,9 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
 type ModalType = "play" | "showcase" | "music" | "collect" | "reviews" | null
 
 const TESTIMONIALS = [
-  { name: "Isabella M", handle: "@ella_m", rating: 5, title: "Amazing for group bonding", body: "The Marshall Mafia is amazing for group bonding, I played this game with my youth group and it was amazing... it really helped everyone to get to know each other and created fun memories!" },
-  { name: "Samuel A", handle: "@sam.a", rating: 5, title: "There is nothing like this game on the market", body: "There is nothing like this game on the market. It's appeals to all ages, no-one is too young or too old to play… plus the background music makes the experience so much endless fun." },
+  { name: "Isabella M", rating: 5, title: "Amazing for group bonding", body: "The Marshall Mafia is amazing for group bonding, I played this game with my youth group and it was amazing... it really helped everyone to get to know each other and created fun memories!" },
+  { name: "Samuel A", rating: 5, title: "There is nothing like this game on the market", body: "There is nothing like this game on the market. It's appeals to all ages, no-one is too young or too old to play… plus the background music makes the experience so much endless fun." },
+  { name: "Lewis W", rating: 5, title: "Always interesting no matter how many times we've played", body: "The Marshall Mafia is always interesting no matter how many times we've played it. An ideal game to play with family or friends!" },
 ]
 
 export default function Home() {
@@ -1047,9 +1048,8 @@ export default function Home() {
                           style={{width:"29px",height:"auto",display:"block",transform: t.rating > 3 ? "scaleY(-1)" : "none", filter: lightMode ? "invert(1)" : "none"}}
                         />
                       </div>
-                      <div style={{minWidth:0,flex:"1 1 0",display:"flex",flexDirection:"column",justifyContent:"space-between",height:"47px"}}>
+                      <div style={{minWidth:0,flex:"1 1 0",display:"flex",flexDirection:"column",justifyContent:"space-between",height:"auto"}}>
                         <p className="play-block-body" style={{margin:0,lineHeight:1.2,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{t.name}</p>
-                        <span className="play-block-subtitle" style={{fontSize:"12px"}}>{t.handle}</span>
                       </div>
                       <div style={{flexShrink:0,paddingTop:"2px"}}><StarRating rating={t.rating} /></div>
                     </div>
