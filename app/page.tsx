@@ -1040,18 +1040,9 @@ export default function Home() {
                 </div>
                 {TESTIMONIALS.map((t, i) => (
                   <div key={i} className="play-card" onClick={e => e.stopPropagation()}>
-                    <div className="review-card-top" style={{alignItems:"flex-start",gap:"clamp(16px,3.5vw,22px)"}}>
-                      <div className="review-avatar" style={{background:"rgba(255,255,255,0.08)",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
-                        <img
-                          src="/tmm_themarshallmafia_logo.svg"
-                          alt=""
-                          style={{width:"29px",height:"auto",display:"block",transform: t.rating > 3 ? "scaleY(-1)" : "none", filter: lightMode ? "invert(1)" : "none"}}
-                        />
-                      </div>
-                      <div style={{minWidth:0,flex:"1 1 0",display:"flex",flexDirection:"column",justifyContent:"space-between",height:"auto"}}>
-                        <p className="play-block-body" style={{margin:0,lineHeight:1.2,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{t.name}</p>
-                      </div>
-                      <div style={{flexShrink:0,paddingTop:"2px"}}><StarRating rating={t.rating} /></div>
+                    <div className="play-card-header">
+                      <span className="play-block-title">{t.name}</span>
+                      <StarRating rating={t.rating} />
                     </div>
                     <p className="play-block-body" style={{marginTop:"clamp(14px,3vw,20px)"}}>{t.body}</p>
                   </div>
