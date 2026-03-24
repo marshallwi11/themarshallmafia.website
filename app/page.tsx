@@ -358,6 +358,7 @@ export default function Home() {
   const lastTapRef = useRef<number>(0)
   const swipeTouchStartX = useRef<number>(0)
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  const musicEverStarted = useRef(false)
   // Left-to-right swipe order for the pill nav (middle 5 items)
   const SWIPE_ORDER: ModalType[] = ["play", "music", null, "showcase", "reviews"]
 
@@ -431,22 +432,12 @@ export default function Home() {
     return () => clearInterval(id)
   }, [activeModal])
 
-  // Theme tune — autoplay at 50% vol; falls back to first interaction if browser blocks
+  // Theme tune — loaded silently; playback starts only on first music-button press
   useEffect(() => {
     const audio = new Audio("/marshallwi11_themarshallmafia_song.mp3")
     audio.volume = 0.5
     audio.loop = true
     audioRef.current = audio
-    const p = audio.play()
-    if (p !== undefined) {
-      p.catch(() => {
-        // Autoplay blocked — unlock on first user touch/click/key
-        const unlock = () => { audio.play().catch(() => {}) }
-        document.addEventListener("click",      unlock, { once: true })
-        document.addEventListener("touchstart", unlock, { once: true })
-        document.addEventListener("keydown",    unlock, { once: true })
-      })
-    }
     return () => { audio.pause(); audio.src = ""; audioRef.current = null }
   }, [])
 
@@ -628,7 +619,18 @@ export default function Home() {
               {/* MUSIC */}
               <button ref={btnMusicRef}
                 className={`pill-nav-item${activeModal === "music" ? " pill-nav-item--active" : ""}`}
-                onClick={() => activeModal === "music" ? closeModal() : openModal("music")}
+                onClick={() => {
+                  if (activeModal === "music") {
+                    closeModal()
+                  } else {
+                    openModal("music")
+                    // First press: start the audio
+                    if (!musicEverStarted.current && audioRef.current) {
+                      musicEverStarted.current = true
+                      audioRef.current.play().catch(() => {})
+                    }
+                  }
+                }}
                 aria-label="Music"
               >
                 {activeModal === "music" ? (
@@ -1044,7 +1046,7 @@ export default function Home() {
                       <span className="play-block-title">{t.name}</span>
                       <StarRating rating={t.rating} />
                     </div>
-                    <p className="play-block-body" style={{marginTop:"clamp(14px,3vw,20px)"}}>{t.body}</p>
+                    <p className="play-block-body" style={{marginTop:"clamp(8px,2vw,12px)"}}>{t.body}</p>
                   </div>
                 ))}
                 <div className="play-card-pill" onClick={e => e.stopPropagation()}>
