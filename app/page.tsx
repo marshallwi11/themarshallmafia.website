@@ -315,7 +315,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
 
           {/* IMAGE — creation story 1 */}
           <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-            <Image src="/images/tmm_creation_story_1.png" alt="The Marshall Mafia — creation story" width={800} height={600} style={{width:"100%",height:"auto",display:"block"}} />
+            <img src="/images/tmm_creation_story_1.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
           {/* ── Step 2: the night ── */}
@@ -332,7 +332,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
 
           {/* IMAGE — creation story 2 */}
           <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-            <Image src="/images/tmm_creation_story_2.png" alt="The Marshall Mafia — creation story" width={800} height={600} style={{width:"100%",height:"auto",display:"block"}} />
+            <img src="/images/tmm_creation_story_2.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
           {/* ── Step 3: the world ── */}
@@ -350,7 +350,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
 
           {/* IMAGE — creation story 3 */}
           <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-            <Image src="/images/tmm_creation_story_3.png" alt="The Marshall Mafia — creation story" width={800} height={600} style={{width:"100%",height:"auto",display:"block"}} />
+            <img src="/images/tmm_creation_story_3.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
           {/* ── Step 4: the testing ── */}
@@ -367,7 +367,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
 
           {/* IMAGE — creation story 4 */}
           <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-            <Image src="/images/tmm_creation_story_4.png" alt="The Marshall Mafia — creation story" width={800} height={600} style={{width:"100%",height:"auto",display:"block"}} />
+            <img src="/images/tmm_creation_story_4.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
           {/* ── Step 5: the mistake ── */}
@@ -383,7 +383,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
 
           {/* IMAGE — creation story 5 */}
           <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-            <Image src="/images/tmm_creation_story_5.png" alt="The Marshall Mafia — creation story" width={800} height={600} style={{width:"100%",height:"auto",display:"block"}} />
+            <img src="/images/tmm_creation_story_5.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
           {/* ── Step 6: the philosophy ── */}
@@ -398,7 +398,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
 
           {/* IMAGE — creation story 6 */}
           <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-            <Image src="/images/tmm_creation_story_6.png" alt="The Marshall Mafia — creation story" width={800} height={600} style={{width:"100%",height:"auto",display:"block"}} />
+            <img src="/images/tmm_creation_story_6.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
           {/* ── Step 7: the game ── */}
@@ -879,7 +879,7 @@ export default function Home() {
                   <p className="play-block-body">Appoint one player to be the <span className="text-tmm-cream">Marshall</span>. Shuffle the CHARACTER cards and deal one face down to each player — check the <span className="text-muted">ROLES card*</span> for the correct card count. All players must keep their CHARACTER CARD secret.</p>
                   <p className="play-block-body">Each game is played in rounds of 3 consecutive phases:</p>
                   <ul className="play-rules-list">
-                    <li className="play-block-body"><span className="text-tmm-red">SLEEP</span> → <span className="text-tmm-blue">DISCUSSION</span> → <span className="text-tmm-green">VOTE</span></li>
+                    <li className="play-block-body">SLEEP → DISCUSSION → VOTE</li>
                   </ul>
                   <p className="play-block-body">Sleep phase — the <span className="text-tmm-cream">Marshall</span> wakes each role in order:</p>
                   <ul className="play-rules-list">
@@ -943,14 +943,14 @@ export default function Home() {
                   <div className="play-card-header"><span className="play-block-title">Even More RULES...</span><span className="play-block-subtitle">(rule card*)</span></div>
                   <p className="play-block-body"><span style={{color:"#F8007A"}}>Note!</span> — these rules let players who know different versions agree on how the game is played.</p>
                   <ul className="play-rules-list">
-                    <li className="play-block-body" style={{color:"var(--tmm-cream)"}}><span className="text-tmm-cream">1#</span> — Players cannot reveal their own role. You can pretend to be other roles — {"don't"} get caught!</li>
-                    <li className="play-block-body" style={{color:"var(--tmm-cream)"}}><span className="text-tmm-cream">2#</span> — If a non-awoken player repeatedly sleep-talks or sleep-walks, they are eliminated</li>
-                    <li className="play-block-body" style={{color:"var(--tmm-cream)"}}><span className="text-tmm-cream">3#</span> — Any player voted out must reveal their card — as theatrical as you like!</li>
-                    <li className="play-block-body" style={{color:"var(--tmm-cream)"}}><span className="text-tmm-cream">4#</span> — If a player is killed, they must reveal their card to the village</li>
-                    <li className="play-block-body" style={{color:"var(--tmm-cream)"}}><span className="text-tmm-cream">5#</span> — Save roles cannot save themselves or other save roles</li>
-                    <li className="play-block-body" style={{color:"var(--tmm-cream)"}}><span className="text-tmm-cream">6#</span> — If a vote ties, the tied players play Rock Paper Scissors (best of 1 or 3)</li>
-                    <li className="play-block-body" style={{color:"var(--tmm-cream)"}}><span className="text-tmm-cream">7#</span> — If a majority skips the vote, no player is eliminated and a new sleep phase begins</li>
-                    <li className="play-block-body" style={{color:"var(--tmm-cream)"}}><span className="text-tmm-cream">8#</span> — Save roles can only save the same player once per cycle, until all players have been saved once</li>
+                    <li className="play-block-body"><span className="text-tmm-cream">1#</span> — Players cannot reveal their own role. You can pretend to be other roles — {"don't"} get caught!</li>
+                    <li className="play-block-body"><span className="text-tmm-cream">2#</span> — If a non-awoken player repeatedly sleep-talks or sleep-walks, they are eliminated</li>
+                    <li className="play-block-body"><span className="text-tmm-cream">3#</span> — Any player voted out must reveal their card — as theatrical as you like!</li>
+                    <li className="play-block-body"><span className="text-tmm-cream">4#</span> — If a player is killed, they must reveal their card to the village</li>
+                    <li className="play-block-body"><span className="text-tmm-cream">5#</span> — Save roles cannot save themselves or other save roles</li>
+                    <li className="play-block-body"><span className="text-tmm-cream">6#</span> — If a vote ties, the tied players play Rock Paper Scissors (best of 1 or 3)</li>
+                    <li className="play-block-body"><span className="text-tmm-cream">7#</span> — If a majority skips the vote, no player is eliminated and a new sleep phase begins</li>
+                    <li className="play-block-body"><span className="text-tmm-cream">8#</span> — Save roles can only save the same player once per cycle, until all players have been saved once</li>
                   </ul>
                 </div>
 
@@ -1057,11 +1057,9 @@ export default function Home() {
                 {/* 8 plain images — no individual card headers */}
                 {[1,2,3,4,5,6,7,8].map(i => (
                   <div key={i} style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-                    <Image
+                    <img
                       src={`/images/tmm_product_shot_${i}.png`}
                       alt={`The Marshall Mafia — product shot ${i}`}
-                      width={800}
-                      height={600}
                       style={{width:"100%",height:"auto",display:"block"}}
                     />
                   </div>
