@@ -548,20 +548,16 @@
   .modal-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.50);
-    backdrop-filter: blur(72px) saturate(1.5) brightness(0.85);
-    -webkit-backdrop-filter: blur(72px) saturate(1.5) brightness(0.85);
-    animation: backdropIn 0.40s cubic-bezier(0.22, 1, 0.36, 1) both;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(60px) saturate(1.4);
+    -webkit-backdrop-filter: blur(60px) saturate(1.4);
+    animation: fadeIn 0.25s ease-out;
   }
   /* Light mode backdrop — neutral frosted white */
   .tmm-light .modal-backdrop {
-    background: rgba(240, 238, 234, 0.78);
-    backdrop-filter: blur(72px) saturate(1.5) brightness(1.06);
-    -webkit-backdrop-filter: blur(72px) saturate(1.5) brightness(1.06);
-  }
-  @keyframes backdropIn {
-    from { opacity: 0; backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px); }
-    to   { opacity: 1; backdrop-filter: blur(72px) saturate(1.5) brightness(0.85); -webkit-backdrop-filter: blur(72px) saturate(1.5) brightness(0.85); }
+    background: rgba(240, 238, 234, 0.72);
+    backdrop-filter: blur(60px) saturate(1.4);
+    -webkit-backdrop-filter: blur(60px) saturate(1.4);
   }
   @keyframes fadeIn {
     from { opacity: 0; }
@@ -586,32 +582,17 @@
     min-height: 100%;
   }
   .animate-modal-in {
-    animation: modalIn 0.46s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: modalIn 0.40s cubic-bezier(0.16, 1, 0.3, 1);
   }
   @keyframes modalIn {
-    from {
-      opacity: 0;
-      filter: blur(10px) saturate(0.6);
-      transform: scale(0.96) translateY(14px);
-    }
-    60% {
-      filter: blur(2px) saturate(1);
-    }
-    to {
-      opacity: 1;
-      filter: blur(0px) saturate(1);
-      transform: scale(1) translateY(0);
-    }
+    from { opacity: 0; filter: blur(6px); transform: scale(0.97) translateY(8px); }
+    to   { opacity: 1; filter: blur(0px); transform: scale(1)    translateY(0);   }
   }
   /* Scoped fade-out — applied to outgoing modal scroll container only, nav unaffected */
   .modal-content-out {
     opacity: 0 !important;
-    filter: blur(8px) saturate(0.5) !important;
-    transform: scale(0.97) !important;
-    transition:
-      opacity 0.28s cubic-bezier(0.4, 0, 1, 1),
-      filter 0.28s cubic-bezier(0.4, 0, 1, 1),
-      transform 0.28s cubic-bezier(0.4, 0, 1, 1) !important;
+    filter: blur(5px) !important;
+    transition: opacity 0.22s ease, filter 0.22s ease !important;
     pointer-events: none;
   }
 
@@ -622,19 +603,11 @@
     .play-card-pill {
       animation: scrollReveal linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 30%;
+      animation-range: entry 0% entry 28%;
     }
     @keyframes scrollReveal {
-      from {
-        opacity: 0;
-        transform: translateY(28px) scale(0.98);
-        filter: blur(4px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        filter: blur(0);
-      }
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
   }
 
