@@ -771,115 +771,91 @@ export default function Home() {
             <div className="modal-backdrop" />
             <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`}>
               <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
-                {/* BOX 1 — HOW TO PLAY */}
+
+                {/* BOX 1 — INSTRUCTIONS / OBJECTIVE */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">HOW TO PLAY</span><span className="play-block-subtitle">INSTRUCTIONS</span></div>
-                  <p className="play-block-body"><span style={{color:"#ffffff"}}>In The Marshall Mafia</span>, <span className="text-tmm-brown">Villagers</span> must Identify, expose and vote out all <span className="text-tmm-red">Mafia</span> members, while the <span className="text-tmm-red">Mafia{"'"}s</span> goal is to secretly eliminate all <span className="text-tmm-brown">Villagers</span> until they outnumber them. The <span className="text-tmm-cream">Marshall</span> hosts the game, managing the flow of the rounds and overseeing the distribution of roles and actions.</p>
+                  <div className="play-card-header"><span className="play-block-title">INSTRUCTIONS</span><span className="play-block-subtitle">OBJECTIVE</span></div>
+                  <p className="play-block-body">In The <span style={{color:"#ffffff"}}>Marshall Mafia</span>, <span className="text-tmm-brown">Villagers</span> must Identify, expose and vote out all <span className="text-tmm-red">Mafia</span> members, while the <span className="text-tmm-red">Mafia{"'"}s</span> goal is to secretly eliminate all <span className="text-tmm-brown">Villagers</span> until they outnumber them. The <span className="text-tmm-cream">Marshall</span> hosts the game, managing the flow of the rounds and overseeing the distribution of roles and actions.</p>
                 </div>
 
-                {/* BOX 2 — SETUP */}
+                {/* BOX 2 — HOW TO PLAY? / (SEE PLAY CARD*) */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">SETUP</span><span className="play-block-subtitle">(SEE PLAY CARD*)</span></div>
-                  <p className="play-block-body">The <span className="text-tmm-cream">Marshall</span> shuffles the character cards (chosen by the players*) and hands one to each player. These cards determine whether a player is a <span className="text-tmm-brown">Villager</span>, <span className="text-tmm-red">Mafia</span>, or has a special role (see <span className="text-muted">Character Cards*</span> for details on each character{"'"}s abilities).</p>
-                  <ul className="play-rules-list" style={{marginTop:"clamp(8px,2vw,12px)"}}>
-                    <li className="play-block-body">All Players must keep their character roles secret.</li>
-                  </ul>
-                  <p className="play-block-body" style={{marginTop:"clamp(8px,2vw,12px)"}}>Use the (<span className="text-tmm-green">Music Card*</span>) as an added bonus, it is used for the game ambience (stopping voting on players that make noise while asleep &amp; puts players in the mood to continue playing).</p>
+                  <div className="play-card-header"><span className="play-block-title">HOW To PLAY?</span><span className="play-block-subtitle">(SEE PLAY CARD*)</span></div>
+                  <p className="play-block-body">Appoint one player to be the <span className="text-tmm-cream">Marshall</span>, then Shuffle the CHARACTER cards chosen by the group and deal one face down to each player (Check the <span className="text-muted">ROLES card*</span> for the correct card count based on player number). These cards determine if a player is a <span className="text-tmm-brown">Villager</span>, <span className="text-tmm-red">Mafia</span>, or has a special role (see <span className="text-muted">Character Card*</span> for details on each character{"'"}s abilities). Note! - all Players must keep their individual character CARDS* secret. Each Game is played in rounds with 3 consecutive phases, (Sleep → DISCUSSION → vote). These rounds Repeat until the game ends (See the <span className="text-muted">RULES card*</span> for more detailed instructions). Sleep phase - The <span className="text-tmm-cream">Marshall</span> wakes each Role group in turn to carry out their action (in this ORDER: <span className="text-tmm-red">KILL</span>, <span className="text-tmm-blue">GUESS</span>, <span className="text-tmm-green">SAVE</span>, <span className="text-tmm-yellow">WILD</span>). DISCUSSION PHASE - PLAYERS Debate AMONGST THEMSELVES FOR a TIMED PERIOD. VOTE PHASE - Each player votes for who they want eliminated and the player with the most votes is removed from the game. Use the (<span className="text-tmm-green">Music Card*</span>) as an added bonus, it is used for the game ambience (stopping players voting on players that make noise while asleep &amp; puts the group in the mood to continue playing).</p>
                 </div>
 
-                {/* BOX 3 — RULES */}
+                {/* BOX 3 — what are the roles? / (SEE ROLES CARD*) */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">RULES</span><span className="play-block-subtitle">(SEE RULES CARD*)</span></div>
-                  <p className="play-block-body">At the start of the game, players agree on selected (<span className="text-muted">Rule Cards*</span>), This allows for players who have played different rules to agree on how the game will be played.</p>
-                  <ul className="play-block-body play-rules-list">
-                    <li>PLAYERS MUST CLOSE Their EYES &amp; Remain Silent DURING THE SLEEP PHASE</li>
-                    <li>DURING THE SLEEP PHASE The <span className="text-tmm-cream">MARSHALL</span> ROLE must not SPEAK Directly TOWARDS Each AWOKEN Player, otherwise all players know which role a player has.</li>
-                    <li>AWOKEN Players SILENTLY POINT &amp; CONFIRM Decisions WITH THE <span className="text-tmm-cream">MARSHALL</span>, by hand signals or mouthing their choice to the <span className="text-tmm-cream">Marshall</span> overseeing the game.</li>
-                    <li>Do not cheat If you die, PICK a {'"'}<span className="text-tmm-red">DEATH CARD</span>{'"'} FROM THE PACK, hold it to show other players you are eliminated from the game.</li>
-                    <li>Timed discussion period (3 minutes recommended, though it does not have to be*), to keep the rounds short and allow the game to be more decisive.</li>
-                    <li>Voting order must switch each round, to avoid the same players voting last, stopping them having an advantage.</li>
-                    <li>The <span className="text-tmm-cream">MARSHALL</span> role SHOULD change each GAME, so all players have a chance at playing.</li>
-                    <li>SCAN the {'"'}<span className="text-tmm-green">MUSIC CARD</span>{'"'} to make the GAME more enjoyable (helps the restless {'"'}sleeping{'"'} of players in the night)</li>
-                  </ul>
+                  <div className="play-card-header"><span className="play-block-title">what are the roles?</span><span className="play-block-subtitle">(SEE ROLES CARD*)</span></div>
+                  <p className="play-block-body">AIM FOR HALF AS MANY ROLES AS PLAYERS, For in-depth definitions on each Different role and what they do (See the <span className="text-muted">CHARACTER card*</span>). 6 players OR LESS - NOT RECOMMENDED. 7 PLAYERS - 1 <span className="text-tmm-cream">Marshall</span>, 3 <span className="text-tmm-brown">Villagers</span>, 3 ROLES (1 <span className="text-tmm-red">KILL</span>, 1 <span className="text-tmm-blue">GUESS</span>, 1 <span className="text-tmm-green">SAVE</span>) 9 PLAYERS - 1 <span className="text-tmm-cream">Marshall</span>, 4 <span className="text-tmm-brown">Villagers</span>, 4 ROLES (1 <span className="text-tmm-red">KILL</span>, 1 <span className="text-tmm-blue">GUESS</span>, 1 <span className="text-tmm-green">SAVE</span>, 1 <span className="text-tmm-yellow">WILD</span>) 11 PLAYERS - 1 <span className="text-tmm-cream">Marshall</span>, 5 <span className="text-tmm-brown">Villagers</span>, 5 ROLES (2 <span className="text-tmm-red">KILL</span>, 1 <span className="text-tmm-blue">GUESS</span>, 1 <span className="text-tmm-green">SAVE</span>, 1 <span className="text-tmm-yellow">WILD</span>) 13 PLAYERS - 1 <span className="text-tmm-cream">Marshall</span>, 6 <span className="text-tmm-brown">Villagers</span>, 6 Roles (2 <span className="text-tmm-red">KILL</span>, 1 <span className="text-tmm-blue">GUESS</span>, 2 <span className="text-tmm-green">SAVE</span>, 1 <span className="text-tmm-yellow">WILD</span>) 15 PLAYERS - 1 <span className="text-tmm-cream">Marshall</span>, 7 <span className="text-tmm-brown">Villagers</span>, 7 Roles (3 <span className="text-tmm-red">KILL</span>, 1 <span className="text-tmm-blue">GUESS</span>, 2 <span className="text-tmm-green">SAVE</span>, 1 <span className="text-tmm-yellow">WILD</span>) 17 PLAYERS - 1 <span className="text-tmm-cream">Marshall</span>, 8 <span className="text-tmm-brown">Villagers</span>, 8 Roles (3 <span className="text-tmm-red">KILL</span>, 2 <span className="text-tmm-blue">GUESS</span>, 2 <span className="text-tmm-green">SAVE</span>, 1 <span className="text-tmm-yellow">WILD</span>) Note! - This is a suggested selection for the amounts of players and their matching role splits, freely experiment with your own numbers, however we have play-tested throughly and have found these work best, but if you really want to... you can even take out certain roles (except <span className="text-tmm-brown">Villager</span> &amp; <span className="text-tmm-red">Mafia</span> roles ;). Make sure you read the <span className="text-muted">gamemode card*</span> for 3 ways to play actions in the sleep phase.</p>
                 </div>
 
-                {/* BOX 4 — CHARACTERS */}
+                {/* BOX 4 — There are gamemodes? / (SEE GAMEMODE CARD*) */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">CHARACTERS</span><span className="play-block-subtitle">(SEE EACH ROLE CARD*)</span></div>
-                  <ul className="play-block-body play-rules-list">
-                    <li><span className="text-tmm-cream">MARSHALL (1)</span> — The games host and all-seeing narrator.</li>
-                  </ul>
-                  <p className="play-block-body">Players with roles wake up during the (Sleep Phase) and open their eyes - in the order called by <span className="text-tmm-cream">Marshall</span> (detailed above*), player then does their role action before closing their eyes again.</p>
-                  <ul className="play-block-body play-rules-list">
-                    <li><span className="text-tmm-green">ANGEL (2)</span> — Pick player to save (Each Round).</li>
-                    <li><span className="text-tmm-blue">DETECTIVE (2)</span> — Pick player to guess if they are a <span className="text-tmm-red">mafia</span>, <span className="text-tmm-cream">Marshall</span> indicates Yes/No (Each Round).</li>
-                    <li><span className="text-tmm-green">DOCTOR (2)</span> — <span className="text-tmm-cream">Marshall</span> shows who the <span className="text-tmm-red">mafia</span> killed, save them Yes/No (Single Use).</li>
-                    <li><span className="text-tmm-yellow">JESTER (1)</span> — Get voted out to win the game.</li>
-                    <li><span className="text-tmm-red">MAFIA (3)</span> — Pick player to kill (Each Round).</li>
-                    <li><span className="text-tmm-yellow">SILENCER (1)</span> — Pick player to silence (Each Round).</li>
-                    <li><span className="text-tmm-brown">VILLAGER (10)</span> — Vote out <span className="text-tmm-red">mafia</span> to win.</li>
-                  </ul>
+                  <div className="play-card-header"><span className="play-block-title">There are gamemodes?</span><span className="play-block-subtitle">(SEE GAMEMODE CARD*)</span></div>
+                  <p className="play-block-body">There are Three Different game-modes that can be played! STANDARD mode: Players with the same role - silently point and agree on a SINGLE target together (EG, 2 <span className="text-tmm-red">mafia</span> = 1 kill) GROUP MODE: Players with the same role - silently point and agree on targets together = to the amount of their role (Eg, 2 <span className="text-tmm-red">mafia</span> = 2 killS) CHAOS mode: Each Player action role - Silently picks their own INDIVIDUAL target SEPARATELY (Eg, 1 <span className="text-tmm-red">mafia</span> = 1 kill / 1 <span className="text-tmm-red">mafia</span> = 1 kill) Note! - THESE Changes only alter the role actions in the sleep phase, and don{"'"}t affect anything else.</p>
                 </div>
 
-                {/* BOX 5 — PHASES */}
+                {/* BOX 5 — What are the rules? / (SEE RULES CARD*) */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">PHASES</span><span className="play-block-subtitle">1, 2 &amp; 3</span></div>
-                  <p className="play-block-body">Each round in The <span className="text-tmm-cream">Marshall</span> <span className="text-tmm-red">Mafia</span> consists of three phases.</p>
-                  <p className="play-block-body">1. SLEEP → 2. DiscussioN → 3. Vote</p>
-                  <p className="play-block-body">If the games go to quickly or too many players are getting eliminated each night, the role groups (e.g. if there are 2+ <span className="text-tmm-green">Angels</span>, 2+ <span className="text-tmm-red">Mafia</span>, 2+ <span className="text-tmm-blue">Detectives</span>)</p>
-                  <p className="play-block-body" style={{marginTop:"clamp(8px,2vw,12px)"}}>each type of role (<span className="text-tmm-red">KILL</span>, <span className="text-tmm-blue">GUESS</span>, <span className="text-tmm-green">SAVE</span>, <span className="text-tmm-yellow">WILD</span>) must decide one player to do their action on.</p>
+                  <div className="play-card-header"><span className="play-block-title">What are the rules?</span><span className="play-block-subtitle">(SEE RULES CARD*)</span></div>
+                  <p className="play-block-body">Before the game starts, Players should Decide which <span className="text-muted">rule cards*</span> are going to be Played, The standard ruleset are the following Rules #1, #2, #3, PLAYERS MUST CLOSE Their EYES &amp; Remain Silent DURING THE SLEEP PHASE. DURING THE SLEEP PHASE The <span className="text-tmm-cream">MARSHALL</span> ROLE must not SPEAK Directly TOWARDS Each AWOKEN Player, otherwise all players know which role a player has. AWOKEN Players SILENTLY POINT &amp; CONFIRM Decisions WITH THE <span className="text-tmm-cream">MARSHALL</span>, by hand signals or mouthing their choice to the <span className="text-tmm-cream">Marshall</span> overseeing the game. Timed discussion period is recommended to be 3 minutes, to keep the rounds short and allow the players to be more decisive and impulsive. CLock-wise Voting must REVERSE each round, with each Player Raising a Finger for every vote they receive from other players. This avoids the same players voting last, stopping them having an advantage. Respect the game, when you are dead you are dead... you can only observe remaining Rounds, PICK a <span className="text-tmm-red">DEATH CARD*</span> FROM THE PACK, hold it up to show other players you are eliminated from the game. The <span className="text-tmm-cream">MARSHALL</span> role SHOULD change each GAME, so all players have a chance at playing. SCAN the <span className="text-tmm-green">MUSIC CARD*</span> to make the GAME more enjoyable for the group (helps the restless {'"'}sleeping{'"'} of players in the night).</p>
                 </div>
 
-                {/* BOX 6 — PHASE 1. SLEEP */}
+                {/* BOX 6 — Even More RULES... / (SEE Each RULE CARD*) — PINK TEXT #F8007A */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">PHASE 1.</span><span className="play-block-subtitle">SLEEP</span></div>
-                  <p className="play-block-body">This is the secretive action phase. All players close their eyes, and the <span className="text-tmm-cream">Marshall</span> calls specific character roles to perform their actions in a set order:</p>
-                  <ul className="play-block-body play-rules-list">
-                    <li><span className="text-tmm-red">KILL</span> — The <span className="text-tmm-red">Mafia</span> choose a player to eliminate.</li>
-                    <li><span className="text-tmm-blue">GUESS</span> — The <span className="text-tmm-blue">Detective</span> (or similar roles) attempt to discover another player{"'"}s identity.</li>
-                    <li><span className="text-tmm-green">SAVE</span> — The <span className="text-tmm-green">Angel</span> (or similar roles) can protect one player from elimination.</li>
-                    <li><span className="text-tmm-yellow">WILD</span> — Any other special roles perform their actions (depending on game customisation).</li>
-                  </ul>
-                  <p className="play-block-body">After all actions are completed, the <span className="text-tmm-cream">Marshall</span> announces the result of the night{"'"}s activities (who has been eliminated, if anyone was saved... without naming the player of course, etc.).</p>
+                  <div className="play-card-header"><span className="play-block-title">Even More RULES...</span><span className="play-block-subtitle">(SEE Each RULE CARD*)</span></div>
+                  <p className="play-block-body" style={{color:"#F8007A"}}>Note! - The choice of rules allows for players who have played by different rules to agree on how the game will be played. 1# - PLAYERS CANNOT REVEAL THEIR OWN ROLE TO OTHER PLAYERS, you can pretend to be other roles but don{"'"}t get caught out! 2# - IF A non-awoken PLAYER SLEEP-TALKS, sleep-walks or sleep-anything, REPEATEDLY in the sleep phase, The PLAYER IS ELIMINATED from the game. 3# - ANY Player voted out must reveal their card to the rest of the group, this can be as theatrical as you want! 4# - If a PLAYER is KILLED, they MUST REVEAL THEIR CARD to the rest of the village. 5# - ROLES that do save actions, CANNOT SAVE THEMSELVES OR any OTHER SAVE ROLES. 6# - WHEN A VOTE IS TIED with multiple players on the same amount of votes, THE PLAYERS PLAY ROCK, PAPER, SCISSORS for a best-of 1 or 3. 7# - IF A PLAYER MAJORITY SKIPS VOTE (more than half of all players), the game continues into another sleep phase and NO PLAYER IS KICKED OUT. 8# - SAVE ROLES can only SAVE THE SAME PLAYER ONCE (UNTIL ALL PLAYERs HAVE BEEN SAVED ONCE), then they can save that player again (this cycles until a new game is started).</p>
                 </div>
 
-                {/* BOX 7 — PHASE 2. DISCUSSION */}
+                {/* BOX 7 — are there Characters? / (SEE each role CARD*) */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">PHASE 2.</span><span className="play-block-subtitle">discussion</span></div>
-                  <p className="play-block-body">All players open their eyes and begin arguing, accusing, or defending themselves based on what they believe has happened during the Sleep Phase.</p>
-                  <p className="play-block-body">The <span className="text-tmm-cream">Marshall</span> should set a timer (Recommended 3 minutes) for this phase. They can also stop the discussions at a natural moment to keep the phase concise and intense.</p>
-                  <p className="play-block-body">Players are free to speculate, but players must not reveal their card (if a player is caught showing their card to another player, they are instantly eliminated.</p>
+                  <div className="play-card-header"><span className="play-block-title">are there Characters?</span><span className="play-block-subtitle">(SEE each role CARD*)</span></div>
+                  <p className="play-block-body">Each role description below reveals the characters objective: <span className="text-tmm-cream">MARSHALL (1)</span> - The games host and all-seeing narrator, switch up this appointed player (each game). Players with roles wake up during the (Sleep Phase) and open their eyes - in the order called by <span className="text-tmm-cream">Marshall</span> (detailed on the <span className="text-muted">play card*</span>), the player then does their role action before closing their eyes again. <span className="text-tmm-green">ANGEL (3)</span> - Pick player to save (Each Round). <span className="text-tmm-blue">DETECTIVE (3)</span> - Pick player to guess if they are a <span className="text-tmm-red">mafia</span>, <span className="text-tmm-cream">Marshall</span> indicates Yes/No (Each Round). <span className="text-tmm-yellow">JESTER (1)</span> - Get voted out to win the game. <span className="text-tmm-red">MAFIA (3)</span> - Kill &amp; vote out all other players to win, PICK PLAYER TO KILL (EACH ROUND). <span className="text-tmm-brown">VILLAGER (11)</span> - Vote out all the <span className="text-tmm-red">mafia</span> to win. The Two opposing tribes battle for control. The <span className="text-tmm-red">Mafia</span> tribe, made up of <span className="text-tmm-red">Mafia</span> Members, secretly fight against The <span className="text-tmm-brown">Villager</span> members of <span className="text-tmm-green">Angels</span>, <span className="text-tmm-blue">Detectives</span> and <span className="text-tmm-brown">Villagers</span>, while the sneaky tribeless <span className="text-tmm-yellow">Jester</span> aims for a solo victory.</p>
                 </div>
 
-                {/* BOX 8 — PHASE 3. VOTE */}
+                {/* BOX 8 — What are the PHASES? / 1, 2 & 3 */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">PHASE 3.</span><span className="play-block-subtitle">VOTE</span></div>
-                  <p className="play-block-body">After the discussion, players proceed straight to the voting.</p>
-                  <p className="play-block-body">Each <span className="text-tmm-brown">VILLAGER</span> role votes to eliminate someone they suspect is <span className="text-tmm-red">Mafia</span>, while the <span className="text-tmm-red">Mafia</span> aim to deceive <span className="text-tmm-brown">Villagers</span> into voting out their own.</p>
-                  <p className="play-block-body">Each player is allowed to make a single vote, on anyone they choose. When a player casts a vote for another player - the player who has been voted for must hold up a finger for each vote received.</p>
-                  <p className="play-block-body">If the vote ties, a re-vote occurs between the tied players (depending on chosen <span className="text-muted">Rule Cards*</span>).</p>
-                  <p className="play-block-body">The player with the most votes is immediately eliminated from the game, and their character is revealed (also depending on chosen <span className="text-muted">Rule Cards*</span>).</p>
+                  <div className="play-card-header"><span className="play-block-title">What are the PHASES?</span><span className="play-block-subtitle">1, 2 &amp; 3</span></div>
+                  <p className="play-block-body">Each round consists of three consecutive phases. 1. SLEEP → 2. Discussion → 3. Vote Standard game mode - each type of role (<span className="text-tmm-red">KILL</span>, <span className="text-tmm-blue">GUESS</span>, <span className="text-tmm-green">SAVE</span>, <span className="text-tmm-yellow">WILD</span>) must decide one player to do their action on. Note! - If the games FINISH too quickly or too many players are getting eliminated each night, SWITCH UP THE PLAYSTYLE of the sleep phase see (<span className="text-muted">GAMEMODE CARD*</span>).</p>
                 </div>
 
-                {/* BOX 9 — ROUNDS */}
+                {/* BOX 9 — PHASE 1 / SLEEP */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">ROUNDS</span><span className="play-block-subtitle">REPEAT</span></div>
-                  <p className="play-block-body">The game continues through the Sleep, Discussion, and Vote phases until one of the following conditions is achieved:</p>
-                  <p className="play-block-body">a. <span className="text-tmm-brown">Villagers</span> win by successfully voting out all <span className="text-tmm-red">Mafia</span> members.</p>
-                  <p className="play-block-body">b. <span className="text-tmm-red">Mafia</span> wins by eliminating enough <span className="text-tmm-brown">Villagers</span> to outnumber them.</p>
-                  <p className="play-block-body">c. <span className="text-tmm-yellow">Wild</span> role wins by fulfilling the unique conditions tied to their abilities.</p>
+                  <div className="play-card-header"><span className="play-block-title">PHASE 1</span><span className="play-block-subtitle">SLEEP</span></div>
+                  <p className="play-block-body">This is the secretive action phase. All players close their eyes, and the <span className="text-tmm-cream">Marshall</span> calls specific character roles to perform their actions in a set order: <span className="text-tmm-red">KILL</span> - The <span className="text-tmm-red">Mafia</span> choose a player to eliminate. <span className="text-tmm-blue">GUESS</span> - The <span className="text-tmm-blue">Detective</span> (or similar roles) attempt to discover another player{"'"}s identity. <span className="text-tmm-green">SAVE</span> - The <span className="text-tmm-green">Angel</span> (or similar roles) can protect one player from elimination. <span className="text-tmm-yellow">WILD</span> - Any other special roles perform their actions (depending on game customisation). After all actions are completed, the <span className="text-tmm-cream">Marshall</span> announces the result of the night{"'"}s activities (who has been eliminated, if anyone was saved... without naming the player of course, etc.).</p>
                 </div>
 
-                {/* BOX 10 — LINKS */}
+                {/* BOX 10 — PHASE 2 / discussion */}
+                <div className="play-card" onClick={e => e.stopPropagation()}>
+                  <div className="play-card-header"><span className="play-block-title">PHASE 2</span><span className="play-block-subtitle">discussion</span></div>
+                  <p className="play-block-body">All players open their eyes and begin arguing, accusing, or defending themselves based on what they believe has happened during the Sleep Phase. The <span className="text-tmm-cream">Marshall</span> should set a timer (Recommended 3 minutes) for this phase, they can also stop the discussions at a natural moment to keep the phase concise and intense. Players are free to speculate, but players must not reveal their card (if a player is caught showing their card to another player, they are instantly eliminated).</p>
+                </div>
+
+                {/* BOX 11 — PHASE 3 / VOTE */}
+                <div className="play-card" onClick={e => e.stopPropagation()}>
+                  <div className="play-card-header"><span className="play-block-title">PHASE 3</span><span className="play-block-subtitle">VOTE</span></div>
+                  <p className="play-block-body">After the discussion, players proceed straight to the voting. Each <span className="text-tmm-brown">VILLAGER ROLE</span> votes to eliminate someone they suspect is <span className="text-tmm-red">Mafia</span>, while the <span className="text-tmm-red">Mafia</span> aim to deceive <span className="text-tmm-brown">Villagers</span> into voting out their own. Each player is allowed to make a single vote (Yes, you can vote for yourself), on anyone they choose. when a player casts a vote for another player - the player who has been voted for must hold up a finger for each vote received. If the vote ties, a re-vote occurs between the tied players (depending on chosen <span className="text-muted">Rule Cards*</span>). The player with the most votes is immediately eliminated from the game, and their character is revealed (also depending on chosen <span className="text-muted">Rule Cards*</span>).</p>
+                </div>
+
+                {/* BOX 12 — How many ROUNDS? / REPEAT */}
+                <div className="play-card" onClick={e => e.stopPropagation()}>
+                  <div className="play-card-header"><span className="play-block-title">How many ROUNDS?</span><span className="play-block-subtitle">REPEAT</span></div>
+                  <p className="play-block-body">The game continues through the Sleep, Discussion, and Vote phases until one of the following conditions is achieved: a. <span className="text-tmm-brown">Villagers</span> win by successfully voting out all <span className="text-tmm-red">Mafia</span> members. b. <span className="text-tmm-red">Mafia</span> wins by eliminating enough <span className="text-tmm-brown">Villagers</span> to outnumber them. c. <span className="text-tmm-yellow">Wild</span> role wins by fulfilling the unique conditions tied to their abilities.</p>
+                </div>
+
+                {/* BOX 13 — Links / SNEEK PEAKS! */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">Links</span><span className="play-block-subtitle">SNEEK PEAKS!</span></div>
                   <p className="play-block-body">Collect → <a href="https://linktr.ee/themarshallmafia" target="_blank" rel="noopener noreferrer" className="text-tmm-blue hover:text-white underline underline-offset-2 transition-colors">https://linktr.ee/themarshallmafia</a></p>
                   <p className="play-block-body">music → <a href="https://linktr.ee/themarshallmafia.music" target="_blank" rel="noopener noreferrer" className="text-tmm-blue hover:text-white underline underline-offset-2 transition-colors">https://linktr.ee/themarshallmafia.music</a></p>
                   <p className="play-block-body">Developer → <a href="https://linktr.ee/marshallwi11" target="_blank" rel="noopener noreferrer" className="text-tmm-blue hover:text-white underline underline-offset-2 transition-colors">https://linktr.ee/marshallwi11</a></p>
                 </div>
+
+                {/* BOX 14 — by marshallwi11 / est. 2025 */}
                 <div className="play-card-pill" onClick={e => e.stopPropagation()}>
                   <span className="play-block-title">by marshallwi11</span>
-                  <span className="play-block-subtitle">est. 2025</span>
+                  <span className="play-block-subtitle">est . 2025</span>
                 </div>
               </div>
             </div>
@@ -1016,7 +992,7 @@ export default function Home() {
                     </div>
                     <div className="reviews-divider" aria-hidden="true" />
                     <div className="reviews-bars">
-                      {[1,2,3,4,5].filter(n => TESTIMONIALS.filter(t => t.rating === n).length > 0).map(n => {
+                      {[5,4,3,2,1].filter(n => TESTIMONIALS.filter(t => t.rating === n).length > 0).map(n => {
                         const count = TESTIMONIALS.filter(t => t.rating === n).length
                         const pct = Math.round((count / TESTIMONIALS.length) * 100)
                         // Both label and count share yellow + same font size across all visible bars
