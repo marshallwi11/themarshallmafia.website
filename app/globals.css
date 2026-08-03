@@ -717,6 +717,7 @@
     letter-spacing: 0.02em;
     color: #ffffff;
     text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+    margin: 0;
   }
   .tmm-light .play-block-title    { color: #111111; }
   .tmm-light .play-block-subtitle { color: #76787B; }
