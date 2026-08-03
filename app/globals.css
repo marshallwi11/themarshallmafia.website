@@ -548,16 +548,20 @@
   .modal-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(60px) saturate(1.4);
-    -webkit-backdrop-filter: blur(60px) saturate(1.4);
-    animation: fadeIn 0.25s ease-out;
+    background: rgba(0, 0, 0, 0.50);
+    backdrop-filter: blur(72px) saturate(1.5) brightness(0.85);
+    -webkit-backdrop-filter: blur(72px) saturate(1.5) brightness(0.85);
+    animation: backdropIn 0.40s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
   /* Light mode backdrop — neutral frosted white */
   .tmm-light .modal-backdrop {
-    background: rgba(240, 238, 234, 0.72);
-    backdrop-filter: blur(60px) saturate(1.4);
-    -webkit-backdrop-filter: blur(60px) saturate(1.4);
+    background: rgba(240, 238, 234, 0.78);
+    backdrop-filter: blur(72px) saturate(1.5) brightness(1.06);
+    -webkit-backdrop-filter: blur(72px) saturate(1.5) brightness(1.06);
+  }
+  @keyframes backdropIn {
+    from { opacity: 0; backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px); }
+    to   { opacity: 1; backdrop-filter: blur(72px) saturate(1.5) brightness(0.85); -webkit-backdrop-filter: blur(72px) saturate(1.5) brightness(0.85); }
   }
   @keyframes fadeIn {
     from { opacity: 0; }
@@ -582,17 +586,32 @@
     min-height: 100%;
   }
   .animate-modal-in {
-    animation: modalIn 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: modalIn 0.46s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
   @keyframes modalIn {
-    from { opacity: 0; filter: blur(6px); transform: scale(0.97) translateY(8px); }
-    to   { opacity: 1; filter: blur(0px); transform: scale(1)    translateY(0);   }
+    from {
+      opacity: 0;
+      filter: blur(10px) saturate(0.6);
+      transform: scale(0.96) translateY(14px);
+    }
+    60% {
+      filter: blur(2px) saturate(1);
+    }
+    to {
+      opacity: 1;
+      filter: blur(0px) saturate(1);
+      transform: scale(1) translateY(0);
+    }
   }
   /* Scoped fade-out — applied to outgoing modal scroll container only, nav unaffected */
   .modal-content-out {
     opacity: 0 !important;
-    filter: blur(5px) !important;
-    transition: opacity 0.22s ease, filter 0.22s ease !important;
+    filter: blur(8px) saturate(0.5) !important;
+    transform: scale(0.97) !important;
+    transition:
+      opacity 0.28s cubic-bezier(0.4, 0, 1, 1),
+      filter 0.28s cubic-bezier(0.4, 0, 1, 1),
+      transform 0.28s cubic-bezier(0.4, 0, 1, 1) !important;
     pointer-events: none;
   }
 
@@ -603,26 +622,38 @@
     .play-card-pill {
       animation: scrollReveal linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 28%;
+      animation-range: entry 0% entry 30%;
     }
     @keyframes scrollReveal {
-      from { opacity: 0; transform: translateY(22px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(28px) scale(0.98);
+        filter: blur(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
     }
   }
 
-  /* ── Play cards — PDF spec: rgba(52,52,52,0.25), 50px radius ────── */
+  /* ── Play cards — premium glass look ──────────────────────────────── */
   .play-card {
-    background: rgba(52, 52, 52, 0.25);
+    background: linear-gradient(160deg, rgba(76, 76, 76, 0.32) 0%, rgba(36, 36, 36, 0.20) 100%);
     border-radius: clamp(26px, 5vw, 40px);
     padding: clamp(24px, 4.8vw, 38px);
     display: flex;
     flex-direction: column;
     gap: clamp(14px, 2.8vw, 20px);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    backdrop-filter: blur(32px) saturate(1.6);
-    -webkit-backdrop-filter: blur(32px) saturate(1.6);
-    box-shadow: 0 2px 20px rgba(0,0,0,0.22);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    backdrop-filter: blur(48px) saturate(1.9) brightness(1.04);
+    -webkit-backdrop-filter: blur(48px) saturate(1.9) brightness(1.04);
+    box-shadow:
+      0 8px 40px rgba(0,0,0,0.32),
+      0 2px 10px rgba(0,0,0,0.18),
+      inset 0 1.5px 0 rgba(255,255,255,0.18),
+      inset 0 -1px 0 rgba(0,0,0,0.14);
   }
   .play-card-header {
     display: flex;
@@ -631,15 +662,19 @@
     margin-bottom: clamp(6px, 1.4vw, 10px);
   }
   .play-card-pill {
-    background: rgba(52, 52, 52, 0.25);
+    background: linear-gradient(135deg, rgba(76, 76, 76, 0.32) 0%, rgba(36, 36, 36, 0.20) 100%);
     border-radius: 100px;
     padding: clamp(14px, 3vw, 22px) clamp(20px, 4vw, 36px);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    backdrop-filter: blur(32px) saturate(1.6);
-    -webkit-backdrop-filter: blur(32px) saturate(1.6);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    backdrop-filter: blur(48px) saturate(1.9) brightness(1.04);
+    -webkit-backdrop-filter: blur(48px) saturate(1.9) brightness(1.04);
+    box-shadow:
+      0 4px 24px rgba(0,0,0,0.28),
+      inset 0 1.5px 0 rgba(255,255,255,0.18),
+      inset 0 -1px 0 rgba(0,0,0,0.12);
   }
   /* ── Image inside a play card — rounded corners, contain fill ────── */
   .play-card-img {
@@ -681,17 +716,25 @@
     margin: 6px 0;
   }
   .tmm-light .play-card {
-    background: rgba(245, 245, 245, 0.60);
-    border-color: rgba(0, 0, 0, 0.07);
-    box-shadow: 0 2px 20px rgba(0,0,0,0.10);
-    backdrop-filter: blur(32px) saturate(1.6);
-    -webkit-backdrop-filter: blur(32px) saturate(1.6);
+    background: linear-gradient(160deg, rgba(255,255,255,0.75) 0%, rgba(240,240,240,0.58) 100%);
+    border-color: rgba(255,255,255,0.80);
+    box-shadow:
+      0 8px 40px rgba(0,0,0,0.10),
+      0 2px 10px rgba(0,0,0,0.07),
+      inset 0 1.5px 0 rgba(255,255,255,0.95),
+      inset 0 -1px 0 rgba(0,0,0,0.04);
+    backdrop-filter: blur(48px) saturate(1.9) brightness(1.02);
+    -webkit-backdrop-filter: blur(48px) saturate(1.9) brightness(1.02);
   }
   .tmm-light .play-card-pill {
-    background: rgba(245, 245, 245, 0.60);
-    border-color: rgba(0, 0, 0, 0.07);
-    backdrop-filter: blur(32px) saturate(1.6);
-    -webkit-backdrop-filter: blur(32px) saturate(1.6);
+    background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(240,240,240,0.58) 100%);
+    border-color: rgba(255,255,255,0.80);
+    box-shadow:
+      0 4px 24px rgba(0,0,0,0.09),
+      inset 0 1.5px 0 rgba(255,255,255,0.95),
+      inset 0 -1px 0 rgba(0,0,0,0.03);
+    backdrop-filter: blur(48px) saturate(1.9) brightness(1.02);
+    -webkit-backdrop-filter: blur(48px) saturate(1.9) brightness(1.02);
   }
   .tmm-light .play-card-divider { border-color: rgba(0, 0, 0, 0.1); }
 
