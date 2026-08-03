@@ -338,6 +338,9 @@ const TESTIMONIALS = [
   { name: "Isabella M", rating: 5, title: "Amazing for group bonding", body: "The Marshall Mafia is amazing for group bonding, I played this game with my youth group and it was amazing... it really helped everyone to get to know each other and created fun memories!" },
   { name: "Samuel A", rating: 5, title: "There is nothing like this game on the market", body: "There is nothing like this game on the market. It's appeals to all ages, no-one is too young or too old to play… plus the background music makes the experience so much endless fun." },
   { name: "Lewis W", rating: 5, title: "Always interesting no matter how many times we've played", body: "The Marshall Mafia is always interesting no matter how many times we've played it. An ideal game to play with family or friends!" },
+  { name: "Jessica M", rating: 5, title: "Love it, love it, love it!", body: "Love it, love it, love it! It was a very creative way to play mafia!" },
+  { name: "Ayanfe O", rating: 4, title: "Cards are really good quality", body: "Cards are really good quality, I like the different additions as well!" },
+  { name: "Geoff S", rating: 5, title: "Great game, really enjoy the variety", body: "Great game, really enjoy the variety of cards in the pack. It's easy for someone new to pick up and understand and is a good game to play in larger groups which is generally hard to find." },
 ]
 
 export default function Home() {
