@@ -299,29 +299,47 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
       <div className="modal-backdrop" />
       <div className="modal-scroll-bare animate-modal-in">
         <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
+
+          {/* ── Paragraph 1 ── */}
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
-              <span className="play-block-title">OBJECTIVE</span>
-              <span className="play-block-subtitle">INFORMATION</span>
+              <span className="play-block-title">THE STORY</span>
+              <span className="play-block-subtitle">origin</span>
             </div>
             <p className="play-block-body" style={{margin:0}}>
-              <span style={{color:"#ffffff"}}>The Marshall Mafia</span> is a social deduction card game where players secretly take on the roles of <span className="text-tmm-red">Mafia</span> members or <span className="text-tmm-brown">Villagers</span>, and through rounds of sleeping, discussion and voting, the <span className="text-tmm-brown">Villagers</span> must identify and eliminate the <span className="text-tmm-red">Mafia</span> before they are outnumbered.
+              {/* CREATION STORY — PARAGRAPH 1 */}
             </p>
           </div>
+
+          {/* IMAGE SLOT 1 — image goes here */}
+
+          {/* ── Paragraph 2 ── */}
           <div className="play-card" onClick={e => e.stopPropagation()}>
-            <div className="play-card-header">
-              <span className="play-block-title">READY</span>
-              <span className="play-block-subtitle">click play*</span>
-            </div>
-            <div style={{display:"flex",flexDirection:"column",gap:"clamp(14px,3vw,22px)"}}>
-              <p className="play-block-body" style={{margin:0}}>
-                Discover the hidden secrets of the game! — Learn how roles are assigned, master the rules of <span className="text-tmm-red">Mafia</span> vs. <span className="text-tmm-brown">Villagers</span>, and get familiar with the game{"'"}s core phases.
-              </p>
-              <p className="play-block-body" style={{margin:0}}>
-                From the silence of the Sleep Phase to the heated debates in Discussion, and the all-important Vote — sharpen your strategy to outsmart your rivals!
-              </p>
-            </div>
+            <p className="play-block-body" style={{margin:0}}>
+              {/* CREATION STORY — PARAGRAPH 2 */}
+            </p>
           </div>
+
+          {/* IMAGE SLOT 2 — image goes here */}
+
+          {/* ── Paragraph 3 ── */}
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <p className="play-block-body" style={{margin:0}}>
+              {/* CREATION STORY — PARAGRAPH 3 */}
+            </p>
+          </div>
+
+          {/* IMAGE SLOT 3 — image goes here */}
+
+          {/* ── Paragraph 4 ── */}
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <p className="play-block-body" style={{margin:0}}>
+              {/* CREATION STORY — PARAGRAPH 4 */}
+            </p>
+          </div>
+
+          {/* IMAGE SLOT 4 — image goes here */}
+
           <div className="play-card-pill" onClick={e => e.stopPropagation()}>
             <span className="play-block-title">the marshall mafia</span>
             <span className="play-block-subtitle">est. 2025</span>
@@ -355,7 +373,6 @@ export default function Home() {
   const [homeHovered, setHomeHovered] = useState(false)
   const [infoOpen, setInfoOpen] = useState(false)
   const [modalSwitching, setModalSwitching] = useState(false)
-  const [showcaseIdx, setShowcaseIdx] = useState(0)
   // 0 = intro text showing | 1 = text fading out | 2 = nav visible
   const [navIntro, setNavIntro] = useState(0)
   const lastTapRef = useRef<number>(0)
@@ -867,43 +884,27 @@ export default function Home() {
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
             <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`}>
-              <div className="modal-content-pane">
-                <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header">
-                    <span className="play-block-title">SHOWCASE</span>
-                    <span className="play-block-subtitle">gallery</span>
+              <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
+                {[1,2,3,4,5,6,7].map(i => (
+                  <div key={i} className="play-card" onClick={e => e.stopPropagation()}>
+                    <div className="play-card-header">
+                      <span className="play-block-title">SHOWCASE</span>
+                      <span className="play-block-subtitle">{i} of 7</span>
+                    </div>
+                    <div className="play-card-img">
+                      <Image
+                        src={`/images/tmm_picture_${i}.png`}
+                        alt={`The Marshall Mafia — image ${i}`}
+                        fill
+                        sizes="(max-width:600px) 100vw, 600px"
+                        style={{objectFit:"contain"}}
+                      />
+                    </div>
                   </div>
-                  {/* Main large image — fixed 4:3 container, contain so full image is always visible */}
-                  <div className="showcase-img-well" style={{borderRadius:"clamp(8px,1.5vw,14px)"}}>
-                    <Image
-                      src={`/images/tmm_picture_${showcaseIdx + 1}.png`}
-                      alt={`The Marshall Mafia — image ${showcaseIdx + 1}`}
-                      fill
-                      priority
-                      sizes="(max-width:600px) 100vw, 600px"
-                      style={{objectFit:"contain"}}
-                    />
-                  </div>
-                  {/* Thumbnail strip */}
-                  <div className="showcase-thumbs">
-                    {[0,1,2,3,4,5,6].map(i => (
-                      <button
-                        key={i}
-                        onClick={() => setShowcaseIdx(i)}
-                        className={`showcase-thumb${showcaseIdx === i ? " showcase-thumb--active" : ""}`}
-                        aria-label={`View image ${i + 1}`}
-                      >
-                        <Image
-                          src={`/images/tmm_picture_${i + 1}.png`}
-                          alt={`Thumbnail ${i + 1}`}
-                          width={200} height={150}
-                          loading="lazy"
-                          sizes="80px"
-                          style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}
-                        />
-                      </button>
-                    ))}
-                  </div>
+                ))}
+                <div className="play-card-pill" onClick={e => e.stopPropagation()}>
+                  <span className="play-block-title">the marshall mafia</span>
+                  <span className="play-block-subtitle">gallery</span>
                 </div>
               </div>
             </div>
