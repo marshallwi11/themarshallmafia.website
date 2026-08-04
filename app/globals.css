@@ -547,6 +547,16 @@
     user-select: none;
     pointer-events: none;
   }
+  /* Mobile abbreviation — hidden on desktop, shown on mobile via media query */
+  .pill-nav-home-tmm {
+    display: none;
+    font-family: 'MarkerBold', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.10em;
+    color: inherit;
+    user-select: none;
+    pointer-events: none;
+  }
   /* Mobile/narrow: 3-line vertical stack — hidden on desktop */
   .pill-nav-home-stack {
     display: none;
@@ -1326,8 +1336,8 @@
   /* Home button — circle, same size as icon buttons */
   .pill-nav-home {
     order: 0 !important;
-    flex: 0 0 52px !important;
-    width: 52px !important;
+    flex: 0 0 44px !important;
+    width: 44px !important;
     height: 44px !important;
     min-width: 0 !important;
     padding: 0 !important;
@@ -1336,11 +1346,12 @@
   }
   .pill-nav-home--text { padding: 0 !important; min-width: 0 !important; }
 
-  /* Mobile home button: show 3-line stack, hide wide horizontal text */
+  /* Mobile home button: show TMM, hide wide text and stack */
   .pill-nav-home .pill-nav-home-text { display: none !important; }
   .pill-nav-home .pill-nav-home-logo { display: none !important; }
   .pill-nav-home .pill-nav-home-wide { display: none !important; }
-  .pill-nav-home .pill-nav-home-stack { display: flex !important; }
+  .pill-nav-home .pill-nav-home-stack { display: none !important; }
+  .pill-nav-home .pill-nav-home-tmm { display: block !important; }
 
   /* No background or border on home button when inactive */
   .pill-nav-home:not(.pill-nav-item--active),
