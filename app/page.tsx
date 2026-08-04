@@ -444,7 +444,6 @@ export default function Home() {
   const [packSelected, setPackSelected] = useState<"standard" | "expansion" | null>(null)
   const [reviewComing, setReviewComing] = useState(false)
   const [cartShaking, setCartShaking] = useState(false)
-  const [homeHovered, setHomeHovered] = useState(false)
   const [infoOpen, setInfoOpen] = useState(false)
   const [modalSwitching, setModalSwitching] = useState(false)
   // 0 = intro text showing | 1 = text fading out | 2 = nav visible
@@ -479,13 +478,13 @@ export default function Home() {
     const inner = navInnerRef.current
     if (!inner) return
     const refMap: Record<string, React.RefObject<HTMLButtonElement | null>> = {
-      info: btnInfoRef, play: btnPlayRef, music: btnMusicRef, home: btnHomeRef,
+      info: btnInfoRef, play: btnPlayRef, music: btnMusicRef,
       showcase: btnShowRef, reviews: btnRevRef, cart: btnCartRef,
     }
     let key: string
     if (infoOpen) key = "info"
     else if (activeModal === "collect") key = "cart"
-    else key = activeModal ?? "home"
+    else key = activeModal
     const btn = refMap[key]?.current
     if (!btn) return
     const btnRect   = btn.getBoundingClientRect()
@@ -636,7 +635,7 @@ export default function Home() {
                   left: sliderStyle.left,
                   width: sliderStyle.width,
                   opacity: navIntro < 2 ? 0
-                    : (activeModal === null && !infoOpen && !homeHovered) ? 0
+                    : (activeModal === null && !infoOpen) ? 0
                     : 1,
                   transition: sliderReady
                     ? "left 0.36s cubic-bezier(0.34,1.18,0.64,1), width 0.36s cubic-bezier(0.34,1.18,0.64,1), opacity 0.3s ease"
@@ -742,65 +741,6 @@ export default function Home() {
                 )}
               </button>
 
-              {/* HOME — text logo; ring only visible on hover/press */}
-              {/* Grid overlay trick: both texts stack in the same grid cell so the
-                  button width is always driven by the WIDER text — no layout shift */}
-              <button ref={btnHomeRef}
-                className={`pill-nav-item pill-nav-home pill-nav-home--text${(activeModal === null && !infoOpen) ? " pill-nav-item--active" : ""}`}
-                onClick={() => { closeModal(); setInfoOpen(false); handleLogoTap(); setHomeHovered(false) }}
-                onPointerEnter={() => setHomeHovered(true)}
-                onPointerLeave={() => setHomeHovered(false)}
-                aria-label="Home / double-tap to switch mode"
-              >
-                {/* Text — desktop only (CSS hides on mobile) */}
-                <span className="pill-nav-home-text" style={{display:"grid"}}>
-                  {/* Default text — always rendered (drives button width) */}
-                  <span style={{gridArea:"1/1", opacity: homeHovered ? 0 : 1, transition:"opacity 0.45s ease", whiteSpace:"nowrap"}}>
-                    THE MARSHALL MAFIA
-                  </span>
-                  {/* Hover text — overlays in the same cell */}
-                  <span style={{gridArea:"1/1", opacity: homeHovered ? 1 : 0, transition:"opacity 0.45s ease", whiteSpace:"nowrap", textAlign:"center"}}>
-                    NIGHT / DAY SWITCH
-                  </span>
-                </span>
-                {/* Eyes logo — mobile only (CSS shows on mobile, hidden on desktop) */}
-                <img
-                  src="/tmm_themarshallmafia_logo.svg"
-                  alt=""
-                  className="pill-nav-home-logo"
-                  style={{
-                    transform: lightMode ? "scaleY(-1)" : undefined,
-                    filter: lightMode ? "invert(1)" : undefined,
-                    /* Grey when inactive, bright on hover — mirrors icon button behaviour */
-                    opacity: logoFading ? 0 : (homeHovered ? 1 : 0.55),
-                    transition: logoFading ? "opacity 0.18s linear" : "opacity 0.2s ease",
-                  }}
-                  draggable={false}
-                />
-              </button>
-
-              {/* ── ALTERNATIVE: eyes logo version (keep for easy revert) ──
-              <button ref={btnHomeRef}
-                className={`pill-nav-item pill-nav-home${(activeModal === null && !infoOpen) ? " pill-nav-item--active" : ""}`}
-                onClick={() => { closeModal(); setInfoOpen(false); handleLogoTap() }}
-                aria-label="Home"
-              >
-                <div style={{
-                  transform: lightMode ? "scaleY(-1)" : undefined,
-                  filter: lightMode ? "invert(1)" : undefined,
-                  opacity: logoFading ? 0 : 1,
-                  transition: "opacity 0.18s linear",
-                  lineHeight: 0,
-                }}>
-                  <img
-                    src="/tmm_themarshallmafia_logo.svg"
-                    alt="TMM"
-                    className="pill-nav-home-logo"
-                    draggable={false}
-                  />
-                </div>
-              </button>
-              ── END ALTERNATIVE ── */}
 
               {/* SHOWCASE */}
               <button ref={btnShowRef}
