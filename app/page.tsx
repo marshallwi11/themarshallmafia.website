@@ -458,8 +458,10 @@ export default function Home() {
   // Site-load intro: text pill → fade → nav icons
   useEffect(() => {
     const t1 = setTimeout(() => setNavIntro(1), 1000)  // text starts fading (1s hold)
-    const t2 = setTimeout(() => setNavIntro(2), 1800)  // icons appear only after text is fully gone (~0.7s fade)
-    return () => { clearTimeout(t1); clearTimeout(t2) }
+    const t2 = setTimeout(() => setNavIntro(2), 1800)  // icons appear after overlay fades (~0.7s fade)
+    const t3 = setTimeout(() => setNavIntro(3), 3200)  // home text collapses: wide → 3 stacked lines
+    const t4 = setTimeout(() => setNavIntro(4), 4000)  // single-line removed from DOM after fade
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4) }
   }, [])
 
   // Slider refs — all 7 items in the unified pill
@@ -473,6 +475,8 @@ export default function Home() {
   const btnCartRef  = useRef<HTMLButtonElement>(null)
   const [sliderStyle, setSliderStyle] = useState({ left: 0, width: 52 })
   const [sliderReady, setSliderReady] = useState(false)
+  // Tracks whether slider was previously visible — used to skip position transition on first appear
+  const sliderWasActive = useRef(false)
 
   const measureSlider = useCallback((skipTransition = false) => {
     const inner = navInnerRef.current
@@ -481,16 +485,27 @@ export default function Home() {
       info: btnInfoRef, play: btnPlayRef, music: btnMusicRef,
       showcase: btnShowRef, reviews: btnRevRef, cart: btnCartRef,
     }
-    let key: string
+    let key: string | null
     if (infoOpen) key = "info"
     else if (activeModal === "collect") key = "cart"
     else key = activeModal
+    if (!key) {
+      // Home state — slider is hidden; still initialise transitions on mount
+      if (skipTransition) setTimeout(() => setSliderReady(true), 0)
+      return
+    }
     const btn = refMap[key]?.current
     if (!btn) return
     const btnRect   = btn.getBoundingClientRect()
     const innerRect = inner.getBoundingClientRect()
     setSliderStyle({ left: btnRect.left - innerRect.left, width: btnRect.width })
-    if (skipTransition) setTimeout(() => setSliderReady(true), 0)
+    // On mount OR when slider first becomes visible: jump to position (no slide animation)
+    const wasActive = sliderWasActive.current
+    sliderWasActive.current = true
+    if (skipTransition || !wasActive) {
+      setSliderReady(false)
+      setTimeout(() => setSliderReady(true), 0)
+    }
   }, [activeModal, infoOpen])
 
   useEffect(() => { measureSlider(true) }, []) // eslint-disable-line
@@ -500,6 +515,10 @@ export default function Home() {
     window.addEventListener("resize", onResize)
     return () => window.removeEventListener("resize", onResize)
   }, [measureSlider])
+  // Reset slider tracking when returning home — so next modal open jumps (not slides) to position
+  useEffect(() => {
+    if (activeModal === null && !infoOpen) sliderWasActive.current = false
+  }, [activeModal, infoOpen])
 
   const handleLogoTap = useCallback(() => {
     const now = Date.now()
@@ -741,6 +760,55 @@ export default function Home() {
                 )}
               </button>
 
+
+              {/* HOME — "THE MARSHALL MAFIA" animates wide → 3 stacked lines */}
+              <button ref={btnHomeRef}
+                className={`pill-nav-item pill-nav-home pill-nav-home--text${(activeModal === null && !infoOpen) ? " pill-nav-item--active" : ""}`}
+                onClick={() => { closeModal(); setInfoOpen(false) }}
+                aria-label="Home"
+                style={{ position: "relative", overflow: "visible" }}
+              >
+                {/* 3-line version — in flow, determines button width; fades in at navIntro ≥ 3 */}
+                <span style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  textAlign: "center",
+                  fontFamily: "'MarkerBold', sans-serif",
+                  fontSize: "clamp(8px,1.8vw,11px)",
+                  letterSpacing: "0.06em",
+                  lineHeight: 1.2,
+                  color: "inherit",
+                  opacity: navIntro >= 3 ? 1 : 0,
+                  transition: "opacity 0.7s ease",
+                  userSelect: "none",
+                  pointerEvents: "none",
+                }}>
+                  <span style={{display:"block"}}>THE</span>
+                  <span style={{display:"block"}}>MARSHALL</span>
+                  <span style={{display:"block"}}>MAFIA</span>
+                </span>
+                {/* Single-line version — absolutely centred, visible at navIntro 2-3, then removed */}
+                {navIntro < 4 && (
+                  <span style={{
+                    position: "absolute",
+                    left: "50%",
+                    top: "50%",
+                    transform: "translate(-50%, -50%)",
+                    whiteSpace: "nowrap",
+                    fontFamily: "'MarkerBold', sans-serif",
+                    fontSize: "clamp(10px,2.2vw,13px)",
+                    letterSpacing: "0.08em",
+                    color: "inherit",
+                    opacity: navIntro >= 3 ? 0 : 1,
+                    transition: "opacity 0.7s ease",
+                    userSelect: "none",
+                    pointerEvents: "none",
+                  }}>
+                    THE MARSHALL MAFIA
+                  </span>
+                )}
+              </button>
 
               {/* SHOWCASE */}
               <button ref={btnShowRef}
