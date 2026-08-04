@@ -459,9 +459,7 @@ export default function Home() {
   useEffect(() => {
     const t1 = setTimeout(() => setNavIntro(1), 1000)  // text starts fading (1s hold)
     const t2 = setTimeout(() => setNavIntro(2), 1800)  // icons appear after overlay fades (~0.7s fade)
-    const t3 = setTimeout(() => setNavIntro(3), 3200)  // home text collapses: wide → 3 stacked lines
-    const t4 = setTimeout(() => setNavIntro(4), 4000)  // single-line removed from DOM after fade
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4) }
+    return () => { clearTimeout(t1); clearTimeout(t2) }
   }, [])
 
   // Slider refs — all 7 items in the unified pill
@@ -558,7 +556,7 @@ export default function Home() {
     if (activeModal !== null && activeModal !== m) {
       // Switching between modals — brief blur pulse to mask the swap
       setModalSwitching(true)
-      setTimeout(() => { setActiveModal(m); setModalSwitching(false) }, 420)
+      setTimeout(() => { setActiveModal(m); setModalSwitching(false) }, 220)
     } else {
       setActiveModal(m)
     }
@@ -761,53 +759,17 @@ export default function Home() {
               </button>
 
 
-              {/* HOME — "THE MARSHALL MAFIA" animates wide → 3 stacked lines */}
+              {/* HOME — "THE / MARSHALL / MAFIA" on 3 lines; press to toggle light/dark mode */}
               <button ref={btnHomeRef}
                 className={`pill-nav-item pill-nav-home pill-nav-home--text${(activeModal === null && !infoOpen) ? " pill-nav-item--active" : ""}`}
-                onClick={() => { closeModal(); setInfoOpen(false) }}
+                onClick={() => { closeModal(); setInfoOpen(false); setLightMode(m => !m) }}
                 aria-label="Home"
-                style={{ position: "relative", overflow: "visible" }}
               >
-                {/* 3-line version — in flow, determines button width; fades in at navIntro ≥ 3 */}
-                <span style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  textAlign: "center",
-                  fontFamily: "'MarkerBold', sans-serif",
-                  fontSize: "clamp(8px,1.8vw,11px)",
-                  letterSpacing: "0.06em",
-                  lineHeight: 1.2,
-                  color: "inherit",
-                  opacity: navIntro >= 3 ? 1 : 0,
-                  transition: "opacity 0.7s ease",
-                  userSelect: "none",
-                  pointerEvents: "none",
-                }}>
+                <span className="pill-nav-home-3line">
                   <span style={{display:"block"}}>THE</span>
                   <span style={{display:"block"}}>MARSHALL</span>
                   <span style={{display:"block"}}>MAFIA</span>
                 </span>
-                {/* Single-line version — absolutely centred, visible at navIntro 2-3, then removed */}
-                {navIntro < 4 && (
-                  <span style={{
-                    position: "absolute",
-                    left: "50%",
-                    top: "50%",
-                    transform: "translate(-50%, -50%)",
-                    whiteSpace: "nowrap",
-                    fontFamily: "'MarkerBold', sans-serif",
-                    fontSize: "clamp(10px,2.2vw,13px)",
-                    letterSpacing: "0.08em",
-                    color: "inherit",
-                    opacity: navIntro >= 3 ? 0 : 1,
-                    transition: "opacity 0.7s ease",
-                    userSelect: "none",
-                    pointerEvents: "none",
-                  }}>
-                    THE MARSHALL MAFIA
-                  </span>
-                )}
               </button>
 
               {/* SHOWCASE */}
@@ -1235,7 +1197,7 @@ export default function Home() {
                 {packSelected === "standard" && (
                   <div className="play-card">
                     {stripeClientSecret ? (
-                      <div style={{borderRadius:"16px", overflow:"hidden"}}>
+                      <div className="animate-fade-in" style={{borderRadius:"16px", overflow:"hidden"}}>
                         <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret: stripeClientSecret }}>
                           <EmbeddedCheckout />
                         </EmbeddedCheckoutProvider>
