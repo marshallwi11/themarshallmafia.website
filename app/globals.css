@@ -440,12 +440,12 @@
     color: rgba(255, 255, 255, 0.70);
     /* no background or border on hover — ring only appears on active/pressed state */
   }
-  /* Active: slider ring is the only indicator — suppress all button chrome */
+  /* Active: subtle ghost circle + white icon */
   .pill-nav-item--active,
   .pill-nav-item--active:hover {
     color: #ffffff;
-    background: transparent;
-    border-color: transparent;
+    background: rgba(255,255,255,0.09);
+    border-color: rgba(255,255,255,0.22);
   }
   .pill-nav-item--active svg {
     animation: navIconPop 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -527,34 +527,36 @@
   .tmm-light .pill-nav-item--active,
   .tmm-light .pill-nav-item--active:hover {
     color: #000000;
-    background: transparent;
-    border-color: transparent;
+    background: rgba(0,0,0,0.07);
+    border-color: rgba(0,0,0,0.18);
   }
   .tmm-light .pill-nav-home {
     background: transparent;
     border-color: transparent;
   }
 
-  /* ── Home button 3-line text ── */
-  .pill-nav-home-3line {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+  /* ── Home button text variants ── */
+  /* Desktop: single horizontal line */
+  .pill-nav-home-wide {
+    display: block;
+    white-space: nowrap;
     font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(8px, 1.8vw, 11px);
-    letter-spacing: 0.06em;
-    line-height: 1.2;
+    font-size: clamp(10px, 2.2vw, 13px);
+    letter-spacing: 0.08em;
     color: inherit;
     user-select: none;
     pointer-events: none;
   }
-  /* Mobile abbreviation — hidden on desktop, shown on mobile via media query */
-  .pill-nav-home-tmm {
+  /* Mobile/narrow: 3-line vertical stack — hidden on desktop */
+  .pill-nav-home-stack {
     display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
     font-family: 'MarkerBold', sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.10em;
+    font-size: 8px;
+    letter-spacing: 0.04em;
+    line-height: 1.25;
     color: inherit;
     user-select: none;
     pointer-events: none;
@@ -571,11 +573,11 @@
     72%  { opacity: 1; }
     100% { opacity: 1; }
   }
-  .pill-nav-home:hover .pill-nav-home-3line {
+  .pill-nav-home:hover .pill-nav-home-wide {
     animation: homeTextFlicker 0.38s ease;
     color: rgba(255, 255, 255, 0.95);
   }
-  .tmm-light .pill-nav-home:hover .pill-nav-home-3line {
+  .tmm-light .pill-nav-home:hover .pill-nav-home-wide {
     color: rgba(0, 0, 0, 0.90);
   }
 
@@ -1324,8 +1326,8 @@
   /* Home button — circle, same size as icon buttons */
   .pill-nav-home {
     order: 0 !important;
-    flex: 0 0 44px !important;
-    width: 44px !important;
+    flex: 0 0 52px !important;
+    width: 52px !important;
     height: 44px !important;
     min-width: 0 !important;
     padding: 0 !important;
@@ -1334,11 +1336,11 @@
   }
   .pill-nav-home--text { padding: 0 !important; min-width: 0 !important; }
 
-  /* Mobile home button: show "TMM" text, hide 3-line and logo */
+  /* Mobile home button: show 3-line stack, hide wide horizontal text */
   .pill-nav-home .pill-nav-home-text { display: none !important; }
   .pill-nav-home .pill-nav-home-logo { display: none !important; }
-  .pill-nav-home .pill-nav-home-3line { display: none !important; }
-  .pill-nav-home .pill-nav-home-tmm { display: block !important; }
+  .pill-nav-home .pill-nav-home-wide { display: none !important; }
+  .pill-nav-home .pill-nav-home-stack { display: flex !important; }
 
   /* No background or border on home button when inactive */
   .pill-nav-home:not(.pill-nav-item--active),
@@ -1364,17 +1366,17 @@
   /* Slider hidden — direct active styling on buttons */
   .pill-nav-slider { display: none !important; }
 
-  /* Active: icon turns full white — no ring/background (matches desktop behaviour) */
+  /* Active: subtle ghost circle + white icon */
   .pill-nav-item--active,
   .pill-nav-item--active:hover {
-    background: transparent !important;
-    border-color: transparent !important;
+    background: rgba(255,255,255,0.09) !important;
+    border-color: rgba(255,255,255,0.22) !important;
     color: #ffffff !important;
   }
   .tmm-light .pill-nav-item--active,
   .tmm-light .pill-nav-item--active:hover {
-    background: transparent !important;
-    border-color: transparent !important;
+    background: rgba(0,0,0,0.07) !important;
+    border-color: rgba(0,0,0,0.18) !important;
     color: #000000 !important;
   }
 

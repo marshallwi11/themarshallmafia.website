@@ -742,18 +742,18 @@ export default function Home() {
               </button>
 
 
-              {/* HOME — "THE / MARSHALL / MAFIA" on 3 lines; press to toggle light/dark mode */}
+              {/* HOME — wide text on desktop, 3-line stack on mobile; press to toggle light/dark */}
               <button ref={btnHomeRef}
                 className={`pill-nav-item pill-nav-home pill-nav-home--text${(activeModal === null && !infoOpen) ? " pill-nav-item--active" : ""}`}
                 onClick={() => { closeModal(); setInfoOpen(false); setLightMode(m => !m) }}
                 aria-label="Home"
               >
-                <span className="pill-nav-home-3line">
+                <span className="pill-nav-home-wide">THE MARSHALL MAFIA</span>
+                <span className="pill-nav-home-stack">
                   <span style={{display:"block"}}>THE</span>
                   <span style={{display:"block"}}>MARSHALL</span>
                   <span style={{display:"block"}}>MAFIA</span>
                 </span>
-                <span className="pill-nav-home-tmm">TMM</span>
               </button>
 
               {/* SHOWCASE */}
