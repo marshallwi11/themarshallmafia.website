@@ -644,23 +644,6 @@ export default function Home() {
           >
             <div className="pill-nav-inner" ref={navInnerRef}>
 
-              {/* ── Sliding glass indicator ── */}
-              {/* Hides when home is the passive default (no modal open, not hovered) */}
-              <span
-                className="pill-nav-slider"
-                style={{
-                  left: sliderStyle.left,
-                  width: sliderStyle.width,
-                  opacity: navIntro < 2 ? 0
-                    : (activeModal === null && !infoOpen) ? 0
-                    : 1,
-                  transition: sliderReady
-                    ? "left 0.36s cubic-bezier(0.34,1.18,0.64,1), width 0.36s cubic-bezier(0.34,1.18,0.64,1), opacity 0.3s ease"
-                    : "opacity 0.3s ease",
-                }}
-                aria-hidden="true"
-              />
-
               {/* ── Intro text overlay — blurs icons behind, fades out to reveal them ── */}
               <div
                 aria-hidden="true"
@@ -770,6 +753,7 @@ export default function Home() {
                   <span style={{display:"block"}}>MARSHALL</span>
                   <span style={{display:"block"}}>MAFIA</span>
                 </span>
+                <span className="pill-nav-home-tmm">TMM</span>
               </button>
 
               {/* SHOWCASE */}
