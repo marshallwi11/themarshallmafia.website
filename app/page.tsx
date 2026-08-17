@@ -1172,42 +1172,43 @@ export default function Home() {
                     </div>
                     <div className="reviews-divider" aria-hidden="true" />
                     <div className="reviews-right">
-                      <div className="reviews-avg">
-                        <span className="reviews-score-number">{avgDisplay}</span>
-                        <StarRating rating={avgRounded} />
-                        <span className="play-block-subtitle" style={{fontSize:"12px"}}>{TESTIMONIALS.length} reviews</span>
-                      </div>
-                      <div className="reviews-bars">
-                        {[5,4,3,2,1].map(n => {
-                          const count = TESTIMONIALS.filter(t => t.rating === n).length
-                          const pct = count > 0 ? Math.round((count / TESTIMONIALS.length) * 100) : 0
-                          const isActive = filterRating === n && count > 0
-                          const isDimmed = filterRating !== null && !isActive && count > 0
-                          const isEmpty = count === 0
-                          const labelStyle = { color: isActive ? "#ffffff" : "var(--tmm-yellow)", fontSize: "clamp(15px,2.4vw,17px)", opacity: isDimmed ? 0.35 : isEmpty ? 0.22 : 1, transition: "opacity 0.2s ease" }
-                          return (
-                            <div key={n}
-                              className={`review-bar-row${!isEmpty ? " review-bar-row--clickable" : ""}${isActive ? " review-bar-row--active" : ""}`}
-                              onClick={!isEmpty ? (e => { e.stopPropagation(); setFilterRating(filterRating === n ? null : n) }) : undefined}>
-                              <span className="review-bar-label" style={labelStyle}>{n}</span>
-                              <div className="review-bar-track" style={{opacity: isDimmed ? 0.35 : isEmpty ? 0.15 : 1, transition:"opacity 0.2s ease"}}>
-                                <div className="review-bar-fill" style={{ width:`${pct}%`, background: isActive ? "#ffffff" : "var(--tmm-yellow)" }} />
+                      <div className="reviews-mid">
+                        <div className="reviews-avg">
+                          <span className="reviews-score-number">{avgDisplay}</span>
+                          <StarRating rating={avgRounded} />
+                          <span className="play-block-subtitle" style={{fontSize:"12px"}}>{TESTIMONIALS.length} reviews</span>
+                        </div>
+                        <div className="reviews-bars">
+                          {[5,4,3,2,1].map(n => {
+                            const count = TESTIMONIALS.filter(t => t.rating === n).length
+                            const pct = count > 0 ? Math.round((count / TESTIMONIALS.length) * 100) : 0
+                            const isActive = filterRating === n && count > 0
+                            const isDimmed = filterRating !== null && !isActive && count > 0
+                            const isEmpty = count === 0
+                            const labelStyle = { color: isActive ? "#ffffff" : "var(--tmm-yellow)", fontSize: "clamp(15px,2.4vw,17px)", opacity: isDimmed ? 0.35 : isEmpty ? 0.22 : 1, transition: "opacity 0.2s ease" }
+                            return (
+                              <div key={n}
+                                className={`review-bar-row${!isEmpty ? " review-bar-row--clickable" : ""}${isActive ? " review-bar-row--active" : ""}`}
+                                onClick={!isEmpty ? (e => { e.stopPropagation(); setFilterRating(filterRating === n ? null : n) }) : undefined}>
+                                <span className="review-bar-label" style={labelStyle}>{n}</span>
+                                <div className="review-bar-track" style={{opacity: isDimmed ? 0.35 : isEmpty ? 0.15 : 1, transition:"opacity 0.2s ease"}}>
+                                  <div className="review-bar-fill" style={{ width:`${pct}%`, background: isActive ? "#ffffff" : "var(--tmm-yellow)" }} />
+                                </div>
+                                <span className="review-bar-count" style={labelStyle}>{isEmpty ? "" : count}</span>
                               </div>
-                              <span className="review-bar-count" style={labelStyle}>{isEmpty ? "" : count}</span>
-                            </div>
-                          )
-                        })}
-                        <a
-                          href="https://forms.gle/eVJJUSfXr5nHSc8ZA"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="play-block-body add-review-btn"
-                          style={{marginTop:"auto"}}
-                          onClick={e => e.stopPropagation()}
-                        >
-                          add a review
-                        </a>
+                            )
+                          })}
+                        </div>
                       </div>
+                      <a
+                        href="https://forms.gle/eVJJUSfXr5nHSc8ZA"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="play-block-body add-review-btn"
+                        onClick={e => e.stopPropagation()}
+                      >
+                        add a review
+                      </a>
                     </div>
                   </div>
                     )
