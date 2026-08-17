@@ -300,17 +300,20 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
       <div className="modal-scroll-bare animate-modal-in">
         <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
 
-          {/* ── Step 1: the conundrum ── */}
+          {/* ── The Conundrum ── */}
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
-              <span className="play-block-title">Step 1</span>
-              <span className="play-block-subtitle">the conundrum</span>
+              <span className="play-block-title">THE CONUNDRUM</span>
             </div>
-            <p className="play-block-body">On a normal Marshall games night, a standard deck of cards was placed down.</p>
-            <p className="play-block-body">We were playing Mafia… or trying to.</p>
-            <p className="play-block-body">Except each person at the table knew a separate version of the same game — different characters, names and rules nobody had agreed on.</p>
-            <p className="play-block-body">Somewhere in that confusion, a Marshall stopped listening and started thinking: there had to be a better way to play this.</p>
-            <p className="play-block-body">One deck. One set of rules for all. One game everyone could actually agree on — child or adult, their first game or their last.</p>
+            <p className="play-block-body">On one suspiciously loud Marshall games night, we were playing Mafia. Or at least trying to. Using a standard deck of playing cards, everyone at the table seemed to know a different version of the same game. The characters were different. The names were different. The rules were different. Nobody could quite agree on how to play.</p>
+          </div>
+
+          {/* ── The Moment ── */}
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <div className="play-card-header">
+              <span className="play-block-title">THE MOMENT</span>
+            </div>
+            <p className="play-block-body">A Marshall, lost in that confusion, stopped listening and started thinking. There had to be a better way to play this. One deck. One set of rules. One game everyone could actually agree on, whether they were a child, a teenager, or an adult. Their first game or their last.</p>
           </div>
 
           {/* IMAGE — creation story 1 */}
@@ -318,16 +321,20 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
             <img src="/images/tmm_creation_story_1.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
-          {/* ── Step 2: the night ── */}
+          {/* ── The Night ── */}
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
-              <span className="play-block-title">Step 2</span>
-              <span className="play-block-subtitle">the night</span>
+              <span className="play-block-title">THE NIGHT</span>
             </div>
-            <p className="play-block-body">The thought didn{"'"}t wait for light of morning.</p>
-            <p className="play-block-body">What followed was a week of very little sleep and a lot of notes — roles, rules, characters, game-modes, written down as fast as they arrived, then crossed out, then written again.</p>
-            <p className="play-block-body">By the end of it, a first game existed.</p>
-            <p className="play-block-body">It wasn{"'"}t complete yet. But it was an idea.</p>
+            <p className="play-block-body">The thought didn{"'"}t wait for light of day. The typing lasted long into the dark early hours of the morning. Once the first idea was created, it sparked a week of very little sleep and a lot of notes — roles, rules, characters, game-modes, written down as fast as they arrived, then crossed out, then written again. By the end of it, the first rule-set existed. It wasn{"'"}t complete yet. But the idea was inspiring…</p>
+          </div>
+
+          {/* ── The Philosophy ── */}
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <div className="play-card-header">
+              <span className="play-block-title">THE PHILOSOPHY</span>
+            </div>
+            <p className="play-block-body">Our aim was to make: {'"'}A world of games, that are suspiciously fun, told with a smile and a wink. Created for any player, all generations, every home.{'"'}</p>
           </div>
 
           {/* IMAGE — creation story 2 */}
@@ -335,17 +342,23 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
             <img src="/images/tmm_creation_story_2.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
-          {/* ── Step 3: the world ── */}
+          {/* ── The World ── */}
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
-              <span className="play-block-title">Step 3</span>
-              <span className="play-block-subtitle">the world</span>
+              <span className="play-block-title">THE WORLD</span>
             </div>
-            <p className="play-block-body">Weeks of drawing followed the weeks of writing — sourcing from old detective novels and spy thrillers to the classy cheekiness of Pink Panther — until a cast started to emerge.</p>
-            <p className="play-block-body">The Mafia. The Villager. The Jester. The Detective. The Marshall ;)</p>
-            <p className="play-block-body">Each one faceless, but not nameless — each one anyone{"'"}s to become.</p>
-            <p className="play-block-body">Their pigments were drawn from old and new consoles, from Nintendo to Xbox, to help people relive the joy of childhood games.</p>
-            <p className="play-block-body">To unify all the roles under a banner of a brand is a logo — eyes that are open, watching, even when they are closed. Awake while the table sleeps.</p>
+            <p className="play-block-body">We wondered what that games night should have looked like, and dreamed a world to accompany it. We imagined a mixed group of players... anyone and everyone, family and friends. Working together, or secretly against each other, around a table or across a collection of sofas.</p>
+            <p className="play-block-body">The room is crisp with light suspicious fog, set in the summer cool of onsetting dusk, with everyone dressed up for a night of theatrical old fashioned games... with a new twist. We speculated art decking the walls while a band plays heartfelt downtempo music, taking off the formal edge, while putting a killer edge on. A room you would expect a spy to be seated in, a scripted movie with a story shaken up and stirred into real life.</p>
+          </div>
+
+          {/* ── The Artwork ── */}
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <div className="play-card-header">
+              <span className="play-block-title">THE ARTWORK</span>
+            </div>
+            <p className="play-block-body">Weeks of drawing followed the weeks of writing. Through sourcing from old detective novels and action thrillers, to the classic cheekiness of 2D shows like Pink Panther, a cast started to emerge.</p>
+            <p className="play-block-body">The sharp <span style={{color:"#E85050"}}>Mafia</span>. The pointed <span style={{color:"#EDE8CA"}}>Villager</span>. The handy <span style={{color:"#5B9BD5"}}>Angel</span>. The ballsy <span style={{color:"#F2C347"}}>Jester</span>. The clued-up <span style={{color:"#6BC46A"}}>Detective</span>. The ruling <span style={{color:"#C4955A"}}>Marshall</span> ;)</p>
+            <p className="play-block-body">Each one faceless, but not nameless, each one anyone{"'"}s to become. Their colours were drawn from timeless pieces of history, old Nintendo and new Xbox consoles that remind generations to relive the joyful nostalgia of childhood games.</p>
           </div>
 
           {/* IMAGE — creation story 3 */}
@@ -353,16 +366,22 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
             <img src="/images/tmm_creation_story_3.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
-          {/* ── Step 4: the testing ── */}
+          {/* ── The Brand ── */}
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
-              <span className="play-block-title">Step 4</span>
-              <span className="play-block-subtitle">the testing</span>
+              <span className="play-block-title">THE BRAND</span>
             </div>
-            <p className="play-block-body">The idea was only half of a game.</p>
-            <p className="play-block-body">The rest came from demo packs, and far too many rounds with friends and family — round after round, night after night, until we knew more about what didn{"'"}t work than what did.</p>
-            <p className="play-block-body">Characters that caused complications, not cheeky confusion were cut. The rule-set that only worked one way was rebuilt to work many ways instead.</p>
-            <p className="play-block-body">The colours were inspired to help all understand and see easily, and several revisions were needed, to make sure your kids and grandparents can read them.</p>
+            <p className="play-block-body">The world had found its voice. But it needed to be instantly recognisable to anyone who plays. So we took the component that does not change across all characters — the eyes. The obvious choice. One we were too blind to see before.</p>
+            <p className="play-block-body">It also captured the heart of the game: seeing what{"'"}s going on around you when you{"'"}re awake, and being in the dark when you{"'"}re asleep. The roles became united under a single mark. Eyes that are open, watching, even when they are closed. Awake while the table sleeps.</p>
+          </div>
+
+          {/* ── The Testing ── */}
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <div className="play-card-header">
+              <span className="play-block-title">THE TESTING</span>
+            </div>
+            <p className="play-block-body">The idea was only half the game. The rest came from demo packs and far too many rounds with friends and family. We played game after game, night after night, until we knew more about what didn{"'"}t work than what did.</p>
+            <p className="play-block-body">Characters that caused complications, rather than cheeky confusion, were cut. Rule sets that created chaos were rebuilt, giving each group more freedom to choose how they played. The colour hues went through several revisions too. Every role needed to be easy to find, easy to understand, and easy to read, whether you were a child, a parent, or a grandparent.</p>
           </div>
 
           {/* IMAGE — creation story 4 */}
@@ -370,15 +389,20 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
             <img src="/images/tmm_creation_story_4.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
-          {/* ── Step 5: the mistake ── */}
+          {/* ── The Mistake ── */}
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
-              <span className="play-block-title">Step 5</span>
-              <span className="play-block-subtitle">the mistake</span>
+              <span className="play-block-title">THE MISTAKE</span>
             </div>
-            <p className="play-block-body">Somewhere in the middle of finishing the standard pack, an additional entire expansion pack got started anyway.</p>
-            <p className="play-block-body">Because once a suspicious little world exists, it{"'"}s very hard to stop building on it.</p>
-            <p className="play-block-body">Everyone has been asking about it… it{"'"}s coming but it will take a little while.</p>
+            <p className="play-block-body">Somewhere in the middle of finishing the standard pack, a whole expansion started to appear too. There were simply too many ideas to fit into one box. Once a suspicious little world exists, it{"'"}s very hard to stop building on it. People keep asking about it. It{"'"}s coming. Just not quite yet.</p>
+          </div>
+
+          {/* ── The Music ── */}
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <div className="play-card-header">
+              <span className="play-block-title">THE MUSIC</span>
+            </div>
+            <p className="play-block-body">We also realised something was missing. When we played, the room didn{"'"}t quite match the world we had imagined. Then, somewhere around midnight, we clocked it... The places that inspired the game all had theme tunes, soundtracks, or background music. So we spent the next few months composing three albums to sit alongside the game and complete the atmosphere.</p>
           </div>
 
           {/* IMAGE — creation story 5 */}
@@ -386,31 +410,25 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
             <img src="/images/tmm_creation_story_5.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
-          {/* ── Step 6: the philosophy ── */}
+          {/* ── The Name ── */}
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
-              <span className="play-block-title">Step 6</span>
-              <span className="play-block-subtitle">the philosophy</span>
+              <span className="play-block-title">THE NAME</span>
             </div>
-            <p className="play-block-body">Our aim was to make:</p>
-            <p className="play-block-body">{'"'}A world of games, that are suspiciously fun, told with a smile and a wink. Created for any player, all generations, every home.{'"'}</p>
+            <p className="play-block-body">We weren{"'"}t quite sure what to call the game. Then we realised it had been staring us in the face all along, even when our eyes were closed. We{"'"}d been playing the Marshall{"'"}s version of Mafia. So we called it exactly that.</p>
+          </div>
+
+          {/* ── The Game ── */}
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <div className="play-card-header">
+              <span className="play-block-title">THE GAME</span>
+            </div>
+            <p className="play-block-body">What we made was called {'"'}The Marshall Mafia{'"'}, the sneakiest social deduction card game. A world of suspicious fun, crafted to be cheeky, cheerful and downright fun. Don{"'"}t believe us? Try it and see. We dare you to have as much fun as everyone else testifies ;)</p>
           </div>
 
           {/* IMAGE — creation story 6 */}
           <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
             <img src="/images/tmm_creation_story_6.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
-          </div>
-
-          {/* ── Step 7: the game ── */}
-          <div className="play-card" onClick={e => e.stopPropagation()}>
-            <div className="play-card-header">
-              <span className="play-block-title">Step 7</span>
-              <span className="play-block-subtitle">the game</span>
-            </div>
-            <p className="play-block-body">What was made was called {'"'}The Marshall Mafia{'"'}, the sneakiest social deduction card game.</p>
-            <p className="play-block-body">A world of suspicious fun, crafted to be cheeky, cheerful and downright fun.</p>
-            <p className="play-block-body">Don{"'"}t believe us? Try it and see.</p>
-            <p className="play-block-body">We dare you to have as much fun as everyone else ;)</p>
           </div>
 
           <div className="play-card-pill" onClick={e => e.stopPropagation()}>
