@@ -1033,6 +1033,17 @@
     align-items: center;
     gap: 10px;
   }
+  .review-bar-row--clickable {
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 3px 4px;
+    margin: 0 -4px;
+    transition: background 0.15s ease;
+  }
+  .review-bar-row--clickable:hover { background: rgba(255,255,255,0.06); }
+  .review-bar-row--active { background: rgba(255,255,255,0.08); }
+  .tmm-light .review-bar-row--clickable:hover { background: rgba(0,0,0,0.04); }
+  .tmm-light .review-bar-row--active { background: rgba(0,0,0,0.06); }
   .review-bar-label {
     font-family: 'MarkerBold', sans-serif;
     font-size: clamp(14px, 2.2vw, 16px);

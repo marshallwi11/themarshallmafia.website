@@ -445,13 +445,42 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
 type ModalType = "play" | "showcase" | "music" | "collect" | "reviews" | null
 
 const TESTIMONIALS = [
-  { name: "Isabella M", rating: 5, title: "Amazing for group bonding", body: "The Marshall Mafia is amazing for group bonding, I played this game with my youth group and it was amazing... it really helped everyone to get to know each other and created fun memories!" },
-  { name: "Samuel A", rating: 5, title: "There is nothing like this game on the market", body: "There is nothing like this game on the market. It's appeals to all ages, no-one is too young or too old to play… plus the background music makes the experience so much endless fun." },
-  { name: "Lewis W", rating: 5, title: "Always interesting no matter how many times we've played", body: "The Marshall Mafia is always interesting no matter how many times we've played it. An ideal game to play with family or friends!" },
-  { name: "Jessica M", rating: 5, title: "Love it, love it, love it!", body: "Love it, love it, love it! It was a very creative way to play mafia!" },
-  { name: "Ayanfe O", rating: 4, title: "Cards are really good quality", body: "Cards are really good quality, I like the different additions as well!" },
-  { name: "Geoff S", rating: 5, title: "Great game, really enjoy the variety", body: "Great game, really enjoy the variety of cards in the pack. It's easy for someone new to pick up and understand and is a good game to play in larger groups which is generally hard to find." },
+  { name: "Ayanfe O",      age: 25, rating: 4, body: "Cards are really good quality, I like the different additions as well!" },
+  { name: "Jessica M",     age: 24, rating: 5, body: "Love it, love it, love it! It was a very creative way to play mafia!" },
+  { name: "Geoff S",       age: 34, rating: 5, body: "Great game, really enjoy the variety of cards in the pack. It's easy for someone new to pick up and understand and is a good game to play in larger groups which is generally hard to find." },
+  { name: "Isabella M",    age: 18, rating: 5, body: "The Marshall Mafia is amazing for group bonding, I played this game with my youth group and it was amazing... it really helped everyone to get to know each other and created fun memories!" },
+  { name: "Samuel A",      age: 30, rating: 5, body: "There is nothing like this game on the market. It's appeals to all ages, no-one is too young or too old to play… plus the background music makes the experience so much endless fun." },
+  { name: "Lewis W",       age: 22, rating: 5, body: "The Marshall Mafia is always interesting no matter how many times we've played it. An ideal game to play with family or friends!" },
+  { name: "Mia S",         age: 23, rating: 5, body: "I was the Mafia and was getting by unscathed, killing people left, right and centre. My fellow mafias, 1 by 1, slowly getting caught... but there's still 1 left (ME). I get through 2 murders placing the blame on easy targets, who crack under pressure, then the dreaded words \"wait what about Mia?\" was said. Then it was wraps because everyone else was like \"Yeah what about Mia\". I immediately went into defence mode and then I was voted out :/ It was super fun, made the atmosphere super competitive... but in a friendly way! My family back home will love this! I will have to recommend it to them!" },
+  { name: "Lucas M",       age: 14, rating: 5, body: "It's fun to play with friends. Great for bonding time with family. You get to know people better and know their lying faces!" },
+  { name: "Abi Robertson", age: 20, rating: 5, body: "My experience is 10/10. I think the way the game is set up is really well organised. I can't even begin to explain the amount of games I've had, but the highlight would be when we finally stopped letting people expose their roles in any way if they were alive or dead. Me and my friend managed to deceive the last 2 villagers and won with 2 mafia still alive, most joyous moment of my entire mafia existence. I would say to someone considering their first night in the village… you can't trust anyone. Don't make alliances, it's every man for himself." },
 ]
+
+// Wrap character-name words in their role colour
+function colorizeBody(text: string) {
+  const ROLES = [
+    { words: ["Mafia", "mafia", "Mafias", "mafias"],               color: "#E4002B" },
+    { words: ["Villager", "villager", "Villagers", "villagers"],   color: "#9E5330" },
+    { words: ["Angel", "angel", "Angels", "angels"],               color: "#00B140" },
+    { words: ["Jester", "jester", "Jesters", "jesters"],           color: "#FFB81C" },
+    { words: ["Detective", "detective", "Detectives", "detectives"], color: "#0083CB" },
+    { words: ["Marshall", "marshall"],                             color: "#F0E8CE" },
+  ]
+  const allWords = ROLES.flatMap(r => r.words)
+  const pattern = new RegExp("\\b(" + allWords.join("|") + ")\\b", "g")
+  const parts: any[] = [] // eslint-disable-line @typescript-eslint/no-explicit-any
+  let lastIndex = 0
+  let match: RegExpExecArray | null
+  while ((match = pattern.exec(text)) !== null) {
+    if (match.index > lastIndex) parts.push(text.slice(lastIndex, match.index))
+    const word = match[0]
+    const role = ROLES.find(r => r.words.includes(word))
+    parts.push(<span key={match.index} style={{color: role?.color, fontWeight: "bold"}}>{word}</span>)
+    lastIndex = pattern.lastIndex
+  }
+  if (lastIndex < text.length) parts.push(text.slice(lastIndex))
+  return <>{parts}</>
+}
 
 export default function Home() {
   const [activeModal, setActiveModal] = useState<ModalType>(null)
@@ -461,6 +490,7 @@ export default function Home() {
   const [logoFading, setLogoFading] = useState(false)
   const [packSelected, setPackSelected] = useState<"standard" | "expansion" | null>(null)
   const [reviewComing, setReviewComing] = useState(false)
+  const [filterRating, setFilterRating] = useState<number | null>(null)
   const [cartShaking, setCartShaking] = useState(false)
   const [infoOpen, setInfoOpen] = useState(false)
   const [modalSwitching, setModalSwitching] = useState(false)
@@ -1117,11 +1147,12 @@ export default function Home() {
                   <div className="play-card-header"><span className="play-block-title">REVIEWS</span><span className="play-block-subtitle">RATING</span></div>
                   {(() => {
                     const avg = TESTIMONIALS.reduce((s, t) => s + t.rating, 0) / TESTIMONIALS.length
-                    const avgDisplay = avg % 1 === 0 ? avg.toFixed(1) : avg.toFixed(1)
+                    const avgDisplay = avg.toFixed(1)
                     const avgRounded = Math.round(avg)
                     return (
                   <div className="reviews-summary">
                     <div className="reviews-score">
+                      <img src="/character_testimonial.svg" alt="" style={{height:"clamp(56px,9vw,80px)",width:"auto",display:"block",margin:"0 auto 4px"}} />
                       <span className="reviews-score-number">{avgDisplay}</span>
                       <StarRating rating={avgRounded} />
                       <span className="play-block-subtitle" style={{fontSize:"12px"}}>{TESTIMONIALS.length} reviews</span>
@@ -1131,13 +1162,15 @@ export default function Home() {
                       {[5,4,3,2,1].filter(n => TESTIMONIALS.filter(t => t.rating === n).length > 0).map(n => {
                         const count = TESTIMONIALS.filter(t => t.rating === n).length
                         const pct = Math.round((count / TESTIMONIALS.length) * 100)
-                        // Both label and count share yellow + same font size across all visible bars
-                        const labelStyle = { color: "var(--tmm-yellow)", fontSize: "clamp(15px,2.4vw,17px)" }
+                        const isActive = filterRating === n
+                        const isDimmed = filterRating !== null && !isActive
+                        const labelStyle = { color: isActive ? "#ffffff" : "var(--tmm-yellow)", fontSize: "clamp(15px,2.4vw,17px)", opacity: isDimmed ? 0.35 : 1, transition: "opacity 0.2s ease" }
                         return (
-                          <div key={n} className="review-bar-row">
+                          <div key={n} className={`review-bar-row review-bar-row--clickable${isActive ? " review-bar-row--active" : ""}`}
+                            onClick={e => { e.stopPropagation(); setFilterRating(filterRating === n ? null : n) }}>
                             <span className="review-bar-label" style={labelStyle}>{n}</span>
-                            <div className="review-bar-track">
-                              <div className="review-bar-fill" style={{ width:`${pct}%`, background:"var(--tmm-yellow)" }} />
+                            <div className="review-bar-track" style={{opacity: isDimmed ? 0.35 : 1, transition:"opacity 0.2s ease"}}>
+                              <div className="review-bar-fill" style={{ width:`${pct}%`, background: isActive ? "#ffffff" : "var(--tmm-yellow)" }} />
                             </div>
                             <span className="review-bar-count" style={labelStyle}>{count}</span>
                           </div>
@@ -1146,22 +1179,25 @@ export default function Home() {
                       <button
                         className="play-block-body add-review-btn"
                         style={{marginTop:"auto"}}
-                        onClick={e => { e.stopPropagation(); setReviewComing(true) }}
+                        onClick={e => { e.stopPropagation(); window.open("https://forms.gle/eVJJUSfXr5nHSc8ZA", "_blank") }}
                       >
-                        {reviewComing ? "COMING SOON!" : "+ add a review"}
+                        + add a review
                       </button>
                     </div>
                   </div>
                     )
                   })()}
                 </div>
-                {TESTIMONIALS.map((t, i) => (
+                {(filterRating !== null ? TESTIMONIALS.filter(t => t.rating === filterRating) : TESTIMONIALS).map((t, i) => (
                   <div key={i} className="play-card" onClick={e => e.stopPropagation()}>
-                    <div className="play-card-header">
-                      <span className="play-block-title">{t.name}</span>
+                    <div className="play-card-header" style={{alignItems:"flex-start"}}>
+                      <div style={{display:"flex",flexDirection:"column",gap:"2px"}}>
+                        <span className="play-block-title">{t.name}</span>
+                        <span className="play-block-subtitle" style={{fontSize:"11px",letterSpacing:"0.04em"}}>age {t.age}</span>
+                      </div>
                       <StarRating rating={t.rating} />
                     </div>
-                    <p className="play-block-body" style={{marginTop:"clamp(8px,2vw,12px)"}}>{t.body}</p>
+                    <p className="play-block-body" style={{marginTop:"clamp(8px,2vw,12px)"}}>{colorizeBody(t.body)}</p>
                   </div>
                 ))}
                 <div className="play-card-pill" onClick={e => e.stopPropagation()}>
