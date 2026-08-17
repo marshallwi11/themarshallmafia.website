@@ -969,7 +969,7 @@
     flex: 1;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: stretch;
     gap: clamp(10px, 2.5vw, 18px);
   }
   .reviews-avg {
@@ -977,14 +977,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 20px;
     flex-shrink: 0;
   }
   .reviews-bars {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
     justify-content: center;
   }
   .review-bar-row {
