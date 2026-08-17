@@ -141,37 +141,6 @@
 }
 
 /* =====================================================================
-   LEGACY BACKDROP — CSS animated linear-gradient (kept for easy revert)
-   To restore: uncomment below AND swap the MeshGradient/backdrop div in page.tsx
-   ===================================================================== */
-/*
-@layer utilities {
-  .tmm-backdrop {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background: linear-gradient(
-      300deg,
-      #000000 0%, #000000 43%, #020d1e 47%, #0780c4 50%, #020d1e 53%, #000000 57%, #000000 100%
-    );
-    background-size: 360% 360%;
-    animation: gradient-animation 48s ease infinite;
-  }
-  .tmm-backdrop--light {
-    background: linear-gradient(
-      300deg,
-      #ffffff 0%, #ffffff 43%, #fff3f3 47%, #E3000B 50%, #fff3f3 53%, #ffffff 57%, #ffffff 100%
-    );
-    background-size: 360% 360%;
-    animation: gradient-animation 48s ease infinite;
-  }
-  @keyframes gradient-animation {
-    0%   { background-position: 0% 50%; }
-    50%  { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-}
-*/
-
-/* =====================================================================
    SITE CANVAS & GLOBAL LAYOUT
    ===================================================================== */
 @layer utilities {
@@ -397,25 +366,6 @@
     overflow: visible;
   }
 
-  /* ── Sliding pill indicator — bordered glass ── */
-  .pill-nav-slider {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 48px;
-    background: rgba(255,255,255,0.09);
-    border: 1.5px solid rgba(255,255,255,0.38);
-    border-radius: 1000px;
-    box-shadow:
-      0 2px 18px rgba(0,0,0,0.28),
-      inset 0 1px 0 rgba(255,255,255,0.18);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    pointer-events: none;
-    z-index: 0;
-    /* left + width controlled via JS */
-  }
-
   /* ── Nav items — perfect circles, transparent bg, no border when unselected ── */
   .pill-nav-item {
     position: relative;
@@ -507,13 +457,6 @@
       inset 0 -1px 0 rgba(0,0,0,0.04);
     backdrop-filter: blur(48px) saturate(1.9) brightness(1.02);
     -webkit-backdrop-filter: blur(48px) saturate(1.9) brightness(1.02);
-  }
-  .tmm-light .pill-nav-slider {
-    background: rgba(255,255,255,0.60);
-    border: 1.5px solid rgba(0,0,0,0.14);
-    box-shadow:
-      0 2px 14px rgba(0,0,0,0.10),
-      inset 0 1px 0 rgba(255,255,255,0.85);
   }
   .tmm-light .pill-nav-item {
     background: transparent;
@@ -1408,9 +1351,6 @@
     padding: 0 !important;
     min-width: 0 !important;
   }
-
-  /* Slider hidden — direct active styling on buttons */
-  .pill-nav-slider { display: none !important; }
 
   /* Active: subtle ghost circle + white icon */
   .pill-nav-item--active,

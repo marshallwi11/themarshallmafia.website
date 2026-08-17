@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import { useState, useEffect, useCallback, useRef } from "react"
 import type { AnimationItem } from "lottie-web"
 import { loadStripe } from "@stripe/stripe-js"
@@ -505,7 +504,6 @@ export default function Home() {
   const [lightMode, setLightMode] = useState(false)
   const [logoFading, setLogoFading] = useState(false)
   const [packSelected, setPackSelected] = useState<"standard" | "expansion" | null>(null)
-  const [reviewComing, setReviewComing] = useState(false)
   const [filterRating, setFilterRating] = useState<number | null>(null)
   const [cartShaking, setCartShaking] = useState(false)
   const [infoOpen, setInfoOpen] = useState(false)
@@ -525,62 +523,6 @@ export default function Home() {
     const t2 = setTimeout(() => setNavIntro(2), 1800)  // icons appear after overlay fades (~0.7s fade)
     return () => { clearTimeout(t1); clearTimeout(t2) }
   }, [])
-
-  // Slider refs — all 7 items in the unified pill
-  const navInnerRef = useRef<HTMLDivElement>(null)
-  const btnInfoRef  = useRef<HTMLButtonElement>(null)
-  const btnPlayRef  = useRef<HTMLButtonElement>(null)
-  const btnMusicRef = useRef<HTMLButtonElement>(null)
-  const btnHomeRef  = useRef<HTMLButtonElement>(null)
-  const btnShowRef  = useRef<HTMLButtonElement>(null)
-  const btnRevRef   = useRef<HTMLButtonElement>(null)
-  const btnCartRef  = useRef<HTMLButtonElement>(null)
-  const [sliderStyle, setSliderStyle] = useState({ left: 0, width: 52 })
-  const [sliderReady, setSliderReady] = useState(false)
-  // Tracks whether slider was previously visible — used to skip position transition on first appear
-  const sliderWasActive = useRef(false)
-
-  const measureSlider = useCallback((skipTransition = false) => {
-    const inner = navInnerRef.current
-    if (!inner) return
-    const refMap: Record<string, React.RefObject<HTMLButtonElement | null>> = {
-      info: btnInfoRef, play: btnPlayRef, music: btnMusicRef,
-      showcase: btnShowRef, reviews: btnRevRef, cart: btnCartRef,
-    }
-    let key: string | null
-    if (infoOpen) key = "info"
-    else if (activeModal === "collect") key = "cart"
-    else key = activeModal
-    if (!key) {
-      // Home state — slider is hidden; still initialise transitions on mount
-      if (skipTransition) setTimeout(() => setSliderReady(true), 0)
-      return
-    }
-    const btn = refMap[key]?.current
-    if (!btn) return
-    const btnRect   = btn.getBoundingClientRect()
-    const innerRect = inner.getBoundingClientRect()
-    setSliderStyle({ left: btnRect.left - innerRect.left, width: btnRect.width })
-    // On mount OR when slider first becomes visible: jump to position (no slide animation)
-    const wasActive = sliderWasActive.current
-    sliderWasActive.current = true
-    if (skipTransition || !wasActive) {
-      setSliderReady(false)
-      setTimeout(() => setSliderReady(true), 0)
-    }
-  }, [activeModal, infoOpen])
-
-  useEffect(() => { measureSlider(true) }, []) // eslint-disable-line
-  useEffect(() => { if (sliderReady) measureSlider(false) }, [activeModal, infoOpen, sliderReady, measureSlider])
-  useEffect(() => {
-    const onResize = () => measureSlider(false)
-    window.addEventListener("resize", onResize)
-    return () => window.removeEventListener("resize", onResize)
-  }, [measureSlider])
-  // Reset slider tracking when returning home — so next modal open jumps (not slides) to position
-  useEffect(() => {
-    if (activeModal === null && !infoOpen) sliderWasActive.current = false
-  }, [activeModal, infoOpen])
 
   const handleLogoTap = useCallback(() => {
     const now = Date.now()
@@ -706,7 +648,7 @@ export default function Home() {
               next === null ? closeModal() : openModal(next)
             }}
           >
-            <div className="pill-nav-inner" ref={navInnerRef}>
+            <div className="pill-nav-inner">
 
               {/* ── Intro text overlay — blurs icons behind, fades out to reveal them ── */}
               <div
@@ -740,7 +682,7 @@ export default function Home() {
               }}>
 
               {/* INFO — ℹ️ circle (default) / ❕ exclamation circle (active) */}
-              <button ref={btnInfoRef}
+              <button
                 className={`pill-nav-item${infoOpen ? " pill-nav-item--active" : ""}`}
                 onClick={() => { closeModal(); setInfoOpen(v => !v) }}
                 aria-label="About"
@@ -760,7 +702,7 @@ export default function Home() {
               </button>
 
               {/* PLAY */}
-              <button ref={btnPlayRef}
+              <button
                 className={`pill-nav-item${activeModal === "play" ? " pill-nav-item--active" : ""}`}
                 onClick={() => activeModal === "play" ? closeModal() : openModal("play")}
                 aria-label="Play"
@@ -778,7 +720,7 @@ export default function Home() {
               </button>
 
               {/* MUSIC */}
-              <button ref={btnMusicRef}
+              <button
                 className={`pill-nav-item${activeModal === "music" ? " pill-nav-item--active" : ""}`}
                 onClick={() => {
                   if (activeModal === "music") {
@@ -807,7 +749,7 @@ export default function Home() {
 
 
               {/* HOME — wide text on desktop, 3-line stack on mobile; press to toggle light/dark */}
-              <button ref={btnHomeRef}
+              <button
                 className={`pill-nav-item pill-nav-home pill-nav-home--text${(activeModal === null && !infoOpen) ? " pill-nav-item--active" : ""}`}
                 onClick={() => { closeModal(); setInfoOpen(false); setLightMode(m => !m) }}
                 aria-label="Home"
@@ -822,7 +764,7 @@ export default function Home() {
               </button>
 
               {/* SHOWCASE */}
-              <button ref={btnShowRef}
+              <button
                 className={`pill-nav-item${activeModal === "showcase" ? " pill-nav-item--active" : ""}`}
                 onClick={() => activeModal === "showcase" ? closeModal() : openModal("showcase")}
                 aria-label="Showcase"
@@ -839,7 +781,7 @@ export default function Home() {
               </button>
 
               {/* REVIEWS */}
-              <button ref={btnRevRef}
+              <button
                 className={`pill-nav-item${activeModal === "reviews" ? " pill-nav-item--active" : ""}`}
                 onClick={() => activeModal === "reviews" ? closeModal() : openModal("reviews")}
                 aria-label="Reviews"
@@ -856,7 +798,7 @@ export default function Home() {
               </button>
 
               {/* CART */}
-              <button ref={btnCartRef}
+              <button
                 className={`pill-nav-item${activeModal === "collect" ? " pill-nav-item--active" : ""}${cartShaking ? " pill-nav-item--shake" : ""}`}
                 onClick={() => activeModal === "collect" ? closeModal() : openModal("collect")}
                 aria-label="Collect"
@@ -898,7 +840,7 @@ export default function Home() {
                   <p className="play-block-body">Appoint one player to be the <span className="text-tmm-cream">Marshall</span>. Shuffle the CHARACTER cards and deal one face down to each player — check the <span className="text-muted">ROLES card*</span> for the correct card count. All players must keep their CHARACTER CARD secret.</p>
                   <p className="play-block-body">Each game is played in rounds of 3 consecutive phases:</p>
                   <ul className="play-rules-list">
-                    <li className="play-block-body">SLEEP → DISCUSSION → VOTE</li>
+                    <li className="play-block-body">SLEEP &gt; DISCUSSION &gt; VOTE</li>
                   </ul>
                   <p className="play-block-body">Sleep phase — the <span className="text-tmm-cream">Marshall</span> wakes each role in order:</p>
                   <ul className="play-rules-list">
@@ -932,11 +874,18 @@ export default function Home() {
                 {/* BOX 4 */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">There are gamemodes?</span><span className="play-block-subtitle">(gamemode card*)</span></div>
-                  <p className="play-block-body">Three different game-modes can be played:</p>
+                  <p className="play-block-body">There are Three Different game-modes that can be played!</p>
+                  <p className="play-block-body" style={{marginTop:"10px"}}><span style={{color:"#ffffff",fontWeight:"bold"}}>STANDARD mode:</span></p>
                   <ul className="play-rules-list">
-                    <li className="play-block-body"><span style={{color:"#ffffff"}}>STANDARD</span> — Players with the same role silently agree on a single target (e.g. 2 <span className="text-tmm-red">Mafia</span> = 1 kill)</li>
-                    <li className="play-block-body"><span style={{color:"#ffffff"}}>GROUP</span> — Players with the same role each pick a separate target, equal to their count (e.g. 2 <span className="text-tmm-red">Mafia</span> = 2 kills)</li>
-                    <li className="play-block-body"><span style={{color:"#ffffff"}}>CHAOS</span> — Each player picks their own individual target separately (e.g. 1 <span className="text-tmm-red">Mafia</span> = 1 kill / 1 <span className="text-tmm-red">Mafia</span> = 1 kill)</li>
+                    <li className="play-block-body">Players with the same role — silently point and agree on a <strong>SINGLE</strong> target together (EG. 2 <span className="text-tmm-red">Mafia</span>&apos;s &gt; 1 kill)</li>
+                  </ul>
+                  <p className="play-block-body" style={{marginTop:"10px"}}><span style={{color:"#ffffff",fontWeight:"bold"}}>GROUP MODE:</span></p>
+                  <ul className="play-rules-list">
+                    <li className="play-block-body">Players with the same role — silently point and agree on targets together = to the amount of their role (Eg. 2 <span className="text-tmm-red">Mafia</span>&apos;s &gt; 2 kills)</li>
+                  </ul>
+                  <p className="play-block-body" style={{marginTop:"10px"}}><span style={{color:"#ffffff",fontWeight:"bold"}}>CHAOS mode:</span></p>
+                  <ul className="play-rules-list">
+                    <li className="play-block-body">Each Player — Silently picks their own <strong>INDIVIDUAL</strong> target <strong>SEPARATELY</strong> (Eg. 1st <span className="text-tmm-red">Mafia</span> &gt; 1 kill / 2nd <span className="text-tmm-red">Mafia</span> &gt; 1 kill)</li>
                   </ul>
                   <p className="play-block-body"><span style={{color:"#F8007A"}}>Note!</span> — these changes only alter role actions in the sleep phase.</p>
                 </div>
