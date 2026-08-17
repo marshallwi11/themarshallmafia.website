@@ -361,7 +361,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
               <span className="play-block-title">THE ARTWORK</span>
             </div>
             <p className="play-block-body">Weeks of drawing followed the weeks of writing. Through sourcing from old detective novels and action thrillers, to the classic cheekiness of 2D shows like Pink Panther, a cast started to emerge.</p>
-            <p className="play-block-body">The sharp <span style={{color:"#E4002B"}}>Mafia</span>. The pointed <span style={{color:"#9E5330"}}>Villager</span>. The handy <span style={{color:"#00B140"}}>Angel</span>. The ballsy <span style={{color:"#FFB81C"}}>Jester</span>. The clued-up <span style={{color:"#0083CB"}}>Detective</span>. The ruling <span style={{color:"#F0E8CE"}}>Marshall</span> ;)</p>
+            <p className="play-block-body">The sharp <span style={{color:"#E4002B"}}>Mafia</span>. The pointed <span style={{color:"#9E5330"}}>Villager</span>. The handy <span style={{color:"#00B140"}}>Angel</span>. The ballsy <span style={{color:"#FFB81C"}}>Jester</span>. The clued-up <span style={{color:"#0083CB"}}>Detective</span>. The ruling <span style={{color:"#DBAB7F"}}>Marshall</span> ;)</p>
             <p className="play-block-body">Each one faceless, but not nameless, each one anyone{"'"}s to become. Their colours were drawn from timeless pieces of history, old Nintendo and new Xbox consoles that remind generations to relive the joyful nostalgia of childhood games.</p>
           </div>
 
@@ -479,7 +479,7 @@ function colorizeBody(text: string) {
     { words: ["Angel", "angel", "Angels", "angels"],               color: "#00B140" },
     { words: ["Jester", "jester", "Jesters", "jesters"],           color: "#FFB81C" },
     { words: ["Detective", "detective", "Detectives", "detectives"], color: "#0083CB" },
-    { words: ["Marshall", "marshall"],                             color: "#F0E8CE" },
+    { words: ["Marshall", "marshall"],                             color: "#DBAB7F" },
   ]
   const allWords = ROLES.flatMap(r => r.words)
   const pattern = new RegExp("\\b(" + allWords.join("|") + ")\\b", "g")
@@ -501,6 +501,7 @@ export default function Home() {
   const [activeModal, setActiveModal] = useState<ModalType>(null)
   const [stripeClientSecret, setStripeClientSecret] = useState<string | null>(null)
   const [stripeLoading, setStripeLoading] = useState(false)
+  const [stripeError, setStripeError] = useState(false)
   const [lightMode, setLightMode] = useState(false)
   const [logoFading, setLogoFading] = useState(false)
   const [packSelected, setPackSelected] = useState<"standard" | "expansion" | null>(null)
@@ -596,17 +597,25 @@ export default function Home() {
     if (activeModal === "collect" && packSelected === null) {
       setPackSelected("standard")
     }
-    if (activeModal === "collect" && packSelected === "standard" && !stripeClientSecret && !stripeLoading) {
+    if (activeModal === "collect" && packSelected === "standard" && !stripeClientSecret && !stripeLoading && !stripeError) {
       setStripeLoading(true)
       fetch("/api/checkout", { method: "POST" })
         .then(r => r.json())
-        .then(d => { setStripeClientSecret(d.clientSecret); setStripeLoading(false) })
-        .catch(() => setStripeLoading(false))
+        .then(d => {
+          if (d.clientSecret) {
+            setStripeClientSecret(d.clientSecret)
+          } else {
+            setStripeError(true)
+          }
+          setStripeLoading(false)
+        })
+        .catch(() => { setStripeLoading(false); setStripeError(true) })
     }
     if (activeModal !== "collect") {
       setStripeClientSecret(null)
       setStripeLoading(false)
       setPackSelected(null)
+      setStripeError(false)
     }
   }, [activeModal, packSelected])
 
@@ -738,7 +747,7 @@ export default function Home() {
               >
                 {activeModal === "music" ? (
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M10 3.75a.75.75 0 00-1.264-.546L4.703 7H3.167a.75.75 0 00-.7.48A6.985 6.985 0 002 10c0 .905.184 1.768.468 2.52.111.29.39.48.7.48h1.535l4.033 3.796A.75.75 0 0010 16.25V3.75zM15.95 5.05a.75.75 0 00-1.06 1.06A6.5 6.5 0 0116.95 10a6.5 6.5 0 01-2.06 3.89.75.75 0 001.06 1.06A8 8 0 0018.45 10a8 8 0 00-2.5-4.95zM13.596 7.404a.75.75 0 00-1.06 1.06 3.5 3.5 0 010 4.95.75.75 0 001.06 1.06 5 5 0 000-7.07z"/>
+                    <path d="M10 3.75a.75.75 0 00-1.264-.546L4.703 7H3.167a.75.75 0 00-.7.48A6.985 6.985 0 002 10c0 .905.184 1.768.468 2.52.111.29.39.48.7.48h1.535l4.033 3.796A.75.75 0 0010 16.25V3.75zM15.95 5.05a.75.75 0 00-1.06 1.06A6.5 6.5 0 0116.95 10a6.5 6.5 0 01-2.06 3.89.75.75 0 001.06 1.06A8 8 0 0018.45 10a8 8 0 00-2.5-4.95zM13.596 6.47a.75.75 0 00-1.06 1.06 3.5 3.5 0 010 4.95.75.75 0 001.06 1.06 5 5 0 000-7.07z"/>
                   </svg>
                 ) : (
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
@@ -769,15 +778,9 @@ export default function Home() {
                 onClick={() => activeModal === "showcase" ? closeModal() : openModal("showcase")}
                 aria-label="Showcase"
               >
-                {activeModal === "showcase" ? (
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" clipRule="evenodd" d="M1 5.25A2.25 2.25 0 013.25 3h13.5A2.25 2.25 0 0119 5.25v9.5A2.25 2.25 0 0116.75 17H3.25A2.25 2.25 0 011 14.75v-9.5zm1.5 5.81v3.69c0 .414.336.75.75.75h13.5a.75.75 0 00.75-.75v-2.69l-2.22-2.219a.75.75 0 00-1.06 0l-1.91 1.909.47.47a.75.75 0 11-1.06 1.06L6.53 8.091a.75.75 0 00-1.06 0l-2.97 2.97zM12 7a1 1 0 11-2 0 1 1 0 012 0z"/>
-                  </svg>
-                ) : (
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" clipRule="evenodd" d="M1 8a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 018.07 3h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0016.07 6H17a2 2 0 012 2v7a2 2 0 01-2 2H3a2 2 0 01-2-2V8zm13.5 3a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM10 14a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/>
-                  </svg>
-                )}
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M1 8a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 018.07 3h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0016.07 6H17a2 2 0 012 2v7a2 2 0 01-2 2H3a2 2 0 01-2-2V8zm13.5 3a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM10 13.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/>
+                </svg>
               </button>
 
               {/* REVIEWS */}
@@ -787,12 +790,12 @@ export default function Home() {
                 aria-label="Reviews"
               >
                 {activeModal === "reviews" ? (
-                  <svg width="21" height="21" viewBox="0 0 20 20" fill="currentColor">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                   </svg>
                 ) : (
-                  <svg width="21" height="21" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" clipRule="evenodd" d="M10 2c-2.236 0-4.43.18-6.57.524C1.993 2.755 1 4.014 1 5.426v5.148c0 1.413.993 2.67 2.43 2.902.848.137 1.705.248 2.57.331v3.443a.75.75 0 001.28.53l3.58-3.579a.78.78 0 01.527-.224 41.202 41.202 0 005.183-.5c1.437-.232 2.43-1.49 2.43-2.903V5.426c0-1.413-.993-2.67-2.43-2.902A41.289 41.289 0 0010 2zm0 7a1 1 0 110-2 1 1 0 010 2zM7 9a1 1 0 110-2 1 1 0 010 2zm7 0a1 1 0 110-2 1 1 0 010 2z"/>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M10 2c-2.236 0-4.43.18-6.57.524C1.993 2.755 1 4.014 1 5.426v5.148c0 1.413.993 2.67 2.43 2.902.848.137 1.705.248 2.57.331v3.443a.75.75 0 001.28.53l3.58-3.579a.78.78 0 01.527-.224 41.202 41.202 0 005.183-.5c1.437-.232 2.43-1.49 2.43-2.903V5.426c0-1.413-.993-2.67-2.43-2.902A41.289 41.289 0 0010 2zm0 7a1 1 0 110-2 1 1 0 010 2zM7 9a1 1 0 110-2 1 1 0 010 2zm6 0a1 1 0 110-2 1 1 0 010 2z"/>
                   </svg>
                 )}
               </button>
@@ -1117,7 +1120,7 @@ export default function Home() {
                     return (
                   <div className="reviews-summary">
                     <div className="reviews-score">
-                      <CharacterSVG style={{height:"100%",width:"auto",display:"block"}} />
+                      <CharacterSVG style={{height:"85%",width:"auto",display:"block"}} />
                     </div>
                     <div className="reviews-divider" aria-hidden="true" />
                     <div className="reviews-right">
@@ -1215,6 +1218,10 @@ export default function Home() {
                         <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret: stripeClientSecret }}>
                           <EmbeddedCheckout />
                         </EmbeddedCheckoutProvider>
+                      </div>
+                    ) : stripeError ? (
+                      <div className="flex items-center justify-center py-8">
+                        <span className="play-block-body" style={{opacity:0.45,textAlign:"center"}}>checkout unavailable — please try again shortly</span>
                       </div>
                     ) : (
                       <div className="flex items-center justify-center py-8 gap-3">
