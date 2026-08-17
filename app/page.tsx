@@ -445,15 +445,15 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
 type ModalType = "play" | "showcase" | "music" | "collect" | "reviews" | null
 
 const TESTIMONIALS = [
-  { name: "Ayanfe O",   age: 25, rating: 4, colorize: false, body: "Cards are really good quality, I like the different additions as well!" },
+  { name: "Abi R",      age: 20, rating: 5, colorize: true,  body: "My experience is 10/10. I think the way the game is set up is really well organised. I can't even begin to explain the amount of games I've had, but the highlight would be when we finally stopped letting people expose their roles in any way if they were alive or dead. Me and my friend managed to deceive the last 2 villagers and won with 2 mafia still alive, most joyous moment of my entire mafia existence. I would say to someone considering their first night in the village… you can't trust anyone. Don't make alliances, it's every man for himself." },
   { name: "Jessica M",  age: 24, rating: 5, colorize: false, body: "Love it, love it, love it! It was a very creative way to play mafia!" },
+  { name: "Lucas M",    age: 14, rating: 5, colorize: false, body: "It's fun to play with friends. Great for bonding time with family. You get to know people better and know their lying faces!" },
+  { name: "Samuel A",   age: 30, rating: 5, colorize: false, body: "There is nothing like this game on the market. It's appeals to all ages, no-one is too young or too old to play… plus the background music makes the experience so much endless fun." },
+  { name: "Ayanfe O",   age: 25, rating: 4, colorize: false, body: "Cards are really good quality, I like the different additions as well!" },
   { name: "Geoff S",    age: 34, rating: 5, colorize: false, body: "Great game, really enjoy the variety of cards in the pack. It's easy for someone new to pick up and understand and is a good game to play in larger groups which is generally hard to find." },
   { name: "Isabella M", age: 18, rating: 5, colorize: false, body: "The Marshall Mafia is amazing for group bonding, I played this game with my youth group and it was amazing... it really helped everyone to get to know each other and created fun memories!" },
-  { name: "Samuel A",   age: 30, rating: 5, colorize: false, body: "There is nothing like this game on the market. It's appeals to all ages, no-one is too young or too old to play… plus the background music makes the experience so much endless fun." },
   { name: "Lewis W",    age: 22, rating: 5, colorize: false, body: "The Marshall Mafia is always interesting no matter how many times we've played it. An ideal game to play with family or friends!" },
   { name: "Mia S",      age: 23, rating: 5, colorize: true,  body: "I was the Mafia and was getting by unscathed, killing people left, right and centre. My fellow mafias, 1 by 1, slowly getting caught... but there's still 1 left (ME). I get through 2 murders placing the blame on easy targets, who crack under pressure, then the dreaded words \"wait what about Mia?\" was said. Then it was wraps because everyone else was like \"Yeah what about Mia\". I immediately went into defence mode and then I was voted out :/ It was super fun, made the atmosphere super competitive... but in a friendly way! My family back home will love this! I will have to recommend it to them!" },
-  { name: "Lucas M",    age: 14, rating: 5, colorize: false, body: "It's fun to play with friends. Great for bonding time with family. You get to know people better and know their lying faces!" },
-  { name: "Abi R",      age: 20, rating: 5, colorize: true,  body: "My experience is 10/10. I think the way the game is set up is really well organised. I can't even begin to explain the amount of games I've had, but the highlight would be when we finally stopped letting people expose their roles in any way if they were alive or dead. Me and my friend managed to deceive the last 2 villagers and won with 2 mafia still alive, most joyous moment of my entire mafia existence. I would say to someone considering their first night in the village… you can't trust anyone. Don't make alliances, it's every man for himself." },
 ]
 
 // Inline SVG for reviews panel (avoids img src loading issues)
@@ -1168,37 +1168,46 @@ export default function Home() {
                     return (
                   <div className="reviews-summary">
                     <div className="reviews-score">
-                      <CharacterSVG style={{height:"clamp(56px,9vw,80px)",width:"auto",display:"block",margin:"0 auto 4px"}} />
-                      <span className="reviews-score-number">{avgDisplay}</span>
-                      <StarRating rating={avgRounded} />
-                      <span className="play-block-subtitle" style={{fontSize:"12px"}}>{TESTIMONIALS.length} reviews</span>
+                      <CharacterSVG style={{height:"clamp(60px,10vw,90px)",width:"auto",display:"block",margin:"0 auto"}} />
                     </div>
                     <div className="reviews-divider" aria-hidden="true" />
-                    <div className="reviews-bars">
-                      {[5,4,3,2,1].filter(n => TESTIMONIALS.filter(t => t.rating === n).length > 0).map(n => {
-                        const count = TESTIMONIALS.filter(t => t.rating === n).length
-                        const pct = Math.round((count / TESTIMONIALS.length) * 100)
-                        const isActive = filterRating === n
-                        const isDimmed = filterRating !== null && !isActive
-                        const labelStyle = { color: isActive ? "#ffffff" : "var(--tmm-yellow)", fontSize: "clamp(15px,2.4vw,17px)", opacity: isDimmed ? 0.35 : 1, transition: "opacity 0.2s ease" }
-                        return (
-                          <div key={n} className={`review-bar-row review-bar-row--clickable${isActive ? " review-bar-row--active" : ""}`}
-                            onClick={e => { e.stopPropagation(); setFilterRating(filterRating === n ? null : n) }}>
-                            <span className="review-bar-label" style={labelStyle}>{n}</span>
-                            <div className="review-bar-track" style={{opacity: isDimmed ? 0.35 : 1, transition:"opacity 0.2s ease"}}>
-                              <div className="review-bar-fill" style={{ width:`${pct}%`, background: isActive ? "#ffffff" : "var(--tmm-yellow)" }} />
+                    <div className="reviews-right">
+                      <div className="reviews-avg">
+                        <span className="reviews-score-number">{avgDisplay}</span>
+                        <StarRating rating={avgRounded} />
+                        <span className="play-block-subtitle" style={{fontSize:"12px"}}>{TESTIMONIALS.length} reviews</span>
+                      </div>
+                      <div className="reviews-bars">
+                        {[5,4,3,2,1].map(n => {
+                          const count = TESTIMONIALS.filter(t => t.rating === n).length
+                          const pct = count > 0 ? Math.round((count / TESTIMONIALS.length) * 100) : 0
+                          const isActive = filterRating === n && count > 0
+                          const isDimmed = filterRating !== null && !isActive && count > 0
+                          const isEmpty = count === 0
+                          const labelStyle = { color: isActive ? "#ffffff" : "var(--tmm-yellow)", fontSize: "clamp(15px,2.4vw,17px)", opacity: isDimmed ? 0.35 : isEmpty ? 0.22 : 1, transition: "opacity 0.2s ease" }
+                          return (
+                            <div key={n}
+                              className={`review-bar-row${!isEmpty ? " review-bar-row--clickable" : ""}${isActive ? " review-bar-row--active" : ""}`}
+                              onClick={!isEmpty ? (e => { e.stopPropagation(); setFilterRating(filterRating === n ? null : n) }) : undefined}>
+                              <span className="review-bar-label" style={labelStyle}>{n}</span>
+                              <div className="review-bar-track" style={{opacity: isDimmed ? 0.35 : isEmpty ? 0.15 : 1, transition:"opacity 0.2s ease"}}>
+                                <div className="review-bar-fill" style={{ width:`${pct}%`, background: isActive ? "#ffffff" : "var(--tmm-yellow)" }} />
+                              </div>
+                              <span className="review-bar-count" style={labelStyle}>{isEmpty ? "" : count}</span>
                             </div>
-                            <span className="review-bar-count" style={labelStyle}>{count}</span>
-                          </div>
-                        )
-                      })}
-                      <button
-                        className="play-block-body add-review-btn"
-                        style={{marginTop:"auto"}}
-                        onClick={e => { e.stopPropagation(); window.open("https://forms.gle/eVJJUSfXr5nHSc8ZA", "_blank") }}
-                      >
-                        add a review
-                      </button>
+                          )
+                        })}
+                        <a
+                          href="https://forms.gle/eVJJUSfXr5nHSc8ZA"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="play-block-body add-review-btn"
+                          style={{marginTop:"auto"}}
+                          onClick={e => e.stopPropagation()}
+                        >
+                          add a review
+                        </a>
+                      </div>
                     </div>
                   </div>
                     )
@@ -1209,7 +1218,7 @@ export default function Home() {
                     <div className="play-card-header" style={{alignItems:"flex-start"}}>
                       <div style={{display:"flex",flexDirection:"row",alignItems:"baseline",gap:"10px"}}>
                         <span className="play-block-title">{t.name}</span>
-                        <span className="play-block-subtitle" style={{fontSize:"12px"}}>{t.age}</span>
+                        <span className="play-block-title" style={{opacity:0.5}}>{t.age}</span>
                       </div>
                       <StarRating rating={t.rating} />
                     </div>

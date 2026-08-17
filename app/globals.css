@@ -1013,6 +1013,21 @@
     color: #ffffff;
   }
   .tmm-light .reviews-score-number { color: #111111; }
+  .reviews-right {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: clamp(14px, 3.5vw, 24px);
+  }
+  .reviews-avg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
   .reviews-bars {
     flex: 1;
     display: flex;
@@ -1455,6 +1470,7 @@
   /* Reviews — stack vertically on mobile */
   .reviews-summary { flex-direction: column; gap: 16px; }
   .reviews-divider { width: auto; height: 1px; margin: 4px 0; align-self: stretch; }
+  .reviews-right { flex-direction: column; gap: 12px; }
   .reviews-bars { width: 100%; }
   .review-card-top { flex-wrap: nowrap; align-items: center; }
 
