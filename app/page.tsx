@@ -138,7 +138,7 @@ void main(){
 }
 
 // ── Lottie hero ───────────────────────────────────────────────────────────────
-function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading: boolean }) {
+function LottieHero({ lightMode, logoFading, blurred }: { lightMode: boolean; logoFading: boolean; blurred: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const animRef = useRef<AnimationItem | null>(null)
 
@@ -163,7 +163,7 @@ function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading:
 
   // Opacity fades to 0 while logoFading; transform/filter swap while invisible.
   return (
-    <div className="hero-rise-wrapper">
+    <div className={`hero-rise-wrapper${blurred ? " hero-rise-wrapper--blurred" : ""}`}>
       <div style={{
         /* Dark mode: scaleY(-1) is the brand aesthetic (intentionally inverted eyes).
            Light mode: eyes should be right-side-up/happy — no flip, just invert for colour. */
@@ -308,17 +308,17 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
             <p className="play-block-body">On one suspiciously loud Marshall games night, we were playing Mafia. Or at least trying to. Using a standard deck of playing cards, everyone at the table seemed to know a different version of the same game. The characters were different. The names were different. The rules were different. Nobody could quite agree on how to play.</p>
           </div>
 
+          {/* IMAGE — creation story 1 */}
+          <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+            <img src="/images/tmm_creation_story_1.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
+          </div>
+
           {/* ── The Moment ── */}
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
               <span className="play-block-title">THE MOMENT</span>
             </div>
             <p className="play-block-body">A Marshall, lost in that confusion, stopped listening and started thinking. There had to be a better way to play this. One deck. One set of rules. One game everyone could actually agree on, whether they were a child, a teenager, or an adult. Their first game or their last.</p>
-          </div>
-
-          {/* IMAGE — creation story 1 */}
-          <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-            <img src="/images/tmm_creation_story_1.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
           {/* ── The Night ── */}
@@ -329,17 +329,17 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
             <p className="play-block-body">The thought didn{"'"}t wait for light of day. The typing lasted long into the dark early hours of the morning. Once the first idea was created, it sparked a week of very little sleep and a lot of notes — roles, rules, characters, game-modes, written down as fast as they arrived, then crossed out, then written again. By the end of it, the first rule-set existed. It wasn{"'"}t complete yet. But the idea was inspiring…</p>
           </div>
 
+          {/* IMAGE — creation story 2 */}
+          <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+            <img src="/images/tmm_creation_story_2.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
+          </div>
+
           {/* ── The Philosophy ── */}
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
               <span className="play-block-title">THE PHILOSOPHY</span>
             </div>
             <p className="play-block-body">Our aim was to make: {'"'}A world of games, that are suspiciously fun, told with a smile and a wink. Created for any player, all generations, every home.{'"'}</p>
-          </div>
-
-          {/* IMAGE — creation story 2 */}
-          <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-            <img src="/images/tmm_creation_story_2.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
           {/* ── The World ── */}
@@ -351,19 +351,19 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
             <p className="play-block-body">The room is crisp with light suspicious fog, set in the summer cool of onsetting dusk, with everyone dressed up for a night of theatrical old fashioned games... with a new twist. We speculated art decking the walls while a band plays heartfelt downtempo music, taking off the formal edge, while putting a killer edge on. A room you would expect a spy to be seated in, a scripted movie with a story shaken up and stirred into real life.</p>
           </div>
 
+          {/* IMAGE — creation story 3 */}
+          <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+            <img src="/images/tmm_creation_story_3.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
+          </div>
+
           {/* ── The Artwork ── */}
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
               <span className="play-block-title">THE ARTWORK</span>
             </div>
             <p className="play-block-body">Weeks of drawing followed the weeks of writing. Through sourcing from old detective novels and action thrillers, to the classic cheekiness of 2D shows like Pink Panther, a cast started to emerge.</p>
-            <p className="play-block-body">The sharp <span style={{color:"#E85050"}}>Mafia</span>. The pointed <span style={{color:"#EDE8CA"}}>Villager</span>. The handy <span style={{color:"#5B9BD5"}}>Angel</span>. The ballsy <span style={{color:"#F2C347"}}>Jester</span>. The clued-up <span style={{color:"#6BC46A"}}>Detective</span>. The ruling <span style={{color:"#C4955A"}}>Marshall</span> ;)</p>
+            <p className="play-block-body">The sharp <span style={{color:"#E4002B"}}>Mafia</span>. The pointed <span style={{color:"#9E5330"}}>Villager</span>. The handy <span style={{color:"#00B140"}}>Angel</span>. The ballsy <span style={{color:"#FFB81C"}}>Jester</span>. The clued-up <span style={{color:"#0083CB"}}>Detective</span>. The ruling <span style={{color:"#F0E8CE"}}>Marshall</span> ;)</p>
             <p className="play-block-body">Each one faceless, but not nameless, each one anyone{"'"}s to become. Their colours were drawn from timeless pieces of history, old Nintendo and new Xbox consoles that remind generations to relive the joyful nostalgia of childhood games.</p>
-          </div>
-
-          {/* IMAGE — creation story 3 */}
-          <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-            <img src="/images/tmm_creation_story_3.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
           {/* ── The Brand ── */}
@@ -375,6 +375,11 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
             <p className="play-block-body">It also captured the heart of the game: seeing what{"'"}s going on around you when you{"'"}re awake, and being in the dark when you{"'"}re asleep. The roles became united under a single mark. Eyes that are open, watching, even when they are closed. Awake while the table sleeps.</p>
           </div>
 
+          {/* IMAGE — creation story 4 */}
+          <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+            <img src="/images/tmm_creation_story_4.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
+          </div>
+
           {/* ── The Testing ── */}
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
@@ -382,11 +387,6 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
             </div>
             <p className="play-block-body">The idea was only half the game. The rest came from demo packs and far too many rounds with friends and family. We played game after game, night after night, until we knew more about what didn{"'"}t work than what did.</p>
             <p className="play-block-body">Characters that caused complications, rather than cheeky confusion, were cut. Rule sets that created chaos were rebuilt, giving each group more freedom to choose how they played. The colour hues went through several revisions too. Every role needed to be easy to find, easy to understand, and easy to read, whether you were a child, a parent, or a grandparent.</p>
-          </div>
-
-          {/* IMAGE — creation story 4 */}
-          <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-            <img src="/images/tmm_creation_story_4.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
           {/* ── The Mistake ── */}
@@ -397,17 +397,17 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
             <p className="play-block-body">Somewhere in the middle of finishing the standard pack, a whole expansion started to appear too. There were simply too many ideas to fit into one box. Once a suspicious little world exists, it{"'"}s very hard to stop building on it. People keep asking about it. It{"'"}s coming. Just not quite yet.</p>
           </div>
 
+          {/* IMAGE — creation story 5 */}
+          <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+            <img src="/images/tmm_creation_story_5.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
+          </div>
+
           {/* ── The Music ── */}
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
               <span className="play-block-title">THE MUSIC</span>
             </div>
             <p className="play-block-body">We also realised something was missing. When we played, the room didn{"'"}t quite match the world we had imagined. Then, somewhere around midnight, we clocked it... The places that inspired the game all had theme tunes, soundtracks, or background music. So we spent the next few months composing three albums to sit alongside the game and complete the atmosphere.</p>
-          </div>
-
-          {/* IMAGE — creation story 5 */}
-          <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-            <img src="/images/tmm_creation_story_5.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
           {/* ── The Name ── */}
@@ -418,17 +418,17 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
             <p className="play-block-body">We weren{"'"}t quite sure what to call the game. Then we realised it had been staring us in the face all along, even when our eyes were closed. We{"'"}d been playing the Marshall{"'"}s version of Mafia. So we called it exactly that.</p>
           </div>
 
+          {/* IMAGE — creation story 6 */}
+          <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+            <img src="/images/tmm_creation_story_6.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
+          </div>
+
           {/* ── The Game ── */}
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
               <span className="play-block-title">THE GAME</span>
             </div>
             <p className="play-block-body">What we made was called {'"'}The Marshall Mafia{'"'}, the sneakiest social deduction card game. A world of suspicious fun, crafted to be cheeky, cheerful and downright fun. Don{"'"}t believe us? Try it and see. We dare you to have as much fun as everyone else testifies ;)</p>
-          </div>
-
-          {/* IMAGE — creation story 6 */}
-          <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-            <img src="/images/tmm_creation_story_6.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
           <div className="play-card-pill" onClick={e => e.stopPropagation()}>
@@ -634,7 +634,7 @@ export default function Home() {
 
       <main className={`site-canvas${lightMode ? " tmm-light" : ""}`}>
 
-        <LottieHero lightMode={lightMode} logoFading={logoFading} />
+        <LottieHero lightMode={lightMode} logoFading={logoFading} blurred={activeModal !== null || infoOpen} />
 
         {/* ── INFO POPUP ── */}
         <InfoPopup open={infoOpen} onClose={() => setInfoOpen(false)} />
