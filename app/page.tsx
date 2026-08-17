@@ -1168,7 +1168,7 @@ export default function Home() {
                     return (
                   <div className="reviews-summary">
                     <div className="reviews-score">
-                      <CharacterSVG style={{height:"clamp(60px,10vw,90px)",width:"auto",display:"block",margin:"0 auto"}} />
+                      <CharacterSVG style={{height:"100%",width:"auto",display:"block"}} />
                     </div>
                     <div className="reviews-divider" aria-hidden="true" />
                     <div className="reviews-right">
@@ -1216,7 +1216,7 @@ export default function Home() {
                 {(filterRating !== null ? TESTIMONIALS.filter(t => t.rating === filterRating) : TESTIMONIALS).map((t, i) => (
                   <div key={i} className="play-card" onClick={e => e.stopPropagation()}>
                     <div className="play-card-header" style={{alignItems:"flex-start"}}>
-                      <div style={{display:"flex",flexDirection:"row",alignItems:"baseline",gap:"10px"}}>
+                      <div style={{display:"flex",flexDirection:"row",alignItems:"baseline",gap:"30px"}}>
                         <span className="play-block-title">{t.name}</span>
                         <span className="play-block-title" style={{opacity:0.5}}>{t.age}</span>
                       </div>

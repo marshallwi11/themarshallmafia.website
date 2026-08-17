@@ -1003,8 +1003,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
     flex-shrink: 0;
+    align-self: stretch;
+    min-height: clamp(80px, 14vw, 130px);
   }
   .reviews-score-number {
     font-family: 'MarkerBold', sans-serif;
@@ -1017,15 +1019,15 @@
     flex: 1;
     display: flex;
     flex-direction: row;
-    align-items: stretch;
-    gap: clamp(14px, 3.5vw, 24px);
+    align-items: center;
+    gap: clamp(10px, 2.5vw, 18px);
   }
   .reviews-avg {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 4px;
     flex-shrink: 0;
   }
   .reviews-bars {
@@ -1062,7 +1064,8 @@
   .tmm-light .review-bar-label { color: rgba(0, 0, 0, 0.45); }
   .review-bar-track {
     flex: 1;
-    min-width: 50px;
+    min-width: 30px;
+    max-width: clamp(55px, 7vw, 80px);
     height: 6px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 100px;
