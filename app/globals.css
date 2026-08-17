@@ -220,14 +220,6 @@
     100% { transform: translateY(0px)  scale(1.12); }
   }
 
-  /* Hero wrapper blur — applied directly (not backdrop-filter) for cross-browser support */
-  .hero-rise-wrapper {
-    transition: filter 0.35s ease;
-  }
-  .hero-rise-wrapper--blurred {
-    filter: blur(16px);
-  }
-
   /* Inner div: handles fade-in + blur clearing */
   .hero-lottie {
     animation: heroFadeIn 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;

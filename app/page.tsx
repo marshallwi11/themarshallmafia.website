@@ -138,7 +138,7 @@ void main(){
 }
 
 // ── Lottie hero ───────────────────────────────────────────────────────────────
-function LottieHero({ lightMode, logoFading, blurred }: { lightMode: boolean; logoFading: boolean; blurred: boolean }) {
+function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const animRef = useRef<AnimationItem | null>(null)
 
@@ -163,7 +163,7 @@ function LottieHero({ lightMode, logoFading, blurred }: { lightMode: boolean; lo
 
   // Opacity fades to 0 while logoFading; transform/filter swap while invisible.
   return (
-    <div className={`hero-rise-wrapper${blurred ? " hero-rise-wrapper--blurred" : ""}`}>
+    <div className="hero-rise-wrapper">
       <div style={{
         /* Dark mode: scaleY(-1) is the brand aesthetic (intentionally inverted eyes).
            Light mode: eyes should be right-side-up/happy — no flip, just invert for colour. */
@@ -445,16 +445,32 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
 type ModalType = "play" | "showcase" | "music" | "collect" | "reviews" | null
 
 const TESTIMONIALS = [
-  { name: "Ayanfe O",      age: 25, rating: 4, body: "Cards are really good quality, I like the different additions as well!" },
-  { name: "Jessica M",     age: 24, rating: 5, body: "Love it, love it, love it! It was a very creative way to play mafia!" },
-  { name: "Geoff S",       age: 34, rating: 5, body: "Great game, really enjoy the variety of cards in the pack. It's easy for someone new to pick up and understand and is a good game to play in larger groups which is generally hard to find." },
-  { name: "Isabella M",    age: 18, rating: 5, body: "The Marshall Mafia is amazing for group bonding, I played this game with my youth group and it was amazing... it really helped everyone to get to know each other and created fun memories!" },
-  { name: "Samuel A",      age: 30, rating: 5, body: "There is nothing like this game on the market. It's appeals to all ages, no-one is too young or too old to play… plus the background music makes the experience so much endless fun." },
-  { name: "Lewis W",       age: 22, rating: 5, body: "The Marshall Mafia is always interesting no matter how many times we've played it. An ideal game to play with family or friends!" },
-  { name: "Mia S",         age: 23, rating: 5, body: "I was the Mafia and was getting by unscathed, killing people left, right and centre. My fellow mafias, 1 by 1, slowly getting caught... but there's still 1 left (ME). I get through 2 murders placing the blame on easy targets, who crack under pressure, then the dreaded words \"wait what about Mia?\" was said. Then it was wraps because everyone else was like \"Yeah what about Mia\". I immediately went into defence mode and then I was voted out :/ It was super fun, made the atmosphere super competitive... but in a friendly way! My family back home will love this! I will have to recommend it to them!" },
-  { name: "Lucas M",       age: 14, rating: 5, body: "It's fun to play with friends. Great for bonding time with family. You get to know people better and know their lying faces!" },
-  { name: "Abi Robertson", age: 20, rating: 5, body: "My experience is 10/10. I think the way the game is set up is really well organised. I can't even begin to explain the amount of games I've had, but the highlight would be when we finally stopped letting people expose their roles in any way if they were alive or dead. Me and my friend managed to deceive the last 2 villagers and won with 2 mafia still alive, most joyous moment of my entire mafia existence. I would say to someone considering their first night in the village… you can't trust anyone. Don't make alliances, it's every man for himself." },
+  { name: "Ayanfe O",   age: 25, rating: 4, colorize: false, body: "Cards are really good quality, I like the different additions as well!" },
+  { name: "Jessica M",  age: 24, rating: 5, colorize: false, body: "Love it, love it, love it! It was a very creative way to play mafia!" },
+  { name: "Geoff S",    age: 34, rating: 5, colorize: false, body: "Great game, really enjoy the variety of cards in the pack. It's easy for someone new to pick up and understand and is a good game to play in larger groups which is generally hard to find." },
+  { name: "Isabella M", age: 18, rating: 5, colorize: false, body: "The Marshall Mafia is amazing for group bonding, I played this game with my youth group and it was amazing... it really helped everyone to get to know each other and created fun memories!" },
+  { name: "Samuel A",   age: 30, rating: 5, colorize: false, body: "There is nothing like this game on the market. It's appeals to all ages, no-one is too young or too old to play… plus the background music makes the experience so much endless fun." },
+  { name: "Lewis W",    age: 22, rating: 5, colorize: false, body: "The Marshall Mafia is always interesting no matter how many times we've played it. An ideal game to play with family or friends!" },
+  { name: "Mia S",      age: 23, rating: 5, colorize: true,  body: "I was the Mafia and was getting by unscathed, killing people left, right and centre. My fellow mafias, 1 by 1, slowly getting caught... but there's still 1 left (ME). I get through 2 murders placing the blame on easy targets, who crack under pressure, then the dreaded words \"wait what about Mia?\" was said. Then it was wraps because everyone else was like \"Yeah what about Mia\". I immediately went into defence mode and then I was voted out :/ It was super fun, made the atmosphere super competitive... but in a friendly way! My family back home will love this! I will have to recommend it to them!" },
+  { name: "Lucas M",    age: 14, rating: 5, colorize: false, body: "It's fun to play with friends. Great for bonding time with family. You get to know people better and know their lying faces!" },
+  { name: "Abi R",      age: 20, rating: 5, colorize: true,  body: "My experience is 10/10. I think the way the game is set up is really well organised. I can't even begin to explain the amount of games I've had, but the highlight would be when we finally stopped letting people expose their roles in any way if they were alive or dead. Me and my friend managed to deceive the last 2 villagers and won with 2 mafia still alive, most joyous moment of my entire mafia existence. I would say to someone considering their first night in the village… you can't trust anyone. Don't make alliances, it's every man for himself." },
 ]
+
+// Inline SVG for reviews panel (avoids img src loading issues)
+function CharacterSVG({ style }: { style?: React.CSSProperties }) {
+  return (
+    <svg width="76" height="133" viewBox="0 0 76 133" fill="none" xmlns="http://www.w3.org/2000/svg" style={style} aria-hidden="true">
+      <path d="M27.1808 121.066H34.9508V132.116H12.0008C11.8708 117.766 27.1808 124.516 27.1808 124.516V121.066Z" fill="white"/>
+      <path d="M49.77 121.066H42V132.116H64.95C65.08 117.766 49.77 124.516 49.77 124.516V121.066Z" fill="white"/>
+      <path d="M60 96.0658V115.066H17V101.066L40 94V83H33V81C33 79.5 31.5 76.5 28 77V83C21.15 81.74 13.44 75.2858 10.56 68.9258L10 67.6858L19 54.0658L38.83 58.8758L58 54.0658L70.67 71.8857L50.18 86.9058L60 96.0658Z" fill="white"/>
+      <path d="M47.29 77.9158C47.16 77.9158 47.05 77.8758 46.97 77.7858L42.38 73.3558C42.38 73.3558 42.26 73.2558 42.18 73.1658C42.1 73.0758 41.96 72.9158 41.77 72.6858C41.58 72.4558 41.42 72.2158 41.27 71.9658C41.12 71.7158 40.99 71.4258 40.88 71.0758C40.76 70.7258 40.71 70.3858 40.71 70.0558C40.71 68.9758 41.02 68.1358 41.64 67.5258C42.26 66.9158 43.12 66.6158 44.22 66.6158C44.52 66.6158 44.83 66.6658 45.15 66.7758C45.47 66.8858 45.76 67.0258 46.03 67.2058C46.3 67.3858 46.54 67.5558 46.73 67.7058C46.93 67.8658 47.11 68.0258 47.29 68.2058C47.47 68.0258 47.65 67.8658 47.85 67.7058C48.05 67.5458 48.28 67.3758 48.55 67.2058C48.82 67.0358 49.12 66.8858 49.43 66.7758C49.74 66.6658 50.06 66.6158 50.36 66.6158C51.46 66.6158 52.32 66.9158 52.94 67.5258C53.56 68.1358 53.87 68.9758 53.87 70.0558C53.87 71.1358 53.31 72.2458 52.18 73.3658L47.6 77.7858C47.51 77.8758 47.4 77.9158 47.28 77.9158H47.29Z" fill="#E31C79"/>
+      <path d="M48.61 42.3757C50.49 42.3157 51.82 43.6057 52.41 46.0657L56 46.0658C55.74 43.3158 54.54 41.2257 52.17 39.9357C49.51 38.4957 46.88 38.7657 44.42 40.4157C42.45 41.7357 41.41 43.6657 41.17 46.0657L44.8 46.0657C45.22 43.4057 47.04 42.4357 48.6 42.3757L48.61 42.3757Z" fill="white"/>
+      <path d="M27.78 42.3757C29.66 42.3157 30.99 43.6057 31.58 46.0657L35.17 46.0658C34.91 43.3158 33.71 41.2257 31.34 39.9357C28.68 38.4957 26.05 38.7657 23.59 40.4157C21.62 41.7357 20.58 43.6657 20.34 46.0657L23.97 46.0657C24.39 43.4057 26.21 42.4357 27.77 42.3757L27.78 42.3757Z" fill="white"/>
+      <path d="M38.1114 23.3439C29.8284 23.3516 22 21 22 21L6 27.4L37.8886 33L70 27.4L54 21C54 21 46.1716 23.3516 37.8886 23.3439" fill="white"/>
+      <path d="M26.6601 0L23.1201 14.76C23.1201 14.76 36.7901 20.64 52.6701 14.76L49.1301 0L37.8901 6.23L26.6501 0H26.6601Z" fill="white"/>
+    </svg>
+  )
+}
 
 // Wrap character-name words in their role colour
 function colorizeBody(text: string) {
@@ -664,7 +680,7 @@ export default function Home() {
 
       <main className={`site-canvas${lightMode ? " tmm-light" : ""}`}>
 
-        <LottieHero lightMode={lightMode} logoFading={logoFading} blurred={activeModal !== null || infoOpen} />
+        <LottieHero lightMode={lightMode} logoFading={logoFading} />
 
         {/* ── INFO POPUP ── */}
         <InfoPopup open={infoOpen} onClose={() => setInfoOpen(false)} />
@@ -1152,7 +1168,7 @@ export default function Home() {
                     return (
                   <div className="reviews-summary">
                     <div className="reviews-score">
-                      <img src="/character_testimonial.svg" alt="" style={{height:"clamp(56px,9vw,80px)",width:"auto",display:"block",margin:"0 auto 4px"}} />
+                      <CharacterSVG style={{height:"clamp(56px,9vw,80px)",width:"auto",display:"block",margin:"0 auto 4px"}} />
                       <span className="reviews-score-number">{avgDisplay}</span>
                       <StarRating rating={avgRounded} />
                       <span className="play-block-subtitle" style={{fontSize:"12px"}}>{TESTIMONIALS.length} reviews</span>
@@ -1181,7 +1197,7 @@ export default function Home() {
                         style={{marginTop:"auto"}}
                         onClick={e => { e.stopPropagation(); window.open("https://forms.gle/eVJJUSfXr5nHSc8ZA", "_blank") }}
                       >
-                        + add a review
+                        add a review
                       </button>
                     </div>
                   </div>
@@ -1191,13 +1207,13 @@ export default function Home() {
                 {(filterRating !== null ? TESTIMONIALS.filter(t => t.rating === filterRating) : TESTIMONIALS).map((t, i) => (
                   <div key={i} className="play-card" onClick={e => e.stopPropagation()}>
                     <div className="play-card-header" style={{alignItems:"flex-start"}}>
-                      <div style={{display:"flex",flexDirection:"column",gap:"2px"}}>
+                      <div style={{display:"flex",flexDirection:"row",alignItems:"baseline",gap:"10px"}}>
                         <span className="play-block-title">{t.name}</span>
-                        <span className="play-block-subtitle" style={{fontSize:"11px",letterSpacing:"0.04em"}}>age {t.age}</span>
+                        <span className="play-block-subtitle" style={{fontSize:"12px"}}>{t.age}</span>
                       </div>
                       <StarRating rating={t.rating} />
                     </div>
-                    <p className="play-block-body" style={{marginTop:"clamp(8px,2vw,12px)"}}>{colorizeBody(t.body)}</p>
+                    <p className="play-block-body" style={{marginTop:"clamp(8px,2vw,12px)"}}>{t.colorize ? colorizeBody(t.body) : t.body}</p>
                   </div>
                 ))}
                 <div className="play-card-pill" onClick={e => e.stopPropagation()}>
