@@ -361,7 +361,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
               <span className="play-block-title">THE ARTWORK</span>
             </div>
             <p className="play-block-body">Weeks of drawing followed the weeks of writing. Through sourcing from old detective novels and action thrillers, to the classic cheekiness of 2D shows like Pink Panther, a cast started to emerge.</p>
-            <p className="play-block-body">The sharp <span style={{color:"#E4002B"}}>Mafia</span>. The pointed <span style={{color:"#9E5330"}}>Villager</span>. The handy <span style={{color:"#00B140"}}>Angel</span>. The ballsy <span style={{color:"#FFB81C"}}>Jester</span>. The clued-up <span style={{color:"#0083CB"}}>Detective</span>. The ruling <span style={{color:"#DBAB7F"}}>Marshall</span> ;)</p>
+            <p className="play-block-body">The sharp <span className="text-tmm-red">Mafia</span>. The pointed <span className="text-tmm-brown">Villager</span>. The handy <span className="text-tmm-green">Angel</span>. The ballsy <span className="text-tmm-yellow">Jester</span>. The clued-up <span className="text-tmm-blue">Detective</span>. The ruling <span className="text-tmm-cream">Marshall</span> ;)</p>
             <p className="play-block-body">Each one faceless, but not nameless, each one anyone{"'"}s to become. Their colours were drawn from timeless pieces of history, old Nintendo and new Xbox consoles that remind generations to relive the joyful nostalgia of childhood games.</p>
           </div>
 
@@ -475,12 +475,12 @@ function CharacterSVG({ style }: { style?: React.CSSProperties }) {
 // Wrap character-name words in their role colour
 function colorizeBody(text: string) {
   const ROLES = [
-    { words: ["Mafia", "mafia", "Mafias", "mafias"],               color: "#E4002B" },
-    { words: ["Villager", "villager", "Villagers", "villagers"],   color: "#9E5330" },
-    { words: ["Angel", "angel", "Angels", "angels"],               color: "#00B140" },
-    { words: ["Jester", "jester", "Jesters", "jesters"],           color: "#FFB81C" },
-    { words: ["Detective", "detective", "Detectives", "detectives"], color: "#0083CB" },
-    { words: ["Marshall", "marshall"],                             color: "#DBAB7F" },
+    { words: ["Mafia", "mafia", "Mafias", "mafias"],               color: "var(--tmm-red)" },
+    { words: ["Villager", "villager", "Villagers", "villagers"],   color: "var(--tmm-brown)" },
+    { words: ["Angel", "angel", "Angels", "angels"],               color: "var(--tmm-green)" },
+    { words: ["Jester", "jester", "Jesters", "jesters"],           color: "var(--tmm-yellow)" },
+    { words: ["Detective", "detective", "Detectives", "detectives"], color: "var(--tmm-blue)" },
+    { words: ["Marshall", "marshall"],                             color: "var(--tmm-cream)" },
   ]
   const allWords = ROLES.flatMap(r => r.words)
   const pattern = new RegExp("\\b(" + allWords.join("|") + ")\\b", "g")
