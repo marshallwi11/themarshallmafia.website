@@ -1119,15 +1119,24 @@ export default function Home() {
                     const avgDisplay = avg.toFixed(1)
                     const avgRounded = Math.round(avg)
                     return (
-                  <>
                   <div className="reviews-summary">
                     <div className="reviews-score">
-                      <CharacterSVG style={{height:"85%",width:"auto",display:"block"}} />
+                      <CharacterSVG style={{height:"100%",width:"auto",display:"block"}} />
                     </div>
                     <div className="reviews-avg">
                       <span className="reviews-score-number">{avgDisplay}</span>
                       <StarRating rating={avgRounded} />
                       <span className="play-block-subtitle" style={{fontSize:"12px"}}>{TESTIMONIALS.length} reviews</span>
+                      <a
+                        href="https://forms.gle/eVJJUSfXr5nHSc8ZA"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="play-block-body add-review-btn"
+                        onClick={e => e.stopPropagation()}
+                        style={{marginTop:0}}
+                      >
+                        add a review
+                      </a>
                     </div>
                     <div className="reviews-bars">
                       {[5,4,3,2,1].map(n => {
@@ -1151,16 +1160,6 @@ export default function Home() {
                       })}
                     </div>
                   </div>
-                  <a
-                    href="https://forms.gle/eVJJUSfXr5nHSc8ZA"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="play-block-body add-review-btn"
-                    onClick={e => e.stopPropagation()}
-                  >
-                    add a review
-                  </a>
-                  </>
                     )
                   })()}
                 </div>
