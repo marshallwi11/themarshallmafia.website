@@ -164,9 +164,8 @@ function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading:
   return (
     <div className="hero-rise-wrapper">
       <div style={{
-        /* Dark mode: scaleY(-1) is the brand aesthetic (intentionally inverted eyes).
-           Light mode: eyes should be right-side-up/happy — no flip, just invert for colour. */
-        transform: lightMode ? undefined : "scaleY(-1)",
+        /* Light mode: invert colours so character reads against light background.
+           Dark mode: no transform — preserves natural bottom-right nod direction. */
         filter: lightMode ? "invert(1)" : undefined,
         opacity: logoFading ? 0 : 1,
         transition: "opacity 0.18s linear",
