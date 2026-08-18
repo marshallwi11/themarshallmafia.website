@@ -1124,7 +1124,6 @@ export default function Home() {
                     <div className="reviews-score">
                       <CharacterSVG style={{height:"85%",width:"auto",display:"block"}} />
                     </div>
-                    <div className="reviews-divider" aria-hidden="true" />
                     <div className="reviews-mid">
                       <div className="reviews-avg">
                         <span className="reviews-score-number">{avgDisplay}</span>
