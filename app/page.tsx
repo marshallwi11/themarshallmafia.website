@@ -453,6 +453,7 @@ const TESTIMONIALS = [
   { name: "Isabella M", age: 18, rating: 5, colorize: false, body: "The Marshall Mafia is amazing for group bonding, I played this game with my youth group and it was amazing... it really helped everyone to get to know each other and created fun memories!" },
   { name: "Lewis W",    age: 22, rating: 5, colorize: false, body: "The Marshall Mafia is always interesting no matter how many times we've played it. An ideal game to play with family or friends!" },
   { name: "Mia S",      age: 23, rating: 5, colorize: true,  body: "I was the Mafia and was getting by unscathed, killing people left, right and centre. My fellow mafias, 1 by 1, slowly getting caught... but there's still 1 left (ME). I get through 2 murders placing the blame on easy targets, who crack under pressure, then the dreaded words \"wait what about Mia?\" was said. Then it was wraps because everyone else was like \"Yeah what about Mia\". I immediately went into defence mode and then I was voted out :/ It was super fun, made the atmosphere super competitive... but in a friendly way! My family back home will love this! I will have to recommend it to them!" },
+  { name: "Joseph G",  age: 21, rating: 5, colorize: true,  body: "I love the Detective card. I remember being given it and each round I guessed correctly. It made the game more enjoyable as I knew who the mafias were whilst trying to shine the light on them during voting, without giving my character away. Great social game at any place or time!" },
 ]
 
 // Inline SVG for reviews panel (avoids img src loading issues)
@@ -1123,46 +1124,44 @@ export default function Home() {
                       <CharacterSVG style={{height:"85%",width:"auto",display:"block"}} />
                     </div>
                     <div className="reviews-divider" aria-hidden="true" />
-                    <div className="reviews-right">
-                      <div className="reviews-mid">
-                        <div className="reviews-avg">
-                          <span className="reviews-score-number">{avgDisplay}</span>
-                          <StarRating rating={avgRounded} />
-                          <span className="play-block-subtitle" style={{fontSize:"12px"}}>{TESTIMONIALS.length} reviews</span>
-                        </div>
-                        <div className="reviews-bars">
-                          {[5,4,3,2,1].map(n => {
-                            const count = TESTIMONIALS.filter(t => t.rating === n).length
-                            const pct = count > 0 ? Math.round((count / TESTIMONIALS.length) * 100) : 0
-                            const isActive = filterRating === n && count > 0
-                            const isDimmed = filterRating !== null && !isActive && count > 0
-                            const isEmpty = count === 0
-                            const labelStyle = { color: isActive ? "#ffffff" : "var(--tmm-yellow)", fontSize: "clamp(15px,2.4vw,17px)", opacity: isDimmed ? 0.35 : isEmpty ? 0.22 : 1, transition: "opacity 0.2s ease" }
-                            return (
-                              <div key={n}
-                                className={`review-bar-row${!isEmpty ? " review-bar-row--clickable" : ""}${isActive ? " review-bar-row--active" : ""}`}
-                                onClick={!isEmpty ? (e => { e.stopPropagation(); setFilterRating(filterRating === n ? null : n) }) : undefined}>
-                                <span className="review-bar-label" style={labelStyle}>{n}</span>
-                                <div className="review-bar-track" style={{opacity: isDimmed ? 0.35 : isEmpty ? 0.15 : 1, transition:"opacity 0.2s ease"}}>
-                                  <div className="review-bar-fill" style={{ width:`${pct}%`, background: isActive ? "#ffffff" : "var(--tmm-yellow)" }} />
-                                </div>
-                                <span className="review-bar-count" style={labelStyle}>{isEmpty ? "" : count}</span>
-                              </div>
-                            )
-                          })}
-                        </div>
+                    <div className="reviews-mid">
+                      <div className="reviews-avg">
+                        <span className="reviews-score-number">{avgDisplay}</span>
+                        <StarRating rating={avgRounded} />
+                        <span className="play-block-subtitle" style={{fontSize:"12px"}}>{TESTIMONIALS.length} reviews</span>
                       </div>
-                      <a
-                        href="https://forms.gle/eVJJUSfXr5nHSc8ZA"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="play-block-body add-review-btn"
-                        onClick={e => e.stopPropagation()}
-                      >
-                        add a review
-                      </a>
+                      <div className="reviews-bars">
+                        {[5,4,3,2,1].map(n => {
+                          const count = TESTIMONIALS.filter(t => t.rating === n).length
+                          const pct = count > 0 ? Math.round((count / TESTIMONIALS.length) * 100) : 0
+                          const isActive = filterRating === n && count > 0
+                          const isDimmed = filterRating !== null && !isActive && count > 0
+                          const isEmpty = count === 0
+                          const labelStyle = { color: isActive ? "#ffffff" : "var(--tmm-yellow)", fontSize: "clamp(15px,2.4vw,17px)", opacity: isDimmed ? 0.35 : isEmpty ? 0.22 : 1, transition: "opacity 0.2s ease" }
+                          return (
+                            <div key={n}
+                              className={`review-bar-row${!isEmpty ? " review-bar-row--clickable" : ""}${isActive ? " review-bar-row--active" : ""}`}
+                              onClick={!isEmpty ? (e => { e.stopPropagation(); setFilterRating(filterRating === n ? null : n) }) : undefined}>
+                              <span className="review-bar-label" style={labelStyle}>{n}</span>
+                              <div className="review-bar-track" style={{opacity: isDimmed ? 0.35 : isEmpty ? 0.15 : 1, transition:"opacity 0.2s ease"}}>
+                                <div className="review-bar-fill" style={{ width:`${pct}%`, background: isActive ? "#ffffff" : "var(--tmm-yellow)" }} />
+                              </div>
+                              <span className="review-bar-count" style={labelStyle}>{isEmpty ? "" : count}</span>
+                            </div>
+                          )
+                        })}
+                      </div>
                     </div>
                   </div>
+                  <a
+                    href="https://forms.gle/eVJJUSfXr5nHSc8ZA"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="play-block-body add-review-btn"
+                    onClick={e => e.stopPropagation()}
+                  >
+                    add a review
+                  </a>
                     )
                   })()}
                 </div>
