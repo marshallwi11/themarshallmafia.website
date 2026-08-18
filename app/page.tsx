@@ -1119,6 +1119,7 @@ export default function Home() {
                     const avgDisplay = avg.toFixed(1)
                     const avgRounded = Math.round(avg)
                     return (
+                  <>
                   <div className="reviews-summary">
                     <div className="reviews-score">
                       <CharacterSVG style={{height:"85%",width:"auto",display:"block"}} />
@@ -1162,6 +1163,7 @@ export default function Home() {
                   >
                     add a review
                   </a>
+                  </>
                     )
                   })()}
                 </div>
