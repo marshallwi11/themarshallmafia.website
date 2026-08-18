@@ -415,11 +415,11 @@
     background: transparent;
     border: 1.5px solid transparent;
   }
-  /* Dark mode: white ring on hover */
+  /* Dark mode: full white bg + black text → previews light mode */
   .pill-nav-home:hover {
-    background: rgba(255, 255, 255, 0.22);
-    border-color: rgba(255, 255, 255, 0.60);
-    color: #ffffff;
+    background: #ffffff;
+    border-color: #ffffff;
+    color: #000000;
   }
   /* Text variant of the home button — naturally wider */
   .pill-nav-home--text {
@@ -483,11 +483,11 @@
     background: transparent;
     border-color: transparent;
   }
-  /* Light mode: clean white hover — no black */
+  /* Light mode: full black bg + white text → previews dark mode */
   .tmm-light .pill-nav-home:hover {
-    background: rgba(255, 255, 255, 0.80);
-    border-color: rgba(0, 0, 0, 0.16);
-    color: rgba(0, 0, 0, 0.80);
+    background: #111111;
+    border-color: #111111;
+    color: #ffffff;
   }
 
   /* ── Home button text variants ── */
@@ -549,10 +549,10 @@
     100% { opacity: 1; }
   }
   .pill-nav-home:hover .pill-nav-home-wide {
-    color: #ffffff;
+    color: #000000;
   }
   .tmm-light .pill-nav-home:hover .pill-nav-home-wide {
-    color: rgba(0, 0, 0, 0.80);
+    color: #ffffff;
   }
 
   /* ── Modal system ────────────────────────────────────────────────── */
