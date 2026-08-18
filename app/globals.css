@@ -415,6 +415,11 @@
     background: transparent;
     border: 1.5px solid transparent;
   }
+  /* Dark mode: hover previews light mode — bright fill + white text */
+  .pill-nav-home:hover {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.32);
+  }
   /* Text variant of the home button — naturally wider */
   .pill-nav-home--text {
     min-width: 0;
@@ -477,6 +482,11 @@
     background: transparent;
     border-color: transparent;
   }
+  /* Light mode: hover previews dark mode — dark fill + white text */
+  .tmm-light .pill-nav-home:hover {
+    background: rgba(18, 18, 18, 0.82);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
 
   /* ── Home button text variants ── */
   /* Desktop: single horizontal line */
@@ -515,7 +525,7 @@
     pointer-events: none;
   }
 
-  /* Flicker-to-white on hover — signals the mode-toggle interaction */
+  /* Dark mode flicker: dims then brightens → signals moving toward light */
   @keyframes homeTextFlicker {
     0%   { opacity: 1; }
     10%  { opacity: 0.12; }
@@ -526,12 +536,23 @@
     72%  { opacity: 1; }
     100% { opacity: 1; }
   }
+  /* Light mode flicker: pops bright then settles → signals moving toward dark */
+  @keyframes homeTextFlickerLight {
+    0%   { opacity: 0; }
+    14%  { opacity: 1; }
+    28%  { opacity: 0.55; }
+    44%  { opacity: 1; }
+    60%  { opacity: 0.72; }
+    78%  { opacity: 1; }
+    100% { opacity: 1; }
+  }
   .pill-nav-home:hover .pill-nav-home-wide {
     animation: homeTextFlicker 0.38s ease;
     color: rgba(255, 255, 255, 0.95);
   }
   .tmm-light .pill-nav-home:hover .pill-nav-home-wide {
-    color: rgba(0, 0, 0, 0.90);
+    animation: homeTextFlickerLight 0.38s ease;
+    color: rgba(255, 255, 255, 0.92);
   }
 
   /* ── Modal system ────────────────────────────────────────────────── */
