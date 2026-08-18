@@ -633,7 +633,7 @@
   }
   .play-card-header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     margin-bottom: clamp(6px, 1.4vw, 10px);
   }
