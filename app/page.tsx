@@ -1121,7 +1121,7 @@ export default function Home() {
                     return (
                   <div className="reviews-summary">
                     <div className="reviews-score">
-                      <CharacterSVG style={{height:"clamp(75px,11vw,100px)",width:"auto",display:"block"}} />
+                      <CharacterSVG style={{height:"100%",width:"auto",display:"block"}} />
                     </div>
                     <div className="reviews-avg">
                       <span className="reviews-score-number">{avgDisplay}</span>

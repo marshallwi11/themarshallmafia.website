@@ -970,6 +970,7 @@
     justify-content: center;
     flex-shrink: 0;
     align-self: stretch;
+    height: 100%;
     width: clamp(100px, 28%, 140px);
     min-height: clamp(60px, 10vw, 100px);
   }
