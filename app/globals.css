@@ -1145,10 +1145,10 @@
 
   /* ── Add review button ───────────────────────────────────────────── */
   .add-review-btn {
-    display: block;
-    width: 100%;
+    display: inline-block;
+    width: auto;
     margin-top: clamp(10px, 2vw, 14px);
-    padding: clamp(8px, 1.6vw, 11px) 0;
+    padding: clamp(8px, 1.6vw, 11px) clamp(20px, 3.5vw, 28px);
     background: transparent;
     border: 1px solid transparent;
     border-radius: 100px;
