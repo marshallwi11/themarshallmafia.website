@@ -1,3 +1,7 @@
+https://raw.githubusercontent.com/marshallwi11/themarshallmafia.website/55ce759/app/page.tsx
+→ https://raw.githubusercontent.com/marshallwi11/themarshallmafia.website/55ce759/app/page.tsx
+Content-Type: text/plain; charset=utf-8
+
 "use client"
 
 import { useState, useEffect, useCallback, useRef } from "react"
@@ -445,6 +449,7 @@ type ModalType = "play" | "showcase" | "music" | "collect" | "reviews" | null
 
 const TESTIMONIALS = [
   { name: "Abi R",      age: 20, rating: 5, colorize: true,  body: "My experience is 10/10. I think the way the game is set up is really well organised. I can't even begin to explain the amount of games I've had, but the highlight would be when we finally stopped letting people expose their roles in any way if they were alive or dead. Me and my friend managed to deceive the last 2 villagers and won with 2 mafia still alive, most joyous moment of my entire mafia existence. I would say to someone considering their first night in the village… you can't trust anyone. Don't make alliances, it's every man for himself." },
+  { name: "William M", age: 22, rating: 5, colorize: true,  body: "I'm a little biased, but I've always loved being a Marshall. I used to be so good as a Mafia but I'm a changed person, If I'm a Villager you better believe I'm catching them out. The cards are just as good in real life as they are in play. I took some photos of them see for yourself!", photos: ["/images/tmm_wm_testimonial_photo_1.png", "/images/tmm_wm_testimonial_photo_2.png", "/images/tmm_wm_testimonial_photo_3.png"] },
   { name: "Jessica M",  age: 24, rating: 5, colorize: false, body: "Love it, love it, love it! It was a very creative way to play mafia!" },
   { name: "Lucas M",    age: 14, rating: 5, colorize: false, body: "It's fun to play with friends. Great for bonding time with family. You get to know people better and know their lying faces!" },
   { name: "Samuel A",   age: 30, rating: 5, colorize: false, body: "There is nothing like this game on the market. It's appeals to all ages, no-one is too young or too old to play… plus the background music makes the experience so much endless fun." },
@@ -455,7 +460,6 @@ const TESTIMONIALS = [
   { name: "Mia S",      age: 23, rating: 5, colorize: true,  body: "I was the Mafia and was getting by unscathed, killing people left, right and centre. My fellow mafias, 1 by 1, slowly getting caught... but there's still 1 left (ME). I get through 2 murders placing the blame on easy targets, who crack under pressure, then the dreaded words \"wait what about Mia?\" was said. Then it was wraps because everyone else was like \"Yeah what about Mia\". I immediately went into defence mode and then I was voted out :/ It was super fun, made the atmosphere super competitive... but in a friendly way! My family back home will love this! I will have to recommend it to them!" },
   { name: "Joseph G",  age: 21, rating: 5, colorize: true,  body: "I love the Detective card. I remember being given it and each round I guessed correctly. It made the game more enjoyable as I knew who the mafias were whilst trying to shine the light on them during voting, without giving my character away. Great social game at any place or time!" },
   { name: "Dyjon N",   age: 20, rating: 4, colorize: true,  body: "Played the game a few times before, what tends to be most memorable for me is when the Angel saves someone from a potential murdering or something of the sort. Just be prepared for anything, but not necessarily everything is a giveaway." },
-  { name: "William M", age: 22, rating: 5, colorize: true,  body: "I'm a little biased, but I've always loved being a Marshall. I used to be so good as a Mafia but I'm a changed person, If I'm a Villager you better believe I'm catching them out. The cards are just as good in real life as they are in play. I took some photos of them see for yourself!", photos: ["/images/tmm_wm_testimonial_photo_1.png", "/images/tmm_wm_testimonial_photo_2.png", "/images/tmm_wm_testimonial_photo_3.png"] },
 ]
 
 // Inline SVG for reviews panel (avoids img src loading issues)
