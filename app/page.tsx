@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import { useState, useEffect, useCallback, useRef } from "react"
 import type { AnimationItem } from "lottie-web"
 import { loadStripe } from "@stripe/stripe-js"
@@ -165,8 +164,8 @@ function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading:
   return (
     <div className="hero-rise-wrapper">
       <div style={{
-        /* Dark mode: scaleY(-1) is the brand aesthetic (intentionally inverted eyes).
-           Light mode: eyes should be right-side-up/happy — no flip, just invert for colour. */
+        /* Dark mode: scaleY(-1) puts eyes right-side-up (Lottie is natively inverted).
+           Light mode: no flip — character is naturally the other way up, invert for colour. */
         transform: lightMode ? undefined : "scaleY(-1)",
         filter: lightMode ? "invert(1)" : undefined,
         opacity: logoFading ? 0 : 1,
@@ -299,29 +298,138 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
       <div className="modal-backdrop" />
       <div className="modal-scroll-bare animate-modal-in">
         <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
+
+          {/* ── The Conundrum ── */}
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
-              <span className="play-block-title">OBJECTIVE</span>
-              <span className="play-block-subtitle">INFORMATION</span>
+              <span className="play-block-title">THE CONUNDRUM</span>
             </div>
-            <p className="play-block-body" style={{margin:0}}>
-              <span style={{color:"#ffffff"}}>The Marshall Mafia</span> is a social deduction card game where players secretly take on the roles of <span className="text-tmm-red">Mafia</span> members or <span className="text-tmm-brown">Villagers</span>, and through rounds of sleeping, discussion and voting, the <span className="text-tmm-brown">Villagers</span> must identify and eliminate the <span className="text-tmm-red">Mafia</span> before they are outnumbered.
-            </p>
+            <p className="play-block-body">On one suspiciously loud Marshall games night, we were playing Mafia. Or at least trying to. Using a standard deck of playing cards, everyone at the table seemed to know a different version of the same game. The characters were different. The names were different. The rules were different. Nobody could quite agree on how to play.</p>
           </div>
+
+          {/* IMAGE — creation story 1 */}
+          <div style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+            <img src="/images/tmm_creation_story_1.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
+          </div>
+
+          {/* ── The Moment ── */}
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
-              <span className="play-block-title">READY</span>
-              <span className="play-block-subtitle">click play*</span>
+              <span className="play-block-title">THE MOMENT</span>
             </div>
-            <div style={{display:"flex",flexDirection:"column",gap:"clamp(14px,3vw,22px)"}}>
-              <p className="play-block-body" style={{margin:0}}>
-                Discover the hidden secrets of the game! — Learn how roles are assigned, master the rules of <span className="text-tmm-red">Mafia</span> vs. <span className="text-tmm-brown">Villagers</span>, and get familiar with the game{"'"}s core phases.
-              </p>
-              <p className="play-block-body" style={{margin:0}}>
-                From the silence of the Sleep Phase to the heated debates in Discussion, and the all-important Vote — sharpen your strategy to outsmart your rivals!
-              </p>
-            </div>
+            <p className="play-block-body">A Marshall, lost in that confusion, stopped listening and started thinking. There had to be a better way to play this. One deck. One set of rules. One game everyone could actually agree on, whether they were a child, a teenager, or an adult. Their first game or their last.</p>
           </div>
+
+          {/* ── The Night ── */}
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <div className="play-card-header">
+              <span className="play-block-title">THE NIGHT</span>
+            </div>
+            <p className="play-block-body">The thought didn{"'"}t wait for light of day. The typing lasted long into the dark early hours of the morning. Once the first idea was created, it sparked a week of very little sleep and a lot of notes — roles, rules, characters, game-modes, written down as fast as they arrived, then crossed out, then written again. By the end of it, the first rule-set existed. It wasn{"'"}t complete yet. But the idea was inspiring…</p>
+          </div>
+
+          {/* IMAGE — creation story 2 */}
+          <div style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+            <img src="/images/tmm_creation_story_2.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
+          </div>
+
+          {/* ── The Philosophy ── */}
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <div className="play-card-header">
+              <span className="play-block-title">THE PHILOSOPHY</span>
+            </div>
+            <p className="play-block-body">Our aim was to make: {'"'}A world of games, that are suspiciously fun, told with a smile and a wink. Created for any player, all generations, every home.{'"'}</p>
+          </div>
+
+          {/* ── The World ── */}
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <div className="play-card-header">
+              <span className="play-block-title">THE WORLD</span>
+            </div>
+            <p className="play-block-body">We wondered what that games night should have looked like, and dreamed a world to accompany it. We imagined a mixed group of players... anyone and everyone, family and friends. Working together, or secretly against each other, around a table or across a collection of sofas.</p>
+            <p className="play-block-body">The room is crisp with light suspicious fog, set in the summer cool of onsetting dusk, with everyone dressed up for a night of theatrical old fashioned games... with a new twist. We speculated art decking the walls while a band plays heartfelt downtempo music, taking off the formal edge, while putting a killer edge on. A room you would expect a spy to be seated in, a scripted movie with a story shaken up and stirred into real life.</p>
+          </div>
+
+          {/* IMAGE — creation story 3 */}
+          <div style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+            <img src="/images/tmm_creation_story_3.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
+          </div>
+
+          {/* ── The Artwork ── */}
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <div className="play-card-header">
+              <span className="play-block-title">THE ARTWORK</span>
+            </div>
+            <p className="play-block-body">Weeks of drawing followed the weeks of writing. Through sourcing from old detective novels and action thrillers, to the classic cheekiness of 2D shows like Pink Panther, a cast started to emerge.</p>
+            <p className="play-block-body">The sharp <span className="text-tmm-red">Mafia</span>. The pointed <span className="text-tmm-brown">Villager</span>. The handy <span className="text-tmm-green">Angel</span>. The ballsy <span className="text-tmm-yellow">Jester</span>. The clued-up <span className="text-tmm-blue">Detective</span>. The ruling <span className="text-tmm-cream">Marshall</span> ;)</p>
+            <p className="play-block-body">Each one faceless, but not nameless, each one anyone{"'"}s to become. Their colours were drawn from timeless pieces of history, old Nintendo and new Xbox consoles that remind generations to relive the joyful nostalgia of childhood games.</p>
+          </div>
+
+          {/* ── The Brand ── */}
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <div className="play-card-header">
+              <span className="play-block-title">THE BRAND</span>
+            </div>
+            <p className="play-block-body">The world had found its voice. But it needed to be instantly recognisable to anyone who plays. So we took the component that does not change across all characters — the eyes. The obvious choice. One we were too blind to see before.</p>
+            <p className="play-block-body">It also captured the heart of the game: seeing what{"'"}s going on around you when you{"'"}re awake, and being in the dark when you{"'"}re asleep. The roles became united under a single mark. Eyes that are open, watching, even when they are closed. Awake while the table sleeps.</p>
+          </div>
+
+          {/* IMAGE — creation story 4 */}
+          <div style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+            <img src="/images/tmm_creation_story_4.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
+          </div>
+
+          {/* ── The Testing ── */}
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <div className="play-card-header">
+              <span className="play-block-title">THE TESTING</span>
+            </div>
+            <p className="play-block-body">The idea was only half the game. The rest came from demo packs and far too many rounds with friends and family. We played game after game, night after night, until we knew more about what didn{"'"}t work than what did.</p>
+            <p className="play-block-body">Characters that caused complications, rather than cheeky confusion, were cut. Rule sets that created chaos were rebuilt, giving each group more freedom to choose how they played. The colour hues went through several revisions too. Every role needed to be easy to find, easy to understand, and easy to read, whether you were a child, a parent, or a grandparent.</p>
+          </div>
+
+          {/* ── The Mistake ── */}
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <div className="play-card-header">
+              <span className="play-block-title">THE MISTAKE</span>
+            </div>
+            <p className="play-block-body">Somewhere in the middle of finishing the standard pack, a whole expansion started to appear too. There were simply too many ideas to fit into one box. Once a suspicious little world exists, it{"'"}s very hard to stop building on it. People keep asking about it. It{"'"}s coming. Just not quite yet.</p>
+          </div>
+
+          {/* IMAGE — creation story 5 */}
+          <div style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+            <img src="/images/tmm_creation_story_5.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
+          </div>
+
+          {/* ── The Music ── */}
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <div className="play-card-header">
+              <span className="play-block-title">THE MUSIC</span>
+            </div>
+            <p className="play-block-body">We also realised something was missing. When we played, the room didn{"'"}t quite match the world we had imagined. Then, somewhere around midnight, we clocked it... The places that inspired the game all had theme tunes, soundtracks, or background music. So we spent the next few months composing three albums to sit alongside the game and complete the atmosphere.</p>
+          </div>
+
+          {/* ── The Name ── */}
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <div className="play-card-header">
+              <span className="play-block-title">THE NAME</span>
+            </div>
+            <p className="play-block-body">We weren{"'"}t quite sure what to call the game. Then we realised it had been staring us in the face all along, even when our eyes were closed. We{"'"}d been playing the Marshall{"'"}s version of Mafia. So we called it exactly that.</p>
+          </div>
+
+          {/* IMAGE — creation story 6 */}
+          <div style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+            <img src="/images/tmm_creation_story_6.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
+          </div>
+
+          {/* ── The Game ── */}
+          <div className="play-card" onClick={e => e.stopPropagation()}>
+            <div className="play-card-header">
+              <span className="play-block-title">THE GAME</span>
+            </div>
+            <p className="play-block-body">What we made was called {'"'}The Marshall Mafia{'"'}, the sneakiest social deduction card game. A world of suspicious fun, crafted to be cheeky, cheerful and downright fun. Don{"'"}t believe us? Try it and see. We dare you to have as much fun as everyone else testifies ;)</p>
+          </div>
+
           <div className="play-card-pill" onClick={e => e.stopPropagation()}>
             <span className="play-block-title">the marshall mafia</span>
             <span className="play-block-subtitle">est. 2025</span>
@@ -332,30 +440,78 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
   )
 }
 
+
 type ModalType = "play" | "showcase" | "music" | "collect" | "reviews" | null
 
 const TESTIMONIALS = [
-  { name: "Isabella M", rating: 5, title: "Amazing for group bonding", body: "The Marshall Mafia is amazing for group bonding, I played this game with my youth group and it was amazing... it really helped everyone to get to know each other and created fun memories!" },
-  { name: "Samuel A", rating: 5, title: "There is nothing like this game on the market", body: "There is nothing like this game on the market. It's appeals to all ages, no-one is too young or too old to play… plus the background music makes the experience so much endless fun." },
-  { name: "Lewis W", rating: 5, title: "Always interesting no matter how many times we've played", body: "The Marshall Mafia is always interesting no matter how many times we've played it. An ideal game to play with family or friends!" },
-  { name: "Jessica M", rating: 5, title: "Love it, love it, love it!", body: "Love it, love it, love it! It was a very creative way to play mafia!" },
-  { name: "Ayanfe O", rating: 4, title: "Cards are really good quality", body: "Cards are really good quality, I like the different additions as well!" },
-  { name: "Geoff S", rating: 5, title: "Great game, really enjoy the variety", body: "Great game, really enjoy the variety of cards in the pack. It's easy for someone new to pick up and understand and is a good game to play in larger groups which is generally hard to find." },
+  { name: "Abi R",      age: 20, rating: 5, colorize: true,  body: "My experience is 10/10. I think the way the game is set up is really well organised. I can't even begin to explain the amount of games I've had, but the highlight would be when we finally stopped letting people expose their roles in any way if they were alive or dead. Me and my friend managed to deceive the last 2 villagers and won with 2 mafia still alive, most joyous moment of my entire mafia existence. I would say to someone considering their first night in the village… you can't trust anyone. Don't make alliances, it's every man for himself." },
+  { name: "Jessica M",  age: 24, rating: 5, colorize: false, body: "Love it, love it, love it! It was a very creative way to play mafia!" },
+  { name: "Lucas M",    age: 14, rating: 5, colorize: false, body: "It's fun to play with friends. Great for bonding time with family. You get to know people better and know their lying faces!" },
+  { name: "Samuel A",   age: 30, rating: 5, colorize: false, body: "There is nothing like this game on the market. It's appeals to all ages, no-one is too young or too old to play… plus the background music makes the experience so much endless fun." },
+  { name: "Ayanfe O",   age: 25, rating: 4, colorize: false, body: "Cards are really good quality, I like the different additions as well!" },
+  { name: "Geoff S",    age: 34, rating: 5, colorize: false, body: "Great game, really enjoy the variety of cards in the pack. It's easy for someone new to pick up and understand and is a good game to play in larger groups which is generally hard to find." },
+  { name: "Isabella M", age: 18, rating: 5, colorize: false, body: "The Marshall Mafia is amazing for group bonding, I played this game with my youth group and it was amazing... it really helped everyone to get to know each other and created fun memories!" },
+  { name: "Lewis W",    age: 22, rating: 5, colorize: false, body: "The Marshall Mafia is always interesting no matter how many times we've played it. An ideal game to play with family or friends!" },
+  { name: "Mia S",      age: 23, rating: 5, colorize: true,  body: "I was the Mafia and was getting by unscathed, killing people left, right and centre. My fellow mafias, 1 by 1, slowly getting caught... but there's still 1 left (ME). I get through 2 murders placing the blame on easy targets, who crack under pressure, then the dreaded words \"wait what about Mia?\" was said. Then it was wraps because everyone else was like \"Yeah what about Mia\". I immediately went into defence mode and then I was voted out :/ It was super fun, made the atmosphere super competitive... but in a friendly way! My family back home will love this! I will have to recommend it to them!" },
+  { name: "Joseph G",  age: 21, rating: 5, colorize: true,  body: "I love the Detective card. I remember being given it and each round I guessed correctly. It made the game more enjoyable as I knew who the mafias were whilst trying to shine the light on them during voting, without giving my character away. Great social game at any place or time!" },
+  { name: "Dyjon N",   age: 20, rating: 4, colorize: true,  body: "Played the game a few times before, what tends to be most memorable for me is when the Angel saves someone from a potential murdering or something of the sort. Just be prepared for anything, but not necessarily everything is a giveaway." },
+  { name: "William M", age: 22, rating: 5, colorize: true,  body: "I'm a little biased, but I've always loved being a Marshall. I used to be so good as a Mafia but I'm a changed person, If I'm a Villager you better believe I'm catching them out. The cards are just as good in real life as they are in play. I took some photos of them see for yourself!", photos: ["/images/tmm_wm_testimonial_photo_1.png", "/images/tmm_wm_testimonial_photo_2.png", "/images/tmm_wm_testimonial_photo_3.png"] },
 ]
+
+// Inline SVG for reviews panel (avoids img src loading issues)
+function CharacterSVG({ style }: { style?: React.CSSProperties }) {
+  return (
+    <svg width="76" height="133" viewBox="0 0 76 133" fill="none" xmlns="http://www.w3.org/2000/svg" style={style} aria-hidden="true">
+      <path d="M27.1808 121.066H34.9508V132.116H12.0008C11.8708 117.766 27.1808 124.516 27.1808 124.516V121.066Z" fill="white"/>
+      <path d="M49.77 121.066H42V132.116H64.95C65.08 117.766 49.77 124.516 49.77 124.516V121.066Z" fill="white"/>
+      <path d="M60 96.0658V115.066H17V101.066L40 94V83H33V81C33 79.5 31.5 76.5 28 77V83C21.15 81.74 13.44 75.2858 10.56 68.9258L10 67.6858L19 54.0658L38.83 58.8758L58 54.0658L70.67 71.8857L50.18 86.9058L60 96.0658Z" fill="white"/>
+      <path d="M47.29 77.9158C47.16 77.9158 47.05 77.8758 46.97 77.7858L42.38 73.3558C42.38 73.3558 42.26 73.2558 42.18 73.1658C42.1 73.0758 41.96 72.9158 41.77 72.6858C41.58 72.4558 41.42 72.2158 41.27 71.9658C41.12 71.7158 40.99 71.4258 40.88 71.0758C40.76 70.7258 40.71 70.3858 40.71 70.0558C40.71 68.9758 41.02 68.1358 41.64 67.5258C42.26 66.9158 43.12 66.6158 44.22 66.6158C44.52 66.6158 44.83 66.6658 45.15 66.7758C45.47 66.8858 45.76 67.0258 46.03 67.2058C46.3 67.3858 46.54 67.5558 46.73 67.7058C46.93 67.8658 47.11 68.0258 47.29 68.2058C47.47 68.0258 47.65 67.8658 47.85 67.7058C48.05 67.5458 48.28 67.3758 48.55 67.2058C48.82 67.0358 49.12 66.8858 49.43 66.7758C49.74 66.6658 50.06 66.6158 50.36 66.6158C51.46 66.6158 52.32 66.9158 52.94 67.5258C53.56 68.1358 53.87 68.9758 53.87 70.0558C53.87 71.1358 53.31 72.2458 52.18 73.3658L47.6 77.7858C47.51 77.8758 47.4 77.9158 47.28 77.9158H47.29Z" fill="#E31C79"/>
+      <path d="M48.61 42.3757C50.49 42.3157 51.82 43.6057 52.41 46.0657L56 46.0658C55.74 43.3158 54.54 41.2257 52.17 39.9357C49.51 38.4957 46.88 38.7657 44.42 40.4157C42.45 41.7357 41.41 43.6657 41.17 46.0657L44.8 46.0657C45.22 43.4057 47.04 42.4357 48.6 42.3757L48.61 42.3757Z" fill="white"/>
+      <path d="M27.78 42.3757C29.66 42.3157 30.99 43.6057 31.58 46.0657L35.17 46.0658C34.91 43.3158 33.71 41.2257 31.34 39.9357C28.68 38.4957 26.05 38.7657 23.59 40.4157C21.62 41.7357 20.58 43.6657 20.34 46.0657L23.97 46.0657C24.39 43.4057 26.21 42.4357 27.77 42.3757L27.78 42.3757Z" fill="white"/>
+      <path d="M38.1114 23.3439C29.8284 23.3516 22 21 22 21L6 27.4L37.8886 33L70 27.4L54 21C54 21 46.1716 23.3516 37.8886 23.3439" fill="white"/>
+      <path d="M26.6601 0L23.1201 14.76C23.1201 14.76 36.7901 20.64 52.6701 14.76L49.1301 0L37.8901 6.23L26.6501 0H26.6601Z" fill="white"/>
+    </svg>
+  )
+}
+
+// Wrap character-name words in their role colour
+function colorizeBody(text: string) {
+  const ROLES = [
+    { words: ["Mafia", "mafia", "Mafias", "mafias"],               color: "var(--tmm-red)" },
+    { words: ["Villager", "villager", "Villagers", "villagers"],   color: "var(--tmm-brown)" },
+    { words: ["Angel", "angel", "Angels", "angels"],               color: "var(--tmm-green)" },
+    { words: ["Jester", "jester", "Jesters", "jesters"],           color: "var(--tmm-yellow)" },
+    { words: ["Detective", "detective", "Detectives", "detectives"], color: "var(--tmm-blue)" },
+    { words: ["Marshall", "marshall"],                             color: "var(--tmm-cream)" },
+  ]
+  const allWords = ROLES.flatMap(r => r.words)
+  const pattern = new RegExp("\\b(" + allWords.join("|") + ")\\b", "g")
+  const parts: any[] = [] // eslint-disable-line @typescript-eslint/no-explicit-any
+  let lastIndex = 0
+  let match: RegExpExecArray | null
+  while ((match = pattern.exec(text)) !== null) {
+    if (match.index > lastIndex) parts.push(text.slice(lastIndex, match.index))
+    const word = match[0]
+    const role = ROLES.find(r => r.words.includes(word))
+    parts.push(<span key={match.index} style={{color: role?.color, fontWeight: "bold"}}>{word}</span>)
+    lastIndex = pattern.lastIndex
+  }
+  if (lastIndex < text.length) parts.push(text.slice(lastIndex))
+  return <>{parts}</>
+}
 
 export default function Home() {
   const [activeModal, setActiveModal] = useState<ModalType>(null)
   const [stripeClientSecret, setStripeClientSecret] = useState<string | null>(null)
   const [stripeLoading, setStripeLoading] = useState(false)
+  const [stripeError, setStripeError] = useState(false)
   const [lightMode, setLightMode] = useState(false)
   const [logoFading, setLogoFading] = useState(false)
   const [packSelected, setPackSelected] = useState<"standard" | "expansion" | null>(null)
-  const [reviewComing, setReviewComing] = useState(false)
+  const [filterRating, setFilterRating] = useState<number | null>(null)
   const [cartShaking, setCartShaking] = useState(false)
-  const [homeHovered, setHomeHovered] = useState(false)
   const [infoOpen, setInfoOpen] = useState(false)
   const [modalSwitching, setModalSwitching] = useState(false)
-  const [showcaseIdx, setShowcaseIdx] = useState(0)
   // 0 = intro text showing | 1 = text fading out | 2 = nav visible
   const [navIntro, setNavIntro] = useState(0)
   const lastTapRef = useRef<number>(0)
@@ -368,48 +524,9 @@ export default function Home() {
   // Site-load intro: text pill → fade → nav icons
   useEffect(() => {
     const t1 = setTimeout(() => setNavIntro(1), 1000)  // text starts fading (1s hold)
-    const t2 = setTimeout(() => setNavIntro(2), 1800)  // icons appear only after text is fully gone (~0.7s fade)
+    const t2 = setTimeout(() => setNavIntro(2), 1800)  // icons appear after overlay fades (~0.7s fade)
     return () => { clearTimeout(t1); clearTimeout(t2) }
   }, [])
-
-  // Slider refs — all 7 items in the unified pill
-  const navInnerRef = useRef<HTMLDivElement>(null)
-  const btnInfoRef  = useRef<HTMLButtonElement>(null)
-  const btnPlayRef  = useRef<HTMLButtonElement>(null)
-  const btnMusicRef = useRef<HTMLButtonElement>(null)
-  const btnHomeRef  = useRef<HTMLButtonElement>(null)
-  const btnShowRef  = useRef<HTMLButtonElement>(null)
-  const btnRevRef   = useRef<HTMLButtonElement>(null)
-  const btnCartRef  = useRef<HTMLButtonElement>(null)
-  const [sliderStyle, setSliderStyle] = useState({ left: 0, width: 52 })
-  const [sliderReady, setSliderReady] = useState(false)
-
-  const measureSlider = useCallback((skipTransition = false) => {
-    const inner = navInnerRef.current
-    if (!inner) return
-    const refMap: Record<string, React.RefObject<HTMLButtonElement | null>> = {
-      info: btnInfoRef, play: btnPlayRef, music: btnMusicRef, home: btnHomeRef,
-      showcase: btnShowRef, reviews: btnRevRef, cart: btnCartRef,
-    }
-    let key: string
-    if (infoOpen) key = "info"
-    else if (activeModal === "collect") key = "cart"
-    else key = activeModal ?? "home"
-    const btn = refMap[key]?.current
-    if (!btn) return
-    const btnRect   = btn.getBoundingClientRect()
-    const innerRect = inner.getBoundingClientRect()
-    setSliderStyle({ left: btnRect.left - innerRect.left, width: btnRect.width })
-    if (skipTransition) setTimeout(() => setSliderReady(true), 0)
-  }, [activeModal, infoOpen])
-
-  useEffect(() => { measureSlider(true) }, []) // eslint-disable-line
-  useEffect(() => { if (sliderReady) measureSlider(false) }, [activeModal, infoOpen, sliderReady, measureSlider])
-  useEffect(() => {
-    const onResize = () => measureSlider(false)
-    window.addEventListener("resize", onResize)
-    return () => window.removeEventListener("resize", onResize)
-  }, [measureSlider])
 
   const handleLogoTap = useCallback(() => {
     const now = Date.now()
@@ -449,7 +566,7 @@ export default function Home() {
     if (activeModal !== null && activeModal !== m) {
       // Switching between modals — brief blur pulse to mask the swap
       setModalSwitching(true)
-      setTimeout(() => { setActiveModal(m); setModalSwitching(false) }, 420)
+      setTimeout(() => { setActiveModal(m); setModalSwitching(false) }, 220)
     } else {
       setActiveModal(m)
     }
@@ -479,17 +596,29 @@ export default function Home() {
   }, [activeModal])
 
   useEffect(() => {
-    if (activeModal === "collect" && packSelected === "standard" && !stripeClientSecret && !stripeLoading) {
+    // Auto-select standard pack when collect modal opens
+    if (activeModal === "collect" && packSelected === null) {
+      setPackSelected("standard")
+    }
+    if (activeModal === "collect" && packSelected === "standard" && !stripeClientSecret && !stripeLoading && !stripeError) {
       setStripeLoading(true)
       fetch("/api/checkout", { method: "POST" })
         .then(r => r.json())
-        .then(d => { setStripeClientSecret(d.clientSecret); setStripeLoading(false) })
-        .catch(() => setStripeLoading(false))
+        .then(d => {
+          if (d.clientSecret) {
+            setStripeClientSecret(d.clientSecret)
+          } else {
+            setStripeError(true)
+          }
+          setStripeLoading(false)
+        })
+        .catch(() => { setStripeLoading(false); setStripeError(true) })
     }
     if (activeModal !== "collect") {
       setStripeClientSecret(null)
       setStripeLoading(false)
       setPackSelected(null)
+      setStripeError(false)
     }
   }, [activeModal, packSelected])
 
@@ -531,24 +660,7 @@ export default function Home() {
               next === null ? closeModal() : openModal(next)
             }}
           >
-            <div className="pill-nav-inner" ref={navInnerRef}>
-
-              {/* ── Sliding glass indicator ── */}
-              {/* Hides when home is the passive default (no modal open, not hovered) */}
-              <span
-                className="pill-nav-slider"
-                style={{
-                  left: sliderStyle.left,
-                  width: sliderStyle.width,
-                  opacity: navIntro < 2 ? 0
-                    : (activeModal === null && !infoOpen && !homeHovered) ? 0
-                    : 1,
-                  transition: sliderReady
-                    ? "left 0.36s cubic-bezier(0.34,1.18,0.64,1), width 0.36s cubic-bezier(0.34,1.18,0.64,1), opacity 0.3s ease"
-                    : "opacity 0.3s ease",
-                }}
-                aria-hidden="true"
-              />
+            <div className="pill-nav-inner">
 
               {/* ── Intro text overlay — blurs icons behind, fades out to reveal them ── */}
               <div
@@ -582,7 +694,7 @@ export default function Home() {
               }}>
 
               {/* INFO — ℹ️ circle (default) / ❕ exclamation circle (active) */}
-              <button ref={btnInfoRef}
+              <button
                 className={`pill-nav-item${infoOpen ? " pill-nav-item--active" : ""}`}
                 onClick={() => { closeModal(); setInfoOpen(v => !v) }}
                 aria-label="About"
@@ -602,7 +714,7 @@ export default function Home() {
               </button>
 
               {/* PLAY */}
-              <button ref={btnPlayRef}
+              <button
                 className={`pill-nav-item${activeModal === "play" ? " pill-nav-item--active" : ""}`}
                 onClick={() => activeModal === "play" ? closeModal() : openModal("play")}
                 aria-label="Play"
@@ -620,7 +732,7 @@ export default function Home() {
               </button>
 
               {/* MUSIC */}
-              <button ref={btnMusicRef}
+              <button
                 className={`pill-nav-item${activeModal === "music" ? " pill-nav-item--active" : ""}`}
                 onClick={() => {
                   if (activeModal === "music") {
@@ -638,7 +750,7 @@ export default function Home() {
               >
                 {activeModal === "music" ? (
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M10 3.75a.75.75 0 00-1.264-.546L4.703 7H3.167a.75.75 0 00-.7.48A6.985 6.985 0 002 10c0 .905.184 1.768.468 2.52.111.29.39.48.7.48h1.535l4.033 3.796A.75.75 0 0010 16.25V3.75zM15.95 5.05a.75.75 0 00-1.06 1.06A6.5 6.5 0 0116.95 10a6.5 6.5 0 01-2.06 3.89.75.75 0 001.06 1.06A8 8 0 0018.45 10a8 8 0 00-2.5-4.95zM13.596 7.404a.75.75 0 00-1.06 1.06 3.5 3.5 0 010 4.95.75.75 0 001.06 1.06 5 5 0 000-7.07z"/>
+                    <path d="M10 3.75a.75.75 0 00-1.264-.546L4.703 7H3.167a.75.75 0 00-.7.48A6.985 6.985 0 002 10c0 .905.184 1.768.468 2.52.111.29.39.48.7.48h1.535l4.033 3.796A.75.75 0 0010 16.25V3.75zM15.95 5.05a.75.75 0 00-1.06 1.06A6.5 6.5 0 0116.95 10a6.5 6.5 0 01-2.06 3.89.75.75 0 001.06 1.06A8 8 0 0018.45 10a8 8 0 00-2.5-4.95zM13.596 6.47a.75.75 0 00-1.06 1.06 3.5 3.5 0 010 4.95.75.75 0 001.06 1.06 5 5 0 000-7.07z"/>
                   </svg>
                 ) : (
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
@@ -647,102 +759,52 @@ export default function Home() {
                 )}
               </button>
 
-              {/* HOME — text logo; ring only visible on hover/press */}
-              {/* Grid overlay trick: both texts stack in the same grid cell so the
-                  button width is always driven by the WIDER text — no layout shift */}
-              <button ref={btnHomeRef}
-                className={`pill-nav-item pill-nav-home pill-nav-home--text${(activeModal === null && !infoOpen) ? " pill-nav-item--active" : ""}`}
-                onClick={() => { closeModal(); setInfoOpen(false); handleLogoTap(); setHomeHovered(false) }}
-                onPointerEnter={() => setHomeHovered(true)}
-                onPointerLeave={() => setHomeHovered(false)}
-                aria-label="Home / double-tap to switch mode"
-              >
-                {/* Text — desktop only (CSS hides on mobile) */}
-                <span className="pill-nav-home-text" style={{display:"grid"}}>
-                  {/* Default text — always rendered (drives button width) */}
-                  <span style={{gridArea:"1/1", opacity: homeHovered ? 0 : 1, transition:"opacity 0.45s ease", whiteSpace:"nowrap"}}>
-                    THE MARSHALL MAFIA
-                  </span>
-                  {/* Hover text — overlays in the same cell */}
-                  <span style={{gridArea:"1/1", opacity: homeHovered ? 1 : 0, transition:"opacity 0.45s ease", whiteSpace:"nowrap", textAlign:"center"}}>
-                    NIGHT / DAY SWITCH
-                  </span>
-                </span>
-                {/* Eyes logo — mobile only (CSS shows on mobile, hidden on desktop) */}
-                <img
-                  src="/tmm_themarshallmafia_logo.svg"
-                  alt=""
-                  className="pill-nav-home-logo"
-                  style={{
-                    transform: lightMode ? "scaleY(-1)" : undefined,
-                    filter: lightMode ? "invert(1)" : undefined,
-                    /* Grey when inactive, bright on hover — mirrors icon button behaviour */
-                    opacity: logoFading ? 0 : (homeHovered ? 1 : 0.55),
-                    transition: logoFading ? "opacity 0.18s linear" : "opacity 0.2s ease",
-                  }}
-                  draggable={false}
-                />
-              </button>
 
-              {/* ── ALTERNATIVE: eyes logo version (keep for easy revert) ──
-              <button ref={btnHomeRef}
-                className={`pill-nav-item pill-nav-home${(activeModal === null && !infoOpen) ? " pill-nav-item--active" : ""}`}
-                onClick={() => { closeModal(); setInfoOpen(false); handleLogoTap() }}
+              {/* HOME — wide text on desktop, 3-line stack on mobile; press to toggle light/dark */}
+              <button
+                className={`pill-nav-item pill-nav-home pill-nav-home--text${(activeModal === null && !infoOpen) ? " pill-nav-item--active" : ""}`}
+                onClick={() => { closeModal(); setInfoOpen(false); setLightMode(m => !m) }}
                 aria-label="Home"
               >
-                <div style={{
-                  transform: lightMode ? "scaleY(-1)" : undefined,
-                  filter: lightMode ? "invert(1)" : undefined,
-                  opacity: logoFading ? 0 : 1,
-                  transition: "opacity 0.18s linear",
-                  lineHeight: 0,
-                }}>
-                  <img
-                    src="/tmm_themarshallmafia_logo.svg"
-                    alt="TMM"
-                    className="pill-nav-home-logo"
-                    draggable={false}
-                  />
-                </div>
+                <span className="pill-nav-home-wide">THE MARSHALL MAFIA</span>
+                <span className="pill-nav-home-stack">
+                  <span style={{display:"block"}}>THE</span>
+                  <span style={{display:"block"}}>MARSHALL</span>
+                  <span style={{display:"block"}}>MAFIA</span>
+                </span>
+                <span className="pill-nav-home-tmm">TMM</span>
               </button>
-              ── END ALTERNATIVE ── */}
 
               {/* SHOWCASE */}
-              <button ref={btnShowRef}
+              <button
                 className={`pill-nav-item${activeModal === "showcase" ? " pill-nav-item--active" : ""}`}
                 onClick={() => activeModal === "showcase" ? closeModal() : openModal("showcase")}
                 aria-label="Showcase"
               >
-                {activeModal === "showcase" ? (
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" clipRule="evenodd" d="M1 5.25A2.25 2.25 0 013.25 3h13.5A2.25 2.25 0 0119 5.25v9.5A2.25 2.25 0 0116.75 17H3.25A2.25 2.25 0 011 14.75v-9.5zm1.5 5.81v3.69c0 .414.336.75.75.75h13.5a.75.75 0 00.75-.75v-2.69l-2.22-2.219a.75.75 0 00-1.06 0l-1.91 1.909.47.47a.75.75 0 11-1.06 1.06L6.53 8.091a.75.75 0 00-1.06 0l-2.97 2.97zM12 7a1 1 0 11-2 0 1 1 0 012 0z"/>
-                  </svg>
-                ) : (
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" clipRule="evenodd" d="M1 8a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 018.07 3h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0016.07 6H17a2 2 0 012 2v7a2 2 0 01-2 2H3a2 2 0 01-2-2V8zm13.5 3a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM10 14a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/>
-                  </svg>
-                )}
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M1 8a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 018.07 3h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0016.07 6H17a2 2 0 012 2v7a2 2 0 01-2 2H3a2 2 0 01-2-2V8zm13.5 3a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM10 13.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/>
+                </svg>
               </button>
 
               {/* REVIEWS */}
-              <button ref={btnRevRef}
+              <button
                 className={`pill-nav-item${activeModal === "reviews" ? " pill-nav-item--active" : ""}`}
                 onClick={() => activeModal === "reviews" ? closeModal() : openModal("reviews")}
                 aria-label="Reviews"
               >
                 {activeModal === "reviews" ? (
-                  <svg width="21" height="21" viewBox="0 0 20 20" fill="currentColor">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                   </svg>
                 ) : (
-                  <svg width="21" height="21" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" clipRule="evenodd" d="M10 2c-2.236 0-4.43.18-6.57.524C1.993 2.755 1 4.014 1 5.426v5.148c0 1.413.993 2.67 2.43 2.902.848.137 1.705.248 2.57.331v3.443a.75.75 0 001.28.53l3.58-3.579a.78.78 0 01.527-.224 41.202 41.202 0 005.183-.5c1.437-.232 2.43-1.49 2.43-2.903V5.426c0-1.413-.993-2.67-2.43-2.902A41.289 41.289 0 0010 2zm0 7a1 1 0 110-2 1 1 0 010 2zM7 9a1 1 0 110-2 1 1 0 010 2zm7 0a1 1 0 110-2 1 1 0 010 2z"/>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M10 2c-2.236 0-4.43.18-6.57.524C1.993 2.755 1 4.014 1 5.426v5.148c0 1.413.993 2.67 2.43 2.902.848.137 1.705.248 2.57.331v3.443a.75.75 0 001.28.53l3.58-3.579a.78.78 0 01.527-.224 41.202 41.202 0 005.183-.5c1.437-.232 2.43-1.49 2.43-2.903V5.426c0-1.413-.993-2.67-2.43-2.902A41.289 41.289 0 0010 2zm0 7a1 1 0 110-2 1 1 0 010 2zM7 9a1 1 0 110-2 1 1 0 010 2zm6 0a1 1 0 110-2 1 1 0 010 2z"/>
                   </svg>
                 )}
               </button>
 
               {/* CART */}
-              <button ref={btnCartRef}
+              <button
                 className={`pill-nav-item${activeModal === "collect" ? " pill-nav-item--active" : ""}${cartShaking ? " pill-nav-item--shake" : ""}`}
                 onClick={() => activeModal === "collect" ? closeModal() : openModal("collect")}
                 aria-label="Collect"
@@ -771,170 +833,221 @@ export default function Home() {
             <div className="modal-backdrop" />
             <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`}>
               <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
-                {/* BOX 1 — HOW TO PLAY */}
+
+                {/* BOX 1 */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">HOW TO PLAY</span><span className="play-block-subtitle">INSTRUCTIONS</span></div>
-                  <p className="play-block-body"><span style={{color:"#ffffff"}}>In The Marshall Mafia</span>, <span className="text-tmm-brown">Villagers</span> must Identify, expose and vote out all <span className="text-tmm-red">Mafia</span> members, while the <span className="text-tmm-red">Mafia{"'"}s</span> goal is to secretly eliminate all <span className="text-tmm-brown">Villagers</span> until they outnumber them. The <span className="text-tmm-cream">Marshall</span> hosts the game, managing the flow of the rounds and overseeing the distribution of roles and actions.</p>
+                  <div className="play-card-header"><span className="play-block-title">INSTRUCTIONS</span><span className="play-block-subtitle">OBJECTIVE</span></div>
+                  <p className="play-block-body">In <span style={{color:"#ffffff"}}>The Marshall Mafia</span>, <span className="text-tmm-brown">Villagers</span> must identify, expose and vote out all <span className="text-tmm-red">Mafia</span> members, while the <span className="text-tmm-red">Mafia{"'"}s</span> goal is to secretly eliminate all <span className="text-tmm-brown">Villagers</span> until they outnumber them. The <span className="text-tmm-cream">Marshall</span> hosts the game, managing the flow of rounds and overseeing the distribution of roles and actions.</p>
                 </div>
 
-                {/* BOX 2 — SETUP */}
+                {/* BOX 2 */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">SETUP</span><span className="play-block-subtitle">(SEE PLAY CARD*)</span></div>
-                  <p className="play-block-body">The <span className="text-tmm-cream">Marshall</span> shuffles the character cards (chosen by the players*) and hands one to each player. These cards determine whether a player is a <span className="text-tmm-brown">Villager</span>, <span className="text-tmm-red">Mafia</span>, or has a special role (see <span className="text-muted">Character Cards*</span> for details on each character{"'"}s abilities).</p>
-                  <ul className="play-rules-list" style={{marginTop:"clamp(8px,2vw,12px)"}}>
-                    <li className="play-block-body">All Players must keep their character roles secret.</li>
+                  <div className="play-card-header"><span className="play-block-title">HOW To PLAY?</span><span className="play-block-subtitle">(play card*)</span></div>
+                  <p className="play-block-body">Appoint one player to be the <span className="text-tmm-cream">Marshall</span>. Shuffle the CHARACTER cards and deal one face down to each player — check the <span className="text-muted">ROLES card*</span> for the correct card count. All players must keep their CHARACTER CARD secret.</p>
+                  <p className="play-block-body">Each game is played in rounds of 3 consecutive phases:</p>
+                  <ul className="play-rules-list">
+                    <li className="play-block-body">SLEEP &gt; DISCUSSION &gt; VOTE</li>
                   </ul>
-                  <p className="play-block-body" style={{marginTop:"clamp(8px,2vw,12px)"}}>Use the (<span className="text-tmm-green">Music Card*</span>) as an added bonus, it is used for the game ambience (stopping voting on players that make noise while asleep &amp; puts players in the mood to continue playing).</p>
+                  <p className="play-block-body">Sleep phase — the <span className="text-tmm-cream">Marshall</span> wakes each role in order:</p>
+                  <ul className="play-rules-list">
+                    <li className="play-block-body"><span className="text-tmm-red">KILL</span> — Mafia choose a target</li>
+                    <li className="play-block-body"><span className="text-tmm-blue">GUESS</span> — Detective guesses a role</li>
+                    <li className="play-block-body"><span className="text-tmm-green">SAVE</span> — Angel saves a player</li>
+                    <li className="play-block-body"><span className="text-tmm-yellow">WILD</span> — Special roles act</li>
+                  </ul>
+                  <p className="play-block-body">Discussion phase — all players debate for a timed period.</p>
+                  <p className="play-block-body">Vote phase — each player votes to eliminate someone. The player with the most votes is removed.</p>
+                  <p className="play-block-body">Scan the <span className="text-tmm-green">Music Card*</span> for ambience — helps keep sleeping players calm and sets the mood.</p>
                 </div>
 
-                {/* BOX 3 — RULES */}
+                {/* BOX 3 */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">RULES</span><span className="play-block-subtitle">(SEE RULES CARD*)</span></div>
-                  <p className="play-block-body">At the start of the game, players agree on selected (<span className="text-muted">Rule Cards*</span>), This allows for players who have played different rules to agree on how the game will be played.</p>
-                  <ul className="play-block-body play-rules-list">
-                    <li>PLAYERS MUST CLOSE Their EYES &amp; Remain Silent DURING THE SLEEP PHASE</li>
-                    <li>DURING THE SLEEP PHASE The <span className="text-tmm-cream">MARSHALL</span> ROLE must not SPEAK Directly TOWARDS Each AWOKEN Player, otherwise all players know which role a player has.</li>
-                    <li>AWOKEN Players SILENTLY POINT &amp; CONFIRM Decisions WITH THE <span className="text-tmm-cream">MARSHALL</span>, by hand signals or mouthing their choice to the <span className="text-tmm-cream">Marshall</span> overseeing the game.</li>
-                    <li>Do not cheat If you die, PICK a {'"'}<span className="text-tmm-red">DEATH CARD</span>{'"'} FROM THE PACK, hold it to show other players you are eliminated from the game.</li>
-                    <li>Timed discussion period (3 minutes recommended, though it does not have to be*), to keep the rounds short and allow the game to be more decisive.</li>
-                    <li>Voting order must switch each round, to avoid the same players voting last, stopping them having an advantage.</li>
-                    <li>The <span className="text-tmm-cream">MARSHALL</span> role SHOULD change each GAME, so all players have a chance at playing.</li>
-                    <li>SCAN the {'"'}<span className="text-tmm-green">MUSIC CARD</span>{'"'} to make the GAME more enjoyable (helps the restless {'"'}sleeping{'"'} of players in the night)</li>
+                  <div className="play-card-header"><span className="play-block-title">what are the roles?</span><span className="play-block-subtitle">(roles card*)</span></div>
+                  <p className="play-block-body">Aim for half as many roles as players. See the <span className="text-muted">CHARACTER card*</span> for in-depth role definitions.</p>
+                  <ul className="play-rules-list">
+                    <li className="play-block-body">6 or fewer players — Not Recommended</li>
+                    <li className="play-block-body">7 players — 1 <span className="text-tmm-cream">Marshall</span>, 3 <span className="text-tmm-brown">Villagers</span>, 3 roles (1 <span className="text-tmm-red">Kill</span>, 1 <span className="text-tmm-blue">Guess</span>, 1 <span className="text-tmm-green">Save</span>)</li>
+                    <li className="play-block-body">9 players — 1 <span className="text-tmm-cream">Marshall</span>, 4 <span className="text-tmm-brown">Villagers</span>, 4 roles (1 <span className="text-tmm-red">Kill</span>, 1 <span className="text-tmm-blue">Guess</span>, 1 <span className="text-tmm-green">Save</span>, 1 <span className="text-tmm-yellow">Wild</span>)</li>
+                    <li className="play-block-body">11 players — 1 <span className="text-tmm-cream">Marshall</span>, 5 <span className="text-tmm-brown">Villagers</span>, 5 roles (2 <span className="text-tmm-red">Kill</span>, 1 <span className="text-tmm-blue">Guess</span>, 1 <span className="text-tmm-green">Save</span>, 1 <span className="text-tmm-yellow">Wild</span>)</li>
+                    <li className="play-block-body">13 players — 1 <span className="text-tmm-cream">Marshall</span>, 6 <span className="text-tmm-brown">Villagers</span>, 6 roles (2 <span className="text-tmm-red">Kill</span>, 1 <span className="text-tmm-blue">Guess</span>, 2 <span className="text-tmm-green">Save</span>, 1 <span className="text-tmm-yellow">Wild</span>)</li>
+                    <li className="play-block-body">15 players — 1 <span className="text-tmm-cream">Marshall</span>, 7 <span className="text-tmm-brown">Villagers</span>, 7 roles (3 <span className="text-tmm-red">Kill</span>, 1 <span className="text-tmm-blue">Guess</span>, 2 <span className="text-tmm-green">Save</span>, 1 <span className="text-tmm-yellow">Wild</span>)</li>
+                    <li className="play-block-body">17 players — 1 <span className="text-tmm-cream">Marshall</span>, 8 <span className="text-tmm-brown">Villagers</span>, 8 roles (3 <span className="text-tmm-red">Kill</span>, 2 <span className="text-tmm-blue">Guess</span>, 2 <span className="text-tmm-green">Save</span>, 1 <span className="text-tmm-yellow">Wild</span>)</li>
+                  </ul>
+                  <p className="play-block-body"><span style={{color:"#F8007A"}}>Note!</span> — freely experiment with your own numbers, though these are our tested suggestions. You can even remove certain roles (except <span className="text-tmm-brown">Villager</span> &amp; <span className="text-tmm-red">Mafia</span> ;).</p>
+                  <p className="play-block-body">Read the <span className="text-muted">gamemode card*</span> for 3 ways to run sleep phase actions.</p>
+                </div>
+
+                {/* BOX 4 */}
+                <div className="play-card" onClick={e => e.stopPropagation()}>
+                  <div className="play-card-header"><span className="play-block-title">There are gamemodes?</span><span className="play-block-subtitle">(gamemode card*)</span></div>
+                  <p className="play-block-body">There are Three Different game-modes that can be played!</p>
+                  <p className="play-block-body" style={{marginTop:"10px"}}><span style={{color:"#ffffff",fontWeight:"bold"}}>STANDARD mode:</span></p>
+                  <ul className="play-rules-list">
+                    <li className="play-block-body">Players with the same role — silently point and agree on a <strong>SINGLE</strong> target together (EG. 2 <span className="text-tmm-red">Mafia</span>&apos;s &gt; 1 kill)</li>
+                  </ul>
+                  <p className="play-block-body" style={{marginTop:"10px"}}><span style={{color:"#ffffff",fontWeight:"bold"}}>GROUP MODE:</span></p>
+                  <ul className="play-rules-list">
+                    <li className="play-block-body">Players with the same role — silently point and agree on targets together = to the amount of their role (Eg. 2 <span className="text-tmm-red">Mafia</span>&apos;s &gt; 2 kills)</li>
+                  </ul>
+                  <p className="play-block-body" style={{marginTop:"10px"}}><span style={{color:"#ffffff",fontWeight:"bold"}}>CHAOS mode:</span></p>
+                  <ul className="play-rules-list">
+                    <li className="play-block-body">Each Player — Silently picks their own <strong>INDIVIDUAL</strong> target <strong>SEPARATELY</strong> (Eg. 1st <span className="text-tmm-red">Mafia</span> &gt; 1 kill / 2nd <span className="text-tmm-red">Mafia</span> &gt; 1 kill)</li>
+                  </ul>
+                  <p className="play-block-body"><span style={{color:"#F8007A"}}>Note!</span> — these changes only alter role actions in the sleep phase.</p>
+                </div>
+
+                {/* BOX 5 */}
+                <div className="play-card" onClick={e => e.stopPropagation()}>
+                  <div className="play-card-header"><span className="play-block-title">What are the rules?</span><span className="play-block-subtitle">(rules card*)</span></div>
+                  <p className="play-block-body">Before the game, decide which <span className="text-muted">rule cards*</span> to play. The standard ruleset includes rules #1, #2, #3.</p>
+                  <ul className="play-rules-list">
+                    <li className="play-block-body">Players must close their eyes and remain silent during the sleep phase</li>
+                    <li className="play-block-body">The <span className="text-tmm-cream">Marshall</span> must not speak directly to awoken players — use hand signals or mouthing only</li>
+                    <li className="play-block-body">Awoken players silently point and confirm decisions with the <span className="text-tmm-cream">Marshall</span></li>
+                    <li className="play-block-body">Timed discussion — 3 minutes recommended, to keep rounds short and decisive</li>
+                    <li className="play-block-body">Clockwise voting reverses each round — each player raises a finger per vote received</li>
+                    <li className="play-block-body">When eliminated — pick a <span className="text-tmm-red">DEATH CARD*</span> and hold it up to show you{"'"}re out</li>
+                    <li className="play-block-body">The <span className="text-tmm-cream">Marshall</span> role should rotate each game so everyone gets a turn</li>
+                    <li className="play-block-body">Scan the <span className="text-tmm-green">MUSIC CARD*</span> for game ambience</li>
                   </ul>
                 </div>
 
-                {/* BOX 4 — CHARACTERS */}
+                {/* BOX 6 */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">CHARACTERS</span><span className="play-block-subtitle">(SEE EACH ROLE CARD*)</span></div>
-                  <ul className="play-block-body play-rules-list">
-                    <li><span className="text-tmm-cream">MARSHALL (1)</span> — The games host and all-seeing narrator.</li>
-                  </ul>
-                  <p className="play-block-body">Players with roles wake up during the (Sleep Phase) and open their eyes - in the order called by <span className="text-tmm-cream">Marshall</span> (detailed above*), player then does their role action before closing their eyes again.</p>
-                  <ul className="play-block-body play-rules-list">
-                    <li><span className="text-tmm-green">ANGEL (2)</span> — Pick player to save (Each Round).</li>
-                    <li><span className="text-tmm-blue">DETECTIVE (2)</span> — Pick player to guess if they are a <span className="text-tmm-red">mafia</span>, <span className="text-tmm-cream">Marshall</span> indicates Yes/No (Each Round).</li>
-                    <li><span className="text-tmm-green">DOCTOR (2)</span> — <span className="text-tmm-cream">Marshall</span> shows who the <span className="text-tmm-red">mafia</span> killed, save them Yes/No (Single Use).</li>
-                    <li><span className="text-tmm-yellow">JESTER (1)</span> — Get voted out to win the game.</li>
-                    <li><span className="text-tmm-red">MAFIA (3)</span> — Pick player to kill (Each Round).</li>
-                    <li><span className="text-tmm-yellow">SILENCER (1)</span> — Pick player to silence (Each Round).</li>
-                    <li><span className="text-tmm-brown">VILLAGER (10)</span> — Vote out <span className="text-tmm-red">mafia</span> to win.</li>
+                  <div className="play-card-header"><span className="play-block-title">Even More RULES...</span><span className="play-block-subtitle">(rule card*)</span></div>
+                  <p className="play-block-body"><span style={{color:"#F8007A"}}>Note!</span> — these rules let players who know different versions agree on how the game is played.</p>
+                  <ul className="play-rules-list">
+                    <li className="play-block-body"><span className="text-tmm-cream">1#</span> — Players cannot reveal their own role. You can pretend to be other roles — {"don't"} get caught!</li>
+                    <li className="play-block-body"><span className="text-tmm-cream">2#</span> — If a non-awoken player repeatedly sleep-talks or sleep-walks, they are eliminated</li>
+                    <li className="play-block-body"><span className="text-tmm-cream">3#</span> — Any player voted out must reveal their card — as theatrical as you like!</li>
+                    <li className="play-block-body"><span className="text-tmm-cream">4#</span> — If a player is killed, they must reveal their card to the village</li>
+                    <li className="play-block-body"><span className="text-tmm-cream">5#</span> — Save roles cannot save themselves or other save roles</li>
+                    <li className="play-block-body"><span className="text-tmm-cream">6#</span> — If a vote ties, the tied players play Rock Paper Scissors (best of 1 or 3)</li>
+                    <li className="play-block-body"><span className="text-tmm-cream">7#</span> — If a majority skips the vote, no player is eliminated and a new sleep phase begins</li>
+                    <li className="play-block-body"><span className="text-tmm-cream">8#</span> — Save roles can only save the same player once per cycle, until all players have been saved once</li>
                   </ul>
                 </div>
 
-                {/* BOX 5 — PHASES */}
+                {/* BOX 7 */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">PHASES</span><span className="play-block-subtitle">1, 2 &amp; 3</span></div>
-                  <p className="play-block-body">Each round in The <span className="text-tmm-cream">Marshall</span> <span className="text-tmm-red">Mafia</span> consists of three phases.</p>
-                  <p className="play-block-body">1. SLEEP → 2. DiscussioN → 3. Vote</p>
-                  <p className="play-block-body">If the games go to quickly or too many players are getting eliminated each night, the role groups (e.g. if there are 2+ <span className="text-tmm-green">Angels</span>, 2+ <span className="text-tmm-red">Mafia</span>, 2+ <span className="text-tmm-blue">Detectives</span>)</p>
-                  <p className="play-block-body" style={{marginTop:"clamp(8px,2vw,12px)"}}>each type of role (<span className="text-tmm-red">KILL</span>, <span className="text-tmm-blue">GUESS</span>, <span className="text-tmm-green">SAVE</span>, <span className="text-tmm-yellow">WILD</span>) must decide one player to do their action on.</p>
-                </div>
-
-                {/* BOX 6 — PHASE 1. SLEEP */}
-                <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">PHASE 1.</span><span className="play-block-subtitle">SLEEP</span></div>
-                  <p className="play-block-body">This is the secretive action phase. All players close their eyes, and the <span className="text-tmm-cream">Marshall</span> calls specific character roles to perform their actions in a set order:</p>
-                  <ul className="play-block-body play-rules-list">
-                    <li><span className="text-tmm-red">KILL</span> — The <span className="text-tmm-red">Mafia</span> choose a player to eliminate.</li>
-                    <li><span className="text-tmm-blue">GUESS</span> — The <span className="text-tmm-blue">Detective</span> (or similar roles) attempt to discover another player{"'"}s identity.</li>
-                    <li><span className="text-tmm-green">SAVE</span> — The <span className="text-tmm-green">Angel</span> (or similar roles) can protect one player from elimination.</li>
-                    <li><span className="text-tmm-yellow">WILD</span> — Any other special roles perform their actions (depending on game customisation).</li>
+                  <div className="play-card-header"><span className="play-block-title">are there Characters?</span><span className="play-block-subtitle">(role card*)</span></div>
+                  <p className="play-block-body">Each role{"'"}s description reveals their objective:</p>
+                  <ul className="play-rules-list">
+                    <li className="play-block-body"><span className="text-tmm-cream">MARSHALL (1)</span> — The game{"'"}s host and all-seeing narrator. Rotate this role each game</li>
+                    <li className="play-block-body"><span className="text-tmm-green">ANGEL (3)</span> — Pick one player to save each round</li>
+                    <li className="play-block-body"><span className="text-tmm-blue">DETECTIVE (3)</span> — Pick a player to guess if they are <span className="text-tmm-red">Mafia</span> — the <span className="text-tmm-cream">Marshall</span> indicates Yes/No</li>
+                    <li className="play-block-body"><span className="text-tmm-yellow">JESTER (1)</span> — Get voted out to win the game</li>
+                    <li className="play-block-body"><span className="text-tmm-red">MAFIA (3)</span> — Kill and vote out all other players. Pick a player to kill each round</li>
+                    <li className="play-block-body"><span className="text-tmm-brown">VILLAGER (11)</span> — Vote out all the <span className="text-tmm-red">Mafia</span> to win</li>
                   </ul>
-                  <p className="play-block-body">After all actions are completed, the <span className="text-tmm-cream">Marshall</span> announces the result of the night{"'"}s activities (who has been eliminated, if anyone was saved... without naming the player of course, etc.).</p>
+                  <p className="play-block-body">The <span className="text-tmm-red">Mafia</span> tribe battles against the <span className="text-tmm-brown">Villager</span> members — <span className="text-tmm-green">Angels</span>, <span className="text-tmm-blue">Detectives</span> and <span className="text-tmm-brown">Villagers</span> — while the tribeless <span className="text-tmm-yellow">Jester</span> aims for a solo victory.</p>
                 </div>
 
-                {/* BOX 7 — PHASE 2. DISCUSSION */}
+                {/* BOX 8 */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">PHASE 2.</span><span className="play-block-subtitle">discussion</span></div>
-                  <p className="play-block-body">All players open their eyes and begin arguing, accusing, or defending themselves based on what they believe has happened during the Sleep Phase.</p>
-                  <p className="play-block-body">The <span className="text-tmm-cream">Marshall</span> should set a timer (Recommended 3 minutes) for this phase. They can also stop the discussions at a natural moment to keep the phase concise and intense.</p>
-                  <p className="play-block-body">Players are free to speculate, but players must not reveal their card (if a player is caught showing their card to another player, they are instantly eliminated.</p>
+                  <div className="play-card-header"><span className="play-block-title">What are the PHASES?</span><span className="play-block-subtitle">1, 2 &amp; 3</span></div>
+                  <p className="play-block-body">Each round consists of three consecutive phases:</p>
+                  <ul className="play-rules-list">
+                    <li className="play-block-body">1 <span style={{color:"#ffffff"}}>SLEEP</span></li>
+                    <li className="play-block-body">2 <span style={{color:"#ffffff"}}>DISCUSSION</span></li>
+                    <li className="play-block-body">3 <span style={{color:"#ffffff"}}>VOTE</span></li>
+                  </ul>
+                  <p className="play-block-body">Standard mode — each role type (<span className="text-tmm-red">Kill</span>, <span className="text-tmm-blue">Guess</span>, <span className="text-tmm-green">Save</span>, <span className="text-tmm-yellow">Wild</span>) must decide on one player to act on.</p>
+                  <p className="play-block-body"><span style={{color:"#F8007A"}}>Note!</span> — if games finish too quickly, switch up the sleep phase playstyle. See the <span className="text-muted">GAMEMODE CARD*</span>.</p>
                 </div>
 
-                {/* BOX 8 — PHASE 3. VOTE */}
+                {/* BOX 9 */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">PHASE 3.</span><span className="play-block-subtitle">VOTE</span></div>
-                  <p className="play-block-body">After the discussion, players proceed straight to the voting.</p>
-                  <p className="play-block-body">Each <span className="text-tmm-brown">VILLAGER</span> role votes to eliminate someone they suspect is <span className="text-tmm-red">Mafia</span>, while the <span className="text-tmm-red">Mafia</span> aim to deceive <span className="text-tmm-brown">Villagers</span> into voting out their own.</p>
-                  <p className="play-block-body">Each player is allowed to make a single vote, on anyone they choose. When a player casts a vote for another player - the player who has been voted for must hold up a finger for each vote received.</p>
-                  <p className="play-block-body">If the vote ties, a re-vote occurs between the tied players (depending on chosen <span className="text-muted">Rule Cards*</span>).</p>
-                  <p className="play-block-body">The player with the most votes is immediately eliminated from the game, and their character is revealed (also depending on chosen <span className="text-muted">Rule Cards*</span>).</p>
+                  <div className="play-card-header"><span className="play-block-title">PHASE 1</span><span className="play-block-subtitle">SLEEP</span></div>
+                  <p className="play-block-body">The secretive action phase. All players close their eyes and the <span className="text-tmm-cream">Marshall</span> calls each role in order:</p>
+                  <ul className="play-rules-list">
+                    <li className="play-block-body"><span className="text-tmm-red">KILL</span> — The <span className="text-tmm-red">Mafia</span> choose a player to eliminate</li>
+                    <li className="play-block-body"><span className="text-tmm-blue">GUESS</span> — The <span className="text-tmm-blue">Detective</span> tries to discover a player{"'"}s identity</li>
+                    <li className="play-block-body"><span className="text-tmm-green">SAVE</span> — The <span className="text-tmm-green">Angel</span> protects one player from elimination</li>
+                    <li className="play-block-body"><span className="text-tmm-yellow">WILD</span> — Special roles perform their actions</li>
+                  </ul>
+                  <p className="play-block-body">After all actions, the <span className="text-tmm-cream">Marshall</span> announces results — who was eliminated, if anyone was saved — without naming who did it.</p>
                 </div>
 
-                {/* BOX 9 — ROUNDS */}
+                {/* BOX 10 */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header"><span className="play-block-title">ROUNDS</span><span className="play-block-subtitle">REPEAT</span></div>
-                  <p className="play-block-body">The game continues through the Sleep, Discussion, and Vote phases until one of the following conditions is achieved:</p>
-                  <p className="play-block-body">a. <span className="text-tmm-brown">Villagers</span> win by successfully voting out all <span className="text-tmm-red">Mafia</span> members.</p>
-                  <p className="play-block-body">b. <span className="text-tmm-red">Mafia</span> wins by eliminating enough <span className="text-tmm-brown">Villagers</span> to outnumber them.</p>
-                  <p className="play-block-body">c. <span className="text-tmm-yellow">Wild</span> role wins by fulfilling the unique conditions tied to their abilities.</p>
+                  <div className="play-card-header"><span className="play-block-title">PHASE 2</span><span className="play-block-subtitle">discussion</span></div>
+                  <p className="play-block-body">All players open their eyes and begin arguing, accusing, or defending themselves based on what they believe happened during the sleep phase.</p>
+                  <p className="play-block-body">The <span className="text-tmm-cream">Marshall</span> sets a timer — 3 minutes recommended. They can stop discussions at a natural moment to keep the phase sharp and intense.</p>
+                  <p className="play-block-body">Players can speculate freely — but must not reveal their card. Caught showing your card = instant elimination.</p>
                 </div>
 
-                {/* BOX 10 — LINKS */}
+                {/* BOX 11 */}
+                <div className="play-card" onClick={e => e.stopPropagation()}>
+                  <div className="play-card-header"><span className="play-block-title">PHASE 3</span><span className="play-block-subtitle">VOTE</span></div>
+                  <p className="play-block-body">After discussion, players proceed straight to voting. Each player casts a single vote — the voted player holds up a finger per vote received.</p>
+                  <ul className="play-rules-list">
+                    <li className="play-block-body"><span className="text-tmm-brown">Villagers</span> — vote to eliminate suspected <span className="text-tmm-red">Mafia</span></li>
+                    <li className="play-block-body"><span className="text-tmm-red">Mafia</span> — aim to deceive <span className="text-tmm-brown">Villagers</span> into voting out their own</li>
+                  </ul>
+                  <p className="play-block-body">If the vote ties, a re-vote occurs between tied players (see chosen <span className="text-muted">Rule Cards*</span>). The player with the most votes is eliminated and their character revealed.</p>
+                </div>
+
+                {/* BOX 12 */}
+                <div className="play-card" onClick={e => e.stopPropagation()}>
+                  <div className="play-card-header"><span className="play-block-title">How many ROUNDS?</span><span className="play-block-subtitle">REPEAT</span></div>
+                  <p className="play-block-body">The game continues until one of the following conditions is met:</p>
+                  <ul className="play-rules-list">
+                    <li className="play-block-body">a. <span className="text-tmm-brown">Villagers</span> win — successfully vote out all <span className="text-tmm-red">Mafia</span> members</li>
+                    <li className="play-block-body">b. <span className="text-tmm-red">Mafia</span> wins — eliminate enough <span className="text-tmm-brown">Villagers</span> to outnumber them</li>
+                    <li className="play-block-body">c. <span className="text-tmm-yellow">Wild</span> role wins — fulfils their unique win condition</li>
+                  </ul>
+                </div>
+
+                {/* BOX 13 */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">Links</span><span className="play-block-subtitle">SNEEK PEAKS!</span></div>
-                  <p className="play-block-body">Collect → <a href="https://linktr.ee/themarshallmafia" target="_blank" rel="noopener noreferrer" className="text-tmm-blue hover:text-white underline underline-offset-2 transition-colors">https://linktr.ee/themarshallmafia</a></p>
-                  <p className="play-block-body">music → <a href="https://linktr.ee/themarshallmafia.music" target="_blank" rel="noopener noreferrer" className="text-tmm-blue hover:text-white underline underline-offset-2 transition-colors">https://linktr.ee/themarshallmafia.music</a></p>
-                  <p className="play-block-body">Developer → <a href="https://linktr.ee/marshallwi11" target="_blank" rel="noopener noreferrer" className="text-tmm-blue hover:text-white underline underline-offset-2 transition-colors">https://linktr.ee/marshallwi11</a></p>
+                  <p className="play-block-body">Collect → <a href="https://linktr.ee/themarshallmafia" target="_blank" rel="noopener noreferrer" className="text-tmm-blue hover:text-white underline underline-offset-2 transition-colors">linktr.ee/themarshallmafia</a></p>
+                  <p className="play-block-body">music → <a href="https://linktr.ee/themarshallmafia.music" target="_blank" rel="noopener noreferrer" className="text-tmm-blue hover:text-white underline underline-offset-2 transition-colors">linktr.ee/themarshallmafia.music</a></p>
+                  <p className="play-block-body">Developer → <a href="https://linktr.ee/marshallwi11" target="_blank" rel="noopener noreferrer" className="text-tmm-blue hover:text-white underline underline-offset-2 transition-colors">linktr.ee/marshallwi11</a></p>
                 </div>
+
+                {/* BOX 14 */}
                 <div className="play-card-pill" onClick={e => e.stopPropagation()}>
                   <span className="play-block-title">by marshallwi11</span>
-                  <span className="play-block-subtitle">est. 2025</span>
+                  <span className="play-block-subtitle">est . 2025</span>
                 </div>
               </div>
             </div>
           </div>
         )}
 
-        {/* ==================== SHOWCASE MODAL ==================== */}
+                {/* ==================== SHOWCASE MODAL ==================== */}
         {activeModal === "showcase" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
             <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`}>
-              <div className="modal-content-pane">
-                <div className="play-card" onClick={e => e.stopPropagation()}>
-                  <div className="play-card-header">
-                    <span className="play-block-title">SHOWCASE</span>
-                    <span className="play-block-subtitle">gallery</span>
-                  </div>
-                  {/* Main large image — fixed 4:3 container, contain so full image is always visible */}
-                  <div className="showcase-img-well" style={{borderRadius:"clamp(8px,1.5vw,14px)"}}>
-                    <Image
-                      src={`/images/tmm_picture_${showcaseIdx + 1}.png`}
-                      alt={`The Marshall Mafia — image ${showcaseIdx + 1}`}
-                      fill
-                      priority
-                      sizes="(max-width:600px) 100vw, 600px"
-                      style={{objectFit:"contain"}}
+              <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
+                {/* Single title pill */}
+                <div className="play-card-pill" onClick={e => e.stopPropagation()}>
+                  <span className="play-block-title">SHOWCASE</span>
+                  <span className="play-block-subtitle">PNG 1–8</span>
+                </div>
+                {/* 8 plain images — no individual card headers */}
+                {[1,2,3,4,5,6,7,8].map(i => (
+                  <div key={i} style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+                    <img
+                      src={`/images/tmm_product_render_${i}.png`}
+                      alt={`The Marshall Mafia — product render ${i}`}
+                      style={{width:"100%",height:"auto",display:"block"}}
                     />
                   </div>
-                  {/* Thumbnail strip */}
-                  <div className="showcase-thumbs">
-                    {[0,1,2,3,4,5,6].map(i => (
-                      <button
-                        key={i}
-                        onClick={() => setShowcaseIdx(i)}
-                        className={`showcase-thumb${showcaseIdx === i ? " showcase-thumb--active" : ""}`}
-                        aria-label={`View image ${i + 1}`}
-                      >
-                        <Image
-                          src={`/images/tmm_picture_${i + 1}.png`}
-                          alt={`Thumbnail ${i + 1}`}
-                          width={200} height={150}
-                          loading="lazy"
-                          sizes="80px"
-                          style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}
-                        />
-                      </button>
-                    ))}
-                  </div>
+                ))}
+                <div className="play-card-pill" onClick={e => e.stopPropagation()}>
+                  <span className="play-block-title">the marshall mafia</span>
+                  <span className="play-block-subtitle">gallery</span>
                 </div>
               </div>
             </div>
           </div>
         )}
 
-        {/* ==================== MUSIC MODAL ==================== */}
+                {/* ==================== MUSIC MODAL ==================== */}
         {activeModal === "music" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
@@ -1005,51 +1118,72 @@ export default function Home() {
                   <div className="play-card-header"><span className="play-block-title">REVIEWS</span><span className="play-block-subtitle">RATING</span></div>
                   {(() => {
                     const avg = TESTIMONIALS.reduce((s, t) => s + t.rating, 0) / TESTIMONIALS.length
-                    const avgDisplay = avg % 1 === 0 ? avg.toFixed(1) : avg.toFixed(1)
+                    const avgDisplay = avg.toFixed(1)
                     const avgRounded = Math.round(avg)
                     return (
                   <div className="reviews-summary">
                     <div className="reviews-score">
+                      <CharacterSVG style={{height:"100%",width:"auto",display:"block"}} />
+                    </div>
+                    <div className="reviews-avg">
                       <span className="reviews-score-number">{avgDisplay}</span>
                       <StarRating rating={avgRounded} />
                       <span className="play-block-subtitle" style={{fontSize:"12px"}}>{TESTIMONIALS.length} reviews</span>
+                      <a
+                        href="https://forms.gle/eVJJUSfXr5nHSc8ZA"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="play-block-body add-review-btn"
+                        onClick={e => e.stopPropagation()}
+                        style={{marginTop:0}}
+                      >
+                        add a review
+                      </a>
                     </div>
-                    <div className="reviews-divider" aria-hidden="true" />
                     <div className="reviews-bars">
-                      {[1,2,3,4,5].filter(n => TESTIMONIALS.filter(t => t.rating === n).length > 0).map(n => {
+                      {[5,4,3,2,1].map(n => {
                         const count = TESTIMONIALS.filter(t => t.rating === n).length
-                        const pct = Math.round((count / TESTIMONIALS.length) * 100)
-                        // Both label and count share yellow + same font size across all visible bars
-                        const labelStyle = { color: "var(--tmm-yellow)", fontSize: "clamp(15px,2.4vw,17px)" }
+                        const pct = count > 0 ? Math.round((count / TESTIMONIALS.length) * 100) : 0
+                        const isActive = filterRating === n && count > 0
+                        const isDimmed = filterRating !== null && !isActive && count > 0
+                        const isEmpty = count === 0
+                        const labelStyle = { color: isActive ? "#ffffff" : "var(--tmm-yellow)", fontSize: "clamp(15px,2.4vw,17px)", opacity: isDimmed ? 0.35 : isEmpty ? 0.22 : 1, transition: "opacity 0.2s ease" }
                         return (
-                          <div key={n} className="review-bar-row">
+                          <div key={n}
+                            className={`review-bar-row${!isEmpty ? " review-bar-row--clickable" : ""}${isActive ? " review-bar-row--active" : ""}`}
+                            onClick={!isEmpty ? (e => { e.stopPropagation(); setFilterRating(filterRating === n ? null : n) }) : undefined}>
                             <span className="review-bar-label" style={labelStyle}>{n}</span>
-                            <div className="review-bar-track">
-                              <div className="review-bar-fill" style={{ width:`${pct}%`, background:"var(--tmm-yellow)" }} />
+                            <div className="review-bar-track" style={{opacity: isDimmed ? 0.35 : isEmpty ? 0.15 : 1, transition:"opacity 0.2s ease"}}>
+                              <div className="review-bar-fill" style={{ width:`${pct}%`, background: isActive ? "#ffffff" : "var(--tmm-yellow)" }} />
                             </div>
-                            <span className="review-bar-count" style={labelStyle}>{count}</span>
+                            <span className="review-bar-count" style={labelStyle}>{isEmpty ? "" : count}</span>
                           </div>
                         )
                       })}
-                      <button
-                        className="play-block-body add-review-btn"
-                        style={{marginTop:"auto"}}
-                        onClick={e => { e.stopPropagation(); setReviewComing(true) }}
-                      >
-                        {reviewComing ? "COMING SOON!" : "+ add a review"}
-                      </button>
                     </div>
                   </div>
                     )
                   })()}
                 </div>
-                {TESTIMONIALS.map((t, i) => (
+                {(filterRating !== null ? TESTIMONIALS.filter(t => t.rating === filterRating) : TESTIMONIALS).map((t, i) => (
                   <div key={i} className="play-card" onClick={e => e.stopPropagation()}>
-                    <div className="play-card-header">
-                      <span className="play-block-title">{t.name}</span>
+                    <div className="play-card-header" style={{alignItems:"flex-start"}}>
+                      <div style={{display:"flex",flexDirection:"row",alignItems:"baseline",gap:"30px"}}>
+                        <span className="play-block-title">{t.name}</span>
+                        <span className="play-block-title" style={{opacity:0.5}}>{t.age}</span>
+                      </div>
                       <StarRating rating={t.rating} />
                     </div>
-                    <p className="play-block-body" style={{marginTop:"clamp(8px,2vw,12px)"}}>{t.body}</p>
+                    <p className="play-block-body" style={{marginTop:"clamp(8px,2vw,12px)"}}>{t.colorize ? colorizeBody(t.body) : t.body}</p>
+                    {(t as any).photos && (
+                      <div style={{display:"flex",flexDirection:"row",gap:"clamp(10px,2vw,16px)",marginTop:"clamp(10px,2vw,16px)"}}>
+                        {(t as any).photos.map((src: string, pi: number) => (
+                          <div key={pi} style={{flex:1,borderRadius:"clamp(12px,2.5vw,18px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}}>
+                            <img src={src} alt={`${t.name} photo ${pi+1}`} style={{width:"100%",height:"auto",display:"block"}} />
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 ))}
                 <div className="play-card-pill" onClick={e => e.stopPropagation()}>
@@ -1088,10 +1222,14 @@ export default function Home() {
                 {packSelected === "standard" && (
                   <div className="play-card">
                     {stripeClientSecret ? (
-                      <div style={{borderRadius:"16px", overflow:"hidden"}}>
+                      <div className="animate-fade-in" style={{borderRadius:"16px", overflow:"hidden"}}>
                         <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret: stripeClientSecret }}>
                           <EmbeddedCheckout />
                         </EmbeddedCheckoutProvider>
+                      </div>
+                    ) : stripeError ? (
+                      <div className="flex items-center justify-center py-8">
+                        <span className="play-block-body" style={{opacity:0.45,textAlign:"center"}}>checkout unavailable — please try again shortly</span>
                       </div>
                     ) : (
                       <div className="flex items-center justify-center py-8 gap-3">

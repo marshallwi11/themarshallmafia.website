@@ -141,37 +141,6 @@
 }
 
 /* =====================================================================
-   LEGACY BACKDROP — CSS animated linear-gradient (kept for easy revert)
-   To restore: uncomment below AND swap the MeshGradient/backdrop div in page.tsx
-   ===================================================================== */
-/*
-@layer utilities {
-  .tmm-backdrop {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background: linear-gradient(
-      300deg,
-      #000000 0%, #000000 43%, #020d1e 47%, #0780c4 50%, #020d1e 53%, #000000 57%, #000000 100%
-    );
-    background-size: 360% 360%;
-    animation: gradient-animation 48s ease infinite;
-  }
-  .tmm-backdrop--light {
-    background: linear-gradient(
-      300deg,
-      #ffffff 0%, #ffffff 43%, #fff3f3 47%, #E3000B 50%, #fff3f3 53%, #ffffff 57%, #ffffff 100%
-    );
-    background-size: 360% 360%;
-    animation: gradient-animation 48s ease infinite;
-  }
-  @keyframes gradient-animation {
-    0%   { background-position: 0% 50%; }
-    50%  { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-}
-*/
-
-/* =====================================================================
    SITE CANVAS & GLOBAL LAYOUT
    ===================================================================== */
 @layer utilities {
@@ -382,37 +351,19 @@
     gap: 0;
     /* Match the modal card width — site-w minus the content-pane side padding */
     width: calc(var(--site-w) - 2 * clamp(12px, 3vw, 20px));
-    padding: 10px 12px;
-    background: rgba(22, 22, 22, 0.45);
-    backdrop-filter: blur(48px) saturate(2);
-    -webkit-backdrop-filter: blur(48px) saturate(2);
+    padding: 8px 12px;
+    background: linear-gradient(160deg, rgba(76,76,76,0.32) 0%, rgba(36,36,36,0.20) 100%);
+    backdrop-filter: blur(48px) saturate(1.9) brightness(1.04);
+    -webkit-backdrop-filter: blur(48px) saturate(1.9) brightness(1.04);
     border-radius: 1000px;
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.13);
     box-shadow:
-      0 0 0 0.5px rgba(255,255,255,0.06),
-      inset 0 1px 0 rgba(255,255,255,0.10),
-      0 8px 40px rgba(0,0,0,0.55);
+      0 8px 40px rgba(0,0,0,0.32),
+      0 2px 10px rgba(0,0,0,0.18),
+      inset 0 1.5px 0 rgba(255,255,255,0.18),
+      inset 0 -1px 0 rgba(0,0,0,0.14);
     box-sizing: border-box;
     overflow: visible;
-  }
-
-  /* ── Sliding pill indicator — bordered glass ── */
-  .pill-nav-slider {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 48px;
-    background: rgba(255,255,255,0.09);
-    border: 1.5px solid rgba(255,255,255,0.38);
-    border-radius: 1000px;
-    box-shadow:
-      0 2px 18px rgba(0,0,0,0.28),
-      inset 0 1px 0 rgba(255,255,255,0.18);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    pointer-events: none;
-    z-index: 0;
-    /* left + width controlled via JS */
   }
 
   /* ── Nav items — perfect circles, transparent bg, no border when unselected ── */
@@ -432,23 +383,22 @@
     cursor: pointer;
     border-radius: 1000px;
     color: rgba(255, 255, 255, 0.55);
-    transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    transition: color 0.12s ease, background 0.12s ease, border-color 0.12s ease;
     flex-shrink: 0;
   }
   .pill-nav-item:hover {
-    color: rgba(255, 255, 255, 0.88);
-    background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(255, 255, 255, 0.45);
+    color: rgba(255, 255, 255, 0.70);
+    /* no background or border on hover — ring only appears on active/pressed state */
   }
-  /* Active: slider ring is the only indicator — suppress all button chrome */
+  /* Active: subtle ghost circle + white icon */
   .pill-nav-item--active,
   .pill-nav-item--active:hover {
     color: #ffffff;
-    background: transparent;
-    border-color: transparent;
+    background: rgba(255,255,255,0.09);
+    border-color: rgba(255,255,255,0.22);
   }
   .pill-nav-item--active svg {
-    animation: navIconPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: navIconPop 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   @keyframes navIconPop {
     0%   { transform: scale(0.8); }
@@ -464,6 +414,12 @@
     padding: 0 20px;
     background: transparent;
     border: 1.5px solid transparent;
+  }
+  /* Dark mode: full white bg + black text → previews light mode */
+  .pill-nav-home:hover {
+    background: #ffffff;
+    border-color: #ffffff;
+    color: #000000;
   }
   /* Text variant of the home button — naturally wider */
   .pill-nav-home--text {
@@ -498,21 +454,15 @@
 
   /* Light mode nav — mirrors dark mode: glass pill, no item borders, slider only */
   .tmm-light .pill-nav-inner {
-    background: rgba(255, 255, 255, 0.55);
-    border-color: rgba(0, 0, 0, 0.08);
+    background: linear-gradient(160deg, rgba(255,255,255,0.75) 0%, rgba(240,240,240,0.58) 100%);
+    border-color: rgba(255,255,255,0.80);
     box-shadow:
-      0 0 0 0.5px rgba(0,0,0,0.04),
-      inset 0 1px 0 rgba(255,255,255,0.75),
-      0 8px 40px rgba(0,0,0,0.12);
-    backdrop-filter: blur(48px) saturate(2);
-    -webkit-backdrop-filter: blur(48px) saturate(2);
-  }
-  .tmm-light .pill-nav-slider {
-    background: rgba(255,255,255,0.60);
-    border: 1.5px solid rgba(0,0,0,0.14);
-    box-shadow:
-      0 2px 14px rgba(0,0,0,0.10),
-      inset 0 1px 0 rgba(255,255,255,0.85);
+      0 8px 40px rgba(0,0,0,0.10),
+      0 2px 10px rgba(0,0,0,0.07),
+      inset 0 1.5px 0 rgba(255,255,255,0.95),
+      inset 0 -1px 0 rgba(0,0,0,0.04);
+    backdrop-filter: blur(48px) saturate(1.9) brightness(1.02);
+    -webkit-backdrop-filter: blur(48px) saturate(1.9) brightness(1.02);
   }
   .tmm-light .pill-nav-item {
     background: transparent;
@@ -520,19 +470,89 @@
     color: rgba(0, 0, 0, 0.50);
   }
   .tmm-light .pill-nav-item:hover {
-    color: #000000;
-    background: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.30);
+    color: rgba(0, 0, 0, 0.70);
+    /* no background or border on hover */
   }
   .tmm-light .pill-nav-item--active,
   .tmm-light .pill-nav-item--active:hover {
     color: #000000;
-    background: transparent;
-    border-color: transparent;
+    background: rgba(0,0,0,0.07);
+    border-color: rgba(0,0,0,0.18);
   }
   .tmm-light .pill-nav-home {
     background: transparent;
     border-color: transparent;
+  }
+  /* Light mode: full black bg + white text → previews dark mode */
+  .tmm-light .pill-nav-home:hover {
+    background: #111111;
+    border-color: #111111;
+    color: #ffffff;
+  }
+
+  /* ── Home button text variants ── */
+  /* Desktop: single horizontal line */
+  .pill-nav-home-wide {
+    display: block;
+    white-space: nowrap;
+    font-family: 'MarkerBold', sans-serif;
+    font-size: clamp(10px, 2.2vw, 13px);
+    letter-spacing: 0.08em;
+    color: inherit;
+    user-select: none;
+    pointer-events: none;
+  }
+  /* Mobile abbreviation — hidden on desktop, shown on mobile via media query */
+  .pill-nav-home-tmm {
+    display: none;
+    font-family: 'MarkerBold', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.10em;
+    color: inherit;
+    user-select: none;
+    pointer-events: none;
+  }
+  /* Mobile/narrow: 3-line vertical stack — hidden on desktop */
+  .pill-nav-home-stack {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family: 'MarkerBold', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.04em;
+    line-height: 1.25;
+    color: inherit;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  /* Dark mode flicker: dims then brightens → signals moving toward light */
+  @keyframes homeTextFlicker {
+    0%   { opacity: 1; }
+    10%  { opacity: 0.12; }
+    20%  { opacity: 1; }
+    32%  { opacity: 0.35; }
+    44%  { opacity: 1; }
+    57%  { opacity: 0.55; }
+    72%  { opacity: 1; }
+    100% { opacity: 1; }
+  }
+  /* Light mode flicker: pops bright then settles → signals moving toward dark */
+  @keyframes homeTextFlickerLight {
+    0%   { opacity: 0; }
+    14%  { opacity: 1; }
+    28%  { opacity: 0.55; }
+    44%  { opacity: 1; }
+    60%  { opacity: 0.72; }
+    78%  { opacity: 1; }
+    100% { opacity: 1; }
+  }
+  .pill-nav-home:hover .pill-nav-home-wide {
+    color: #000000;
+  }
+  .tmm-light .pill-nav-home:hover .pill-nav-home-wide {
+    color: #ffffff;
   }
 
   /* ── Modal system ────────────────────────────────────────────────── */
@@ -571,18 +591,22 @@
     overflow-x: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    /* Fade content that scrolls behind the top nav bar */
-    mask-image: linear-gradient(to bottom, transparent 0, transparent 72px, black 175px);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 72px, black 175px);
+    /* Fade content that scrolls behind the top nav bar — nav bottom ≈ 92px (28px pos + 64px height) */
+    mask-image: linear-gradient(to bottom, transparent 0, transparent 88px, black 140px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 88px, black 140px);
   }
   .modal-scroll-bare::-webkit-scrollbar { display: none; }
   .modal-scroll-bare > div {
-    /* nav bottom (~84px) + double inter-modal gap (2 × clamp(16,4vw,28) ≈ 56px) */
-    padding-top: clamp(136px, 20vw, 152px);
+    /* nav bottom (~92px) + halved gap (~22px) */
+    padding-top: clamp(104px, 15vw, 118px);
     min-height: 100%;
   }
   .animate-modal-in {
-    animation: modalIn 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: modalIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  /* Simple opacity fade — used for content that loads async (e.g. Stripe checkout) */
+  .animate-fade-in {
+    animation: fadeIn 0.35s ease;
   }
   @keyframes modalIn {
     from { opacity: 0; filter: blur(6px); transform: scale(0.97) translateY(8px); }
@@ -592,7 +616,7 @@
   .modal-content-out {
     opacity: 0 !important;
     filter: blur(5px) !important;
-    transition: opacity 0.22s ease, filter 0.22s ease !important;
+    transition: opacity 0.18s ease, filter 0.18s ease !important;
     pointer-events: none;
   }
 
@@ -611,35 +635,53 @@
     }
   }
 
-  /* ── Play cards — consistent glass matching nav ──────────────────── */
+  /* ── Play cards — premium glass look ──────────────────────────────── */
   .play-card {
-    background: rgba(30, 30, 30, 0.38);
-    border-radius: clamp(24px, 4.5vw, 34px);
+    background: linear-gradient(160deg, rgba(76, 76, 76, 0.32) 0%, rgba(36, 36, 36, 0.20) 100%);
+    border-radius: clamp(26px, 5vw, 40px);
     padding: clamp(24px, 4.8vw, 38px);
     display: flex;
     flex-direction: column;
-    gap: clamp(12px, 2.5vw, 16px);
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    backdrop-filter: blur(44px) saturate(2);
-    -webkit-backdrop-filter: blur(44px) saturate(2);
-    box-shadow: 0 8px 40px rgba(0,0,0,0.40), inset 0 1px 0 rgba(255,255,255,0.08);
+    gap: clamp(14px, 2.8vw, 20px);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    backdrop-filter: blur(48px) saturate(1.9) brightness(1.04);
+    -webkit-backdrop-filter: blur(48px) saturate(1.9) brightness(1.04);
+    box-shadow:
+      0 8px 40px rgba(0,0,0,0.32),
+      0 2px 10px rgba(0,0,0,0.18),
+      inset 0 1.5px 0 rgba(255,255,255,0.18),
+      inset 0 -1px 0 rgba(0,0,0,0.14);
   }
   .play-card-header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: clamp(12px, 2.4vw, 16px);
+    margin-bottom: clamp(6px, 1.4vw, 10px);
   }
   .play-card-pill {
-    background: rgba(30, 30, 30, 0.38);
+    background: linear-gradient(135deg, rgba(76, 76, 76, 0.32) 0%, rgba(36, 36, 36, 0.20) 100%);
     border-radius: 100px;
     padding: clamp(14px, 3vw, 22px) clamp(20px, 4vw, 36px);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(44px) saturate(2);
-    -webkit-backdrop-filter: blur(44px) saturate(2);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    backdrop-filter: blur(48px) saturate(1.9) brightness(1.04);
+    -webkit-backdrop-filter: blur(48px) saturate(1.9) brightness(1.04);
+    box-shadow:
+      0 4px 24px rgba(0,0,0,0.28),
+      inset 0 1.5px 0 rgba(255,255,255,0.18),
+      inset 0 -1px 0 rgba(0,0,0,0.12);
+  }
+  /* ── Image inside a play card — rounded corners, contain fill ────── */
+  .play-card-img {
+    width: 100%;
+    border-radius: clamp(14px, 3vw, 22px);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    position: relative;
+    line-height: 0;
+    background: rgba(0, 0, 0, 0.12);
   }
   /* ── Rules bullet list ───────────────────────────────────────────── */
   .play-rules-list {
@@ -671,17 +713,25 @@
     margin: 6px 0;
   }
   .tmm-light .play-card {
-    background: rgba(255, 255, 255, 0.72);
-    border-color: rgba(0, 0, 0, 0.08);
-    box-shadow: 0 8px 40px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.90);
-    backdrop-filter: blur(44px) saturate(1.8);
-    -webkit-backdrop-filter: blur(44px) saturate(1.8);
+    background: linear-gradient(160deg, rgba(255,255,255,0.75) 0%, rgba(240,240,240,0.58) 100%);
+    border-color: rgba(255,255,255,0.80);
+    box-shadow:
+      0 8px 40px rgba(0,0,0,0.10),
+      0 2px 10px rgba(0,0,0,0.07),
+      inset 0 1.5px 0 rgba(255,255,255,0.95),
+      inset 0 -1px 0 rgba(0,0,0,0.04);
+    backdrop-filter: blur(48px) saturate(1.9) brightness(1.02);
+    -webkit-backdrop-filter: blur(48px) saturate(1.9) brightness(1.02);
   }
   .tmm-light .play-card-pill {
-    background: rgba(255, 255, 255, 0.72);
-    border-color: rgba(0, 0, 0, 0.08);
-    backdrop-filter: blur(44px) saturate(1.8);
-    -webkit-backdrop-filter: blur(44px) saturate(1.8);
+    background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(240,240,240,0.58) 100%);
+    border-color: rgba(255,255,255,0.80);
+    box-shadow:
+      0 4px 24px rgba(0,0,0,0.09),
+      inset 0 1.5px 0 rgba(255,255,255,0.95),
+      inset 0 -1px 0 rgba(0,0,0,0.03);
+    backdrop-filter: blur(48px) saturate(1.9) brightness(1.02);
+    -webkit-backdrop-filter: blur(48px) saturate(1.9) brightness(1.02);
   }
   .tmm-light .play-card-divider { border-color: rgba(0, 0, 0, 0.1); }
 
@@ -698,18 +748,19 @@
     font-size: clamp(19px, 3.5vw, 23px);
     line-height: 1.3;
     letter-spacing: 0.03em;
-    color: rgba(255, 255, 255, 0.38);
+    color: #76787B;
   }
   .play-block-body {
     font-family: 'MarkerBold', sans-serif;
-    font-size: clamp(13px, 2.4vw, 15px);
-    line-height: 1.6;
+    font-size: clamp(14px, 2.4vw, 16px);
+    line-height: 1.65;
     letter-spacing: 0.02em;
     color: #ffffff;
     text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+    margin: 0;
   }
   .tmm-light .play-block-title    { color: #111111; }
-  .tmm-light .play-block-subtitle { color: rgba(0, 0, 0, 0.4); }
+  .tmm-light .play-block-subtitle { color: #76787B; }
   .tmm-light .play-block-body     { color: #111111; text-shadow: none; }
 
   /* ── Showcase modal ──────────────────────────────────────────────── */
@@ -916,8 +967,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
     flex-shrink: 0;
+    align-self: stretch;
+    width: clamp(100px, 28%, 140px);
+    min-height: clamp(60px, 10vw, 100px);
   }
   .reviews-score-number {
     font-family: 'MarkerBold', sans-serif;
@@ -926,18 +980,38 @@
     color: #ffffff;
   }
   .tmm-light .reviews-score-number { color: #111111; }
-  .reviews-bars {
+  .reviews-avg {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    justify-content: flex-start;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .reviews-bars {
+    width: clamp(100px, 28%, 140px);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
   }
   .review-bar-row {
     display: flex;
     align-items: center;
     gap: 10px;
   }
+  .review-bar-row--clickable {
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 3px 4px;
+    margin: 0 -4px;
+    transition: background 0.15s ease;
+  }
+  .review-bar-row--clickable:hover { background: rgba(255,255,255,0.06); }
+  .review-bar-row--active { background: rgba(255,255,255,0.08); }
+  .tmm-light .review-bar-row--clickable:hover { background: rgba(0,0,0,0.04); }
+  .tmm-light .review-bar-row--active { background: rgba(0,0,0,0.06); }
   .review-bar-label {
     font-family: 'MarkerBold', sans-serif;
     font-size: clamp(14px, 2.2vw, 16px);
@@ -949,7 +1023,7 @@
   .tmm-light .review-bar-label { color: rgba(0, 0, 0, 0.45); }
   .review-bar-track {
     flex: 1;
-    min-width: 50px;
+    min-width: 30px;
     height: 6px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 100px;
@@ -1092,10 +1166,10 @@
 
   /* ── Add review button ───────────────────────────────────────────── */
   .add-review-btn {
-    display: block;
-    width: 100%;
+    display: inline-block;
+    width: auto;
     margin-top: clamp(10px, 2vw, 14px);
-    padding: clamp(8px, 1.6vw, 11px) 0;
+    padding: clamp(8px, 1.6vw, 11px) clamp(20px, 3.5vw, 28px);
     background: transparent;
     border: 1px solid transparent;
     border-radius: 100px;
@@ -1231,7 +1305,7 @@
   /* ── Single-row pill — same shape as desktop, same vertical height ── */
   .pill-nav-inner {
     border-radius: 1000px;    /* pill shape */
-    padding: 10px 8px;        /* 10px top/bottom + 44px items = ~64px, same as desktop */
+    padding: 8px 8px;         /* 8px top/bottom + 44px items = ~60px */
     flex-direction: row;      /* horizontal — single row */
     align-items: center;
     height: auto;
@@ -1259,16 +1333,14 @@
   }
   .pill-nav-home--text { padding: 0 !important; min-width: 0 !important; }
 
-  /* Show eyes logo, hide text inside home button */
+  /* Mobile home button: show TMM, hide wide text and stack */
   .pill-nav-home .pill-nav-home-text { display: none !important; }
-  .pill-nav-home .pill-nav-home-logo { display: block !important; width: 28px !important; height: 28px !important; }
+  .pill-nav-home .pill-nav-home-logo { display: none !important; }
+  .pill-nav-home .pill-nav-home-wide { display: none !important; }
+  .pill-nav-home .pill-nav-home-stack { display: none !important; }
+  .pill-nav-home .pill-nav-home-tmm { display: block !important; }
 
-  /* Logo active state: force full brightness (overrides React's 0.55 default) */
-  .pill-nav-item--active .pill-nav-home-logo { opacity: 1 !important; }
-
-  /* Home logo button: no background or border when inactive/unhovered —
-     keep it as a plain icon identical to the other icon buttons.
-     Only .pill-nav-item--active adds the glass circle ring. */
+  /* No background or border on home button when inactive */
   .pill-nav-home:not(.pill-nav-item--active),
   .pill-nav-home:not(.pill-nav-item--active):hover {
     background: transparent !important;
@@ -1289,19 +1361,18 @@
     min-width: 0 !important;
   }
 
-  /* Slider hidden — direct active styling on buttons */
-  .pill-nav-slider { display: none !important; }
-
-  /* Active: glass circle on ALL items (including home icon) */
+  /* Active: subtle ghost circle + white icon */
   .pill-nav-item--active,
   .pill-nav-item--active:hover {
     background: rgba(255,255,255,0.09) !important;
-    border-color: rgba(255,255,255,0.38) !important;
+    border-color: rgba(255,255,255,0.22) !important;
+    color: #ffffff !important;
   }
   .tmm-light .pill-nav-item--active,
   .tmm-light .pill-nav-item--active:hover {
-    background: rgba(255,255,255,0.60) !important;
-    border-color: rgba(0,0,0,0.14) !important;
+    background: rgba(0,0,0,0.07) !important;
+    border-color: rgba(0,0,0,0.18) !important;
+    color: #000000 !important;
   }
 
   /* Badge position on mobile */
@@ -1327,13 +1398,13 @@
 
   main { padding-bottom: env(safe-area-inset-bottom, 0px); }
 
-  /* Modal fade mask — single-row nav is ~74px from top (10px pos + 64px height) */
+  /* Modal fade mask — mobile nav bottom ≈ 70px (10px pos + 60px height) */
   .modal-scroll-bare {
-    mask-image: linear-gradient(to bottom, transparent 0, transparent 68px, black 118px);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 68px, black 118px);
+    mask-image: linear-gradient(to bottom, transparent 0, transparent 64px, black 94px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 64px, black 94px);
   }
   .modal-scroll-bare > div {
-    padding-top: 118px; /* nav bottom (~74px) + ~44px (double inter-modal gap) */
+    padding-top: 94px; /* nav bottom (~70px) + halved gap (~24px) */
     padding-bottom: env(safe-area-inset-bottom, 24px);
   }
 
@@ -1357,6 +1428,7 @@
   /* Reviews — stack vertically on mobile */
   .reviews-summary { flex-direction: column; gap: 16px; }
   .reviews-divider { width: auto; height: 1px; margin: 4px 0; align-self: stretch; }
+  .reviews-score { width: 100%; min-height: clamp(60px, 12vw, 90px); }
   .reviews-bars { width: 100%; }
   .review-card-top { flex-wrap: nowrap; align-items: center; }
 
