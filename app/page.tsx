@@ -454,7 +454,7 @@ const TESTIMONIALS = [
   { name: "Lewis W",    age: 22, rating: 5, colorize: false, body: "The Marshall Mafia is always interesting no matter how many times we've played it. An ideal game to play with family or friends!" },
   { name: "Mia S",      age: 23, rating: 5, colorize: true,  body: "I was the Mafia and was getting by unscathed, killing people left, right and centre. My fellow mafias, 1 by 1, slowly getting caught... but there's still 1 left (ME). I get through 2 murders placing the blame on easy targets, who crack under pressure, then the dreaded words \"wait what about Mia?\" was said. Then it was wraps because everyone else was like \"Yeah what about Mia\". I immediately went into defence mode and then I was voted out :/ It was super fun, made the atmosphere super competitive... but in a friendly way! My family back home will love this! I will have to recommend it to them!" },
   { name: "Joseph G",  age: 21, rating: 5, colorize: true,  body: "I love the Detective card. I remember being given it and each round I guessed correctly. It made the game more enjoyable as I knew who the mafias were whilst trying to shine the light on them during voting, without giving my character away. Great social game at any place or time!" },
-  { name: "Dyjon N",   age: 20, rating: 4, colorize: false, body: "Played the game a few times before, what tends to be most memorable for me is when the Angel saves someone from a potential murdering or something of the sort. Just be prepared for anything, but not necessarily everything is a giveaway." },
+  { name: "Dyjon N",   age: 20, rating: 4, colorize: true,  body: "Played the game a few times before, what tends to be most memorable for me is when the Angel saves someone from a potential murdering or something of the sort. Just be prepared for anything, but not necessarily everything is a giveaway." },
   { name: "William M", age: 22, rating: 5, colorize: true,  body: "I'm a little biased, but I've always loved being a Marshall. I used to be so good as a Mafia but I'm a changed person, If I'm a Villager you better believe I'm catching them out. The cards are just as good in real life as they are in play. I took some photos of them see for yourself!", photos: ["/images/tmm_wm_testimonial_photo_1.png", "/images/tmm_wm_testimonial_photo_2.png", "/images/tmm_wm_testimonial_photo_3.png"] },
 ]
 
@@ -1176,7 +1176,7 @@ export default function Home() {
                     </div>
                     <p className="play-block-body" style={{marginTop:"clamp(8px,2vw,12px)"}}>{t.colorize ? colorizeBody(t.body) : t.body}</p>
                     {(t as any).photos && (
-                      <div style={{display:"flex",flexDirection:"row",gap:"clamp(6px,1.2vw,10px)",marginTop:"clamp(10px,2vw,16px)"}}>
+                      <div style={{display:"flex",flexDirection:"row",gap:"clamp(10px,2vw,16px)",marginTop:"clamp(10px,2vw,16px)"}}>
                         {(t as any).photos.map((src: string, pi: number) => (
                           <div key={pi} style={{flex:1,borderRadius:"clamp(12px,2.5vw,18px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}}>
                             <img src={src} alt={`${t.name} photo ${pi+1}`} style={{width:"100%",height:"auto",display:"block"}} />
