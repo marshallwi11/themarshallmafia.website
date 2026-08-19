@@ -1030,8 +1030,8 @@ export default function Home() {
                 {[1,2,3,4,5,6,7,8].map(i => (
                   <div key={i} style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
                     <img
-                      src={`/images/tmm_product_shot_${i}.png`}
-                      alt={`The Marshall Mafia — product shot ${i}`}
+                      src={`/images/tmm_product_render_${i}.png`}
+                      alt={`The Marshall Mafia — product render ${i}`}
                       style={{width:"100%",height:"auto",display:"block"}}
                     />
                   </div>
