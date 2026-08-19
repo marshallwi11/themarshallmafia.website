@@ -308,7 +308,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
           </div>
 
           {/* IMAGE — creation story 1 */}
-          <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+          <div style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
             <img src="/images/tmm_creation_story_1.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
@@ -329,7 +329,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
           </div>
 
           {/* IMAGE — creation story 2 */}
-          <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+          <div style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
             <img src="/images/tmm_creation_story_2.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
@@ -351,7 +351,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
           </div>
 
           {/* IMAGE — creation story 3 */}
-          <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+          <div style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
             <img src="/images/tmm_creation_story_3.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
@@ -375,7 +375,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
           </div>
 
           {/* IMAGE — creation story 4 */}
-          <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+          <div style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
             <img src="/images/tmm_creation_story_4.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
@@ -397,7 +397,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
           </div>
 
           {/* IMAGE — creation story 5 */}
-          <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+          <div style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
             <img src="/images/tmm_creation_story_5.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
@@ -418,7 +418,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
           </div>
 
           {/* IMAGE — creation story 6 */}
-          <div style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+          <div style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
             <img src="/images/tmm_creation_story_6.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
@@ -454,6 +454,7 @@ const TESTIMONIALS = [
   { name: "Lewis W",    age: 22, rating: 5, colorize: false, body: "The Marshall Mafia is always interesting no matter how many times we've played it. An ideal game to play with family or friends!" },
   { name: "Mia S",      age: 23, rating: 5, colorize: true,  body: "I was the Mafia and was getting by unscathed, killing people left, right and centre. My fellow mafias, 1 by 1, slowly getting caught... but there's still 1 left (ME). I get through 2 murders placing the blame on easy targets, who crack under pressure, then the dreaded words \"wait what about Mia?\" was said. Then it was wraps because everyone else was like \"Yeah what about Mia\". I immediately went into defence mode and then I was voted out :/ It was super fun, made the atmosphere super competitive... but in a friendly way! My family back home will love this! I will have to recommend it to them!" },
   { name: "Joseph G",  age: 21, rating: 5, colorize: true,  body: "I love the Detective card. I remember being given it and each round I guessed correctly. It made the game more enjoyable as I knew who the mafias were whilst trying to shine the light on them during voting, without giving my character away. Great social game at any place or time!" },
+  { name: "Dyjon N",   age: 20, rating: 4, colorize: false, body: "Played the game a few times before, what tends to be most memorable for me is when the Angel saves someone from a potential murdering or something of the sort. Just be prepared for anything, but not necessarily everything is a giveaway." },
 ]
 
 // Inline SVG for reviews panel (avoids img src loading issues)
@@ -1028,7 +1029,7 @@ export default function Home() {
                 </div>
                 {/* 8 plain images — no individual card headers */}
                 {[1,2,3,4,5,6,7,8].map(i => (
-                  <div key={i} style={{borderRadius:"clamp(14px,3vw,22px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+                  <div key={i} style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
                     <img
                       src={`/images/tmm_product_render_${i}.png`}
                       alt={`The Marshall Mafia — product render ${i}`}
