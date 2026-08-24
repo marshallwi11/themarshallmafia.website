@@ -1081,6 +1081,14 @@ export default function Home() {
                   </div>
                 </div>
 
+                {/* ── Album description ── */}
+                <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
+                  <p className="play-block-body">The extended playlist for The Marshall Mafia is a cross-generational album crafted to blur the line between playful intrigue and cinematic suspense. The selection of six songs creates a soundscape environment that feels both nostalgic and freshly mischievous.</p>
+                  <p className="play-block-body" style={{marginTop:"clamp(10px,2vw,14px)"}}>Designed to engage audiences of all ages, the soundtrack balances retro charm with modern "ear candy" — crisp textures, sly bass lines, and playful melodic hooks that appeal to younger listeners while delighting adults with subtle nods to vintage spy scores. Drawing inspiration from the suave mystery of The Pink Panther and the timeless sophistication of classic James Bond themes, its flagship theme, The Marshall Mafia, anchors the collection with a distinct, memorable motif that defines the project's identity — equal parts shadowy and sophisticated.</p>
+                  <p className="play-block-body" style={{marginTop:"clamp(10px,2vw,14px)"}}>Each track extends this atmosphere, drawing its title and tone from in-game quotes and moments, forming an immersive sonic backdrop to the Marshall Mafia game world. Beyond serving as theme music, the album functions as a layer of sonic camouflage — a background that conceals "nightly activities" within the game's universe while enriching the player's experience through tone, rhythm, and narrative depth.</p>
+                  <p className="play-block-body" style={{marginTop:"clamp(10px,2vw,14px)"}}>Its aim... merging detective noir with childlike wonder, offering a musical experience that is equal parts mysterious, mischievous, and unmistakably memorable.</p>
+                </div>
+
                 {/* ── Music player — controls the autoplay theme tune ── */}
                 <MusicPlayer audioRef={audioRef} lightMode={lightMode} />
 
