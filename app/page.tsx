@@ -1101,6 +1101,17 @@ export default function Home() {
                   <p className="play-block-body" style={{marginTop:"clamp(10px,2vw,14px)"}}>Its aim... merging detective noir with childlike wonder, offering a musical experience that is equal parts mysterious, mischievous, and unmistakably memorable.</p>
                 </div>
 
+                {/* ── Album 2 description ── */}
+                <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
+                  <div className="play-card-header">
+                    <span className="play-block-title">THE</span>
+                    <span className="play-block-subtitle">VOLUME 2</span>
+                  </div>
+                  <p className="play-block-body">The first full album dubbed "volume 2" advances The Marshall Mafia's soundscape with a more immersive, narrative-driven musical experience. Building on the foundation of the first release, this collection deepens the project's cinematic identity, introducing richer atmospheres, heightened tension, and a refined sense of storytelling through sound.</p>
+                  <p className="play-block-body" style={{marginTop:"clamp(10px,2vw,14px)"}}>Each composition is crafted to enhance world-building, strengthen emotional engagement, and reflect the evolving tone of the game. The album moves with intent — shaping intrigue, intensifying drama, and reinforcing the project's unique blend of sophistication, suspense, and thematic continuity.</p>
+                  <p className="play-block-body" style={{marginTop:"clamp(10px,2vw,14px)"}}>Positioned not simply as a follow-up but as an expansion, volume 2 broadens the narrative scope of The Marshall Mafia, offering a deeper, more resonant musical environment for audiences to engage with.</p>
+                </div>
+
                 {/* ── Music player — controls the autoplay theme tune ── */}
                 <MusicPlayer audioRef={audioRef} lightMode={lightMode} />
 
