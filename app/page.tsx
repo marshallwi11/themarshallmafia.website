@@ -525,6 +525,7 @@ export default function Home() {
   const [logoFading, setLogoFading] = useState(false)
   const [packSelected, setPackSelected] = useState<"standard" | "expansion" | null>(null)
   const [filterRating, setFilterRating] = useState<number | null>(null)
+  const [openVolume, setOpenVolume] = useState<number | null>(null)
   const [cartShaking, setCartShaking] = useState(false)
   const [infoOpen, setInfoOpen] = useState(false)
   const [modalSwitching, setModalSwitching] = useState(false)
@@ -1096,62 +1097,68 @@ export default function Home() {
                 {/* ── Music player — controls the autoplay theme tune ── */}
                 <MusicPlayer audioRef={audioRef} lightMode={lightMode} />
 
-                {/* Releases — right side matches left side font size */}
+                {/* Releases — accordion */}
                 <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
                   <div className="play-card-header">
                     <span className="play-block-title">MUSIC</span>
                     <span className="play-block-subtitle">RELEASED</span>
                   </div>
                   <div className="releases-list">
-                    <div className="release-row">
-                      <span className="play-block-body">VOLUME 1</span>
-                      <span className="play-block-body release-tag">Extended Playlist</span>
+                    {/* Volume 1 */}
+                    <div>
+                      <div className="release-row" style={{cursor:"pointer"}} onClick={() => setOpenVolume(openVolume === 1 ? null : 1)}>
+                        <span className="play-block-body">VOLUME 1</span>
+                        <span className="play-block-body release-tag" style={{display:"flex",alignItems:"center",gap:"8px"}}>
+                          Extended Playlist
+                          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" style={{opacity:0.45,transition:"transform 0.2s",transform:openVolume===1?"rotate(180deg)":"rotate(0deg)"}}><path d="M6 8L1 3h10L6 8z"/></svg>
+                        </span>
+                      </div>
+                      {openVolume === 1 && (
+                        <div style={{marginTop:"clamp(10px,2vw,14px)",display:"flex",flexDirection:"column",gap:"clamp(8px,1.5vw,12px)"}}>
+                          <p className="play-block-body">The extended playlist for The Marshall Mafia is a cross-generational album crafted to blur the line between playful intrigue and cinematic suspense. The selection of six songs creates a soundscape environment that feels both nostalgic and freshly mischievous.</p>
+                          <p className="play-block-body">Designed to engage audiences of all ages, the soundtrack balances retro charm with modern "ear candy" — crisp textures, sly bass lines, and playful melodic hooks that appeal to younger listeners while delighting adults with subtle nods to vintage spy scores. Drawing inspiration from the suave mystery of The Pink Panther and the timeless sophistication of classic James Bond themes, its flagship theme, The Marshall Mafia, anchors the collection with a distinct, memorable motif that defines the project's identity — equal parts shadowy and sophisticated.</p>
+                          <p className="play-block-body">Each track extends this atmosphere, drawing its title and tone from in-game quotes and moments, forming an immersive sonic backdrop to the Marshall Mafia game world. Beyond serving as theme music, the album functions as a layer of sonic camouflage — a background that conceals "nightly activities" within the game's universe while enriching the player's experience through tone, rhythm, and narrative depth.</p>
+                          <p className="play-block-body">Its aim... merging detective noir with childlike wonder, offering a musical experience that is equal parts mysterious, mischievous, and unmistakably memorable.</p>
+                        </div>
+                      )}
                     </div>
                     <hr className="play-card-divider" />
-                    <div className="release-row">
-                      <span className="play-block-body">VOLUME 2</span>
-                      <span className="play-block-body release-tag">ALBUM</span>
+                    {/* Volume 2 */}
+                    <div>
+                      <div className="release-row" style={{cursor:"pointer"}} onClick={() => setOpenVolume(openVolume === 2 ? null : 2)}>
+                        <span className="play-block-body">VOLUME 2</span>
+                        <span className="play-block-body release-tag" style={{display:"flex",alignItems:"center",gap:"8px"}}>
+                          ALBUM
+                          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" style={{opacity:0.45,transition:"transform 0.2s",transform:openVolume===2?"rotate(180deg)":"rotate(0deg)"}}><path d="M6 8L1 3h10L6 8z"/></svg>
+                        </span>
+                      </div>
+                      {openVolume === 2 && (
+                        <div style={{marginTop:"clamp(10px,2vw,14px)",display:"flex",flexDirection:"column",gap:"clamp(8px,1.5vw,12px)"}}>
+                          <p className="play-block-body">The first full album dubbed "volume 2" advances The Marshall Mafia's soundscape with a more immersive, narrative-driven musical experience. Building on the foundation of the first release, this collection deepens the project's cinematic identity, introducing richer atmospheres, heightened tension, and a refined sense of storytelling through sound.</p>
+                          <p className="play-block-body">Each composition is crafted to enhance world-building, strengthen emotional engagement, and reflect the evolving tone of the game. The album moves with intent — shaping intrigue, intensifying drama, and reinforcing the project's unique blend of sophistication, suspense, and thematic continuity.</p>
+                          <p className="play-block-body">Positioned not simply as a follow-up but as an expansion, volume 2 broadens the narrative scope of The Marshall Mafia, offering a deeper, more resonant musical environment for audiences to engage with.</p>
+                        </div>
+                      )}
                     </div>
                     <hr className="play-card-divider" />
-                    <div className="release-row">
-                      <span className="play-block-body">VOLUME 3</span>
-                      <span className="play-block-body release-tag">SOUNDTRACKS</span>
+                    {/* Volume 3 */}
+                    <div>
+                      <div className="release-row" style={{cursor:"pointer"}} onClick={() => setOpenVolume(openVolume === 3 ? null : 3)}>
+                        <span className="play-block-body">VOLUME 3</span>
+                        <span className="play-block-body release-tag" style={{display:"flex",alignItems:"center",gap:"8px"}}>
+                          SOUNDTRACKS
+                          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" style={{opacity:0.45,transition:"transform 0.2s",transform:openVolume===3?"rotate(180deg)":"rotate(0deg)"}}><path d="M6 8L1 3h10L6 8z"/></svg>
+                        </span>
+                      </div>
+                      {openVolume === 3 && (
+                        <div style={{marginTop:"clamp(10px,2vw,14px)",display:"flex",flexDirection:"column",gap:"clamp(8px,1.5vw,12px)"}}>
+                          <p className="play-block-body">The Marshall Mafia's character soundtrack collection translates the essence of eight core characters, including the storyteller into targeted musical identities. Each short-format track functions as a sonic profile, capturing attitude, tone, and emotional presence in a concise and immediately recognisable way.</p>
+                          <p className="play-block-body">Designed to support narrative immersion, these themes reinforce character identity, influence audience perception, and enhance a collective storytelling through atmosphere and mood. From the authority of certain characters and mischief of others, each piece serves as a distinct thematic signature within the wider game franchise.</p>
+                          <p className="play-block-body">Collectively, the collection strengthens character depth, enriches player experience, and contributes to a cohesive, emotionally resonant creative ecosystem surrounding The Marshall Mafia.</p>
+                        </div>
+                      )}
                     </div>
                   </div>
-                </div>
-
-                {/* ── Volume 1 description ── */}
-                <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
-                  <div className="play-card-header">
-                    <span className="play-block-title">THE</span>
-                    <span className="play-block-subtitle">VOLUME 1</span>
-                  </div>
-                  <p className="play-block-body">The extended playlist for The Marshall Mafia is a cross-generational album crafted to blur the line between playful intrigue and cinematic suspense. The selection of six songs creates a soundscape environment that feels both nostalgic and freshly mischievous.</p>
-                  <p className="play-block-body" style={{marginTop:"clamp(10px,2vw,14px)"}}>Designed to engage audiences of all ages, the soundtrack balances retro charm with modern "ear candy" — crisp textures, sly bass lines, and playful melodic hooks that appeal to younger listeners while delighting adults with subtle nods to vintage spy scores. Drawing inspiration from the suave mystery of The Pink Panther and the timeless sophistication of classic James Bond themes, its flagship theme, The Marshall Mafia, anchors the collection with a distinct, memorable motif that defines the project's identity — equal parts shadowy and sophisticated.</p>
-                  <p className="play-block-body" style={{marginTop:"clamp(10px,2vw,14px)"}}>Each track extends this atmosphere, drawing its title and tone from in-game quotes and moments, forming an immersive sonic backdrop to the Marshall Mafia game world. Beyond serving as theme music, the album functions as a layer of sonic camouflage — a background that conceals "nightly activities" within the game's universe while enriching the player's experience through tone, rhythm, and narrative depth.</p>
-                  <p className="play-block-body" style={{marginTop:"clamp(10px,2vw,14px)"}}>Its aim... merging detective noir with childlike wonder, offering a musical experience that is equal parts mysterious, mischievous, and unmistakably memorable.</p>
-                </div>
-
-                {/* ── Volume 2 description ── */}
-                <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
-                  <div className="play-card-header">
-                    <span className="play-block-title">THE</span>
-                    <span className="play-block-subtitle">VOLUME 2</span>
-                  </div>
-                  <p className="play-block-body">The first full album dubbed "volume 2" advances The Marshall Mafia's soundscape with a more immersive, narrative-driven musical experience. Building on the foundation of the first release, this collection deepens the project's cinematic identity, introducing richer atmospheres, heightened tension, and a refined sense of storytelling through sound.</p>
-                  <p className="play-block-body" style={{marginTop:"clamp(10px,2vw,14px)"}}>Each composition is crafted to enhance world-building, strengthen emotional engagement, and reflect the evolving tone of the game. The album moves with intent — shaping intrigue, intensifying drama, and reinforcing the project's unique blend of sophistication, suspense, and thematic continuity.</p>
-                  <p className="play-block-body" style={{marginTop:"clamp(10px,2vw,14px)"}}>Positioned not simply as a follow-up but as an expansion, volume 2 broadens the narrative scope of The Marshall Mafia, offering a deeper, more resonant musical environment for audiences to engage with.</p>
-                </div>
-
-                {/* ── Volume 3 / Character soundtrack description ── */}
-                <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
-                  <div className="play-card-header">
-                    <span className="play-block-title">THE</span>
-                    <span className="play-block-subtitle">VOLUME 3</span>
-                  </div>
-                  <p className="play-block-body">The Marshall Mafia's character soundtrack collection translates the essence of eight core characters, including the storyteller into targeted musical identities. Each short-format track functions as a sonic profile, capturing attitude, tone, and emotional presence in a concise and immediately recognisable way.</p>
-                  <p className="play-block-body" style={{marginTop:"clamp(10px,2vw,14px)"}}>Designed to support narrative immersion, these themes reinforce character identity, influence audience perception, and enhance a collective storytelling through atmosphere and mood. From the authority of certain characters and mischief of others, each piece serves as a distinct thematic signature within the wider game franchise.</p>
-                  <p className="play-block-body" style={{marginTop:"clamp(10px,2vw,14px)"}}>Collectively, the collection strengthens character depth, enriches player experience, and contributes to a cohesive, emotionally resonant creative ecosystem surrounding The Marshall Mafia.</p>
                 </div>
               </div>
             </div>
