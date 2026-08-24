@@ -303,6 +303,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
               <span className="play-block-title">THE CONUNDRUM</span>
+              <span className="play-block-subtitle">origin</span>
             </div>
             <p className="play-block-body">On one suspiciously loud Marshall games night, we were playing Mafia. Or at least trying to. Using a standard deck of playing cards, everyone at the table seemed to know a different version of the same game. The characters were different. The names were different. The rules were different. Nobody could quite agree on how to play.</p>
           </div>
@@ -316,6 +317,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
               <span className="play-block-title">THE MOMENT</span>
+              <span className="play-block-subtitle">the spark</span>
             </div>
             <p className="play-block-body">A Marshall, lost in that confusion, stopped listening and started thinking. There had to be a better way to play this. One deck. One set of rules. One game everyone could actually agree on, whether they were a child, a teenager, or an adult. Their first game or their last.</p>
           </div>
@@ -324,6 +326,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
               <span className="play-block-title">THE NIGHT</span>
+              <span className="play-block-subtitle">the work</span>
             </div>
             <p className="play-block-body">The thought didn{"'"}t wait for light of day. The typing lasted long into the dark early hours of the morning. Once the first idea was created, it sparked a week of very little sleep and a lot of notes — roles, rules, characters, game-modes, written down as fast as they arrived, then crossed out, then written again. By the end of it, the first rule-set existed. It wasn{"'"}t complete yet. But the idea was inspiring…</p>
           </div>
@@ -337,6 +340,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
               <span className="play-block-title">THE PHILOSOPHY</span>
+              <span className="play-block-subtitle">our vision</span>
             </div>
             <p className="play-block-body">Our aim was to make: {'"'}A world of games, that are suspiciously fun, told with a smile and a wink. Created for any player, all generations, every home.{'"'}</p>
           </div>
@@ -345,6 +349,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
               <span className="play-block-title">THE WORLD</span>
+              <span className="play-block-subtitle">the dream</span>
             </div>
             <p className="play-block-body">We wondered what that games night should have looked like, and dreamed a world to accompany it. We imagined a mixed group of players... anyone and everyone, family and friends. Working together, or secretly against each other, around a table or across a collection of sofas.</p>
             <p className="play-block-body">The room is crisp with light suspicious fog, set in the summer cool of onsetting dusk, with everyone dressed up for a night of theatrical old fashioned games... with a new twist. We speculated art decking the walls while a band plays heartfelt downtempo music, taking off the formal edge, while putting a killer edge on. A room you would expect a spy to be seated in, a scripted movie with a story shaken up and stirred into real life.</p>
@@ -359,6 +364,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
               <span className="play-block-title">THE ARTWORK</span>
+              <span className="play-block-subtitle">the characters</span>
             </div>
             <p className="play-block-body">Weeks of drawing followed the weeks of writing. Through sourcing from old detective novels and action thrillers, to the classic cheekiness of 2D shows like Pink Panther, a cast started to emerge.</p>
             <p className="play-block-body">The sharp <span className="text-tmm-red">Mafia</span>. The pointed <span className="text-tmm-brown">Villager</span>. The handy <span className="text-tmm-green">Angel</span>. The ballsy <span className="text-tmm-yellow">Jester</span>. The clued-up <span className="text-tmm-blue">Detective</span>. The ruling <span className="text-tmm-cream">Marshall</span> ;)</p>
@@ -369,6 +375,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
               <span className="play-block-title">THE BRAND</span>
+              <span className="play-block-subtitle">the mark</span>
             </div>
             <p className="play-block-body">The world had found its voice. But it needed to be instantly recognisable to anyone who plays. So we took the component that does not change across all characters — the eyes. The obvious choice. One we were too blind to see before.</p>
             <p className="play-block-body">It also captured the heart of the game: seeing what{"'"}s going on around you when you{"'"}re awake, and being in the dark when you{"'"}re asleep. The roles became united under a single mark. Eyes that are open, watching, even when they are closed. Awake while the table sleeps.</p>
@@ -383,6 +390,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
               <span className="play-block-title">THE TESTING</span>
+              <span className="play-block-subtitle">the process</span>
             </div>
             <p className="play-block-body">The idea was only half the game. The rest came from demo packs and far too many rounds with friends and family. We played game after game, night after night, until we knew more about what didn{"'"}t work than what did.</p>
             <p className="play-block-body">Characters that caused complications, rather than cheeky confusion, were cut. Rule sets that created chaos were rebuilt, giving each group more freedom to choose how they played. The colour hues went through several revisions too. Every role needed to be easy to find, easy to understand, and easy to read, whether you were a child, a parent, or a grandparent.</p>
@@ -392,6 +400,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
               <span className="play-block-title">THE MISTAKE</span>
+              <span className="play-block-subtitle">coming soon</span>
             </div>
             <p className="play-block-body">Somewhere in the middle of finishing the standard pack, a whole expansion started to appear too. There were simply too many ideas to fit into one box. Once a suspicious little world exists, it{"'"}s very hard to stop building on it. People keep asking about it. It{"'"}s coming. Just not quite yet.</p>
           </div>
@@ -405,6 +414,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
               <span className="play-block-title">THE MUSIC</span>
+              <span className="play-block-subtitle">the atmosphere</span>
             </div>
             <p className="play-block-body">We also realised something was missing. When we played, the room didn{"'"}t quite match the world we had imagined. Then, somewhere around midnight, we clocked it... The places that inspired the game all had theme tunes, soundtracks, or background music. So we spent the next few months composing three albums to sit alongside the game and complete the atmosphere.</p>
           </div>
@@ -413,6 +423,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
               <span className="play-block-title">THE NAME</span>
+              <span className="play-block-subtitle">the identity</span>
             </div>
             <p className="play-block-body">We weren{"'"}t quite sure what to call the game. Then we realised it had been staring us in the face all along, even when our eyes were closed. We{"'"}d been playing the Marshall{"'"}s version of Mafia. So we called it exactly that.</p>
           </div>
@@ -426,6 +437,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
           <div className="play-card" onClick={e => e.stopPropagation()}>
             <div className="play-card-header">
               <span className="play-block-title">THE GAME</span>
+              <span className="play-block-subtitle">the result</span>
             </div>
             <p className="play-block-body">What we made was called {'"'}The Marshall Mafia{'"'}, the sneakiest social deduction card game. A world of suspicious fun, crafted to be cheeky, cheerful and downright fun. Don{"'"}t believe us? Try it and see. We dare you to have as much fun as everyone else testifies ;)</p>
           </div>
