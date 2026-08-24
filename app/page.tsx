@@ -1112,6 +1112,17 @@ export default function Home() {
                   <p className="play-block-body" style={{marginTop:"clamp(10px,2vw,14px)"}}>Positioned not simply as a follow-up but as an expansion, volume 2 broadens the narrative scope of The Marshall Mafia, offering a deeper, more resonant musical environment for audiences to engage with.</p>
                 </div>
 
+                {/* ── Character soundtrack description ── */}
+                <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
+                  <div className="play-card-header">
+                    <span className="play-block-title">THE</span>
+                    <span className="play-block-subtitle">CHARACTERS</span>
+                  </div>
+                  <p className="play-block-body">The Marshall Mafia's character soundtrack collection translates the essence of eight core characters, including the storyteller into targeted musical identities. Each short-format track functions as a sonic profile, capturing attitude, tone, and emotional presence in a concise and immediately recognisable way.</p>
+                  <p className="play-block-body" style={{marginTop:"clamp(10px,2vw,14px)"}}>Designed to support narrative immersion, these themes reinforce character identity, influence audience perception, and enhance a collective storytelling through atmosphere and mood. From the authority of certain characters and mischief of others, each piece serves as a distinct thematic signature within the wider game franchise.</p>
+                  <p className="play-block-body" style={{marginTop:"clamp(10px,2vw,14px)"}}>Collectively, the collection strengthens character depth, enriches player experience, and contributes to a cohesive, emotionally resonant creative ecosystem surrounding The Marshall Mafia.</p>
+                </div>
+
                 {/* ── Music player — controls the autoplay theme tune ── */}
                 <MusicPlayer audioRef={audioRef} lightMode={lightMode} />
 
