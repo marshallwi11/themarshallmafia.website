@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback, useRef } from "react"
+import Script from "next/script"
 import type { AnimationItem } from "lottie-web"
 import { loadStripe } from "@stripe/stripe-js"
 import { EmbeddedCheckout, EmbeddedCheckoutProvider } from "@stripe/react-stripe-js"
@@ -641,6 +642,15 @@ export default function Home() {
 
   return (
     <>
+      {/* ── Google Analytics ── */}
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-1TVZ9D5MWT" strategy="afterInteractive" />
+      <Script id="google-analytics" strategy="afterInteractive">{`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-1TVZ9D5MWT');
+      `}</Script>
+
       {/* WebGL mesh gradient backdrop — replaces old CSS animated linear-gradient */}
       <MeshGradient lightMode={lightMode} />
       {/* OLD CSS backdrop (kept for easy revert — re-enable in globals.css "LEGACY BACKDROP" section too):
