@@ -1320,6 +1320,90 @@ export default function Home() {
                   <span className="play-block-subtitle">SECURE</span>
                 </div>
 
+                {/* ── Cancellations ── */}
+                <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
+                  <div className="play-card-header">
+                    <span className="play-block-title">ORDER</span>
+                    <span className="play-block-subtitle">CANCELLATIONS</span>
+                  </div>
+                  <p className="play-block-body" style={{marginBottom:"clamp(10px,2vw,14px)"}}>This is the formal bit, so forgive us for being less witty and more blunt :)</p>
+                  <p className="play-block-body" style={{marginBottom:"clamp(10px,2vw,14px)"}}>You can cancel your order within 14 days without giving a reason. The period ends 14 days after the day you, or someone you nominate other than the courier, receives the goods.</p>
+                  <p className="play-block-body" style={{marginBottom:"clamp(10px,2vw,14px)"}}>We hope you don't — let us know if there is anything we can do to help — but if you have changed your mind? It happens, just tell us clearly before the period ends. Easiest is an email to <a href="mailto:info@themarshallmafia.com" style={{color:"inherit",textDecoration:"underline",opacity:0.7}}>info@themarshallmafia.com</a> with your name, address, order number and date, so we can find your order quickly. There's also our cancellation form if you'd prefer, and any other clear message is good to us too.</p>
+                  <p className="play-block-body" style={{marginBottom:"clamp(10px,2vw,14px)"}}>Send the box back within 14 days of telling us you are cancelling, to:</p>
+                  <p className="play-block-body" style={{marginBottom:"clamp(10px,2vw,14px)",opacity:0.7}}>57 Parklawn Avenue, KT18 7SJ, Epsom, Surrey, United Kingdom.</p>
+                  <p className="play-block-body" style={{marginBottom:"clamp(10px,2vw,14px)",fontWeight:600}}>NOTE!</p>
+                  <p className="play-block-body">You'll need to cover the cost of sending the deck back — this is to protect us from cheeky customers. Please use a tracked service if you can; until the parcel has been received by us it's still your responsibility, and tracking saves a lot of mess if it goes astray. As soon as we have the box in our hands, we'll hand your refund back to you.</p>
+                </div>
+
+                {/* ── Refunds ── */}
+                <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
+                  <div className="play-card-header">
+                    <span className="play-block-title">REFUND</span>
+                    <span className="play-block-subtitle">POLICY</span>
+                  </div>
+                  <p className="play-block-body" style={{marginBottom:"clamp(10px,2vw,14px)"}}>We will refund the price you paid, plus the standard outbound postage charge (if we delivered this). If you chose a faster or upgraded delivery option, we can only refund the standard rate. You send it, we will refund it — within 14 days of receiving the deck, or of you proving it's on its way, whichever comes first. Your payment will return the way it came.</p>
+                  <p className="play-block-body" style={{marginBottom:"clamp(10px,2vw,14px)",fontWeight:600}}>NOTE!</p>
+                  <p className="play-block-body" style={{marginBottom:"clamp(10px,2vw,14px)"}}>If the deck comes back having seen some action, we may have to reduce the refund to reflect the loss in value. Looking is fine. Touching, we would too. However unsealing and playing a full round or few is a different case ;)</p>
+                  <p className="play-block-body">Faulty or misdescribed? That's on us — no games. Whether it was us or the postage service, it's separate from your cancellation right: you have 30 days from delivery to reject faulty goods for a full refund. We cover return postage. Don't worry.</p>
+                </div>
+
+                {/* ── Legal Compliance intro ── */}
+                <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
+                  <div className="play-card-header">
+                    <span className="play-block-title">LEGAL</span>
+                    <span className="play-block-subtitle">COMPLIANCE</span>
+                  </div>
+                  <p className="play-block-body">We don't play games here, so you can. We push the paper, draw the lines, dot the full stops and tick the boxes, so you can safely cross each other. The boxes have been tested several standards deep so you can put your friends 6ft under. We are EN 71 toy safety tested, UKCA and CE marked, GPSR labelled, FSC card stocked.</p>
+                </div>
+
+                {/* ── FSC ── */}
+                <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
+                  <div className="play-card-header">
+                    <span className="play-block-title">FSC®</span>
+                    <span className="play-block-subtitle">SOURCING</span>
+                  </div>
+                  <p className="play-block-body">The paper and card stock used in The Marshall Mafia is produced by Ivory Graphics, an FSC® certified printer. FSC® (Forest Stewardship Council) certification means materials are sourced from responsibly managed forests. We do our due diligence with our print suppliers to ensure that our environmental commitments aren't just words — they're printed into every card onto every box.</p>
+                </div>
+
+                {/* ── UKCA ── */}
+                <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
+                  <div className="play-card-header">
+                    <span className="play-block-title">UKCA</span>
+                    <span className="play-block-subtitle">CERTIFIED</span>
+                  </div>
+                  <p className="play-block-body">The Marshall Mafia carries the UKCA mark, the legal requirement for products sold in England, Scotland, and Wales. Our printer, Ivory Graphics, submits products for annual testing with an accredited laboratory. This confirms the game meets UK toy safety legislation.</p>
+                </div>
+
+                {/* ── CE & GPSR ── */}
+                <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
+                  <div className="play-card-header">
+                    <span className="play-block-title">CE &</span>
+                    <span className="play-block-subtitle">GPSR</span>
+                  </div>
+                  <p className="play-block-body" style={{marginBottom:"clamp(10px,2vw,14px)"}}>For customers in the EU, The Marshall Mafia is CE marked and compliant with the General Product Safety Regulation (GPSR), mandatory as of December 2024. Our EU Responsible Person for GPSR compliance:</p>
+                  <p className="play-block-body" style={{opacity:0.7}}>eucomply OÜ — Pärnu mnt. 139b–14, 11317 Tallinn, Estonia, European Union. <a href="mailto:hello@eucompliancepartner.com" style={{color:"inherit",textDecoration:"underline"}}>hello@eucompliancepartner.com</a></p>
+                </div>
+
+                {/* ── Ivory UK – Manufacturer ── */}
+                <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
+                  <div className="play-card-header">
+                    <span className="play-block-title">IVORY</span>
+                    <span className="play-block-subtitle">UK</span>
+                  </div>
+                  <p className="play-block-body" style={{opacity:0.7}}>Printed by Ivory Graphics Ltd, Unit 2, 55 Thorby Avenue, March, PE15 0AZ, England.</p>
+                </div>
+
+                {/* ── Producer ── */}
+                <div className="play-card" onClick={e => e.stopPropagation()} style={{marginTop:"clamp(16px,4vw,32px)"}}>
+                  <div className="play-card-header">
+                    <span className="play-block-title">THE</span>
+                    <span className="play-block-subtitle">PRODUCER</span>
+                  </div>
+                  <p className="play-block-body" style={{marginBottom:"clamp(10px,2vw,14px)"}}>Who you're buying from is our resident designer and artist.</p>
+                  <p className="play-block-body" style={{marginBottom:"clamp(10px,2vw,14px)"}}>William Marshall (trading as marshallwi11), 57 Parklawn Avenue, Epsom, Surrey, KT18 7SJ, United Kingdom. <a href="mailto:info@marshallwi11.com" style={{color:"inherit",textDecoration:"underline",opacity:0.7}}>info@marshallwi11.com</a></p>
+                  <p className="play-block-body">For enquiries regarding The Marshall Mafia, please email: <a href="mailto:info@themarshallmafia.com" style={{color:"inherit",textDecoration:"underline",opacity:0.7}}>info@themarshallmafia.com</a></p>
+                </div>
+
               </div>
             </div>
           </div>
