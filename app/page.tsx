@@ -1346,7 +1346,7 @@ export default function Home() {
                   <p className="play-block-body">We will refund the price you paid, plus the standard outbound postage charge (if we delivered this). If you choose a faster or upgraded delivery option, we can only refund the standard rate. You send it, we will refund it. Within 14 days of receiving the deck, or of you proving it's on its way — whichever comes first. Your payment will return the way it came.</p>
                   <p className="play-block-body"><span style={{color:"#F8007A",fontWeight:600}}>NOTE!</span> — If the deck comes back having seen some action, we may have to reduce the refund to reflect the loss in value. Looking is fine. Touching, we would too. However unsealing and playing a full round or few is a different case ;)</p>
                   <p className="play-block-body">Faulty or misdescribed? That's on us — no games. Whether it was us or the postage service, we shouldn't play around with your package. Jokes aside, we are being serious and it's separate from your cancellation right: you have 30 days from delivery to reject faulty goods for a full refund. We cover return postage. Don't you worry.</p>
-                  <p className="play-block-body" style={{opacity:0.55}}>The Marshall Mafia is a family of players. But technically, who you're buying from is just one of us — our resident designer and artist. William Marshall (trading as marshallwi11), 57 Parklawn Avenue, Epsom, Surrey, KT18 7SJ, United Kingdom.</p>
+                  <p className="play-block-body" style={{color:"rgba(255,255,255,0.55)"}}>The Marshall Mafia is a family of players. But technically, who you're buying from is just one of us — our resident designer and artist. William Marshall (trading as marshallwi11), 57 Parklawn Avenue, Epsom, Surrey, KT18 7SJ, United Kingdom.</p>
                 </div>
 
                 {/* ── Legal Compliance intro — FIRST ── */}
@@ -1383,7 +1383,7 @@ export default function Home() {
                     <span className="play-block-subtitle">GPSR</span>
                   </div>
                   <p className="play-block-body" style={{marginBottom:"clamp(8px,1.5vw,12px)"}}>For customers in the EU, The Marshall Mafia is CE marked and compliant with the General Product Safety Regulation (GPSR), mandatory as of December 2024. Our EU Responsible Person for GPSR compliance:</p>
-                  <p className="play-block-body" style={{opacity:0.55}}>eucomply OÜ — Pärnu mnt. 139b–14, 11317 Tallinn, Estonia, European Union. <a href="mailto:hello@eucompliancepartner.com" className="legal-email">hello@eucompliancepartner.com</a></p>
+                  <p className="play-block-body" style={{color:"rgba(255,255,255,0.55)"}}>eucomply OÜ — Pärnu mnt. 139b–14, 11317 Tallinn, Estonia, European Union. <a href="mailto:hello@eucompliancepartner.com" className="legal-email">hello@eucompliancepartner.com</a></p>
                 </div>
 
                 {/* ── Ivory UK – Manufacturer ── */}
@@ -1392,7 +1392,7 @@ export default function Home() {
                     <span className="play-block-title">IVORY</span>
                     <span className="play-block-subtitle">UK</span>
                   </div>
-                  <p className="play-block-body" style={{opacity:0.55}}>Printed by Ivory Graphics Ltd, Unit 2, 55 Thorby Avenue, March, PE15 0AZ, England.</p>
+                  <p className="play-block-body" style={{color:"rgba(255,255,255,0.55)"}}>Printed by Ivory Graphics Ltd, Unit 2, 55 Thorby Avenue, March, PE15 0AZ, England.</p>
                 </div>
 
                 {/* ── Producer ── */}
@@ -1401,9 +1401,9 @@ export default function Home() {
                     <span className="play-block-title">THE</span>
                     <span className="play-block-subtitle">PRODUCER</span>
                   </div>
-                  <p className="play-block-body" style={{opacity:0.55}}>For inquiries regarding The Marshall Mafia please email: <a href="mailto:info@themarshallmafia.com" className="legal-email">info@themarshallmafia.com</a></p>
-                  <p className="play-block-body" style={{opacity:0.55}}>The Marshall Mafia is designed and published by William Marshall (t/a marshallwi11), operating as a sole trader in the United Kingdom.</p>
-                  <p className="play-block-body" style={{opacity:0.55}}>William Marshall — 57 Parklawn Avenue, KT18 7SJ, Epsom, Surrey, United Kingdom. <a href="mailto:info@marshallwi11.com" className="legal-email">info@marshallwi11.com</a></p>
+                  <p className="play-block-body">For inquiries regarding The Marshall Mafia please email: <a href="mailto:info@themarshallmafia.com" className="legal-email">info@themarshallmafia.com</a></p>
+                  <p className="play-block-body">The Marshall Mafia is designed and published by William Marshall (t/a marshallwi11), operating as a sole trader in the United Kingdom.</p>
+                  <p className="play-block-body" style={{color:"rgba(255,255,255,0.55)"}}>57 Parklawn Avenue, KT18 7SJ, Epsom, Surrey, United Kingdom. <a href="mailto:info@marshallwi11.com" className="legal-email">info@marshallwi11.com</a></p>
                 </div>
 
               </div>
