@@ -311,7 +311,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
 
           {/* IMAGE — creation story 1 */}
           <div style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-            <img src="/images/tmm_creation_story_1.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
+            <img loading="lazy" decoding="async" src="/images/tmm_creation_story_1.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
           {/* ── The Moment ── */}
@@ -334,7 +334,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
 
           {/* IMAGE — creation story 2 */}
           <div style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-            <img src="/images/tmm_creation_story_2.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
+            <img loading="lazy" decoding="async" src="/images/tmm_creation_story_2.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
           {/* ── The Philosophy ── */}
@@ -358,7 +358,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
 
           {/* IMAGE — creation story 3 */}
           <div style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-            <img src="/images/tmm_creation_story_3.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
+            <img loading="lazy" decoding="async" src="/images/tmm_creation_story_3.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
           {/* ── The Artwork ── */}
@@ -384,7 +384,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
 
           {/* IMAGE — creation story 4 */}
           <div style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-            <img src="/images/tmm_creation_story_4.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
+            <img loading="lazy" decoding="async" src="/images/tmm_creation_story_4.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
           {/* ── The Testing ── */}
@@ -408,7 +408,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
 
           {/* IMAGE — creation story 5 */}
           <div style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-            <img src="/images/tmm_creation_story_5.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
+            <img loading="lazy" decoding="async" src="/images/tmm_creation_story_5.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
           {/* ── The Music ── */}
@@ -431,7 +431,7 @@ function InfoPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
 
           {/* IMAGE — creation story 6 */}
           <div style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
-            <img src="/images/tmm_creation_story_6.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
+            <img loading="lazy" decoding="async" src="/images/tmm_creation_story_6.png" alt="The Marshall Mafia — creation story" style={{width:"100%",height:"auto",display:"block"}} />
           </div>
 
           {/* ── The Game ── */}
@@ -531,6 +531,7 @@ export default function Home() {
   const [cartShaking, setCartShaking] = useState(false)
   const [infoOpen, setInfoOpen] = useState(false)
   const [modalSwitching, setModalSwitching] = useState(false)
+  const [cookieDismissed, setCookieDismissed] = useState(true) // start hidden; useEffect reveals if not yet accepted
   // 0 = intro text showing | 1 = text fading out | 2 = nav visible
   const [navIntro, setNavIntro] = useState(0)
   const lastTapRef = useRef<number>(0)
@@ -545,6 +546,29 @@ export default function Home() {
     const t1 = setTimeout(() => setNavIntro(1), 1000)  // text starts fading (1s hold)
     const t2 = setTimeout(() => setNavIntro(2), 1800)  // icons appear after overlay fades (~0.7s fade)
     return () => { clearTimeout(t1); clearTimeout(t2) }
+  }, [])
+
+  // Cookie banner — check localStorage once on mount
+  useEffect(() => {
+    if (!localStorage.getItem("tmm_cookies_accepted")) setCookieDismissed(false)
+  }, [])
+
+  // Preload all modal images in the background so they're cached before the user opens anything
+  useEffect(() => {
+    const paths = [
+      ...([1,2,3,4,5,6].map(i => `/images/tmm_creation_story_${i}.png`)),
+      ...([1,2,3,4,5,6,7].map(i => `/images/tmm_product_render_${i}.png`)),
+      "/images/tmm_wm_testimonial_photo_1.png",
+      "/images/tmm_wm_testimonial_photo_2.png",
+      "/images/tmm_wm_testimonial_photo_3.png",
+      "/images/tmm_music_spotify.jpg",
+      "/images/tmm_music_apple_music.jpg",
+      "/images/tmm_music_tidal.jpg",
+      "/images/tmm_music_amazon_music.jpg",
+      "/images/tmm_music_deezer.jpg",
+      "/images/tmm_music_youtube.jpg",
+    ]
+    paths.forEach(src => { const img = new window.Image(); img.src = src })
   }, [])
 
   const handleLogoTap = useCallback(() => {
@@ -652,7 +676,17 @@ export default function Home() {
         gtag('config', 'G-1TVZ9D5MWT');
       `}</Script>
 
-      <style>{`.legal-email{color:var(--tmm-blue);transition:color 0.2s}.legal-email:hover{color:rgba(255,255,255,0.45)}`}</style>
+      <style>{`
+        .legal-email{color:var(--tmm-blue);transition:color 0.2s}.legal-email:hover{color:rgba(255,255,255,0.45)}
+        .cookie-bar{position:fixed;bottom:clamp(16px,3vw,28px);left:50%;transform:translateX(-50%);z-index:9000;display:flex;align-items:center;gap:12px;padding:10px 16px 10px 12px;background:rgba(18,18,24,0.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.10);border-radius:50px;white-space:nowrap;pointer-events:auto;transition:opacity 0.35s,transform 0.35s}
+        .cookie-bar--hidden{opacity:0;transform:translateX(-50%) translateY(12px);pointer-events:none}
+        .cookie-bar__text{font-size:clamp(10px,1.6vw,13px);color:rgba(255,255,255,0.65);letter-spacing:0.02em}
+        .cookie-bar__link{color:var(--tmm-blue);font-size:clamp(10px,1.6vw,13px)}
+        .cookie-bar__btn{background:rgba(255,255,255,0.10);border:none;border-radius:50px;color:#fff;font-size:clamp(9px,1.4vw,12px);letter-spacing:0.08em;padding:4px 12px;cursor:pointer;transition:background 0.2s;font-weight:600;text-transform:uppercase}
+        .cookie-bar__btn:hover{background:rgba(255,255,255,0.20)}
+        .cookie-bar__close{background:none;border:none;color:rgba(255,255,255,0.35);cursor:pointer;font-size:16px;line-height:1;padding:0 2px;transition:color 0.2s}
+        .cookie-bar__close:hover{color:rgba(255,255,255,0.75)}
+      `}</style>
 
       {/* WebGL mesh gradient backdrop — replaces old CSS animated linear-gradient */}
       <MeshGradient lightMode={lightMode} />
@@ -1056,14 +1090,16 @@ export default function Home() {
                 {/* Single title pill */}
                 <div className="play-card-pill" onClick={e => e.stopPropagation()}>
                   <span className="play-block-title">SHOWCASE</span>
-                  <span className="play-block-subtitle">PNG 1–8</span>
+                  <span className="play-block-subtitle">PNG 1–7</span>
                 </div>
                 {/* 8 plain images — no individual card headers */}
-                {[1,2,3,4,5,6,7,8].map(i => (
+                {[1,2,3,4,5,6,7].map(i => (
                   <div key={i} style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
                     <img
                       src={`/images/tmm_product_render_${i}.png`}
                       alt={`The Marshall Mafia — product render ${i}`}
+                      loading="lazy"
+                      decoding="async"
                       style={{width:"100%",height:"auto",display:"block"}}
                     />
                   </div>
@@ -1413,6 +1449,31 @@ export default function Home() {
         )}
 
       </main>
+
+      {/* ── Cookie banner ── */}
+      <div className={`cookie-bar${(cookieDismissed || activeModal !== null) ? " cookie-bar--hidden" : ""}`} role="region" aria-label="Cookie notice">
+        {/* TMM eyes mark */}
+        <svg width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{flexShrink:0}}>
+          {/* left eye */}
+          <ellipse cx="7" cy="9" rx="6" ry="8" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5" fill="none"/>
+          <circle cx="7" cy="9" r="3" fill="rgba(255,255,255,0.7)"/>
+          <circle cx="8.2" cy="7.8" r="1" fill="rgba(255,255,255,0.35)"/>
+          {/* right eye */}
+          <ellipse cx="21" cy="9" rx="6" ry="8" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5" fill="none"/>
+          <circle cx="21" cy="9" r="3" fill="rgba(255,255,255,0.7)"/>
+          <circle cx="22.2" cy="7.8" r="1" fill="rgba(255,255,255,0.35)"/>
+        </svg>
+        <span className="cookie-bar__text">We use cookies to improve your experience.</span>
+        <button
+          className="cookie-bar__btn"
+          onClick={() => { localStorage.setItem("tmm_cookies_accepted","1"); setCookieDismissed(true) }}
+        >Got it</button>
+        <button
+          className="cookie-bar__close"
+          aria-label="Dismiss"
+          onClick={() => { localStorage.setItem("tmm_cookies_accepted","1"); setCookieDismissed(true) }}
+        >×</button>
+      </div>
     </>
   )
 }
