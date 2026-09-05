@@ -678,14 +678,62 @@ export default function Home() {
 
       <style>{`
         .legal-email{color:var(--tmm-blue);transition:color 0.2s}.legal-email:hover{color:rgba(255,255,255,0.45)}
-        .cookie-bar{position:fixed;bottom:clamp(16px,3vw,28px);left:50%;transform:translateX(-50%);z-index:9000;display:flex;align-items:center;gap:12px;padding:10px 16px 10px 12px;background:rgba(18,18,24,0.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.10);border-radius:50px;white-space:nowrap;pointer-events:auto;transition:opacity 0.35s,transform 0.35s}
-        .cookie-bar--hidden{opacity:0;transform:translateX(-50%) translateY(12px);pointer-events:none}
-        .cookie-bar__text{font-size:clamp(10px,1.6vw,13px);color:rgba(255,255,255,0.65);letter-spacing:0.02em}
-        .cookie-bar__link{color:var(--tmm-blue);font-size:clamp(10px,1.6vw,13px)}
-        .cookie-bar__btn{background:rgba(255,255,255,0.10);border:none;border-radius:50px;color:#fff;font-size:clamp(9px,1.4vw,12px);letter-spacing:0.08em;padding:4px 12px;cursor:pointer;transition:background 0.2s;font-weight:600;text-transform:uppercase}
-        .cookie-bar__btn:hover{background:rgba(255,255,255,0.20)}
-        .cookie-bar__close{background:none;border:none;color:rgba(255,255,255,0.35);cursor:pointer;font-size:16px;line-height:1;padding:0 2px;transition:color 0.2s}
-        .cookie-bar__close:hover{color:rgba(255,255,255,0.75)}
+
+        /* ── Cookie banner ── */
+        /* Outer wrapper: centering only — never transitions, so translateX(-50%) is never animated */
+        .cookie-bar-wrap{
+          position:fixed;bottom:clamp(14px,2.5vw,24px);left:50%;
+          transform:translateX(-50%);
+          z-index:9000;pointer-events:none;
+        }
+        /* Inner bar: animates only opacity + translateY — no compound transform, no Windows GPU flicker */
+        .cookie-bar{
+          display:flex;align-items:center;gap:clamp(10px,2vw,16px);
+          padding:clamp(10px,1.5vw,14px) clamp(14px,2.5vw,22px);
+          /* Solid fallback first — shown on Firefox/Windows where backdrop-filter is unsupported */
+          background:rgba(10,10,16,0.94);
+          border:1px solid rgba(255,255,255,0.09);border-radius:clamp(20px,4vw,32px);
+          white-space:nowrap;pointer-events:auto;
+          will-change:opacity,transform;
+          transform:translateY(0) translateZ(0);
+          opacity:1;
+          transition:opacity 0.4s cubic-bezier(0.4,0,0.2,1),transform 0.4s cubic-bezier(0.4,0,0.2,1);
+          font-family:inherit;
+        }
+        /* Apply blur only where supported (Chrome/Edge/Safari — all fine on Windows) */
+        @supports (backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px)){
+          .cookie-bar{background:rgba(12,12,18,0.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+        }
+        .cookie-bar--hidden{opacity:0;transform:translateY(10px) translateZ(0);pointer-events:none}
+        .cookie-bar__text{font-size:clamp(11px,1.5vw,13px);color:rgba(255,255,255,0.6);letter-spacing:0.04em;font-family:inherit}
+        .cookie-bar__accept{
+          background:none;border:none;color:rgba(255,255,255,0.75);cursor:pointer;
+          padding:4px;display:flex;align-items:center;justify-content:center;
+          transition:color 0.2s;flex-shrink:0;font-family:inherit;
+        }
+        .cookie-bar__accept:hover{color:#fff}
+
+        /* ── Scroll-reveal fix: ensure cards always remain visible ── */
+        .play-card,.play-card-pill{animation-fill-mode:both}
+        .modal-scroll-bare .play-card,.modal-scroll-bare .play-card-pill{opacity:1!important;transform:none!important}
+
+        /* ── Reviews summary: keep character + stats side-by-side at all widths ── */
+        .reviews-summary{display:flex!important;flex-wrap:nowrap!important;align-items:flex-start;gap:clamp(10px,2vw,20px)}
+        .reviews-score{flex-shrink:0}
+        .reviews-avg{flex-shrink:0;min-width:0}
+        .reviews-bars{flex:1;min-width:0}
+
+        /* ── Pack selector pills: slimmer than play-card-pill ── */
+        .pack-pills-row{display:flex;gap:clamp(8px,2vw,14px);margin-bottom:0}
+        .pack-pill-btn{
+          flex:1;padding:clamp(8px,1.5vw,11px) clamp(10px,2vw,16px);
+          border-radius:clamp(12px,2.5vw,18px);border:1px solid rgba(255,255,255,0.14);
+          background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.55);
+          font-family:inherit;font-size:clamp(10px,1.6vw,13px);letter-spacing:0.1em;
+          cursor:pointer;transition:background 0.2s,color 0.2s,border-color 0.2s;text-transform:uppercase;font-weight:700
+        }
+        .pack-pill-btn--active{background:rgba(255,255,255,0.12);color:#fff;border-color:rgba(255,255,255,0.28)}
+        .pack-pill-btn:hover:not(.pack-pill-btn--active){background:rgba(255,255,255,0.09);color:rgba(255,255,255,0.8)}
       `}</style>
 
       {/* WebGL mesh gradient backdrop — replaces old CSS animated linear-gradient */}
@@ -1090,11 +1138,11 @@ export default function Home() {
                 {/* Single title pill */}
                 <div className="play-card-pill" onClick={e => e.stopPropagation()}>
                   <span className="play-block-title">SHOWCASE</span>
-                  <span className="play-block-subtitle">PNG 1–7</span>
+                  <span className="play-block-subtitle">IMAGES</span>
                 </div>
-                {/* 8 plain images — no individual card headers */}
+                {/* Product renders — card background matches other modal blocks */}
                 {[1,2,3,4,5,6,7].map(i => (
-                  <div key={i} style={{borderRadius:"clamp(26px,5vw,40px)",overflow:"hidden",lineHeight:0,background:"rgba(0,0,0,0.10)"}} onClick={e => e.stopPropagation()}>
+                  <div key={i} className="play-card" style={{padding:0,overflow:"hidden",lineHeight:0}} onClick={e => e.stopPropagation()}>
                     <img
                       src={`/images/tmm_product_render_${i}.png`}
                       alt={`The Marshall Mafia — product render ${i}`}
@@ -1308,6 +1356,12 @@ export default function Home() {
             <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`}>
               <div className="collect-list" onClick={e => e.stopPropagation()}>
 
+                {/* ── Checkout / Secure pill — top, always visible ── */}
+                <div className="play-card-pill">
+                  <span className="play-block-title">CHECKOUT</span>
+                  <span className="play-block-subtitle">SECURE</span>
+                </div>
+
                 {/* ── Pack selector — two separate pills ── */}
                 <div className="pack-pills-row">
                   <button
@@ -1352,12 +1406,6 @@ export default function Home() {
                     <span className="play-block-title">COMING SOON!</span>
                   </div>
                 )}
-
-                {/* ── Checkout / Secure pill — always visible ── */}
-                <div className="play-card-pill">
-                  <span className="play-block-title">CHECKOUT</span>
-                  <span className="play-block-subtitle">SECURE</span>
-                </div>
 
                 {/* ── Cancellations ── */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
@@ -1451,28 +1499,32 @@ export default function Home() {
       </main>
 
       {/* ── Cookie banner ── */}
-      <div className={`cookie-bar${(cookieDismissed || activeModal !== null) ? " cookie-bar--hidden" : ""}`} role="region" aria-label="Cookie notice">
-        {/* TMM eyes mark */}
-        <svg width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{flexShrink:0}}>
-          {/* left eye */}
-          <ellipse cx="7" cy="9" rx="6" ry="8" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5" fill="none"/>
-          <circle cx="7" cy="9" r="3" fill="rgba(255,255,255,0.7)"/>
-          <circle cx="8.2" cy="7.8" r="1" fill="rgba(255,255,255,0.35)"/>
-          {/* right eye */}
-          <ellipse cx="21" cy="9" rx="6" ry="8" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5" fill="none"/>
-          <circle cx="21" cy="9" r="3" fill="rgba(255,255,255,0.7)"/>
-          <circle cx="22.2" cy="7.8" r="1" fill="rgba(255,255,255,0.35)"/>
-        </svg>
-        <span className="cookie-bar__text">We use cookies to improve your experience.</span>
-        <button
-          className="cookie-bar__btn"
-          onClick={() => { localStorage.setItem("tmm_cookies_accepted","1"); setCookieDismissed(true) }}
-        >Got it</button>
-        <button
-          className="cookie-bar__close"
-          aria-label="Dismiss"
-          onClick={() => { localStorage.setItem("tmm_cookies_accepted","1"); setCookieDismissed(true) }}
-        >×</button>
+      {/* Outer wrapper: centering only (translateX never animates → no Windows GPU flicker) */}
+      <div className="cookie-bar-wrap">
+        <div className={`cookie-bar${(cookieDismissed || activeModal !== null) ? " cookie-bar--hidden" : ""}`} role="region" aria-label="Cookie notice">
+          {/* TMM eyes — same almond eye mark as the logo */}
+          <svg width="34" height="14" viewBox="0 0 34 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{flexShrink:0,opacity:0.8}}>
+            {/* left eye */}
+            <path d="M1 7C1 7 4 1 8.5 1C13 1 16 7 16 7C16 7 13 13 8.5 13C4 13 1 7 1 7Z" stroke="white" strokeWidth="1.4" fill="none"/>
+            <circle cx="8.5" cy="7" r="2.8" fill="white"/>
+            <circle cx="9.4" cy="6.1" r="1" fill="rgba(0,0,0,0.35)"/>
+            {/* right eye */}
+            <path d="M18 7C18 7 21 1 25.5 1C30 1 33 7 33 7C33 7 30 13 25.5 13C21 13 18 7 18 7Z" stroke="white" strokeWidth="1.4" fill="none"/>
+            <circle cx="25.5" cy="7" r="2.8" fill="white"/>
+            <circle cx="26.4" cy="6.1" r="1" fill="rgba(0,0,0,0.35)"/>
+          </svg>
+          <span className="cookie-bar__text">We use cookies to improve your experience.</span>
+          {/* Tick button — unframed, nav icon style */}
+          <button
+            className="cookie-bar__accept"
+            aria-label="Accept cookies"
+            onClick={() => { localStorage.setItem("tmm_cookies_accepted","1"); setCookieDismissed(true) }}
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" clipRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"/>
+            </svg>
+          </button>
+        </div>
       </div>
     </>
   )
