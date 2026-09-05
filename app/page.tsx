@@ -723,17 +723,36 @@ export default function Home() {
         .reviews-avg{flex-shrink:0;min-width:0}
         .reviews-bars{flex:1;min-width:0}
 
-        /* ── Pack selector pills: slimmer than play-card-pill ── */
-        .pack-pills-row{display:flex;gap:clamp(8px,2vw,14px);margin-bottom:0}
-        .pack-pill-btn{
-          flex:1;padding:clamp(8px,1.5vw,11px) clamp(10px,2vw,16px);
-          border-radius:clamp(12px,2.5vw,18px);border:1px solid rgba(255,255,255,0.14);
-          background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.55);
-          font-family:inherit;font-size:clamp(10px,1.6vw,13px);letter-spacing:0.1em;
-          cursor:pointer;transition:background 0.2s,color 0.2s,border-color 0.2s;text-transform:uppercase;font-weight:700
+        /* ── Pack selector: sliding segmented control ── */
+        .pack-toggle{
+          position:relative;display:flex;
+          background:rgba(255,255,255,0.05);
+          border:1px solid rgba(255,255,255,0.11);
+          border-radius:clamp(16px,3vw,24px);
+          padding:4px;
         }
-        .pack-pill-btn--active{background:rgba(255,255,255,0.12);color:#fff;border-color:rgba(255,255,255,0.28)}
-        .pack-pill-btn:hover:not(.pack-pill-btn--active){background:rgba(255,255,255,0.09);color:rgba(255,255,255,0.8)}
+        /* Sliding thumb — absolutely positioned, transitions between left positions */
+        .pack-toggle__thumb{
+          position:absolute;top:4px;bottom:4px;
+          width:calc(50% - 4px);
+          background:rgba(255,255,255,0.12);
+          border:1px solid rgba(255,255,255,0.22);
+          border-radius:clamp(12px,2.5vw,20px);
+          transition:left 0.32s cubic-bezier(0.4,0,0.2,1);
+          pointer-events:none;
+        }
+        .pack-toggle__thumb--standard{left:4px}
+        .pack-toggle__thumb--expansion{left:50%}
+        .pack-toggle__btn{
+          flex:1;position:relative;z-index:1;
+          background:none;border:none;cursor:pointer;
+          padding:clamp(11px,2vw,15px) clamp(10px,2vw,16px);
+          font-family:inherit;font-size:clamp(11px,1.9vw,14px);
+          letter-spacing:0.08em;text-transform:uppercase;font-weight:700;
+          transition:color 0.25s;text-align:center;white-space:nowrap;
+        }
+        .pack-toggle__btn--active{color:#fff}
+        .pack-toggle__btn--inactive{color:rgba(255,255,255,0.38)}
       `}</style>
 
       {/* WebGL mesh gradient backdrop — replaces old CSS animated linear-gradient */}
@@ -1362,19 +1381,20 @@ export default function Home() {
                   <span className="play-block-subtitle">SECURE</span>
                 </div>
 
-                {/* ── Pack selector — two separate pills ── */}
-                <div className="pack-pills-row">
+                {/* ── Pack selector — sliding segmented toggle ── */}
+                <div className="pack-toggle">
+                  <div className={`pack-toggle__thumb pack-toggle__thumb--${packSelected === "expansion" ? "expansion" : "standard"}`} />
                   <button
-                    className={`pack-pill-btn${packSelected === "standard" ? " pack-pill-btn--active" : ""}`}
+                    className={`pack-toggle__btn${packSelected !== "expansion" ? " pack-toggle__btn--active" : " pack-toggle__btn--inactive"}`}
                     onClick={() => { setPackSelected("standard"); setLightMode(false) }}
                   >
-                    STANDARD PACK
+                    Standard Pack
                   </button>
                   <button
-                    className={`pack-pill-btn${packSelected === "expansion" ? " pack-pill-btn--active" : ""}`}
+                    className={`pack-toggle__btn${packSelected === "expansion" ? " pack-toggle__btn--active" : " pack-toggle__btn--inactive"}`}
                     onClick={() => { setPackSelected("expansion"); setLightMode(true) }}
                   >
-                    EXPANSION PACK
+                    Expansion Pack
                   </button>
                 </div>
 
