@@ -3,10 +3,6 @@
 import { useState, useEffect, useCallback, useRef } from "react"
 import Script from "next/script"
 import type { AnimationItem } from "lottie-web"
-import { loadStripe } from "@stripe/stripe-js"
-import { EmbeddedCheckout, EmbeddedCheckoutProvider } from "@stripe/react-stripe-js"
-
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 // ── Mesh Gradient Background (pure WebGL — no external deps) ─────────────────
 // Replaces the old CSS animated linear-gradient backdrop.
@@ -520,9 +516,6 @@ function colorizeBody(text: string) {
 
 export default function Home() {
   const [activeModal, setActiveModal] = useState<ModalType>(null)
-  const [stripeClientSecret, setStripeClientSecret] = useState<string | null>(null)
-  const [stripeLoading, setStripeLoading] = useState(false)
-  const [stripeError, setStripeError] = useState(false)
   const [lightMode, setLightMode] = useState(false)
   const [logoFading, setLogoFading] = useState(false)
   const [packSelected, setPackSelected] = useState<"standard" | "expansion" | null>(null)
@@ -643,30 +636,17 @@ export default function Home() {
     if (activeModal === "collect" && packSelected === null) {
       setPackSelected("standard")
     }
-    if (activeModal === "collect" && packSelected === "standard" && !stripeClientSecret && !stripeLoading && !stripeError) {
-      setStripeLoading(true)
-      fetch("/api/checkout", { method: "POST" })
-        .then(r => r.json())
-        .then(d => {
-          if (d.clientSecret) {
-            setStripeClientSecret(d.clientSecret)
-          } else {
-            setStripeError(true)
-          }
-          setStripeLoading(false)
-        })
-        .catch(() => { setStripeLoading(false); setStripeError(true) })
-    }
+    // Reset pack selection when collect closes
     if (activeModal !== "collect") {
-      setStripeClientSecret(null)
-      setStripeLoading(false)
       setPackSelected(null)
-      setStripeError(false)
     }
   }, [activeModal, packSelected])
 
   return (
     <>
+      {/* ── Stripe Buy Button ── */}
+      <Script src="https://js.stripe.com/v3/buy-button.js" strategy="afterInteractive" />
+
       {/* ── Google Analytics ── */}
       <Script src="https://www.googletagmanager.com/gtag/js?id=G-1TVZ9D5MWT" strategy="afterInteractive" />
       <Script id="google-analytics" strategy="afterInteractive">{`
@@ -1406,26 +1386,41 @@ export default function Home() {
                   </button>
                 </div>
 
-                {/* ── Standard pack: stripe checkout ── */}
+                {/* ── Standard pack: product info + buy button ── */}
                 {packSelected === "standard" && (
-                  <div className="play-card">
-                    {stripeClientSecret ? (
-                      <div className="animate-fade-in" style={{borderRadius:"16px", overflow:"hidden"}}>
-                        <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret: stripeClientSecret }}>
-                          <EmbeddedCheckout />
-                        </EmbeddedCheckoutProvider>
+                  <>
+                    {/* Product information card */}
+                    <div className="play-card" onClick={e => e.stopPropagation()}>
+                      <div className="play-card-header">
+                        <span className="play-block-title">PRODUCT</span>
+                        <span className="play-block-subtitle">INFORMATION</span>
                       </div>
-                    ) : stripeError ? (
-                      <div className="flex items-center justify-center py-8">
-                        <span className="play-block-body" style={{opacity:0.45,textAlign:"center"}}>checkout unavailable — please try again shortly</span>
-                      </div>
-                    ) : (
-                      <div className="flex items-center justify-center py-8 gap-3">
-                        <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                        <span className="text-white/40 text-[13px]">Loading secure checkout...</span>
-                      </div>
-                    )}
-                  </div>
+                      <p className="play-block-body">100&apos;s of rounds in a box.</p>
+                      <p className="play-block-body">Built to be played with all your friends and family, not just admired on a shelf.</p>
+                      <p className="play-block-body">The box comes packed with:</p>
+                      <ul className="play-rules-list">
+                        <li className="play-block-body">54 cards (410gsm Tusker FSC Certified) as standard, weighty enough to shuffle easily, durable enough to survive as many rounds as you do.</li>
+                        <li className="play-block-body">22 people can play at the game, all at one time!</li>
+                        <li className="play-block-body">20+ songs to enjoy, experience the village in a new way.</li>
+                        <li className="play-block-body">17 death cards, can you manage to deal that much damage?</li>
+                        <li className="play-block-body">8 custom house rules to choose from, play what works best for your home!</li>
+                        <li className="play-block-body">6 roles to impersonate, from the narrating marshall, to a sneaky mafia and a cheeky jester.</li>
+                        <li className="play-block-body">1 tucked box with a classy matt textured finish, designed to look and feel the part.</li>
+                      </ul>
+                      <p className="play-block-body">We trumped the competition — 10% more paper for the pound over classic poker sized decks, with bigger faces, clearer text to read across a crowded table.</p>
+                      <p className="play-block-body">Premium cards that won&apos;t leave you out of pocket. Priced at what they&apos;re worth, all things considered, not a penny more :)</p>
+                      <p className="play-block-body">Collect a deck today, don&apos;t sleep on it, if you snooze you lose!</p>
+                    </div>
+
+                    {/* Stripe Buy Button */}
+                    <div className="play-card" style={{display:"flex",alignItems:"center",justifyContent:"center"}} onClick={e => e.stopPropagation()}>
+                      {/* @ts-expect-error — stripe-buy-button is a web component registered at runtime */}
+                      <stripe-buy-button
+                        buy-button-id="buy_btn_1UCVMKK5AQ6dxy1cviVZflou"
+                        publishable-key="pk_live_51RbW9KK5AQ6dxy1cxibQc3RFT11wEH3WRJj68nDVz6BvWbv9qytmrSOH1kLG6T8blCjyGIweloF6k7ZUbhWEMo3100E3BCFEZE"
+                      />
+                    </div>
+                  </>
                 )}
 
                 {/* ── Expansion pack: coming soon ── */}
