@@ -740,8 +740,8 @@ export default function Home() {
           font-family:inherit;
           transition:color 0.25s;text-align:center;white-space:nowrap;
         }
-        .pack-toggle__btn--active{color:#fff}
-        .pack-toggle__btn--inactive{color:rgba(255,255,255,0.38)}
+        .pack-toggle__btn--active{color:#fff;opacity:1}
+        .pack-toggle__btn--inactive{color:rgba(255,255,255,0.5);opacity:0.42;transition:color 0.25s,opacity 0.25s}
       `}</style>
 
       {/* WebGL mesh gradient backdrop — replaces old CSS animated linear-gradient */}
@@ -1285,7 +1285,7 @@ export default function Home() {
                     return (
                   <div className="reviews-summary">
                     <div className="reviews-score">
-                      <CharacterSVG style={{height:"clamp(80px,12vw,140px)",width:"auto",display:"block"}} />
+                      <CharacterSVG style={{height:"clamp(70px,15vw,100px)",width:"auto",display:"block"}} />
                     </div>
                     <div className="reviews-avg">
                       <span className="reviews-score-number">{avgDisplay}</span>
@@ -1391,7 +1391,7 @@ export default function Home() {
                 {packSelected === "standard" && (
                   <>
                     {/* Stripe Buy Button — above product info */}
-                    <div className="play-card" style={{padding:"clamp(12px,2.5vw,20px)"}} onClick={e => e.stopPropagation()}>
+                    <div className="play-card" style={{padding:"clamp(12px,2.5vw,20px)",display:"flex",alignItems:"center",justifyContent:"center"}} onClick={e => e.stopPropagation()}>
                       {/* @ts-expect-error — stripe-buy-button is a web component registered at runtime */}
                       <stripe-buy-button
                         buy-button-id="buy_btn_1UCVMKK5AQ6dxy1cviVZflou"
@@ -1527,16 +1527,10 @@ export default function Home() {
       {/* Outer wrapper: centering only (translateX never animates → no Windows GPU flicker) */}
       <div className="cookie-bar-wrap">
         <div className={`cookie-bar${(cookieDismissed || activeModal !== null) ? " cookie-bar--hidden" : ""}`} role="region" aria-label="Cookie notice">
-          {/* TMM eyes — same almond eye mark as the logo */}
-          <svg width="34" height="14" viewBox="0 0 34 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{flexShrink:0,opacity:0.8}}>
-            {/* left eye */}
-            <path d="M1 7C1 7 4 1 8.5 1C13 1 16 7 16 7C16 7 13 13 8.5 13C4 13 1 7 1 7Z" stroke="white" strokeWidth="1.4" fill="none"/>
-            <circle cx="8.5" cy="7" r="2.8" fill="white"/>
-            <circle cx="9.4" cy="6.1" r="1" fill="rgba(0,0,0,0.35)"/>
-            {/* right eye */}
-            <path d="M18 7C18 7 21 1 25.5 1C30 1 33 7 33 7C33 7 30 13 25.5 13C21 13 18 7 18 7Z" stroke="white" strokeWidth="1.4" fill="none"/>
-            <circle cx="25.5" cy="7" r="2.8" fill="white"/>
-            <circle cx="26.4" cy="6.1" r="1" fill="rgba(0,0,0,0.35)"/>
+          {/* TMM logo eyes — the actual brand mark SVG */}
+          <svg width="71" height="14" viewBox="0 0 153 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{flexShrink:0,opacity:0.8}}>
+            <path d="M31.5839 15.6672C23.549 15.9219 17.8647 10.4448 15.3432 3.05176e-05H0C1.1112 11.6761 6.23985 20.5499 16.3689 26.027C27.7374 32.141 38.9777 30.9946 49.4914 23.989C57.9109 18.3845 62.3557 10.19 63.3814 3.05176e-05H47.8673C46.0723 11.2939 38.2938 15.4124 31.6266 15.6672H31.5839Z" fill="white"/>
+            <path d="M120.609 15.6672C112.574 15.9219 106.889 10.4448 104.368 3.05176e-05H89.0247C90.1359 11.6761 95.2645 20.5499 105.394 26.027C116.762 32.141 128.002 30.9946 138.516 23.989C146.936 18.3845 151.38 10.19 152.406 3.05176e-05H136.892C135.097 11.2939 127.319 15.4124 120.651 15.6672H120.609Z" fill="white"/>
           </svg>
           <span className="cookie-bar__text">We use cookies to improve your experience.</span>
           {/* Tick button — unframed, nav icon style */}
