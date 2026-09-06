@@ -5,8 +5,7 @@
 
 @font-face {
   font-family: 'MarkerBold';
-  src: url('/fonts/asset_font_bold_marker.otf') format('opentype'),
-       url('/fonts/asset_font_bold_marker.ttf') format('truetype');
+  src: url('/fonts/asset_font_bold_marker.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
