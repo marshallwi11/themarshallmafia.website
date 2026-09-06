@@ -697,35 +697,37 @@ export default function Home() {
         .play-card,.play-card-pill{animation-fill-mode:both}
         .modal-scroll-bare .play-card,.modal-scroll-bare .play-card-pill{opacity:1!important;transform:none!important}
 
-        /* ── Play card header: prevent subtitle from escaping right edge on narrow phones ── */
-        .play-card-header{flex-wrap:wrap;gap:4px 8px;overflow:hidden}
-        .play-card-header .play-block-title{flex:1 1 0;min-width:0}
-        .play-card-header .play-block-subtitle{flex:0 0 auto;text-align:right}
+        /* ── Play card header: > selectors only — won't affect nested testimonial name spans ── */
+        .play-card-header{gap:8px;overflow:hidden}
+        .play-card-header > .play-block-title{flex:1 1 0;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .play-card-header > .play-block-subtitle{flex:0 0 auto;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:55%}
+        /* Stars wrap below name only on true phone widths */
+        @media (max-width:480px){.play-card-header{flex-wrap:wrap}}
 
-        /* ── Reviews character: explicit size so it doesn't collapse to 0 on mobile ── */
-        .reviews-score{flex-shrink:0;width:clamp(50px,14vw,85px)}
-
-        /* ── Reviews summary: keep character + stats side-by-side at all widths ── */
+        /* ── Reviews summary ── */
         .reviews-summary{display:flex!important;flex-wrap:nowrap!important;align-items:flex-start;gap:clamp(10px,2vw,20px)}
-        .reviews-score{flex-shrink:0}
+        .reviews-score{flex-shrink:0;width:clamp(70px,10vw,130px)}
         .reviews-avg{flex-shrink:0;min-width:0}
         .reviews-bars{flex:1;min-width:0}
 
-        /* ── Pack selector: sliding segmented control ── */
+        /* ── Nav: prevent pill from overflowing on very narrow screens ── */
+        .pill-nav{max-width:calc(100vw - 16px)!important}
+        .pill-nav-inner{min-width:0;overflow:hidden}
+
+        /* ── Pack selector: true pill shape, text matches the CHECKOUT pill above ── */
         .pack-toggle{
           position:relative;display:flex;
           background:rgba(255,255,255,0.05);
           border:1px solid rgba(255,255,255,0.11);
-          border-radius:clamp(16px,3vw,24px);
+          border-radius:999px;
           padding:4px;
         }
-        /* Sliding thumb — absolutely positioned, transitions between left positions */
         .pack-toggle__thumb{
           position:absolute;top:4px;bottom:4px;
           width:calc(50% - 4px);
           background:rgba(255,255,255,0.12);
           border:1px solid rgba(255,255,255,0.22);
-          border-radius:clamp(12px,2.5vw,20px);
+          border-radius:999px;
           transition:left 0.32s cubic-bezier(0.4,0,0.2,1);
           pointer-events:none;
         }
@@ -734,9 +736,8 @@ export default function Home() {
         .pack-toggle__btn{
           flex:1;position:relative;z-index:1;
           background:none;border:none;cursor:pointer;
-          padding:clamp(15px,3vw,20px) clamp(10px,2vw,16px);
-          font-family:inherit;font-size:clamp(11px,1.9vw,14px);
-          letter-spacing:0.08em;text-transform:uppercase;font-weight:700;
+          padding:clamp(14px,2.5vw,18px) clamp(10px,2vw,18px);
+          font-family:inherit;
           transition:color 0.25s;text-align:center;white-space:nowrap;
         }
         .pack-toggle__btn--active{color:#fff}
@@ -1284,7 +1285,7 @@ export default function Home() {
                     return (
                   <div className="reviews-summary">
                     <div className="reviews-score">
-                      <CharacterSVG style={{height:"clamp(70px,18vw,110px)",width:"auto",display:"block"}} />
+                      <CharacterSVG style={{height:"clamp(80px,12vw,140px)",width:"auto",display:"block"}} />
                     </div>
                     <div className="reviews-avg">
                       <span className="reviews-score-number">{avgDisplay}</span>
@@ -1329,9 +1330,9 @@ export default function Home() {
                 {(filterRating !== null ? TESTIMONIALS.filter(t => t.rating === filterRating) : TESTIMONIALS).map((t, i) => (
                   <div key={i} className="play-card" onClick={e => e.stopPropagation()}>
                     <div className="play-card-header" style={{alignItems:"flex-start"}}>
-                      <div style={{display:"flex",flexDirection:"row",alignItems:"baseline",gap:"30px"}}>
-                        <span className="play-block-title">{t.name}</span>
-                        <span className="play-block-title" style={{opacity:0.5}}>{t.age}</span>
+                      <div style={{display:"flex",flexDirection:"row",alignItems:"baseline",gap:"clamp(8px,2vw,16px)"}}>
+                        <span className="play-block-title" style={{whiteSpace:"nowrap"}}>{t.name}</span>
+                        <span className="play-block-title" style={{opacity:0.5,whiteSpace:"nowrap"}}>{t.age}</span>
                       </div>
                       <StarRating rating={t.rating} />
                     </div>
@@ -1376,19 +1377,29 @@ export default function Home() {
                     className={`pack-toggle__btn${packSelected !== "expansion" ? " pack-toggle__btn--active" : " pack-toggle__btn--inactive"}`}
                     onClick={() => { setPackSelected("standard"); setLightMode(false) }}
                   >
-                    Standard Pack
+                    <span className="play-block-title">Standard Pack</span>
                   </button>
                   <button
                     className={`pack-toggle__btn${packSelected === "expansion" ? " pack-toggle__btn--active" : " pack-toggle__btn--inactive"}`}
                     onClick={() => { setPackSelected("expansion"); setLightMode(true) }}
                   >
-                    Expansion Pack
+                    <span className="play-block-title">Expansion Pack</span>
                   </button>
                 </div>
 
                 {/* ── Standard pack: product info + buy button ── */}
                 {packSelected === "standard" && (
                   <>
+                    {/* Stripe Buy Button — above product info */}
+                    <div className="play-card" style={{padding:"clamp(12px,2.5vw,20px)"}} onClick={e => e.stopPropagation()}>
+                      {/* @ts-expect-error — stripe-buy-button is a web component registered at runtime */}
+                      <stripe-buy-button
+                        buy-button-id="buy_btn_1UCVMKK5AQ6dxy1cviVZflou"
+                        publishable-key="pk_live_51RbW9KK5AQ6dxy1cxibQc3RFT11wEH3WRJj68nDVz6BvWbv9qytmrSOH1kLG6T8blCjyGIweloF6k7ZUbhWEMo3100E3BCFEZE"
+                        style={{width:"100%"}}
+                      />
+                    </div>
+
                     {/* Product information card */}
                     <div className="play-card" onClick={e => e.stopPropagation()}>
                       <div className="play-card-header">
@@ -1404,21 +1415,12 @@ export default function Home() {
                         <li className="play-block-body">20+ songs to enjoy, experience the village in a new way.</li>
                         <li className="play-block-body">17 death cards, can you manage to deal that much damage?</li>
                         <li className="play-block-body">8 custom house rules to choose from, play what works best for your home!</li>
-                        <li className="play-block-body">6 roles to impersonate, from the narrating marshall, to a sneaky mafia and a cheeky jester.</li>
+                        <li className="play-block-body">{colorizeBody("6 roles to impersonate, from the narrating Marshall, to a sneaky Mafia and a cheeky Jester.")}</li>
                         <li className="play-block-body">1 tucked box with a classy matt textured finish, designed to look and feel the part.</li>
                       </ul>
                       <p className="play-block-body">We trumped the competition — 10% more paper for the pound over classic poker sized decks, with bigger faces, clearer text to read across a crowded table.</p>
                       <p className="play-block-body">Premium cards that won&apos;t leave you out of pocket. Priced at what they&apos;re worth, all things considered, not a penny more :)</p>
                       <p className="play-block-body">Collect a deck today, don&apos;t sleep on it, if you snooze you lose!</p>
-                    </div>
-
-                    {/* Stripe Buy Button */}
-                    <div className="play-card" style={{display:"flex",alignItems:"center",justifyContent:"center"}} onClick={e => e.stopPropagation()}>
-                      {/* @ts-expect-error — stripe-buy-button is a web component registered at runtime */}
-                      <stripe-buy-button
-                        buy-button-id="buy_btn_1UCVMKK5AQ6dxy1cviVZflou"
-                        publishable-key="pk_live_51RbW9KK5AQ6dxy1cxibQc3RFT11wEH3WRJj68nDVz6BvWbv9qytmrSOH1kLG6T8blCjyGIweloF6k7ZUbhWEMo3100E3BCFEZE"
-                      />
                     </div>
                   </>
                 )}
