@@ -717,6 +717,14 @@ export default function Home() {
         .play-card,.play-card-pill{animation-fill-mode:both}
         .modal-scroll-bare .play-card,.modal-scroll-bare .play-card-pill{opacity:1!important;transform:none!important}
 
+        /* ── Play card header: prevent subtitle from escaping right edge on narrow phones ── */
+        .play-card-header{flex-wrap:wrap;gap:4px 8px;overflow:hidden}
+        .play-card-header .play-block-title{flex:1 1 0;min-width:0}
+        .play-card-header .play-block-subtitle{flex:0 0 auto;text-align:right}
+
+        /* ── Reviews character: explicit size so it doesn't collapse to 0 on mobile ── */
+        .reviews-score{flex-shrink:0;width:clamp(50px,14vw,85px)}
+
         /* ── Reviews summary: keep character + stats side-by-side at all widths ── */
         .reviews-summary{display:flex!important;flex-wrap:nowrap!important;align-items:flex-start;gap:clamp(10px,2vw,20px)}
         .reviews-score{flex-shrink:0}
@@ -746,7 +754,7 @@ export default function Home() {
         .pack-toggle__btn{
           flex:1;position:relative;z-index:1;
           background:none;border:none;cursor:pointer;
-          padding:clamp(11px,2vw,15px) clamp(10px,2vw,16px);
+          padding:clamp(15px,3vw,20px) clamp(10px,2vw,16px);
           font-family:inherit;font-size:clamp(11px,1.9vw,14px);
           letter-spacing:0.08em;text-transform:uppercase;font-weight:700;
           transition:color 0.25s;text-align:center;white-space:nowrap;
@@ -968,7 +976,7 @@ export default function Home() {
                 {/* BOX 1 */}
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">INSTRUCTIONS</span><span className="play-block-subtitle">OBJECTIVE</span></div>
-                  <p className="play-block-body">In <span style={{color:"#ffffff"}}>The Marshall Mafia</span>, <span className="text-tmm-brown">Villagers</span> must identify, expose and vote out all <span className="text-tmm-red">Mafia</span> members, while the <span className="text-tmm-red">Mafia{"'"}s</span> goal is to secretly eliminate all <span className="text-tmm-brown">Villagers</span> until they outnumber them. The <span className="text-tmm-cream">Marshall</span> hosts the game, managing the flow of rounds and overseeing the distribution of roles and actions.</p>
+                  <p className="play-block-body">In <span style={{color:lightMode?"#111111":"#ffffff"}}>The Marshall Mafia</span>, <span className="text-tmm-brown">Villagers</span> must identify, expose and vote out all <span className="text-tmm-red">Mafia</span> members, while the <span className="text-tmm-red">Mafia{"'"}s</span> goal is to secretly eliminate all <span className="text-tmm-brown">Villagers</span> until they outnumber them. The <span className="text-tmm-cream">Marshall</span> hosts the game, managing the flow of rounds and overseeing the distribution of roles and actions.</p>
                 </div>
 
                 {/* BOX 2 */}
@@ -1012,15 +1020,15 @@ export default function Home() {
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">There are gamemodes?</span><span className="play-block-subtitle">(gamemode card*)</span></div>
                   <p className="play-block-body">There are Three Different game-modes that can be played!</p>
-                  <p className="play-block-body" style={{marginTop:"10px"}}><span style={{color:"#ffffff",fontWeight:"bold"}}>STANDARD mode:</span></p>
+                  <p className="play-block-body" style={{marginTop:"10px"}}><span style={{color:lightMode?"#111111":"#ffffff",fontWeight:"bold"}}>STANDARD mode:</span></p>
                   <ul className="play-rules-list">
                     <li className="play-block-body">Players with the same role — silently point and agree on a <strong>SINGLE</strong> target together (EG. 2 <span className="text-tmm-red">Mafia</span>&apos;s &gt; 1 kill)</li>
                   </ul>
-                  <p className="play-block-body" style={{marginTop:"10px"}}><span style={{color:"#ffffff",fontWeight:"bold"}}>GROUP MODE:</span></p>
+                  <p className="play-block-body" style={{marginTop:"10px"}}><span style={{color:lightMode?"#111111":"#ffffff",fontWeight:"bold"}}>GROUP MODE:</span></p>
                   <ul className="play-rules-list">
                     <li className="play-block-body">Players with the same role — silently point and agree on targets together = to the amount of their role (Eg. 2 <span className="text-tmm-red">Mafia</span>&apos;s &gt; 2 kills)</li>
                   </ul>
-                  <p className="play-block-body" style={{marginTop:"10px"}}><span style={{color:"#ffffff",fontWeight:"bold"}}>CHAOS mode:</span></p>
+                  <p className="play-block-body" style={{marginTop:"10px"}}><span style={{color:lightMode?"#111111":"#ffffff",fontWeight:"bold"}}>CHAOS mode:</span></p>
                   <ul className="play-rules-list">
                     <li className="play-block-body">Each Player — Silently picks their own <strong>INDIVIDUAL</strong> target <strong>SEPARATELY</strong> (Eg. 1st <span className="text-tmm-red">Mafia</span> &gt; 1 kill / 2nd <span className="text-tmm-red">Mafia</span> &gt; 1 kill)</li>
                   </ul>
@@ -1079,9 +1087,9 @@ export default function Home() {
                   <div className="play-card-header"><span className="play-block-title">What are the PHASES?</span><span className="play-block-subtitle">1, 2 &amp; 3</span></div>
                   <p className="play-block-body">Each round consists of three consecutive phases:</p>
                   <ul className="play-rules-list">
-                    <li className="play-block-body">1 <span style={{color:"#ffffff"}}>SLEEP</span></li>
-                    <li className="play-block-body">2 <span style={{color:"#ffffff"}}>DISCUSSION</span></li>
-                    <li className="play-block-body">3 <span style={{color:"#ffffff"}}>VOTE</span></li>
+                    <li className="play-block-body">1 <span style={{color:lightMode?"#111111":"#ffffff"}}>SLEEP</span></li>
+                    <li className="play-block-body">2 <span style={{color:lightMode?"#111111":"#ffffff"}}>DISCUSSION</span></li>
+                    <li className="play-block-body">3 <span style={{color:lightMode?"#111111":"#ffffff"}}>VOTE</span></li>
                   </ul>
                   <p className="play-block-body">Standard mode — each role type (<span className="text-tmm-red">Kill</span>, <span className="text-tmm-blue">Guess</span>, <span className="text-tmm-green">Save</span>, <span className="text-tmm-yellow">Wild</span>) must decide on one player to act on.</p>
                   <p className="play-block-body"><span style={{color:"#F8007A"}}>Note!</span> — if games finish too quickly, switch up the sleep phase playstyle. See the <span className="text-muted">GAMEMODE CARD*</span>.</p>
@@ -1163,7 +1171,7 @@ export default function Home() {
                 {[1,2,3,4,5,6,7].map(i => (
                   <div key={i} className="play-card" style={{padding:0,overflow:"hidden",lineHeight:0}} onClick={e => e.stopPropagation()}>
                     <img
-                      src={`/images/tmm_product_render_${i}.png`}
+                      src={`/images/tmm_product_render_${i}.png?v=2`}
                       alt={`The Marshall Mafia — product render ${i}`}
                       loading="lazy"
                       decoding="async"
@@ -1296,7 +1304,7 @@ export default function Home() {
                     return (
                   <div className="reviews-summary">
                     <div className="reviews-score">
-                      <CharacterSVG style={{height:"100%",width:"auto",display:"block"}} />
+                      <CharacterSVG style={{height:"clamp(70px,18vw,110px)",width:"auto",display:"block"}} />
                     </div>
                     <div className="reviews-avg">
                       <span className="reviews-score-number">{avgDisplay}</span>
