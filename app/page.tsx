@@ -715,8 +715,9 @@ export default function Home() {
 
         /* ── Reviews summary ── */
         .reviews-summary{display:flex!important;flex-wrap:nowrap!important;align-items:stretch;gap:clamp(10px,2vw,20px)}
+        .reviews-left{display:flex;flex-direction:row;align-items:stretch;flex-shrink:0;gap:clamp(8px,1.5vw,14px)}
         .reviews-score{flex-shrink:0;display:flex;align-items:stretch}
-        .reviews-avg{flex-shrink:0;min-width:0}
+        .reviews-avg{flex-shrink:0;min-width:0;display:flex;flex-direction:column;justify-content:space-between}
         .reviews-bars{flex:1;min-width:0}
 
         /* ── Nav: prevent pill from overflowing on very narrow screens ── */
@@ -1312,6 +1313,7 @@ export default function Home() {
                     const avgRounded = Math.round(avg)
                     return (
                   <div className="reviews-summary">
+                    <div className="reviews-left">
                     <div className="reviews-score">
                       <CharacterSVG style={{height:"100%",width:"auto",display:"block"}} lightMode={lightMode} />
                     </div>
@@ -1329,6 +1331,7 @@ export default function Home() {
                       >
                         add a review
                       </a>
+                    </div>
                     </div>
                     <div className="reviews-bars">
                       {[5,4,3,2,1].map(n => {
@@ -1420,13 +1423,12 @@ export default function Home() {
                         <span className="play-block-title">CHECKOUT</span>
                         <span className="play-block-subtitle">SECURE</span>
                       </div>
-                      <div style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",borderRadius:"clamp(12px,2vw,18px)",overflow:"hidden"}}>
-                        {/* zoom scales the component up; no width:100% so flexbox can centre it */}
+                      <div style={{width:"100%"}}>
                         {/* @ts-expect-error — stripe-buy-button is a web component registered at runtime */}
                         <stripe-buy-button
                           buy-button-id="buy_btn_1UCVMKK5AQ6dxy1cviVZflou"
                           publishable-key="pk_live_51RbW9KK5AQ6dxy1cxibQc3RFT11wEH3WRJj68nDVz6BvWbv9qytmrSOH1kLG6T8blCjyGIweloF6k7ZUbhWEMo3100E3BCFEZE"
-                          style={{display:"block",zoom:"1.15"}}
+                          style={{display:"block",width:"100%"}}
                         />
                       </div>
                     </div>
@@ -1456,11 +1458,22 @@ export default function Home() {
                   </>
                 )}
 
-                {/* ── Expansion pack: coming soon ── */}
+                {/* ── Expansion pack: coming soon + product info ── */}
                 {packSelected === "expansion" && (
-                  <div className="play-card-pill" style={{justifyContent:"center"}}>
-                    <span className="play-block-title">COMING SOON!</span>
-                  </div>
+                  <>
+                    <div className="play-card-pill" style={{justifyContent:"center"}}>
+                      <span className="play-block-title">COMING SOON!</span>
+                    </div>
+                    <div className="play-card" onClick={e => e.stopPropagation()}>
+                      <div className="play-card-header">
+                        <span className="play-block-title">PRODUCT</span>
+                        <span className="play-block-subtitle">INFORMATION</span>
+                      </div>
+                      <p className="play-block-body">YOUR FAVOURITE GAME JUST GOT EXPANDED!</p>
+                      <p className="play-block-body">Death isn&apos;t funny, But this official Expansion is. It&apos;s Packed with killer puns, Creative Story Starters, Role Missions, Extra RANKED Game Modes, 25+ New Characters &amp; MUCH MUCH More!</p>
+                      <p className="play-block-body">&ldquo;AN Ultimate Addition TO THE BEST Group Game.&rdquo; &mdash; anonymous</p>
+                    </div>
+                  </>
                 )}
 
                 {/* ── Cancellations ── */}
