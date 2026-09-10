@@ -473,17 +473,19 @@ const TESTIMONIALS = [
 ]
 
 // Inline SVG for reviews panel (avoids img src loading issues)
-function CharacterSVG({ style }: { style?: React.CSSProperties }) {
+// lightMode swaps white fills to near-black; heart is always pink #E31C79
+function CharacterSVG({ style, lightMode }: { style?: React.CSSProperties; lightMode?: boolean }) {
+  const bodyFill = lightMode ? "#1a1a1a" : "white"
   return (
     <svg width="76" height="133" viewBox="0 0 76 133" fill="none" xmlns="http://www.w3.org/2000/svg" style={style} aria-hidden="true">
-      <path d="M27.1808 121.066H34.9508V132.116H12.0008C11.8708 117.766 27.1808 124.516 27.1808 124.516V121.066Z" fill="white"/>
-      <path d="M49.77 121.066H42V132.116H64.95C65.08 117.766 49.77 124.516 49.77 124.516V121.066Z" fill="white"/>
-      <path d="M60 96.0658V115.066H17V101.066L40 94V83H33V81C33 79.5 31.5 76.5 28 77V83C21.15 81.74 13.44 75.2858 10.56 68.9258L10 67.6858L19 54.0658L38.83 58.8758L58 54.0658L70.67 71.8857L50.18 86.9058L60 96.0658Z" fill="white"/>
+      <path d="M27.1808 121.066H34.9508V132.116H12.0008C11.8708 117.766 27.1808 124.516 27.1808 124.516V121.066Z" fill={bodyFill}/>
+      <path d="M49.77 121.066H42V132.116H64.95C65.08 117.766 49.77 124.516 49.77 124.516V121.066Z" fill={bodyFill}/>
+      <path d="M60 96.0658V115.066H17V101.066L40 94V83H33V81C33 79.5 31.5 76.5 28 77V83C21.15 81.74 13.44 75.2858 10.56 68.9258L10 67.6858L19 54.0658L38.83 58.8758L58 54.0658L70.67 71.8857L50.18 86.9058L60 96.0658Z" fill={bodyFill}/>
       <path d="M47.29 77.9158C47.16 77.9158 47.05 77.8758 46.97 77.7858L42.38 73.3558C42.38 73.3558 42.26 73.2558 42.18 73.1658C42.1 73.0758 41.96 72.9158 41.77 72.6858C41.58 72.4558 41.42 72.2158 41.27 71.9658C41.12 71.7158 40.99 71.4258 40.88 71.0758C40.76 70.7258 40.71 70.3858 40.71 70.0558C40.71 68.9758 41.02 68.1358 41.64 67.5258C42.26 66.9158 43.12 66.6158 44.22 66.6158C44.52 66.6158 44.83 66.6658 45.15 66.7758C45.47 66.8858 45.76 67.0258 46.03 67.2058C46.3 67.3858 46.54 67.5558 46.73 67.7058C46.93 67.8658 47.11 68.0258 47.29 68.2058C47.47 68.0258 47.65 67.8658 47.85 67.7058C48.05 67.5458 48.28 67.3758 48.55 67.2058C48.82 67.0358 49.12 66.8858 49.43 66.7758C49.74 66.6658 50.06 66.6158 50.36 66.6158C51.46 66.6158 52.32 66.9158 52.94 67.5258C53.56 68.1358 53.87 68.9758 53.87 70.0558C53.87 71.1358 53.31 72.2458 52.18 73.3658L47.6 77.7858C47.51 77.8758 47.4 77.9158 47.28 77.9158H47.29Z" fill="#E31C79"/>
-      <path d="M48.61 42.3757C50.49 42.3157 51.82 43.6057 52.41 46.0657L56 46.0658C55.74 43.3158 54.54 41.2257 52.17 39.9357C49.51 38.4957 46.88 38.7657 44.42 40.4157C42.45 41.7357 41.41 43.6657 41.17 46.0657L44.8 46.0657C45.22 43.4057 47.04 42.4357 48.6 42.3757L48.61 42.3757Z" fill="white"/>
-      <path d="M27.78 42.3757C29.66 42.3157 30.99 43.6057 31.58 46.0657L35.17 46.0658C34.91 43.3158 33.71 41.2257 31.34 39.9357C28.68 38.4957 26.05 38.7657 23.59 40.4157C21.62 41.7357 20.58 43.6657 20.34 46.0657L23.97 46.0657C24.39 43.4057 26.21 42.4357 27.77 42.3757L27.78 42.3757Z" fill="white"/>
-      <path d="M38.1114 23.3439C29.8284 23.3516 22 21 22 21L6 27.4L37.8886 33L70 27.4L54 21C54 21 46.1716 23.3516 37.8886 23.3439" fill="white"/>
-      <path d="M26.6601 0L23.1201 14.76C23.1201 14.76 36.7901 20.64 52.6701 14.76L49.1301 0L37.8901 6.23L26.6501 0H26.6601Z" fill="white"/>
+      <path d="M48.61 42.3757C50.49 42.3157 51.82 43.6057 52.41 46.0657L56 46.0658C55.74 43.3158 54.54 41.2257 52.17 39.9357C49.51 38.4957 46.88 38.7657 44.42 40.4157C42.45 41.7357 41.41 43.6657 41.17 46.0657L44.8 46.0657C45.22 43.4057 47.04 42.4357 48.6 42.3757L48.61 42.3757Z" fill={bodyFill}/>
+      <path d="M27.78 42.3757C29.66 42.3157 30.99 43.6057 31.58 46.0657L35.17 46.0658C34.91 43.3158 33.71 41.2257 31.34 39.9357C28.68 38.4957 26.05 38.7657 23.59 40.4157C21.62 41.7357 20.58 43.6657 20.34 46.0657L23.97 46.0657C24.39 43.4057 26.21 42.4357 27.77 42.3757L27.78 42.3757Z" fill={bodyFill}/>
+      <path d="M38.1114 23.3439C29.8284 23.3516 22 21 22 21L6 27.4L37.8886 33L70 27.4L54 21C54 21 46.1716 23.3516 37.8886 23.3439" fill={bodyFill}/>
+      <path d="M26.6601 0L23.1201 14.76C23.1201 14.76 36.7901 20.64 52.6701 14.76L49.1301 0L37.8901 6.23L26.6501 0H26.6601Z" fill={bodyFill}/>
     </svg>
   )
 }
@@ -658,6 +660,13 @@ export default function Home() {
 
       <style>{`
         .legal-email{color:var(--tmm-blue);transition:color 0.2s}.legal-email:hover{color:rgba(255,255,255,0.45)}
+        .tmm-light .legal-email:hover{color:var(--tmm-blue);opacity:0.65}
+        /* Skip navigation — visually hidden until focused */
+        .skip-nav{position:fixed;top:-100%;left:1rem;z-index:10000;background:#000;color:#fff;padding:0.5rem 1.25rem;border-radius:6px;font-size:14px;text-decoration:none;letter-spacing:0.04em;transition:top 0.1s}
+        .skip-nav:focus{top:1rem;outline:3px solid var(--tmm-yellow);outline-offset:2px}
+        /* Dim address/secondary text — adapts per colour scheme */
+        .play-block-dim{color:rgba(255,255,255,0.55)}
+        .tmm-light .play-block-dim{color:rgba(0,0,0,0.42)}
 
         /* ── Cookie banner ── */
         /* Outer wrapper: centering only — never transitions, so translateX(-50%) is never animated */
@@ -705,8 +714,8 @@ export default function Home() {
         @media (max-width:480px){.play-card-header{flex-wrap:wrap}}
 
         /* ── Reviews summary ── */
-        .reviews-summary{display:flex!important;flex-wrap:nowrap!important;align-items:flex-start;gap:clamp(10px,2vw,20px)}
-        .reviews-score{flex-shrink:0;width:clamp(70px,10vw,130px)}
+        .reviews-summary{display:flex!important;flex-wrap:nowrap!important;align-items:stretch;gap:clamp(10px,2vw,20px)}
+        .reviews-score{flex-shrink:0;display:flex;align-items:stretch}
         .reviews-avg{flex-shrink:0;min-width:0}
         .reviews-bars{flex:1;min-width:0}
 
@@ -743,11 +752,11 @@ export default function Home() {
         .pack-toggle__btn--active{color:#fff;opacity:1}
         .pack-toggle__btn--inactive{color:rgba(255,255,255,0.5);opacity:0.42;transition:color 0.25s,opacity 0.25s}
 
-        /* Pack toggle — light mode overrides */
-        .tmm-light .pack-toggle{background:rgba(0,0,0,0.08);border-color:rgba(0,0,0,0.18)}
-        .tmm-light .pack-toggle__thumb{background:rgba(0,0,0,0.14);border-color:rgba(0,0,0,0.22)}
-        .tmm-light .pack-toggle__btn--active{color:#000}
-        .tmm-light .pack-toggle__btn--inactive{color:rgba(0,0,0,0.38)}
+        /* Pack toggle — light mode overrides (matches .tmm-light .play-card-pill) */
+        .tmm-light .pack-toggle{background:linear-gradient(135deg,rgba(255,255,255,0.75) 0%,rgba(240,240,240,0.58) 100%);border-color:rgba(255,255,255,0.80);backdrop-filter:blur(48px) saturate(1.9) brightness(1.02);-webkit-backdrop-filter:blur(48px) saturate(1.9) brightness(1.02)}
+        .tmm-light .pack-toggle__thumb{background:rgba(150,150,150,0.45);border-color:rgba(255,255,255,0.9)}
+        .tmm-light .pack-toggle__btn--active{color:#1a1a1a}
+        .tmm-light .pack-toggle__btn--inactive{color:rgba(0,0,0,0.35)}
       `}</style>
 
       {/* WebGL mesh gradient backdrop — replaces old CSS animated linear-gradient */}
@@ -758,7 +767,8 @@ export default function Home() {
 
       {/* Modal switching: fade/blur handled via .modal-content-out on each modal's scroll container */}
 
-      <main className={`site-canvas${lightMode ? " tmm-light" : ""}`}>
+      <a href="#main-content" className="skip-nav">Skip to main content</a>
+      <main id="main-content" className={`site-canvas${lightMode ? " tmm-light" : ""}`}>
 
         <LottieHero lightMode={lightMode} logoFading={logoFading} />
 
@@ -957,7 +967,7 @@ export default function Home() {
         {activeModal === "play" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`}>
+            <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`} role="dialog" aria-modal="true" aria-label="How to Play">
               <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
 
                 {/* BOX 1 */}
@@ -1147,12 +1157,24 @@ export default function Home() {
         {activeModal === "showcase" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`}>
+            <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`} role="dialog" aria-modal="true" aria-label="Showcase">
               <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
                 {/* Single title pill */}
                 <div className="play-card-pill" onClick={e => e.stopPropagation()}>
                   <span className="play-block-title">SHOWCASE</span>
                   <span className="play-block-subtitle">IMAGES</span>
+                </div>
+                {/* Showcase animation video — autoplay, loop, muted (required for autoplay) */}
+                <div className="play-card" style={{padding:0,overflow:"hidden",lineHeight:0}} onClick={e => e.stopPropagation()}>
+                  <video
+                    src="/videos/tmm_product_showcase_animation_1.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    aria-label="The Marshall Mafia product showcase animation"
+                    style={{width:"100%",height:"auto",display:"block"}}
+                  />
                 </div>
                 {/* Product renders — card background matches other modal blocks */}
                 {[1,2,3,4,5,6,7,8,9,10].map(i => (
@@ -1179,7 +1201,7 @@ export default function Home() {
         {activeModal === "music" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`}>
+            <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`} role="dialog" aria-modal="true" aria-label="Music">
               <div className="modal-content-pane">
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="music-modal-header">
@@ -1280,7 +1302,7 @@ export default function Home() {
         {activeModal === "reviews" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`}>
+            <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`} role="dialog" aria-modal="true" aria-label="Reviews">
               <div className="modal-content-pane" style={{display:"flex",flexDirection:"column",gap:"clamp(16px,4vw,28px)"}}>
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">REVIEWS</span><span className="play-block-subtitle">RATING</span></div>
@@ -1291,7 +1313,7 @@ export default function Home() {
                     return (
                   <div className="reviews-summary">
                     <div className="reviews-score">
-                      <CharacterSVG style={{height:"clamp(70px,15vw,100px)",width:"auto",display:"block",filter:lightMode?"invert(1)":undefined}} />
+                      <CharacterSVG style={{height:"100%",width:"auto",display:"block"}} lightMode={lightMode} />
                     </div>
                     <div className="reviews-avg">
                       <span className="reviews-score-number">{avgDisplay}</span>
@@ -1367,7 +1389,7 @@ export default function Home() {
         {activeModal === "collect" && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-backdrop" />
-            <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`}>
+            <div className={`modal-scroll-bare animate-modal-in${modalSwitching ? " modal-content-out" : ""}`} role="dialog" aria-modal="true" aria-label="Checkout">
               <div className="collect-list" onClick={e => e.stopPropagation()}>
 
                 {/* ── Pack selector — sliding segmented toggle ── */}
@@ -1376,12 +1398,14 @@ export default function Home() {
                   <button
                     className={`pack-toggle__btn${packSelected !== "expansion" ? " pack-toggle__btn--active" : " pack-toggle__btn--inactive"}`}
                     onClick={() => { setPackSelected("standard"); setLightMode(false) }}
+                    aria-pressed={packSelected !== "expansion"}
                   >
                     <span className="play-block-title">Standard Pack</span>
                   </button>
                   <button
                     className={`pack-toggle__btn${packSelected === "expansion" ? " pack-toggle__btn--active" : " pack-toggle__btn--inactive"}`}
                     onClick={() => { setPackSelected("expansion"); setLightMode(true) }}
+                    aria-pressed={packSelected === "expansion"}
                   >
                     <span className="play-block-title">Expansion Pack</span>
                   </button>
@@ -1396,12 +1420,12 @@ export default function Home() {
                         <span className="play-block-title">CHECKOUT</span>
                         <span className="play-block-subtitle">SECURE</span>
                       </div>
-                      <div style={{borderRadius:"clamp(12px,2vw,18px)",overflow:"hidden"}}>
+                      <div style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",borderRadius:"clamp(12px,2vw,18px)",overflow:"hidden"}}>
                         {/* @ts-expect-error — stripe-buy-button is a web component registered at runtime */}
                         <stripe-buy-button
                           buy-button-id="buy_btn_1UCVMKK5AQ6dxy1cviVZflou"
                           publishable-key="pk_live_51RbW9KK5AQ6dxy1cxibQc3RFT11wEH3WRJj68nDVz6BvWbv9qytmrSOH1kLG6T8blCjyGIweloF6k7ZUbhWEMo3100E3BCFEZE"
-                          style={{width:"100%",display:"block"}}
+                          style={{width:"100%",display:"block",minWidth:0}}
                         />
                       </div>
                     </div>
@@ -1462,7 +1486,7 @@ export default function Home() {
                   <p className="play-block-body"><span style={{color:"#F8007A",fontWeight:600}}>NOTE!</span> — If the deck comes back having seen some action, we may have to reduce the refund to reflect the loss in value. Looking is fine. Touching, we would too. However unsealing and playing a full round or few is a different case ;)</p>
                   <p className="play-block-body">Faulty or misdescribed? That's on us — no games. Whether it was us or the postage service, we shouldn't play around with your package. Jokes aside, we are being serious and it's separate from your cancellation right: you have 30 days from delivery to reject faulty goods for a full refund. We cover return postage. Don't you worry.</p>
                   <p className="play-block-body">The Marshall Mafia is a family of players. But technically, who you're buying from is just one of us — our resident designer and artist.</p>
-                  <p className="play-block-body" style={{color:"rgba(255,255,255,0.55)"}}>William Marshall (trading as marshallwi11), 57 Parklawn Avenue, Epsom, Surrey, KT18 7SJ, United Kingdom.</p>
+                  <p className="play-block-body play-block-dim">William Marshall (trading as marshallwi11), 57 Parklawn Avenue, Epsom, Surrey, KT18 7SJ, United Kingdom.</p>
                 </div>
 
                 {/* ── Legal Compliance intro — FIRST ── */}
@@ -1499,7 +1523,7 @@ export default function Home() {
                     <span className="play-block-subtitle">GPSR</span>
                   </div>
                   <p className="play-block-body" style={{marginBottom:"clamp(8px,1.5vw,12px)"}}>For customers in the EU, The Marshall Mafia is CE marked and compliant with the General Product Safety Regulation (GPSR), mandatory as of December 2024. Our EU Responsible Person for GPSR compliance:</p>
-                  <p className="play-block-body" style={{color:"rgba(255,255,255,0.55)"}}>eucomply OÜ — PÄrnu mnt. 139b–14, 11317 Tallinn, Estonia, European Union. <a href="mailto:hello@eucompliancepartner.com" className="legal-email">hello@eucompliancepartner.com</a></p>
+                  <p className="play-block-body play-block-dim">eucomply OÜ — PÄrnu mnt. 139b–14, 11317 Tallinn, Estonia, European Union. <a href="mailto:hello@eucompliancepartner.com" className="legal-email">hello@eucompliancepartner.com</a></p>
                 </div>
 
                 {/* ── Ivory UK – Manufacturer ── */}
@@ -1508,7 +1532,7 @@ export default function Home() {
                     <span className="play-block-title">IVORY</span>
                     <span className="play-block-subtitle">UK</span>
                   </div>
-                  <p className="play-block-body" style={{color:"rgba(255,255,255,0.55)"}}>Printed by Ivory Graphics Ltd, Unit 2, 55 Thorby Avenue, March, PE15 0AZ, England.</p>
+                  <p className="play-block-body play-block-dim">Printed by Ivory Graphics Ltd, Unit 2, 55 Thorby Avenue, March, PE15 0AZ, England.</p>
                 </div>
 
                 {/* ── Producer ── */}
@@ -1519,7 +1543,7 @@ export default function Home() {
                   </div>
                   <p className="play-block-body">For inquiries regarding The Marshall Mafia please email: <a href="mailto:info@themarshallmafia.com" className="legal-email">info@themarshallmafia.com</a></p>
                   <p className="play-block-body">The Marshall Mafia is designed and published by William Marshall (t/a marshallwi11), operating as a sole trader in the United Kingdom.</p>
-                  <p className="play-block-body" style={{color:"rgba(255,255,255,0.55)"}}>57 Parklawn Avenue, KT18 7SJ, Epsom, Surrey, United Kingdom. <a href="mailto:info@marshallwi11.com" className="legal-email">info@marshallwi11.com</a></p>
+                  <p className="play-block-body play-block-dim">57 Parklawn Avenue, KT18 7SJ, Epsom, Surrey, United Kingdom. <a href="mailto:info@marshallwi11.com" className="legal-email">info@marshallwi11.com</a></p>
                 </div>
 
               </div>
