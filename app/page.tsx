@@ -752,10 +752,10 @@ export default function Home() {
         .pack-toggle__btn--active{color:#fff;opacity:1}
         .pack-toggle__btn--inactive{color:rgba(255,255,255,0.5);opacity:0.42;transition:color 0.25s,opacity 0.25s}
 
-        /* Pack toggle — light mode overrides (matches .tmm-light .play-card-pill) */
-        .tmm-light .pack-toggle{background:linear-gradient(135deg,rgba(255,255,255,0.75) 0%,rgba(240,240,240,0.58) 100%);border-color:rgba(255,255,255,0.80);backdrop-filter:blur(48px) saturate(1.9) brightness(1.02);-webkit-backdrop-filter:blur(48px) saturate(1.9) brightness(1.02)}
-        .tmm-light .pack-toggle__thumb{background:rgba(150,150,150,0.45);border-color:rgba(255,255,255,0.9)}
-        .tmm-light .pack-toggle__btn--active{color:#1a1a1a}
+        /* Pack toggle — light mode overrides */
+        .tmm-light .pack-toggle{background:#e8e8e8;border-color:#d4d4d4;box-shadow:inset 0 1px 3px rgba(0,0,0,0.08)}
+        .tmm-light .pack-toggle__thumb{background:#fff;border-color:#c8c8c8;box-shadow:0 2px 8px rgba(0,0,0,0.14)}
+        .tmm-light .pack-toggle__btn--active{color:#111}
         .tmm-light .pack-toggle__btn--inactive{color:rgba(0,0,0,0.35)}
       `}</style>
 
@@ -1421,11 +1421,12 @@ export default function Home() {
                         <span className="play-block-subtitle">SECURE</span>
                       </div>
                       <div style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",borderRadius:"clamp(12px,2vw,18px)",overflow:"hidden"}}>
+                        {/* zoom scales the component up; no width:100% so flexbox can centre it */}
                         {/* @ts-expect-error — stripe-buy-button is a web component registered at runtime */}
                         <stripe-buy-button
                           buy-button-id="buy_btn_1UCVMKK5AQ6dxy1cviVZflou"
                           publishable-key="pk_live_51RbW9KK5AQ6dxy1cxibQc3RFT11wEH3WRJj68nDVz6BvWbv9qytmrSOH1kLG6T8blCjyGIweloF6k7ZUbhWEMo3100E3BCFEZE"
-                          style={{width:"100%",display:"block",minWidth:0}}
+                          style={{display:"block",zoom:"1.15"}}
                         />
                       </div>
                     </div>
@@ -1472,7 +1473,7 @@ export default function Home() {
                   <p className="play-block-body">You can cancel your order within 14 days without giving a reason. The period ends 14 days after the day you, or someone you nominate other than the courier, receives the goods.</p>
                   <p className="play-block-body">We hope you don't, let us know if there is anything we can do to help but if you have changed your mind? It happens, just tell us clearly before the period ends. Easiest is an email to <a href="mailto:info@themarshallmafia.com" className="legal-email">info@themarshallmafia.com</a> with your name, address, order number and date, so we can find your order quickly. There's also our <a href="https://forms.gle/wjRZERqxpgT19TGH8" target="_blank" rel="noopener noreferrer" className="legal-email">themarshallmafia.cancellations</a> form if you'd prefer, and any other clear message is good to us too!</p>
                   <p className="play-block-body">Send the box back within 14 days of telling us you are cancelling, to:</p>
-                  <p className="play-block-body" style={{opacity:0.7}}>57 Parklawn Avenue, KT18 7SJ, Epsom, Surrey, United Kingdom.</p>
+                  <p className="play-block-body play-block-dim">57 Parklawn Avenue, KT18 7SJ, Epsom, Surrey, United Kingdom.</p>
                   <p className="play-block-body"><span style={{color:"#F8007A",fontWeight:600}}>NOTE!</span> — You'll need to cover the cost of sending the deck back, this is to protect us from cheeky customers. Please do use a tracked service if you can, until the parcel has been recollected by us it's still your responsibility, and tracking saves a lot of mess if it goes astray. As soon as we have the box in our hands, we'll hand your refund back to you.</p>
                 </div>
 
