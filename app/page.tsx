@@ -668,30 +668,27 @@ export default function Home() {
         .play-block-dim{color:rgba(255,255,255,0.55)}
         .tmm-light .play-block-dim{color:rgba(0,0,0,0.42)}
 
-        /* ── Cookie banner ── */
-        /* Outer wrapper: centering only — never transitions, so translateX(-50%) is never animated */
+        /* ── Cookie banner — matches modal play-card glass style ── */
         .cookie-bar-wrap{
           position:fixed;bottom:clamp(14px,2.5vw,24px);left:50%;
           transform:translateX(-50%);
           z-index:9000;pointer-events:none;
         }
-        /* Inner bar: animates only opacity + translateY — no compound transform, no Windows GPU flicker */
         .cookie-bar{
           display:flex;align-items:center;gap:clamp(10px,2vw,16px);
-          padding:clamp(10px,1.5vw,14px) clamp(14px,2.5vw,22px);
-          /* Solid fallback first — shown on Firefox/Windows where backdrop-filter is unsupported */
-          background:rgba(10,10,16,0.94);
-          border:1px solid rgba(255,255,255,0.09);border-radius:clamp(20px,4vw,32px);
+          padding:clamp(12px,2vw,16px) clamp(16px,2.8vw,24px);
+          border-radius:100px;
+          border:1px solid rgba(255,255,255,0.13);
+          background:linear-gradient(160deg,rgba(76,76,76,0.32) 0%,rgba(36,36,36,0.20) 100%);
+          backdrop-filter:blur(48px) saturate(1.9) brightness(1.04);
+          -webkit-backdrop-filter:blur(48px) saturate(1.9) brightness(1.04);
+          box-shadow:0 8px 40px rgba(0,0,0,0.32),0 2px 10px rgba(0,0,0,0.18),inset 0 1.5px 0 rgba(255,255,255,0.18),inset 0 -1px 0 rgba(0,0,0,0.14);
           white-space:nowrap;pointer-events:auto;
           will-change:opacity,transform;
           transform:translateY(0) translateZ(0);
           opacity:1;
           transition:opacity 0.4s cubic-bezier(0.4,0,0.2,1),transform 0.4s cubic-bezier(0.4,0,0.2,1);
           font-family:inherit;
-        }
-        /* Apply blur only where supported (Chrome/Edge/Safari — all fine on Windows) */
-        @supports (backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px)){
-          .cookie-bar{background:rgba(12,12,18,0.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
         }
         .cookie-bar--hidden{opacity:0;transform:translateY(10px) translateZ(0);pointer-events:none}
         .cookie-bar__text{font-size:clamp(11px,1.5vw,13px);color:rgba(255,255,255,0.6);letter-spacing:0.04em;font-family:inherit}
@@ -1165,20 +1162,54 @@ export default function Home() {
                   <span className="play-block-title">SHOWCASE</span>
                   <span className="play-block-subtitle">IMAGES</span>
                 </div>
-                {/* Showcase animation video — autoplay, loop, muted (required for autoplay) */}
-                <div className="play-card" style={{padding:0,overflow:"hidden",lineHeight:0}} onClick={e => e.stopPropagation()}>
+                {/* Product renders 1–2 */}
+                {[1,2].map(i => (
+                  <div key={i} className="play-card" style={{padding:0,overflow:"hidden",lineHeight:0}} onClick={e => e.stopPropagation()}>
+                    <img
+                      src={`/images/tmm_product_render_${i}.png?v=2`}
+                      alt={`The Marshall Mafia — product render ${i}`}
+                      loading="lazy"
+                      decoding="async"
+                      style={{width:"100%",height:"auto",display:"block"}}
+                    />
+                  </div>
+                ))}
+                {/* Showcase animation — 3rd in list; cropped 20% top+bottom via aspectRatio;
+                    isolation:isolate prevents Mac backdrop-filter compositing glitch */}
+                <div
+                  onClick={e => e.stopPropagation()}
+                  style={{
+                    lineHeight:0,
+                    position:"relative",
+                    aspectRatio:"16/5.4",
+                    overflow:"hidden",
+                    borderRadius:"clamp(26px,5vw,40px)",
+                    isolation:"isolate",
+                    border:"1px solid rgba(255,255,255,0.13)",
+                    boxShadow:"0 8px 40px rgba(0,0,0,0.32),0 2px 10px rgba(0,0,0,0.18),inset 0 1.5px 0 rgba(255,255,255,0.18),inset 0 -1px 0 rgba(0,0,0,0.14)",
+                  }}
+                >
                   <video
                     src="/videos/tmm_product_showcase_animation_1.mp4"
                     autoPlay
                     loop
                     muted
                     playsInline
+                    preload="auto"
                     aria-label="The Marshall Mafia product showcase animation"
-                    style={{width:"100%",height:"auto",display:"block"}}
+                    style={{
+                      position:"absolute",
+                      top:"50%",
+                      left:0,
+                      width:"100%",
+                      height:"auto",
+                      display:"block",
+                      transform:"translateY(-50%) translateZ(0)",
+                    }}
                   />
                 </div>
-                {/* Product renders — card background matches other modal blocks */}
-                {[1,2,3,4,5,6,7,8,9,10].map(i => (
+                {/* Product renders 3–10 */}
+                {[3,4,5,6,7,8,9,10].map(i => (
                   <div key={i} className="play-card" style={{padding:0,overflow:"hidden",lineHeight:0}} onClick={e => e.stopPropagation()}>
                     <img
                       src={`/images/tmm_product_render_${i}.png?v=2`}
@@ -1571,20 +1602,20 @@ export default function Home() {
       {/* Outer wrapper: centering only (translateX never animates → no Windows GPU flicker) */}
       <div className="cookie-bar-wrap">
         <div className={`cookie-bar${(cookieDismissed || activeModal !== null) ? " cookie-bar--hidden" : ""}`} role="region" aria-label="Cookie notice">
-          {/* TMM logo eyes — the actual brand mark SVG */}
-          <svg width="71" height="14" viewBox="0 0 153 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{flexShrink:0,opacity:0.8}}>
+          {/* TMM logo eyes — slightly smaller */}
+          <svg width="58" height="11" viewBox="0 0 153 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{flexShrink:0,opacity:0.8}}>
             <path d="M31.5839 15.6672C23.549 15.9219 17.8647 10.4448 15.3432 3.05176e-05H0C1.1112 11.6761 6.23985 20.5499 16.3689 26.027C27.7374 32.141 38.9777 30.9946 49.4914 23.989C57.9109 18.3845 62.3557 10.19 63.3814 3.05176e-05H47.8673C46.0723 11.2939 38.2938 15.4124 31.6266 15.6672H31.5839Z" fill="white"/>
             <path d="M120.609 15.6672C112.574 15.9219 106.889 10.4448 104.368 3.05176e-05H89.0247C90.1359 11.6761 95.2645 20.5499 105.394 26.027C116.762 32.141 128.002 30.9946 138.516 23.989C146.936 18.3845 151.38 10.19 152.406 3.05176e-05H136.892C135.097 11.2939 127.319 15.4124 120.651 15.6672H120.609Z" fill="white"/>
           </svg>
           <span className="cookie-bar__text">We use cookies to improve your experience.</span>
-          {/* Tick button — unframed, nav icon style */}
+          {/* Tick button — stroked, matches nav icon weight */}
           <button
             className="cookie-bar__accept"
             aria-label="Accept cookies"
             onClick={() => { localStorage.setItem("tmm_cookies_accepted","1"); setCookieDismissed(true) }}
           >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" clipRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"/>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"/>
             </svg>
           </button>
         </div>
