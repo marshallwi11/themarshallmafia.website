@@ -1182,7 +1182,7 @@ export default function Home() {
                   style={{
                     lineHeight:0,
                     position:"relative",
-                    aspectRatio:"16/7.2",
+                    aspectRatio:"16/8.55",
                     overflow:"hidden",
                     borderRadius:"clamp(26px,5vw,40px)",
                     transform:"translateZ(0)",
@@ -1210,8 +1210,8 @@ export default function Home() {
                     }}
                   />
                 </div>
-                {/* Product renders 3–10 */}
-                {[3,4,5,6,7,8,9,10].map(i => (
+                {/* Product renders 3–7 (8,9,10 removed); 7 moved one above 6 */}
+                {[3,4,5,7,6].map(i => (
                   <div key={i} className="play-card" style={{padding:0,overflow:"hidden",lineHeight:0}} onClick={e => e.stopPropagation()}>
                     <img
                       src={`/images/tmm_product_render_${i}.png?v=2`}
