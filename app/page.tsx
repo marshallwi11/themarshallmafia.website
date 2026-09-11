@@ -1481,12 +1481,12 @@ export default function Home() {
                         <span className="play-block-title">CHECKOUT</span>
                         <span className="play-block-subtitle">SECURE</span>
                       </div>
-                      <div style={{background:"#0d0d0d",borderRadius:"clamp(14px,2.5vw,20px)",overflow:"hidden"}}>
+                      <div style={{background:"#000",borderRadius:"clamp(14px,2.5vw,20px)",overflow:"hidden",display:"flex",justifyContent:"center",alignItems:"center"}}>
                         {/* @ts-expect-error — stripe-buy-button is a web component registered at runtime */}
                         <stripe-buy-button
                           buy-button-id="buy_btn_1UCVMKK5AQ6dxy1cviVZflou"
                           publishable-key="pk_live_51RbW9KK5AQ6dxy1cxibQc3RFT11wEH3WRJj68nDVz6BvWbv9qytmrSOH1kLG6T8blCjyGIweloF6k7ZUbhWEMo3100E3BCFEZE"
-                          style={{display:"block",width:"100%"}}
+                          style={{display:"block",margin:"0 auto"}}
                         />
                       </div>
                     </div>
