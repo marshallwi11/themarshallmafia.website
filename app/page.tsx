@@ -1209,8 +1209,8 @@ export default function Home() {
                     }}
                   />
                 </div>
-                {/* Product renders 3–7 (8,9,10 removed); 7 moved one above 6 */}
-                {[3,4,5,7,6].map(i => (
+                {/* Product renders 3–5 (positions 4–6) */}
+                {[3,4,5].map(i => (
                   <div key={i} className="play-card" style={{padding:0,overflow:"hidden",lineHeight:0}} onClick={e => e.stopPropagation()}>
                     <img
                       src={`/images/tmm_product_render_${i}.png?v=2`}
@@ -1221,6 +1221,32 @@ export default function Home() {
                     />
                   </div>
                 ))}
+                {/* Animation 3 — position 7 */}
+                <div
+                  onClick={e => e.stopPropagation()}
+                  style={{lineHeight:0,aspectRatio:"16/8.55",overflow:"hidden",background:"#000",borderRadius:"clamp(26px,5vw,40px)",transform:"translateZ(0)",willChange:"transform",border:"1px solid rgba(255,255,255,0.13)",boxShadow:"0 8px 40px rgba(0,0,0,0.32),0 2px 10px rgba(0,0,0,0.18),inset 0 1.5px 0 rgba(255,255,255,0.18),inset 0 -1px 0 rgba(0,0,0,0.14)"}}
+                >
+                  <video src="/videos/tmm_product_showcase_animation_3.mp4" autoPlay loop muted playsInline preload="auto" aria-label="The Marshall Mafia showcase animation 3" style={{display:"block",width:"100%",height:"100%",objectFit:"cover",objectPosition:"center center"}} />
+                </div>
+                {/* Product renders 7 & 6 (positions 8–9) */}
+                {[7,6].map(i => (
+                  <div key={i} className="play-card" style={{padding:0,overflow:"hidden",lineHeight:0}} onClick={e => e.stopPropagation()}>
+                    <img
+                      src={`/images/tmm_product_render_${i}.png?v=2`}
+                      alt={`The Marshall Mafia — product render ${i}`}
+                      loading="lazy"
+                      decoding="async"
+                      style={{width:"100%",height:"auto",display:"block"}}
+                    />
+                  </div>
+                ))}
+                {/* Animation 2 — last item before footer pill */}
+                <div
+                  onClick={e => e.stopPropagation()}
+                  style={{lineHeight:0,aspectRatio:"16/8.55",overflow:"hidden",background:"#000",borderRadius:"clamp(26px,5vw,40px)",transform:"translateZ(0)",willChange:"transform",border:"1px solid rgba(255,255,255,0.13)",boxShadow:"0 8px 40px rgba(0,0,0,0.32),0 2px 10px rgba(0,0,0,0.18),inset 0 1.5px 0 rgba(255,255,255,0.18),inset 0 -1px 0 rgba(0,0,0,0.14)"}}
+                >
+                  <video src="/videos/tmm_product_showcase_animation_2.mp4" autoPlay loop muted playsInline preload="auto" aria-label="The Marshall Mafia showcase animation 2" style={{display:"block",width:"100%",height:"100%",objectFit:"cover",objectPosition:"center center"}} />
+                </div>
                 <div className="play-card-pill" onClick={e => e.stopPropagation()}>
                   <span className="play-block-title">the marshall mafia</span>
                   <span className="play-block-subtitle">gallery</span>

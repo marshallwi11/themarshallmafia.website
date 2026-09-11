@@ -352,6 +352,8 @@ export default function RootLayout({
   return (
     <html lang="en-GB">
       <head>
+        {/* Preload MarkerBold so it's ready before first paint — eliminates font swap flash */}
+        <link rel="preload" as="font" href="/fonts/asset_font_bold_marker.ttf" type="font/truetype" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://js.stripe.com" />
         <link rel="dns-prefetch" href="https://api.stripe.com" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdProduct) }} />
