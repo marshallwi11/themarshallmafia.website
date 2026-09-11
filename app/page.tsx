@@ -1175,21 +1175,19 @@ export default function Home() {
                   </div>
                 ))}
                 {/* Showcase animation — 3rd in list.
-                    aspectRatio 16/8.55 ≈ 5% uniform crop top+bottom from a 16:9 source.
-                    objectFit:cover + height:100% is the correct uniform-crop technique.
+                    aspectRatio 16/17.1 = 2× vertical height from centre (8.55 × 2).
+                    className="play-card" provides glass background, border, shadow.
                     No transform on the video → fewer Mac GPU compositing conflicts. */}
                 <div
+                  className="play-card"
                   onClick={e => e.stopPropagation()}
                   style={{
+                    padding:0,
                     lineHeight:0,
-                    aspectRatio:"16/8.55",
+                    aspectRatio:"16/17.1",
                     overflow:"hidden",
-                    background:"#000",
-                    borderRadius:"clamp(26px,5vw,40px)",
                     transform:"translateZ(0)",
                     willChange:"transform",
-                    border:"1px solid rgba(255,255,255,0.13)",
-                    boxShadow:"0 8px 40px rgba(0,0,0,0.32),0 2px 10px rgba(0,0,0,0.18),inset 0 1.5px 0 rgba(255,255,255,0.18),inset 0 -1px 0 rgba(0,0,0,0.14)",
                   }}
                 >
                   <video
@@ -1221,10 +1219,11 @@ export default function Home() {
                     />
                   </div>
                 ))}
-                {/* Animation 3 — position 7 */}
+                {/* Animation 3 — position 7. 2× vertical height from centre. */}
                 <div
+                  className="play-card"
                   onClick={e => e.stopPropagation()}
-                  style={{lineHeight:0,aspectRatio:"16/8.55",overflow:"hidden",background:"#000",borderRadius:"clamp(26px,5vw,40px)",transform:"translateZ(0)",willChange:"transform",border:"1px solid rgba(255,255,255,0.13)",boxShadow:"0 8px 40px rgba(0,0,0,0.32),0 2px 10px rgba(0,0,0,0.18),inset 0 1.5px 0 rgba(255,255,255,0.18),inset 0 -1px 0 rgba(0,0,0,0.14)"}}
+                  style={{padding:0,lineHeight:0,aspectRatio:"16/17.1",overflow:"hidden",transform:"translateZ(0)",willChange:"transform"}}
                 >
                   <video src="/videos/tmm_product_showcase_animation_3.mp4" autoPlay loop muted playsInline preload="auto" aria-label="The Marshall Mafia showcase animation 3" style={{display:"block",width:"100%",height:"100%",objectFit:"cover",objectPosition:"center center"}} />
                 </div>
@@ -1240,10 +1239,11 @@ export default function Home() {
                     />
                   </div>
                 ))}
-                {/* Animation 2 — last item before footer pill */}
+                {/* Animation 2 — last item before footer pill. Standard height. */}
                 <div
+                  className="play-card"
                   onClick={e => e.stopPropagation()}
-                  style={{lineHeight:0,aspectRatio:"16/8.55",overflow:"hidden",background:"#000",borderRadius:"clamp(26px,5vw,40px)",transform:"translateZ(0)",willChange:"transform",border:"1px solid rgba(255,255,255,0.13)",boxShadow:"0 8px 40px rgba(0,0,0,0.32),0 2px 10px rgba(0,0,0,0.18),inset 0 1.5px 0 rgba(255,255,255,0.18),inset 0 -1px 0 rgba(0,0,0,0.14)"}}
+                  style={{padding:0,lineHeight:0,aspectRatio:"16/8.55",overflow:"hidden",transform:"translateZ(0)",willChange:"transform"}}
                 >
                   <video src="/videos/tmm_product_showcase_animation_2.mp4" autoPlay loop muted playsInline preload="auto" aria-label="The Marshall Mafia showcase animation 2" style={{display:"block",width:"100%",height:"100%",objectFit:"cover",objectPosition:"center center"}} />
                 </div>
