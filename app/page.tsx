@@ -1174,16 +1174,17 @@ export default function Home() {
                     />
                   </div>
                 ))}
-                {/* Showcase animation — 3rd in list; 10% crop top+bottom via aspectRatio 16/7.2;
-                    Container gets translateZ(0)+will-change so Mac compositor puts it on its
-                    own GPU layer, avoiding the overflow:hidden+video flicker on macOS */}
+                {/* Showcase animation — 3rd in list.
+                    aspectRatio 16/8.55 ≈ 5% uniform crop top+bottom from a 16:9 source.
+                    objectFit:cover + height:100% is the correct uniform-crop technique.
+                    No transform on the video → fewer Mac GPU compositing conflicts. */}
                 <div
                   onClick={e => e.stopPropagation()}
                   style={{
                     lineHeight:0,
-                    position:"relative",
                     aspectRatio:"16/8.55",
                     overflow:"hidden",
+                    background:"#000",
                     borderRadius:"clamp(26px,5vw,40px)",
                     transform:"translateZ(0)",
                     willChange:"transform",
@@ -1200,13 +1201,11 @@ export default function Home() {
                     preload="auto"
                     aria-label="The Marshall Mafia product showcase animation"
                     style={{
-                      position:"absolute",
-                      top:"50%",
-                      left:0,
-                      width:"100%",
-                      height:"auto",
                       display:"block",
-                      transform:"translateY(-50%)",
+                      width:"100%",
+                      height:"100%",
+                      objectFit:"cover",
+                      objectPosition:"center center",
                     }}
                   />
                 </div>
@@ -1450,18 +1449,18 @@ export default function Home() {
                 {/* ── Standard pack: product info + buy button ── */}
                 {packSelected === "standard" && (
                   <>
-                    {/* Stripe Buy Button — dark card bg matches stripe theme; stripe centred at natural width */}
-                    <div className="play-card" style={{padding:0,overflow:"hidden",background:"#0d0d0d"}} onClick={e => e.stopPropagation()}>
-                      <div className="play-card-header" style={{padding:"clamp(24px,4.8vw,38px) clamp(24px,4.8vw,38px) 0"}}>
+                    {/* Stripe Buy Button — normal glass play-card; black sub-box wraps stripe */}
+                    <div className="play-card" onClick={e => e.stopPropagation()}>
+                      <div className="play-card-header">
                         <span className="play-block-title">CHECKOUT</span>
                         <span className="play-block-subtitle">SECURE</span>
                       </div>
-                      <div style={{display:"flex",justifyContent:"center",width:"100%"}}>
+                      <div style={{background:"#0d0d0d",borderRadius:"clamp(14px,2.5vw,20px)",overflow:"hidden"}}>
                         {/* @ts-expect-error — stripe-buy-button is a web component registered at runtime */}
                         <stripe-buy-button
                           buy-button-id="buy_btn_1UCVMKK5AQ6dxy1cviVZflou"
                           publishable-key="pk_live_51RbW9KK5AQ6dxy1cxibQc3RFT11wEH3WRJj68nDVz6BvWbv9qytmrSOH1kLG6T8blCjyGIweloF6k7ZUbhWEMo3100E3BCFEZE"
-                          style={{display:"block"}}
+                          style={{display:"block",width:"100%"}}
                         />
                       </div>
                     </div>
@@ -1616,7 +1615,7 @@ export default function Home() {
             aria-label="Accept cookies"
             onClick={() => { localStorage.setItem("tmm_cookies_accepted","1"); setCookieDismissed(true) }}
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <polyline points="20 6 9 17 4 12"/>
             </svg>
           </button>
