@@ -1174,17 +1174,19 @@ export default function Home() {
                     />
                   </div>
                 ))}
-                {/* Showcase animation — 3rd in list; cropped 20% top+bottom via aspectRatio;
-                    isolation:isolate prevents Mac backdrop-filter compositing glitch */}
+                {/* Showcase animation — 3rd in list; 10% crop top+bottom via aspectRatio 16/7.2;
+                    Container gets translateZ(0)+will-change so Mac compositor puts it on its
+                    own GPU layer, avoiding the overflow:hidden+video flicker on macOS */}
                 <div
                   onClick={e => e.stopPropagation()}
                   style={{
                     lineHeight:0,
                     position:"relative",
-                    aspectRatio:"16/5.4",
+                    aspectRatio:"16/7.2",
                     overflow:"hidden",
                     borderRadius:"clamp(26px,5vw,40px)",
-                    isolation:"isolate",
+                    transform:"translateZ(0)",
+                    willChange:"transform",
                     border:"1px solid rgba(255,255,255,0.13)",
                     boxShadow:"0 8px 40px rgba(0,0,0,0.32),0 2px 10px rgba(0,0,0,0.18),inset 0 1.5px 0 rgba(255,255,255,0.18),inset 0 -1px 0 rgba(0,0,0,0.14)",
                   }}
@@ -1204,7 +1206,7 @@ export default function Home() {
                       width:"100%",
                       height:"auto",
                       display:"block",
-                      transform:"translateY(-50%) translateZ(0)",
+                      transform:"translateY(-50%)",
                     }}
                   />
                 </div>
