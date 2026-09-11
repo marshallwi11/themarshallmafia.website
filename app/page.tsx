@@ -1417,18 +1417,20 @@ export default function Home() {
                 {/* ── Standard pack: product info + buy button ── */}
                 {packSelected === "standard" && (
                   <>
-                    {/* Stripe Buy Button — padding:0 + overflow:hidden so card border-radius clips the iframe edges */}
-                    <div className="play-card" style={{padding:0,overflow:"hidden"}} onClick={e => e.stopPropagation()}>
+                    {/* Stripe Buy Button — dark card bg matches stripe theme; stripe centred at natural width */}
+                    <div className="play-card" style={{padding:0,overflow:"hidden",background:"#0d0d0d"}} onClick={e => e.stopPropagation()}>
                       <div className="play-card-header" style={{padding:"clamp(24px,4.8vw,38px) clamp(24px,4.8vw,38px) 0"}}>
                         <span className="play-block-title">CHECKOUT</span>
                         <span className="play-block-subtitle">SECURE</span>
                       </div>
-                      {/* @ts-expect-error — stripe-buy-button is a web component registered at runtime */}
-                      <stripe-buy-button
-                        buy-button-id="buy_btn_1UCVMKK5AQ6dxy1cviVZflou"
-                        publishable-key="pk_live_51RbW9KK5AQ6dxy1cxibQc3RFT11wEH3WRJj68nDVz6BvWbv9qytmrSOH1kLG6T8blCjyGIweloF6k7ZUbhWEMo3100E3BCFEZE"
-                        style={{display:"block",width:"100%"}}
-                      />
+                      <div style={{display:"flex",justifyContent:"center",width:"100%"}}>
+                        {/* @ts-expect-error — stripe-buy-button is a web component registered at runtime */}
+                        <stripe-buy-button
+                          buy-button-id="buy_btn_1UCVMKK5AQ6dxy1cviVZflou"
+                          publishable-key="pk_live_51RbW9KK5AQ6dxy1cxibQc3RFT11wEH3WRJj68nDVz6BvWbv9qytmrSOH1kLG6T8blCjyGIweloF6k7ZUbhWEMo3100E3BCFEZE"
+                          style={{display:"block"}}
+                        />
+                      </div>
                     </div>
 
                     {/* Product information card */}
