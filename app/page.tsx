@@ -713,7 +713,7 @@ export default function Home() {
         /* ── Reviews summary ── */
         .reviews-summary{display:flex!important;flex-wrap:nowrap!important;align-items:stretch;gap:clamp(10px,2vw,20px)}
         .reviews-left{display:flex;flex-direction:row;align-items:stretch;flex-shrink:0;gap:clamp(8px,1.5vw,14px)}
-        .reviews-score{flex-shrink:0;display:flex;align-items:stretch}
+        .reviews-score{flex-shrink:0;display:flex;align-items:center}
         .reviews-avg{flex-shrink:0;min-width:0;display:flex;flex-direction:column;justify-content:space-between}
         .reviews-bars{flex:1;min-width:0}
 
@@ -1373,7 +1373,7 @@ export default function Home() {
                   <div className="reviews-summary">
                     <div className="reviews-left">
                     <div className="reviews-score">
-                      <CharacterSVG style={{height:"100%",width:"auto",display:"block"}} lightMode={lightMode} />
+                      <CharacterSVG style={{width:"clamp(38px,8vw,64px)",height:"auto",display:"block"}} lightMode={lightMode} />
                     </div>
                     <div className="reviews-avg">
                       <span className="reviews-score-number">{avgDisplay}</span>
