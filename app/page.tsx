@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback, useRef } from "react"
 import Script from "next/script"
-import type { AnimationItem } from "lottie-web"
 
 // ── Mesh Gradient Background (pure WebGL — no external deps) ─────────────────
 // Replaces the old CSS animated linear-gradient backdrop.
@@ -133,42 +132,30 @@ void main(){
   )
 }
 
-// ── Lottie hero ───────────────────────────────────────────────────────────────
-function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading: boolean }) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const animRef = useRef<AnimationItem | null>(null)
-
-  useEffect(() => {
-    let cancelled = false
-    import("lottie-web").then((lottie) => {
-      if (cancelled || !containerRef.current) return
-      animRef.current = lottie.default.loadAnimation({
-        container: containerRef.current,
-        renderer: "svg",
-        loop: true,
-        autoplay: true,
-        path: "/tmm_hero.json",
-      })
-    })
-    return () => {
-      cancelled = true
-      animRef.current?.destroy()
-      animRef.current = null
-    }
-  }, [])
-
-  // Opacity fades to 0 while logoFading; transform/filter swap while invisible.
+// ── Hero Video (transparent animation — replaces Lottie eyes) ─────────────────
+// WebM (VP9 alpha) → Chrome / Firefox / Edge
+// HEVC MOV (hvc1 alpha) → Safari on Mac — build this file on your Mac with:
+//   ffmpeg -i tmm_animation_homescreen.mov -c:v hevc_videotoolbox -allow_sw 1 \
+//          -alpha_quality 0.75 -tag:v hvc1 -an tmm_animation_homescreen_hevc.mov
+// Then place tmm_animation_homescreen_hevc.mov in /public/videos/
+function HeroVideo({ logoFading }: { logoFading: boolean }) {
   return (
     <div className="hero-rise-wrapper">
-      <div style={{
-        /* Dark mode: scaleY(-1) puts eyes right-side-up (Lottie is natively inverted).
-           Light mode: no flip — character is naturally the other way up, invert for colour. */
-        transform: lightMode ? undefined : "scaleY(-1)",
-        filter: lightMode ? "invert(1)" : undefined,
-        opacity: logoFading ? 0 : 1,
-        transition: "opacity 0.18s linear",
-      }}>
-        <div ref={containerRef} className="select-none pointer-events-none w-full aspect-square hero-lottie" aria-label="The Marshall Mafia" />
+      <div style={{ opacity: logoFading ? 0 : 1, transition: "opacity 0.18s linear" }}>
+        {/* Source order matters: Safari picks hvc1, all others fall through to WebM */}
+        <video
+          className="hero-lottie select-none pointer-events-none"
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-label="The Marshall Mafia"
+          style={{ display: "block", width: "100%", height: "auto" }}
+        >
+          {/* @ts-expect-error — type string with codec param is valid but TS narrows it */}
+          <source src="/videos/tmm_animation_homescreen_hevc.mov" type='video/mp4; codecs="hvc1"' />
+          <source src="/videos/tmm_animation_homescreen.webm" type="video/webm" />
+        </video>
       </div>
     </div>
   )
@@ -768,7 +755,7 @@ export default function Home() {
       <a href="#main-content" className="skip-nav">Skip to main content</a>
       <main id="main-content" className={`site-canvas${lightMode ? " tmm-light" : ""}`}>
 
-        <LottieHero lightMode={lightMode} logoFading={logoFading} />
+        <HeroVideo logoFading={logoFading} />
 
         {/* ── INFO POPUP ── */}
         <InfoPopup open={infoOpen} onClose={() => setInfoOpen(false)} />
