@@ -132,31 +132,39 @@ void main(){
   )
 }
 
-// ── Hero Video (transparent animation — replaces Lottie eyes) ─────────────────
-// WebM (VP9 alpha) → Chrome / Firefox / Edge
-// HEVC MOV (hvc1 alpha) → Safari on Mac — build this file on your Mac with:
-//   ffmpeg -i tmm_animation_homescreen.mov -c:v hevc_videotoolbox -allow_sw 1 \
-//          -alpha_quality 0.75 -tag:v hvc1 -an tmm_animation_homescreen_hevc.mov
-// Then place tmm_animation_homescreen_hevc.mov in /public/videos/
-function HeroVideo({ logoFading }: { logoFading: boolean }) {
+// ── Lottie Hero (eyes animation) ─────────────────────────────────────────────
+function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading: boolean }) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const animRef      = useRef<import("lottie-web").AnimationItem | null>(null)
+
+  useEffect(() => {
+    let destroyed = false
+    import("lottie-web").then((lottie) => {
+      if (destroyed || !containerRef.current) return
+      animRef.current = lottie.default.loadAnimation({
+        container:     containerRef.current,
+        renderer:      "svg",
+        loop:          true,
+        autoplay:      true,
+        path:          "/tmm_hero.json",
+      })
+    })
+    return () => {
+      destroyed = true
+      animRef.current?.destroy()
+      animRef.current = null
+    }
+  }, [])
+
   return (
     <div className="hero-rise-wrapper">
-      <div style={{ opacity: logoFading ? 0 : 1, transition: "opacity 0.18s linear" }}>
-        {/* Source order matters: Safari picks hvc1, all others fall through to WebM */}
-        <video
-          className="hero-lottie select-none pointer-events-none"
-          autoPlay
-          muted
-          loop
-          playsInline
-          aria-label="The Marshall Mafia"
-          style={{ display: "block", width: "100%", height: "auto", mixBlendMode: "screen" }}
-        >
-          {/* @ts-expect-error — type string with codec param is valid but TS narrows it */}
-          <source src="/videos/tmm_animation_homescreen_hevc.mov" type='video/mp4; codecs="hvc1"' />
-          <source src="/videos/tmm_animation_homescreen.webm" type="video/webm" />
-        </video>
-      </div>
+      <div
+        ref={containerRef}
+        className="hero-lottie select-none pointer-events-none"
+        aria-label="The Marshall Mafia"
+        style={{ opacity: logoFading ? 0 : 1, transition: "opacity 0.18s linear",
+                 filter: lightMode ? "invert(1)" : undefined }}
+      />
     </div>
   )
 }
@@ -539,7 +547,7 @@ export default function Home() {
   useEffect(() => {
     const paths = [
       ...([1,2,3,4,5,6].map(i => `/images/tmm_creation_story_${i}.png`)),
-      ...([1,2,3,4,5,6,7,8,9,10].map(i => `/images/tmm_product_render_${i}.png`)),
+      ...([1,2,3,4,5].map(i => `/images/tmm_product_render_${i}.png`)),
       "/images/tmm_wm_testimonial_photo_1.png",
       "/images/tmm_wm_testimonial_photo_2.png",
       "/images/tmm_wm_testimonial_photo_3.png",
@@ -755,7 +763,7 @@ export default function Home() {
       <a href="#main-content" className="skip-nav">Skip to main content</a>
       <main id="main-content" className={`site-canvas${lightMode ? " tmm-light" : ""}`}>
 
-        <HeroVideo logoFading={logoFading} />
+        <LottieHero lightMode={lightMode} logoFading={logoFading} />
 
         {/* ── INFO POPUP ── */}
         <InfoPopup open={infoOpen} onClose={() => setInfoOpen(false)} />
@@ -1149,8 +1157,8 @@ export default function Home() {
                   <span className="play-block-title">SHOWCASE</span>
                   <span className="play-block-subtitle">IMAGES</span>
                 </div>
-                {/* Product renders 1–2 */}
-                {[1,2].map(i => (
+                {/* Product renders 1–5 */}
+                {[1,2,3,4,5].map(i => (
                   <div key={i} className="play-card" style={{padding:0,overflow:"hidden",lineHeight:0}} onClick={e => e.stopPropagation()}>
                     <img
                       src={`/images/tmm_product_render_${i}.png?v=2`}
@@ -1161,79 +1169,6 @@ export default function Home() {
                     />
                   </div>
                 ))}
-                {/* Showcase animation — 3rd in list.
-                    aspectRatio 16/17.1 = 2× vertical height from centre (8.55 × 2).
-                    className="play-card" provides glass background, border, shadow.
-                    No transform on the video → fewer Mac GPU compositing conflicts. */}
-                <div
-                  className="play-card"
-                  onClick={e => e.stopPropagation()}
-                  style={{
-                    padding:0,
-                    lineHeight:0,
-                    aspectRatio:"16/17.1",
-                    overflow:"hidden",
-                    transform:"translateZ(0)",
-                    willChange:"transform",
-                  }}
-                >
-                  <video
-                    src="/videos/tmm_product_showcase_animation_1.mp4"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="auto"
-                    aria-label="The Marshall Mafia product showcase animation"
-                    style={{
-                      display:"block",
-                      width:"100%",
-                      height:"100%",
-                      objectFit:"cover",
-                      objectPosition:"center center",
-                    }}
-                  />
-                </div>
-                {/* Product renders 3–5 (positions 4–6) */}
-                {[3,4,5].map(i => (
-                  <div key={i} className="play-card" style={{padding:0,overflow:"hidden",lineHeight:0}} onClick={e => e.stopPropagation()}>
-                    <img
-                      src={`/images/tmm_product_render_${i}.png?v=2`}
-                      alt={`The Marshall Mafia — product render ${i}`}
-                      loading="lazy"
-                      decoding="async"
-                      style={{width:"100%",height:"auto",display:"block"}}
-                    />
-                  </div>
-                ))}
-                {/* Animation 3 — position 7. 2× vertical height from centre. */}
-                <div
-                  className="play-card"
-                  onClick={e => e.stopPropagation()}
-                  style={{padding:0,lineHeight:0,aspectRatio:"16/17.1",overflow:"hidden",transform:"translateZ(0)",willChange:"transform"}}
-                >
-                  <video src="/videos/tmm_product_showcase_animation_3.mp4" autoPlay loop muted playsInline preload="auto" aria-label="The Marshall Mafia showcase animation 3" style={{display:"block",width:"100%",height:"100%",objectFit:"cover",objectPosition:"center center"}} />
-                </div>
-                {/* Product renders 7 & 6 (positions 8–9) */}
-                {[7,6].map(i => (
-                  <div key={i} className="play-card" style={{padding:0,overflow:"hidden",lineHeight:0}} onClick={e => e.stopPropagation()}>
-                    <img
-                      src={`/images/tmm_product_render_${i}.png?v=2`}
-                      alt={`The Marshall Mafia — product render ${i}`}
-                      loading="lazy"
-                      decoding="async"
-                      style={{width:"100%",height:"auto",display:"block"}}
-                    />
-                  </div>
-                ))}
-                {/* Animation 2 — last item before footer pill. Standard height. */}
-                <div
-                  className="play-card"
-                  onClick={e => e.stopPropagation()}
-                  style={{padding:0,lineHeight:0,aspectRatio:"16/8.55",overflow:"hidden",transform:"translateZ(0)",willChange:"transform"}}
-                >
-                  <video src="/videos/tmm_product_showcase_animation_2.mp4" autoPlay loop muted playsInline preload="auto" aria-label="The Marshall Mafia showcase animation 2" style={{display:"block",width:"100%",height:"100%",objectFit:"cover",objectPosition:"center center"}} />
-                </div>
                 <div className="play-card-pill" onClick={e => e.stopPropagation()}>
                   <span className="play-block-title">the marshall mafia</span>
                   <span className="play-block-subtitle">gallery</span>
@@ -1360,7 +1295,7 @@ export default function Home() {
                   <div className="reviews-summary">
                     <div className="reviews-left">
                     <div className="reviews-score">
-                      <CharacterSVG style={{width:"clamp(38px,8vw,64px)",height:"auto",display:"block"}} lightMode={lightMode} />
+                      <CharacterSVG style={{width:"clamp(52px,12vw,76px)",height:"auto",display:"block"}} lightMode={lightMode} />
                     </div>
                     <div className="reviews-avg">
                       <span className="reviews-score-number">{avgDisplay}</span>
