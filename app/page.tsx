@@ -150,7 +150,7 @@ function HeroVideo({ logoFading }: { logoFading: boolean }) {
           loop
           playsInline
           aria-label="The Marshall Mafia"
-          style={{ display: "block", width: "100%", height: "auto" }}
+          style={{ display: "block", width: "100%", height: "auto", mixBlendMode: "screen" }}
         >
           {/* @ts-expect-error — type string with codec param is valid but TS narrows it */}
           <source src="/videos/tmm_animation_homescreen_hevc.mov" type='video/mp4; codecs="hvc1"' />
@@ -700,7 +700,7 @@ export default function Home() {
         /* ── Reviews summary ── */
         .reviews-summary{display:flex!important;flex-wrap:nowrap!important;align-items:stretch;gap:clamp(10px,2vw,20px)}
         .reviews-left{display:flex;flex-direction:row;align-items:stretch;flex-shrink:0;gap:clamp(8px,1.5vw,14px)}
-        .reviews-score{flex-shrink:0;display:flex;align-items:center}
+        .reviews-score{flex-shrink:0!important;display:flex!important;align-items:center!important;width:auto!important;min-height:0!important;align-self:auto!important;flex-direction:row!important;justify-content:flex-start!important}
         .reviews-avg{flex-shrink:0;min-width:0;display:flex;flex-direction:column;justify-content:space-between}
         .reviews-bars{flex:1;min-width:0}
 
