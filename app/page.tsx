@@ -166,6 +166,7 @@ function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading:
             ref={containerRef}
             className="hero-lottie select-none pointer-events-none"
             aria-label="The Marshall Mafia"
+            style={{ transform: "scaleY(-1)" }}
           />
         </div>
       </div>
