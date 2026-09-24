@@ -158,16 +158,17 @@ function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading:
 
   return (
     <div className="hero-rise-wrapper">
-      <div
-        ref={containerRef}
-        className="hero-lottie select-none pointer-events-none"
-        aria-label="The Marshall Mafia"
-        style={{
-          opacity:    logoFading ? 0 : 1,
-          transition: "opacity 0.18s linear",
-          filter:     lightMode ? "invert(1)" : undefined,
-        }}
-      />
+      {/* logoFading wrapper — opacity fade sits outside the animation element */}
+      <div style={{ opacity: logoFading ? 0 : 1, transition: "opacity 0.18s linear" }}>
+        {/* lightMode wrapper — invert sits outside heroFadeIn so forwards-fill can't clobber it */}
+        <div style={{ filter: lightMode ? "invert(1)" : undefined }}>
+          <div
+            ref={containerRef}
+            className="hero-lottie select-none pointer-events-none"
+            aria-label="The Marshall Mafia"
+          />
+        </div>
+      </div>
     </div>
   )
 }
