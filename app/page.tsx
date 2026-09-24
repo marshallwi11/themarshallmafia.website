@@ -132,39 +132,23 @@ void main(){
   )
 }
 
-// ── Lottie Hero (eyes animation) ─────────────────────────────────────────────
-function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading: boolean }) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const animRef      = useRef<import("lottie-web").AnimationItem | null>(null)
-
-  useEffect(() => {
-    let destroyed = false
-    import("lottie-web").then((lottie) => {
-      if (destroyed || !containerRef.current) return
-      animRef.current = lottie.default.loadAnimation({
-        container:     containerRef.current,
-        renderer:      "svg",
-        loop:          true,
-        autoplay:      true,
-        path:          "/tmm_hero.json",
-      })
-    })
-    return () => {
-      destroyed = true
-      animRef.current?.destroy()
-      animRef.current = null
-    }
-  }, [])
-
+// ── Hero Video (transparent animation — mix-blend-mode:screen handles transparency) ──
+function HeroVideo({ logoFading }: { logoFading: boolean }) {
   return (
     <div className="hero-rise-wrapper">
-      <div
-        ref={containerRef}
-        className="hero-lottie select-none pointer-events-none"
-        aria-label="The Marshall Mafia"
-        style={{ opacity: logoFading ? 0 : 1, transition: "opacity 0.18s linear",
-                 filter: lightMode ? "invert(1)" : undefined }}
-      />
+      <div style={{ opacity: logoFading ? 0 : 1, transition: "opacity 0.18s linear" }}>
+        <video
+          className="hero-lottie select-none pointer-events-none"
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-label="The Marshall Mafia"
+          style={{ display: "block", width: "100%", height: "auto", mixBlendMode: "screen" }}
+        >
+          <source src="/videos/tmm_product_animation_homescreen.mp4" type="video/mp4" />
+        </video>
+      </div>
     </div>
   )
 }
@@ -763,7 +747,7 @@ export default function Home() {
       <a href="#main-content" className="skip-nav">Skip to main content</a>
       <main id="main-content" className={`site-canvas${lightMode ? " tmm-light" : ""}`}>
 
-        <LottieHero lightMode={lightMode} logoFading={logoFading} />
+        <HeroVideo logoFading={logoFading} />
 
         {/* ── INFO POPUP ── */}
         <InfoPopup open={infoOpen} onClose={() => setInfoOpen(false)} />
@@ -1157,18 +1141,26 @@ export default function Home() {
                   <span className="play-block-title">SHOWCASE</span>
                   <span className="play-block-subtitle">IMAGES</span>
                 </div>
-                {/* Product renders 1–5 */}
-                {[1,2,3,4,5].map(i => (
+                {/* Product renders 1–2 */}
+                {[1,2].map(i => (
                   <div key={i} className="play-card" style={{padding:0,overflow:"hidden",lineHeight:0}} onClick={e => e.stopPropagation()}>
-                    <img
-                      src={`/images/tmm_product_render_${i}.png?v=2`}
-                      alt={`The Marshall Mafia — product render ${i}`}
-                      loading="lazy"
-                      decoding="async"
-                      style={{width:"100%",height:"auto",display:"block"}}
-                    />
+                    <img src={`/images/tmm_product_render_${i}.png?v=2`} alt={`The Marshall Mafia — product render ${i}`} loading="lazy" decoding="async" style={{width:"100%",height:"auto",display:"block"}} />
                   </div>
                 ))}
+                {/* 1st Edition animation — 2× tall */}
+                <div className="play-card" onClick={e => e.stopPropagation()} style={{padding:0,lineHeight:0,aspectRatio:"16/17.1",overflow:"hidden",transform:"translateZ(0)",willChange:"transform"}}>
+                  <video src="/videos/tmm_product_animation_1st_edition.mp4" autoPlay loop muted playsInline preload="auto" aria-label="The Marshall Mafia 1st edition animation" style={{display:"block",width:"100%",height:"100%",objectFit:"cover",objectPosition:"center center"}} />
+                </div>
+                {/* Product renders 3–5 */}
+                {[3,4,5].map(i => (
+                  <div key={i} className="play-card" style={{padding:0,overflow:"hidden",lineHeight:0}} onClick={e => e.stopPropagation()}>
+                    <img src={`/images/tmm_product_render_${i}.png?v=2`} alt={`The Marshall Mafia — product render ${i}`} loading="lazy" decoding="async" style={{width:"100%",height:"auto",display:"block"}} />
+                  </div>
+                ))}
+                {/* Tuck box animation — 2× tall */}
+                <div className="play-card" onClick={e => e.stopPropagation()} style={{padding:0,lineHeight:0,aspectRatio:"16/17.1",overflow:"hidden",transform:"translateZ(0)",willChange:"transform"}}>
+                  <video src="/videos/tmm_product_animation_tuck_box.mp4" autoPlay loop muted playsInline preload="auto" aria-label="The Marshall Mafia tuck box animation" style={{display:"block",width:"100%",height:"100%",objectFit:"cover",objectPosition:"center center"}} />
+                </div>
                 <div className="play-card-pill" onClick={e => e.stopPropagation()}>
                   <span className="play-block-title">the marshall mafia</span>
                   <span className="play-block-subtitle">gallery</span>
