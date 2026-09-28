@@ -623,9 +623,11 @@
     overflow-x: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    /* Fade content that scrolls behind the top nav bar — nav bottom ≈ 92px (28px pos + 64px height) */
-    mask-image: linear-gradient(to bottom, transparent 0, transparent 88px, black 140px);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 88px, black 140px);
+    /* Fade content that scrolls behind the top nav bar — nav bottom ≈ 76px (28px pos + 48px height).
+       The fade resolves to fully-visible by 96px so the first card (which starts at 104px+)
+       is never clipped when at rest — only content that actually scrolls behind the pill fades. */
+    mask-image: linear-gradient(to bottom, transparent 0, transparent 76px, black 96px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 76px, black 96px);
   }
   .modal-scroll-bare::-webkit-scrollbar { display: none; }
   .modal-scroll-bare > div {
@@ -1032,8 +1034,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    gap: 8px;
+    justify-content: center;
+    gap: clamp(8px, 1.8vw, 12px);
     min-width: 0;
     padding: 4px 0;
   }

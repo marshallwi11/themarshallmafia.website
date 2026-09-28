@@ -807,7 +807,7 @@ export default function Home() {
         .reviews-summary{display:flex!important;flex-wrap:nowrap!important;align-items:stretch;gap:clamp(10px,2vw,20px)}
         .reviews-left{display:flex;flex-direction:row;align-items:stretch;flex:1;min-width:0;gap:clamp(8px,1.5vw,14px)}
         .reviews-score{flex-shrink:0!important;display:flex!important;align-items:center!important;align-self:stretch!important;width:auto!important;min-height:0!important;flex-direction:column!important}
-        .reviews-avg{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:8px;padding:4px 0}
+        .reviews-avg{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;padding:4px 0}
         .reviews-bars{flex-shrink:0;min-width:0;width:clamp(90px,26%,130px)}
 
         /* ── Nav: prevent pill from overflowing on very narrow screens ── */
@@ -890,6 +890,9 @@ export default function Home() {
             <div className="pill-nav-inner">
 
               {/* ── Intro text overlay — blurs icons behind, fades out to reveal them ── */}
+              {/* backdropFilter is ONLY active during intro — once navIntro ≥ 2 the element
+                  fades to opacity:0 and the blur is removed so it can't create a ghost ring
+                  on the pill border. */}
               <div
                 aria-hidden="true"
                 style={{
@@ -900,8 +903,9 @@ export default function Home() {
                   justifyContent: "center",
                   pointerEvents: "none",
                   zIndex: 2,
-                  backdropFilter: "blur(10px)",
-                  WebkitBackdropFilter: "blur(10px)",
+                  ...(navIntro < 2
+                    ? { backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)" }
+                    : {}),
                   borderRadius: "1000px",
                   opacity: navIntro < 2 ? 1 : 0,
                   transition: "opacity 0.7s cubic-bezier(0.65,0,0.35,1)",
