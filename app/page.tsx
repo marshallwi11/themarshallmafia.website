@@ -95,17 +95,17 @@ void main(){
       gl.uniform1f(uT, t)
       gl.uniform2f(uR, canvas.width, canvas.height)
       if (lightRef.current) {
-        // Light mode: near-white base — muted TMM green TL, muted TMM yellow BR
-        gl.uniform1f(uStr, 0.42)            // 42% — edges vibrant, centre stays near-white
+        // Light mode: pure near-white — no corner colour blobs
+        gl.uniform1f(uStr, 0.0)
         gl.uniform3f(uBg,  0.97, 0.97, 0.97)
-        gl.uniform3f(uA,   0.14, 0.68, 0.25) // muted green (top-left)
-        gl.uniform3f(uB,   0.95, 0.58, 0.0 ) // muted yellow (bottom-right)
+        gl.uniform3f(uA,   0.97, 0.97, 0.97)
+        gl.uniform3f(uB,   0.97, 0.97, 0.97)
       } else {
-        // Dark mode: black base — muted TMM blue TL, muted TMM red BR
-        gl.uniform1f(uStr, 0.65)            // 65% — strong colour at edges, black centre
+        // Dark mode: pure black — no corner colour blobs
+        gl.uniform1f(uStr, 0.0)
         gl.uniform3f(uBg,  0.0,  0.0,  0.0 )
-        gl.uniform3f(uA,   0.02, 0.20, 0.52) // muted blue (top-left)
-        gl.uniform3f(uB,   0.44, 0.02, 0.02) // muted red  (bottom-right)
+        gl.uniform3f(uA,   0.0,  0.0,  0.0 )
+        gl.uniform3f(uB,   0.0,  0.0,  0.0 )
       }
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
       raf = requestAnimationFrame(frame)
@@ -132,42 +132,128 @@ void main(){
   )
 }
 
-// ── Lottie Hero (eyes animation) ─────────────────────────────────────────────
+// ── CSS Hero — lightweight rewrite of the Lottie animation + wink cycle ──────
+// Recreates the Lottie's look-left/right, zoom-in, squish-blink, and double-blink
+// sequence in pure CSS — no JS payload — and adds the wink from the wink.md spec
+// as a cycled phase within the same 13 s loop (matching the Lottie's frame count).
+//
+// Timeline (13 s / 780 frames at 60 fps):
+//   0–15 %   idle
+//   15–44 %  look left → hold → look right → hold → return centre
+//   49–71 %  zoom in → hold → squish-blink → return
+//   71–87 %  WINK: right eye closes, left squints, whole group hops
+//   87–93 %  idle
+//   93–100 % double blink
+//
+// Eye paths: exact SVG from themarshallmafia.logo.wink.md (viewBox 0 0 135.8 26.71).
+// The viewBox is padded to −38 −93 212 212 so the eyes sit in a square frame that
+// matches the Lottie's 2500×2500 canvas proportions (~64 % eye-to-canvas ratio).
+const HERO_CSS = `
+  /* ── look left / right (translateX on the outer wrapper) ── */
+  @keyframes tmmLook {
+    0%,  15%  { transform: translateX(0);    }
+    20%        { transform: translateX(-6%);  }
+    29%        { transform: translateX(-6%);  }
+    35%        { transform: translateX(6%);   }
+    44%        { transform: translateX(6%);   }
+    49%, 100%  { transform: translateX(0);    }
+  }
+  /* ── zoom-in then squish (scale on a middle wrapper) ── */
+  @keyframes tmmZoom {
+    0%,  49%  { transform: scale(1);            }
+    55%        { transform: scale(1.44);          }
+    60%        { transform: scale(1.44);          }
+    66%        { transform: scale(1.08, 0.8);     }
+    71%, 100%  { transform: scale(1);            }
+  }
+  /* ── vertical hop timed with the wink ── */
+  @keyframes tmmHop {
+    0%,  71%  { transform: translateY(0);    }
+    74%        { transform: translateY(-8px); }
+    77%        { transform: translateY(3px);  }
+    80%, 100%  { transform: translateY(0);    }
+  }
+  /* ── double blink (both eyes via the SVG group) ── */
+  @keyframes tmmBlink {
+    0%,  93%   { transform: scaleY(1);    }
+    94.9%      { transform: scaleY(0);    }
+    96.4%      { transform: scaleY(1);    }
+    97.7%      { transform: scaleY(1);    }
+    99%        { transform: scaleY(0);    }
+    100%       { transform: scaleY(1);    }
+  }
+  /* ── right eye: close for wink, hold, reopen ── */
+  @keyframes tmmWinkR {
+    0%,  71%   { transform: scaleY(1); opacity: 1; }
+    74%         { transform: scaleY(0); opacity: 0; }
+    83%         { transform: scaleY(0); opacity: 0; }
+    87%, 100%   { transform: scaleY(1); opacity: 1; }
+  }
+  /* ── left eye: squint during wink ── */
+  @keyframes tmmWinkL {
+    0%,  71%   { transform: scaleY(1);    }
+    74%         { transform: scaleY(0.72); }
+    83%         { transform: scaleY(0.72); }
+    87%, 100%   { transform: scaleY(1);    }
+  }
+  /* apply animations — all share the 13 s clock */
+  .tmm-look  { animation: tmmLook 13s ease-in-out infinite; }
+  .tmm-zoom  { animation: tmmZoom 13s ease-in-out infinite; }
+  .tmm-hop   { animation: tmmHop  13s ease-in-out infinite; }
+  .tmm-blink {
+    transform-box: fill-box; transform-origin: center;
+    animation: tmmBlink 13s cubic-bezier(.82,0,.18,1) infinite;
+  }
+  .tmm-wink-r {
+    transform-box: fill-box; transform-origin: center;
+    animation: tmmWinkR 13s ease-in-out infinite;
+  }
+  .tmm-wink-l {
+    transform-box: fill-box; transform-origin: center;
+    animation: tmmWinkL 13s ease-in-out infinite;
+  }
+`
+
 function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading: boolean }) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const animRef      = useRef<import("lottie-web").AnimationItem | null>(null)
-
-  useEffect(() => {
-    let destroyed = false
-    import("lottie-web").then((lottie) => {
-      if (destroyed || !containerRef.current) return
-      animRef.current = lottie.default.loadAnimation({
-        container: containerRef.current,
-        renderer:  "svg",
-        loop:      true,
-        autoplay:  true,
-        path:      "/tmm_hero.json",
-      })
-    })
-    return () => {
-      destroyed = true
-      animRef.current?.destroy()
-      animRef.current = null
-    }
-  }, [])
-
   return (
     <div className="hero-rise-wrapper">
-      {/* logoFading wrapper — opacity fade sits outside the animation element */}
       <div style={{ opacity: logoFading ? 0 : 1, transition: "opacity 0.18s linear" }}>
-        {/* lightMode wrapper — invert sits outside heroFadeIn so forwards-fill can't clobber it */}
         <div style={{ filter: lightMode ? "invert(1)" : undefined }}>
-          <div
-            ref={containerRef}
-            className="hero-lottie select-none pointer-events-none"
-            aria-label="The Marshall Mafia"
-            style={{ transform: "scaleY(-1)" }}
-          />
+          {/* TODO: character orbit animation — items will orbit around eyes */}
+          <style>{HERO_CSS}</style>
+          <div className="hero-lottie select-none pointer-events-none" aria-label="The Marshall Mafia">
+            {/* tmm-look: slides the eye pair left / right */}
+            <div className="tmm-look">
+              {/* tmm-hop: vertical bounce timed with the wink */}
+              <div className="tmm-hop">
+                {/* tmm-zoom: scales the eye pair in then squishes */}
+                <div className="tmm-zoom" style={{ width: "100%" }}>
+                  {/*
+                    viewBox padded to −38 −93 212 212 (square) so the eyes
+                    sit at ~64 % of canvas width, vertically centred —
+                    matching the Lottie's 2500×2500 proportions.
+                  */}
+                  <svg
+                    viewBox="-38 -93 212 212"
+                    xmlns="http://www.w3.org/2000/svg"
+                    style={{ width: "100%", height: "auto", display: "block" }}
+                  >
+                    {/* tmm-blink: collapses both eyes for the double blink */}
+                    <g className="tmm-blink">
+                      {/* left eye — squints during wink */}
+                      <g className="tmm-wink-l">
+                        <path fill="#FFFFFF" d="M28,13.9c-7.1.2-12.1-4.7-14.4-13.9H0c1,10.4,5.5,18.3,14.5,23.2,10,5.4,20,4.4,29.3-1.8,7.4-5,11.4-12.3,12.3-21.3h-13.7c-1.6,10-8.4,13.7-14.4,13.9h0v-.1Z" />
+                      </g>
+                      {/* right eye — closes for the wink */}
+                      <g className="tmm-wink-r">
+                        <path fill="#FFFFFF" d="M107.7,13.9c-7.1.2-12.1-4.7-14.4-13.9h-13.6c1,10.4,5.5,18.3,14.5,23.2,10,5.4,20,4.4,29.3-1.8,7.4-5,11.4-12.3,12.3-21.3h-13.7c-1.6,10-8.4,13.7-14.4,13.9h0v-.1Z" />
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -454,7 +540,7 @@ type ModalType = "play" | "showcase" | "music" | "collect" | "reviews" | null
 
 const TESTIMONIALS = [
   { name: "Abi R",      age: 20, rating: 5, colorize: true,  body: "My experience is 10/10. I think the way the game is set up is really well organised. I can't even begin to explain the amount of games I've had, but the highlight would be when we finally stopped letting people expose their roles in any way if they were alive or dead. Me and my friend managed to deceive the last 2 villagers and won with 2 mafia still alive, most joyous moment of my entire mafia existence. I would say to someone considering their first night in the village… you can't trust anyone. Don't make alliances, it's every man for himself." },
-  { name: "William M", age: 22, rating: 5, colorize: true,  body: "I'm a little biased, but I've always loved being a Marshall. I used to be so good as a Mafia but I'm a changed person, If I'm a Villager you better believe I'm catching them out. The cards are just as good in real life as they are in play. I took some photos of them see for yourself!", photos: ["/images/tmm_wm_testimonial_photo_1.png", "/images/tmm_wm_testimonial_photo_2.png", "/images/tmm_wm_testimonial_photo_3.png"] },
+  { name: "Anonymous", age: 22, rating: 5, colorize: true,  body: "I'm a little biased, but I've always loved being a Marshall. I used to be so good as a Mafia but I'm a changed person, If I'm a Villager you better believe I'm catching them out. The cards are just as good in real life as they are in play. I took some photos of them see for yourself!", photos: ["/images/tmm_wm_testimonial_photo_1.png", "/images/tmm_wm_testimonial_photo_2.png", "/images/tmm_wm_testimonial_photo_3.png"] },
   { name: "Jessica M",  age: 24, rating: 5, colorize: false, body: "Love it, love it, love it! It was a very creative way to play mafia!" },
   { name: "Lucas M",    age: 14, rating: 5, colorize: false, body: "It's fun to play with friends. Great for bonding time with family. You get to know people better and know their lying faces!" },
   { name: "Katie R",    age: 21, rating: 5, colorize: false, body: "Highly recommend getting this game! It's so much fun to play with friends and the physical cards make it much easier to follow along. I love the character design and the music that comes with this pack. It is now the go to game in my friendship group and we can't get enough!" },
@@ -498,7 +584,7 @@ function colorizeBody(text: string) {
     { words: ["Angel", "angel", "Angels", "angels"],               color: "var(--tmm-green)" },
     { words: ["Jester", "jester", "Jesters", "jesters"],           color: "var(--tmm-yellow)" },
     { words: ["Detective", "detective", "Detectives", "detectives"], color: "var(--tmm-blue)" },
-    { words: ["Marshall", "marshall"],                             color: "var(--tmm-cream)" },
+    { words: ["Marshall", "marshall"],                             color: "var(--tmm-beige)" },
   ]
   const allWords = ROLES.flatMap(r => r.words)
   const pattern = new RegExp("\\b(" + allWords.join("|") + ")\\b", "g")
@@ -712,10 +798,10 @@ export default function Home() {
 
         /* ── Reviews summary ── */
         .reviews-summary{display:flex!important;flex-wrap:nowrap!important;align-items:stretch;gap:clamp(10px,2vw,20px)}
-        .reviews-left{display:flex;flex-direction:row;align-items:stretch;flex-shrink:0;gap:clamp(8px,1.5vw,14px)}
-        .reviews-score{flex-shrink:0!important;display:flex!important;align-items:center!important;align-self:center!important;width:auto!important;min-height:0!important;flex-direction:column!important}
-        .reviews-avg{flex-shrink:0;min-width:0;display:flex;flex-direction:column;justify-content:space-between}
-        .reviews-bars{flex:1;min-width:0}
+        .reviews-left{display:flex;flex-direction:row;align-items:stretch;flex:1;min-width:0;gap:clamp(8px,1.5vw,14px)}
+        .reviews-score{flex-shrink:0!important;display:flex!important;align-items:center!important;align-self:stretch!important;width:auto!important;min-height:0!important;flex-direction:column!important}
+        .reviews-avg{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:8px;padding:4px 0}
+        .reviews-bars{flex-shrink:0;min-width:0;width:clamp(90px,26%,130px)}
 
         /* ── Nav: prevent pill from overflowing on very narrow screens ── */
         .pill-nav{max-width:calc(100vw - 16px)!important}
@@ -1015,7 +1101,7 @@ export default function Home() {
                 <div className="play-card" onClick={e => e.stopPropagation()}>
                   <div className="play-card-header"><span className="play-block-title">There are gamemodes?</span><span className="play-block-subtitle">(gamemode card*)</span></div>
                   <p className="play-block-body">There are Three Different game-modes that can be played!</p>
-                  <p className="play-block-body" style={{marginTop:"10px"}}><span style={{color:lightMode?"#111111":"#ffffff",fontWeight:"bold"}}>STANDARD mode:</span></p>
+                  <p className="play-block-body" style={{marginTop:"10px"}}><span style={{color:lightMode?"#111111":"#ffffff",fontWeight:"bold"}}>CLASSIC mode:</span></p>
                   <ul className="play-rules-list">
                     <li className="play-block-body">Players with the same role — silently point and agree on a <strong>SINGLE</strong> target together (EG. 2 <span className="text-tmm-red">Mafia</span>&apos;s &gt; 1 kill)</li>
                   </ul>
@@ -1139,6 +1225,7 @@ export default function Home() {
                   <p className="play-block-body">Collect → <a href="https://linktr.ee/themarshallmafia" target="_blank" rel="noopener noreferrer" className="text-tmm-blue hover:text-white underline underline-offset-2 transition-colors">linktr.ee/themarshallmafia</a></p>
                   <p className="play-block-body">music → <a href="https://linktr.ee/themarshallmafia.music" target="_blank" rel="noopener noreferrer" className="text-tmm-blue hover:text-white underline underline-offset-2 transition-colors">linktr.ee/themarshallmafia.music</a></p>
                   <p className="play-block-body">Developer → <a href="https://linktr.ee/marshallwi11" target="_blank" rel="noopener noreferrer" className="text-tmm-blue hover:text-white underline underline-offset-2 transition-colors">linktr.ee/marshallwi11</a></p>
+                  <p className="play-block-body">Instructions → <a href="/themarshallmafia.classic.instructions.pdf" target="_blank" rel="noopener noreferrer" className="text-tmm-blue hover:text-white underline underline-offset-2 transition-colors" download="themarshallmafia.classic.instructions.pdf">download PDF</a></p>
                 </div>
 
                 {/* BOX 14 */}
@@ -1294,7 +1381,7 @@ export default function Home() {
                   <div className="reviews-summary">
                     <div className="reviews-left">
                     <div className="reviews-score">
-                      <CharacterSVG style={{height:"clamp(140px,26vw,210px)",width:"auto",display:"block"}} lightMode={lightMode} />
+                      <CharacterSVG style={{height:"100%",width:"auto",display:"block",minHeight:"140px",maxHeight:"220px"}} lightMode={lightMode} />
                     </div>
                     <div className="reviews-avg">
                       <span className="reviews-score-number">{avgDisplay}</span>
