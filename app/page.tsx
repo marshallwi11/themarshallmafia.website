@@ -149,68 +149,75 @@ void main(){
 // The viewBox is padded to −38 −93 212 212 so the eyes sit in a square frame that
 // matches the Lottie's 2500×2500 canvas proportions (~64 % eye-to-canvas ratio).
 const HERO_CSS = `
-  /* ── look left / right (translateX on the outer wrapper) ── */
+  /* ── look left / right ── */
+  /* Snap to position (cubic-bezier fast-out), hold, snap back.            */
+  /* Lottie timing: slide = 38 frames (0.63 s) at 60fps → 4.9 % of 13 s. */
   @keyframes tmmLook {
-    0%,  15%  { transform: translateX(0);    }
-    20%        { transform: translateX(-6%);  }
-    29%        { transform: translateX(-6%);  }
-    35%        { transform: translateX(6%);   }
-    44%        { transform: translateX(6%);   }
-    49%, 100%  { transform: translateX(0);    }
+    0%, 15%   { transform: translateX(0);   animation-timing-function: cubic-bezier(.4,0,.05,1); }
+    20%        { transform: translateX(-6%); animation-timing-function: linear; }
+    29%        { transform: translateX(-6%); animation-timing-function: cubic-bezier(.4,0,.05,1); }
+    35%        { transform: translateX(6%);  animation-timing-function: linear; }
+    44%        { transform: translateX(6%);  animation-timing-function: cubic-bezier(.4,0,.05,1); }
+    49%, 100%  { transform: translateX(0); }
   }
-  /* ── zoom-in then squish (scale on a middle wrapper) ── */
+  /* ── zoom-in then squish ── */
   @keyframes tmmZoom {
-    0%,  49%  { transform: scale(1);            }
-    55%        { transform: scale(1.44);          }
-    60%        { transform: scale(1.44);          }
-    66%        { transform: scale(1.08, 0.8);     }
-    71%, 100%  { transform: scale(1);            }
+    0%, 49%   { transform: scale(1);         animation-timing-function: cubic-bezier(.4,0,.2,1); }
+    55%        { transform: scale(1.44);      animation-timing-function: linear; }
+    60%        { transform: scale(1.44);      animation-timing-function: cubic-bezier(.4,0,.6,1); }
+    66%        { transform: scale(1.08,.8);   animation-timing-function: cubic-bezier(.2,0,.4,1); }
+    71%, 100%  { transform: scale(1); }
   }
-  /* ── vertical hop timed with the wink ── */
+  /* ── nod toward buy button, then pop up with the wink ──              */
+  /* Lottie frames 555-730: eyes drift down-left to ~(-5%, +8.8%) then   */
+  /* jitter before returning. We do a clean nod + rebound arc.            */
   @keyframes tmmHop {
-    0%,  71%  { transform: translateY(0);    }
-    74%        { transform: translateY(-8px); }
-    77%        { transform: translateY(3px);  }
-    80%, 100%  { transform: translateY(0);    }
+    0%, 71%   { transform: translate(0, 0);       animation-timing-function: cubic-bezier(.4,0,.6,1); }
+    73.5%      { transform: translate(-4%, 8%);    animation-timing-function: cubic-bezier(.2,0,.4,1); }
+    76%        { transform: translate(0%, -5%);    animation-timing-function: cubic-bezier(.4,0,.2,1); }
+    79%        { transform: translate(0%, 2%);     animation-timing-function: cubic-bezier(.2,0,.4,1); }
+    83%, 100%  { transform: translate(0, 0); }
   }
-  /* ── double blink (both eyes via the SVG group) ── */
+  /* ── double blink ──                                                    */
+  /* Lottie: close = 10 frames (0.167 s = 1.28 %), open = 12 f (1.54 %). */
+  /* Fast snap easing mirrors Lottie o.x=0.95 (very fast departure).      */
   @keyframes tmmBlink {
-    0%,  93%   { transform: scaleY(1);    }
-    94.9%      { transform: scaleY(0);    }
-    96.4%      { transform: scaleY(1);    }
-    97.7%      { transform: scaleY(1);    }
-    99%        { transform: scaleY(0);    }
-    100%       { transform: scaleY(1);    }
+    0%, 93.6%  { transform: scaleY(1); animation-timing-function: cubic-bezier(0,.2,0,1); }
+    94.9%      { transform: scaleY(0); animation-timing-function: cubic-bezier(0,.2,0,1); }
+    96.4%      { transform: scaleY(1); animation-timing-function: linear; }
+    97.7%      { transform: scaleY(1); animation-timing-function: cubic-bezier(0,.2,0,1); }
+    99%        { transform: scaleY(0); animation-timing-function: cubic-bezier(0,.2,0,1); }
+    100%       { transform: scaleY(1); }
   }
-  /* ── right eye: close for wink, hold, reopen ── */
+  /* ── right eye: wink closes at 75 % (after the nod peaks at 73.5 %) ── */
   @keyframes tmmWinkR {
-    0%,  71%   { transform: scaleY(1); opacity: 1; }
-    74%         { transform: scaleY(0); opacity: 0; }
-    83%         { transform: scaleY(0); opacity: 0; }
-    87%, 100%   { transform: scaleY(1); opacity: 1; }
+    0%, 73%   { transform: scaleY(1); opacity: 1; animation-timing-function: cubic-bezier(0,.2,0,1); }
+    75%        { transform: scaleY(0); opacity: 0; animation-timing-function: linear; }
+    85%        { transform: scaleY(0); opacity: 0; animation-timing-function: cubic-bezier(0,.2,0,1); }
+    87%, 100%  { transform: scaleY(1); opacity: 1; }
   }
-  /* ── left eye: squint during wink ── */
+  /* ── left eye: squint mirrors the right-eye wink ── */
   @keyframes tmmWinkL {
-    0%,  71%   { transform: scaleY(1);    }
-    74%         { transform: scaleY(0.72); }
-    83%         { transform: scaleY(0.72); }
-    87%, 100%   { transform: scaleY(1);    }
+    0%, 73%   { transform: scaleY(1);    animation-timing-function: cubic-bezier(.4,0,.2,1); }
+    75%        { transform: scaleY(.72); animation-timing-function: linear; }
+    85%        { transform: scaleY(.72); animation-timing-function: cubic-bezier(.2,0,.4,1); }
+    87%, 100%  { transform: scaleY(1); }
   }
-  /* apply animations — all share the 13 s clock */
-  .tmm-look  { animation: tmmLook 13s ease-in-out infinite; }
-  .tmm-zoom  { animation: tmmZoom 13s ease-in-out infinite; }
-  .tmm-hop   { animation: tmmHop  13s ease-in-out infinite; }
+  /* ── class bindings — linear overall so per-keyframe ATF takes control ── */
+  .tmm-look { animation: tmmLook 13s linear infinite; }
+  .tmm-zoom { animation: tmmZoom 13s linear infinite; }
+  .tmm-hop  { animation: tmmHop  13s linear infinite; }
   .tmm-blink {
     transform-box: fill-box; transform-origin: center;
-    animation: tmmBlink 13s cubic-bezier(.82,0,.18,1) infinite;
+    animation: tmmBlink 13s linear infinite;
   }
   .tmm-wink-r {
     transform-box: fill-box; transform-origin: center;
-    animation: tmmWinkR 13s ease-in-out infinite;
+    animation: tmmWinkR 13s linear infinite;
   }
   .tmm-wink-l {
     transform-box: fill-box; transform-origin: center;
-    animation: tmmWinkL 13s ease-in-out infinite;
+    animation: tmmWinkL 13s linear infinite;
   }
 `
 
@@ -234,7 +241,7 @@ function LottieHero({ lightMode, logoFading }: { lightMode: boolean; logoFading:
                     matching the Lottie's 2500×2500 proportions.
                   */}
                   <svg
-                    viewBox="-38 -93 212 212"
+                    viewBox="-58 -112 252 252"
                     xmlns="http://www.w3.org/2000/svg"
                     style={{ width: "100%", height: "auto", display: "block" }}
                   >
